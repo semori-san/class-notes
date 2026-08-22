@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<meta content="pandoc 3.10.1" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Prof./Coach Emori" name="author"/>
+<title> NANO 2314: Applied Quantitative Methods for Nanoscience Fall 2026 Lecture Notes: Calc to ODE S26 </title>
+<style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+<style>
+
+:root {
+--vt-maroon: #861F41;
+--vt-orange: #E5751F;
+--text: #2c2c2c;
+--bg: #ffffff;
+--code-bg: #f5f5f5;
+--border: #e0e0e0;
+--link: #861F41;
+--muted: #666666;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+--text: #e0e0e0;
+--bg: #1a1a1a;
+--code-bg: #2a2a2a;
+--border: #404040;
+--link: #E5751F;
+--muted: #999999;
+}
+}
+* { box-sizing: border-box; }
+html {
+-webkit-text-size-adjust: 100%;
+scroll-behavior: smooth;
+}
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+'Helvetica Neue', Arial, sans-serif;
+font-size: clamp(16px, 4.2vw, 19px);
+line-height: 1.65;
+color: var(--text);
+background: var(--bg);
+margin: 0;
+padding: 0;
+}
+/* Container — readable measure, centered.
+On wide screens with a TOC sidebar (body.has-toc), the layout
+switches to a 2-column grid (see the min-width: 1024px query
+below). On mobile, content lives in <main class="lecture-main">
+     as a single centered column. */
+  main.lecture-main {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 1rem 1.25rem 4rem;
+  }
+
+  /* TOC sidebar — hidden by default (mobile-first). Revealed on
+     wide screens via the media query below. */
+  nav.toc-sidebar {
+    display: none;
+  }
+
+  /* Headers */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--vt-maroon);
+    line-height: 1.3;
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+  }
+
+  h1.title {
+    font-size: 1.55em;
+    margin-top: 0.5em;
+    border-bottom: 3px solid var(--vt-orange);
+    padding-bottom: 0.3em;
+  }
+
+  h1 { font-size: 1.4em; }
+  h2 {
+    font-size: 1.25em;
+    border-bottom: 1.5px solid var(--vt-orange);
+    padding-bottom: 0.15em;
+  }
+  h3 { font-size: 1.1em; }
+  h4 { font-size: 1em; }
+
+  /* Author / date (pandoc metadata) */
+  p.author, p.date {
+    font-size: 0.82em;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0;
+  }
+
+  /* Paragraphs */
+  p { margin: 0.8em 0; }
+
+  /* Links */
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Images and figures */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.2em auto;
+    border-radius: 6px;
+  }
+
+  figure {
+    margin: 1.5em 0;
+    text-align: center;
+  }
+
+  figcaption {
+    font-size: 0.85em;
+    color: var(--muted);
+    margin-top: 0.5em;
+    line-height: 1.4;
+  }
+
+  /* Inline code */
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.12em 0.3em;
+    border-radius: 3px;
+  }
+
+  /* Code blocks */
+  pre {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 0.9em 1em;
+    border-radius: 6px;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    line-height: 1.5;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th, td {
+    padding: 0.55em 0.75em;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    background: var(--code-bg);
+    font-weight: 600;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 3px solid var(--vt-orange);
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background: var(--code-bg);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* KaTeX math — horizontal scroll for wide equations */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.3em 0;
+  }
+
+  .katex {
+    font-size: 1.05em;
+  }
+
+  /* Pandoc math display wrapper */
+  span.math.display {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.3em 0;
+  }
+
+  /* Horizontal rule */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2em 0;
+  }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 1.3em;
+  }
+
+  li {
+    margin: 0.3em 0;
+  }
+
+  /* Back-to-top button */
+  .back-to-top {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--vt-maroon);
+    color: white;
+    border: none;
+    font-size: 1.3em;
+    cursor: pointer;
+    display: none;
+    z-index: 200;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .back-to-top.visible {
+    display: flex;
+  }
+
+  @media (min-width: 768px) {
+    .back-to-top {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Anchor scroll offset — prevents heading targets (TOC clicks,
+     \eqref cross-refs) from being hidden behind any sticky bar. */
+  h1, h2, h3, h4, h5, h6,
+  [id], span.math.display {
+    scroll-margin-top: 1.5rem;
+  }
+
+  /* ===== Wide-screen layout: TOC sidebar + wider content column =====
+     Activated only when body.has-toc is present (set by
+     postprocess_html when at least one collapsible <section> with an
+     <h1 id="..."> exists). Below 1024px the TOC is hidden and the
+     layout falls back to a single centered column (mobile-friendly).
+
+     Grid layout (wide screens):
+       +---------------------------------------+
+       | lecture-header (spans both columns)   |
+       +-----------+---------------------------+
+       | toc-side  | main.lecture-main         |
+       | bar       |                           |
+       +-----------+---------------------------+
+  */
+  @media (min-width: 1024px) {
+    /* Slightly wider, slightly larger reading measure for laptop. */
+    main.lecture-main {
+      font-size: 20px;
+      max-width: 50rem;
+    }
+
+    /* Two-column grid with a full-width header row on top.
+       Only activates when body.has-toc is set. */
+    body.has-toc {
+      display: grid;
+      grid-template-columns: 17rem 1fr;
+      grid-template-areas:
+        "header header"
+        "toc    main";
+      align-items: start;
+    }
+
+    body.has-toc > .lecture-header {
+      grid-area: header;
+      margin: 0 0 1.5em;
+      border-radius: 0;
+    }
+
+    body.has-toc > nav.toc-sidebar {
+      display: block;
+      grid-area: toc;
+      position: sticky;
+      top: 0;
+      /* Sticky offset accounts for the header row height; once the
+         header scrolls past, the TOC pins to the viewport top. */
+      max-height: 100vh;
+      overflow-y: auto;
+      padding: 1.25rem 1rem 2rem 1.25rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    body.has-toc > main.lecture-main {
+      grid-area: main;
+      /* Override the auto-centering margins — the grid handles
+         placement, and we want content to fill its grid cell. */
+      margin: 0;
+      padding: 1.25rem 2rem 4rem 2rem;
+    }
+
+    /* The TOC handles navigation on wide screens — let the
+       expand/collapse bar scroll away instead of staying sticky. */
+    body.has-toc .section-controls {
+      position: static;
+    }
+  }
+
+  /* ===== TOC sidebar visual styling ===== */
+  nav.toc-sidebar .toc-title {
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--vt-maroon);
+    margin-bottom: 0.6em;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav.toc-sidebar ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav.toc-sidebar li {
+    margin: 0;
+  }
+
+  nav.toc-sidebar a {
+    display: block;
+    padding: 0.32em 0.5em 0.32em 0.75em;
+    border-left: 2px solid transparent;
+    color: var(--text);
+    font-size: 0.86em;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+
+  nav.toc-sidebar a:hover {
+    background: var(--code-bg);
+    border-left-color: var(--vt-orange);
+    color: var(--vt-maroon);
+  }
+
+  /* ===== Lecture header (replaces pandoc title block) ===== */
+  .lecture-header {
+    background: var(--vt-maroon);
+    color: #ffffff;
+    text-align: center;
+    padding: 1.4em 1rem 1.2em;
+    margin: 0 0 1.5em;
+    border-radius: 8px;
+    line-height: 1.4;
+  }
+
+  .lecture-header .lh-course,
+  .lecture-header .lh-semester,
+  .lecture-header .lh-topic,
+  .lecture-header .lh-instructor,
+  .lecture-header .lh-model,
+  .lecture-header .lh-date {
+    display: block;
+  }
+
+  .lecture-header .lh-course {
+    font-size: 1.05em;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .lecture-header .lh-course-title {
+    font-weight: 400;
+    font-style: italic;
+    opacity: 0.92;
+    font-size: 0.92em;
+  }
+
+  .lecture-header .lh-semester {
+    font-size: 0.88em;
+    opacity: 0.85;
+    margin-top: 0.3em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lecture-header .lh-topic {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 0.6em;
+    line-height: 1.2;
+  }
+
+  .lecture-header .lh-instructor,
+  .lecture-header .lh-model,
+  .lecture-header .lh-date {
+    font-size: 0.82em;
+    margin-top: 0.35em;
+  }
+
+  .lecture-header .lh-instructor {
+    font-weight: 600;
+  }
+
+  .lecture-header .lh-model {
+    font-style: italic;
+    opacity: 0.78;
+  }
+
+  .lecture-header .lh-date {
+    opacity: 0.85;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== Bottom spacer (uncollapsible empty space for reading) ===== */
+  .bottom-spacer {
+    height: 45vh;
+    max-height: 500px;
+    /* intentionally empty — just scroll space */
+  }
+
+  /* ===== TLDR callout ===== */
+  .tldr-callout {
+    background: linear-gradient(135deg, rgba(229, 117, 31, 0.10),
+                rgba(134, 31, 65, 0.06));
+    border-left: 4px solid var(--vt-orange);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .tldr-callout .callout-label {
+    display: block;
+    color: var(--vt-maroon);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .tldr-callout p {
+    margin: 0.4em 0 0;
+  }
+
+  .tldr-callout p:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Hook callout (Why Are We Doing This?) ===== */
+  .hook-callout {
+    background: rgba(229, 117, 31, 0.08);
+    border-left: 4px solid var(--vt-orange);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .hook-callout .callout-label {
+    display: block;
+    color: var(--vt-orange);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .hook-callout p {
+    margin: 0.4em 0 0;
+  }
+
+  .hook-callout p:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Learning Objectives callout (checklist) ===== */
+  .objectives-callout {
+    background: rgba(134, 31, 65, 0.05);
+    border-left: 4px solid var(--vt-maroon);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .objectives-callout .callout-label {
+    display: block;
+    color: var(--vt-maroon);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .objectives-callout ul {
+    margin: 0.4em 0 0;
+    padding-left: 1.5em;
+    list-style: none;
+  }
+
+  .objectives-callout li {
+    position: relative;
+    margin: 0.3em 0;
+    padding-left: 1.4em;
+  }
+
+  .objectives-callout li::before {
+    content: '\2610';  /* ballot box (empty checkbox) */
+    position: absolute;
+    left: 0;
+    color: var(--vt-maroon);
+    font-size: 1.05em;
+    line-height: 1;
+  }
+
+  /* ===== Before You Start callout (prerequisites — muted) ===== */
+  .prereqs-callout {
+    background: rgba(102, 102, 102, 0.06);
+    border-left: 4px solid var(--muted);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .prereqs-callout .callout-label {
+    display: block;
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .prereqs-callout p,
+  .prereqs-callout ul {
+    margin: 0.4em 0 0;
+  }
+
+  .prereqs-callout p:first-of-type,
+  .prereqs-callout ul:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Stop and Think (collapsible prediction + answer) ===== */
+  details.stop-and-think {
+    margin: 1.2em 0;
+    border: 1px solid var(--vt-orange);
+    border-radius: 6px;
+    background: rgba(229, 117, 31, 0.05);
+    overflow: hidden;
+  }
+
+  details.stop-and-think summary {
+    cursor: pointer;
+    padding: 0.6em 1em;
+    color: var(--vt-orange);
+    font-weight: 600;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.15s;
+  }
+
+  details.stop-and-think summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details.stop-and-think summary:hover {
+    background: rgba(229, 117, 31, 0.12);
+  }
+
+  details.stop-and-think summary::before {
+    content: '\25B6';  /* right-pointing triangle */
+    font-size: 0.75em;
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+
+  details.stop-and-think[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  details.stop-and-think .sat-question {
+    font-weight: 600;
+    color: var(--vt-orange);
+  }
+
+  details.stop-and-think .sat-answer {
+    padding: 0.6em 1.2em 0.8em;
+    border-top: 1px solid rgba(229, 117, 31, 0.3);
+  }
+
+  details.stop-and-think .sat-answer p {
+    margin: 0.4em 0 0;
+  }
+
+  details.stop-and-think .sat-answer p:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Key Takeaway (prominent maroon box) ===== */
+  .key-takeaway {
+    background: rgba(134, 31, 65, 0.08);
+    border: 1px solid var(--vt-maroon);
+    border-left: 4px solid var(--vt-maroon);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 1.5em 0;
+  }
+
+  .key-takeaway .callout-label {
+    display: block;
+    color: var(--vt-maroon);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .key-takeaway p {
+    margin: 0.4em 0 0;
+  }
+
+  .key-takeaway p:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Key Terms (definition list) ===== */
+  .terms-callout {
+    background: rgba(134, 31, 65, 0.04);
+    border-left: 4px solid var(--vt-maroon);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .terms-callout .callout-label {
+    display: block;
+    color: var(--vt-maroon);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .terms-callout dl {
+    margin: 0.4em 0 0;
+  }
+
+  .terms-callout dt {
+    font-weight: 700;
+    color: var(--vt-maroon);
+    margin-top: 0.6em;
+  }
+
+  .terms-callout dt:first-child {
+    margin-top: 0;
+  }
+
+  .terms-callout dd {
+    margin: 0.2em 0 0;
+    padding-left: 1.2em;
+  }
+
+  /* ===== What's Next callout (blue-tinted) ===== */
+  .whats-next-callout {
+    background: rgba(31, 84, 134, 0.06);
+    border-left: 4px solid #1f5486;
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.2em 1em;
+    margin: 0 0 1.8em;
+  }
+
+  .whats-next-callout .callout-label {
+    display: block;
+    color: #1f5486;
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+  }
+
+  .whats-next-callout p {
+    margin: 0.4em 0 0;
+  }
+
+  .whats-next-callout p:first-of-type {
+    margin-top: 0;
+  }
+
+  /* ===== Collapsible Python code blocks ===== */
+  details.code-block {
+    margin: 1.2em 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  details.code-block summary {
+    cursor: pointer;
+    padding: 0.5em 1em;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.82em;
+    color: var(--vt-maroon);
+    font-weight: 600;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.15s;
+  }
+
+  details.code-block summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details.code-block summary:hover {
+    background: var(--border);
+  }
+
+  details.code-block summary::before {
+    content: '\25B6';  /* right-pointing triangle */
+    font-size: 0.75em;
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+
+  details.code-block[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  details.code-block pre {
+    margin: 0;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: var(--bg);
+  }
+
+  /* ===== Collapsible sections (Wikipedia mobile-style) ===== */
+  .section-controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding: 0.5em 0 0.6em;
+    margin: 0 0 0.4em;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .section-controls button {
+    flex: 1;
+    padding: 0.4em 0.8em;
+    font-size: 0.82em;
+    font-weight: 600;
+    color: var(--vt-maroon);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .section-controls button:hover {
+    background: var(--border);
+  }
+
+  .collapsible-section {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .collapsible-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .collapsible-section > h1 {
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+    padding: 0.7em 0 0.6em;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    border-bottom: none;
+  }
+
+  .collapsible-section > h1::before {
+    content: '\25BC';  /* down-pointing triangle (expanded state) */
+    font-size: 0.65em;
+    color: var(--vt-orange);
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+
+  .collapsible-section.collapsed > h1::before {
+    transform: rotate(-90deg);  /* points right when collapsed */
+  }
+
+  .collapsible-section > h1:hover {
+    color: var(--vt-orange);
+  }
+
+  /* When collapsed, hide everything inside the section except the h1 */
+  .collapsible-section.collapsed > *:not(h1) {
+    display: none;
+  }
+
+  .collapsible-section > *:not(h1) {
+    padding-left: 0.2em;
+  }
+  </style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // --- Back-to-top button ---
+    var btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.innerHTML = '&uarr;';
+    btn.setAttribute('aria-label', 'Back to top');
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- Collapsible sections: click h1 to toggle ---
+    var sections = document.querySelectorAll('.collapsible-section > h1');
+    sections.forEach(function(h1) {
+      h1.addEventListener('click', function() {
+        var section = h1.parentElement;
+        section.classList.toggle('collapsed');
+        // Scroll the section header into view when collapsing
+        // (avoids the page jumping to an awkward position)
+        if (section.classList.contains('collapsed')) {
+          var rect = h1.getBoundingClientRect();
+          if (rect.top < 0 || rect.top > window.innerHeight * 0.4) {
+            h1.scrollIntoView({ block: 'start', behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // --- Expand all / Collapse all controls ---
+    var controls = document.querySelector('.section-controls');
+    if (controls) {
+      var expandBtn = controls.querySelector('[data-action="expand-all"]');
+      var collapseBtn = controls.querySelector('[data-action="collapse-all"]');
+
+      if (expandBtn) {
+        expandBtn.addEventListener('click', function() {
+          document.querySelectorAll('.collapsible-section')
+            .forEach(function(s) { s.classList.remove('collapsed'); });
+        });
+      }
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', function() {
+          document.querySelectorAll('.collapsible-section')
+            .forEach(function(s) { s.classList.add('collapsed'); });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    }
+
+    // Initialize on load
+    updateProgress();
+  });
+  </script>
+</head>
+<body><div class="lecture-header"><span class="lh-course">NANO 2314: Applied Quantitative Methods for Nanoscience</span><span class="lh-semester">Fall 2026</span><span class="lh-topic">Calc to ODE S26</span><span class="lh-instructor">Prof./Coach Emori</span><span class="lh-model">Notes generated by Gemini 3.1 Pro</span><span class="lh-date">2026 08/21</span></div><main class="lecture-main"><div aria-hidden="true" class="bottom-spacer"></div></main>
+
+</body>
+</html>
