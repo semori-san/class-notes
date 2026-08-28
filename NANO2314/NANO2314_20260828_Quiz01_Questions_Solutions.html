@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NANO 2314 — Quiz 01 (Questions &amp; Solutions)</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']],
+           displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root {
+    --vtmaroon: #861F41;
+    --vtorange: #E5751F;
+    --sol-curve: #E5751F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #1a1a1a;
+    margin: 0 auto;
+    max-width: 860px;
+    padding: 1.5rem 1rem 4rem;
+    background: #fafafa;
+  }
+  .header-box {
+    background: #fff;
+    border: 0.8pt solid var(--vtmaroon);
+    border-radius: 2mm;
+    padding: 14px 18px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .header-box .course {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .header-box .title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--vtmaroon);
+    margin: 4px 0;
+  }
+  .header-box .meta {
+    font-size: 1rem;
+    margin-top: 6px;
+  }
+  h2.section {
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--vtmaroon);
+    padding-bottom: 4px;
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .pts {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    background: #fff;
+  }
+  th, td {
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #ddd;
+  }
+  thead th {
+    border-top: 2px solid #222;
+    border-bottom: 2px solid #222;
+    font-weight: 700;
+  }
+  tbody tr:last-child td {
+    border-bottom: 2px solid #222;
+  }
+  .answer { font-weight: 700; }
+  .solution-box {
+    background: rgba(229, 117, 31, 0.06);
+    border: 0.6pt solid rgba(229, 117, 31, 0.75);
+    border-radius: 2mm;
+    padding: 12px 16px;
+    margin: 1em 0;
+  }
+  .solution-box .sol-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #6b3410;
+  }
+  .solution-box p, .solution-box div { margin: 0.5em 0; }
+  .part {
+    margin: 1.2em 0;
+  }
+  .part-head {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .question-text { margin: 6px 0; }
+  .grading-note { font-weight: 700; margin: 1em 0 0.3em; }
+  h3.subsection {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+  }
+  .boxed {
+    border: 1px solid #333;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .plot {
+    display: flex;
+    justify-content: center;
+    margin: 14px 0;
+  }
+  .plot svg { display: block; }
+  .plot-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: -6px;
+    margin-bottom: 10px;
+  }
+  ol.options {
+    list-style: none;
+    padding-left: 3em;
+    margin: 6px 0 0 0;
+    counter-reset: opt;
+  }
+  ol.options > li {
+    counter-increment: opt;
+    margin: 3px 0;
+    position: relative;
+  }
+  ol.options > li::before {
+    content: "(" counter(opt, upper-alpha) ")";
+    font-weight: 700;
+    position: absolute;
+    left: -3em;
+    width: 2.5em;
+    text-align: left;
+  }
+  ol.options li.correct {
+    color: var(--vtmaroon);
+    font-weight: 600;
+  }
+  ol.options li.correct::after {
+    content: " \2713";
+    color: var(--vtorange);
+    font-weight: 700;
+  }
+  .axis-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12px; fill: #1a1a1a; }
+  .tick-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; fill: #333; }
+  .sol-curve { stroke: var(--sol-curve); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .sol-point { fill: var(--sol-curve); }
+  .sol-dash { stroke: var(--sol-curve); stroke-width: 1; stroke-dasharray: 3 3; fill: none; opacity: 0.7; }
+  .point-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; fill: var(--vtmaroon); font-weight: 600; }
+  @media print {
+    body { background: #fff; max-width: none; padding: 0.5in; }
+    .solution-box, .plot, table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-box">
+  <div class="course">NANO 2314: Applied Quantitative Methods for Nanoscience &nbsp;&bull;&nbsp; Fall 2026</div>
+  <div class="title">Quiz 01 &mdash; Questions &amp; Solutions</div>
+  <div class="meta">2026-08-28 &nbsp;&bull;&nbsp; Time: 10 min &nbsp;&bull;&nbsp; Total: 10 points</div>
+</div>
+
+<h2 class="section">Question 1: Multiple Choice <span class="pts">[4 pts]</span></h2>
+
+<p>Circle the letter of the correct option. Each part is worth 1 point. <em>Correct answers are highlighted in maroon with a check.</em></p>
+
+<div class="part">
+  <div class="part-head">(a)</div>
+  <div class="question-text">A derivative is often described as &ldquo;rise over run&rdquo; taken to the limit of an infinitesimally small run. Which two fundamental mathematical operations survive that limit?</div>
+  <ol class="options">
+    <li>Multiplication and summation</li>
+    <li class="correct">Difference and division</li>
+    <li>Addition and multiplication</li>
+    <li>Summation and division</li>
+  </ol>
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p><strong>(B) Difference and division.</strong> HW 8/24 P1: rise and run are differences; &ldquo;over&rdquo; is division.</p>
+  </div>
+</div>
+
+<div class="part">
+  <div class="part-head">(b)</div>
+  <div class="question-text">A nanoscale motor's speed is
+    $$v(t) = \begin{cases} 2t & \text{for } 0 \le t \le 5,\\ 10 & \text{for } t > 5, \end{cases}$$
+    in $\mu$m/s, with $t$ in seconds. The motor's acceleration at $t = 6$ s is:</div>
+  <ol class="options">
+    <li class="correct">$0\ \mu\text{m/s}^2$</li>
+    <li>$2\ \mu\text{m/s}^2$</li>
+    <li>$10\ \mu\text{m/s}^2$</li>
+    <li>$20\ \mu\text{m/s}^2$</li>
+  </ol>
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p><strong>(A) $0\ \mu\text{m/s}^2$.</strong> HW 8/24 P2: slope of a constant ($v = 10$) is zero.</p>
+  </div>
+</div>
+
+<div class="part">
+  <div class="part-head">(c)</div>
+  <div class="question-text">Using the power rule, $\displaystyle \frac{d}{dt}\left(6 t^4\right) =$</div>
+  <ol class="options">
+    <li>$\dfrac{6}{5} t^5$</li>
+    <li>$6 t^3$</li>
+    <li class="correct">$24 t^3$</li>
+    <li>$24 t^5$</li>
+  </ol>
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p><strong>(C) $24\, t^3$.</strong> HW 8/26 P3: power rule, $6 \cdot 4\, t^{4-1}$.</p>
+  </div>
+</div>
+
+<div class="part">
+  <div class="part-head">(d)</div>
+  <div class="question-text">A rally car averages $120$ km/h while actively driving a circuit. Using $1.6\ \text{km} = 1$ mile, this average speed in miles per hour is approximately:</div>
+  <ol class="options">
+    <li>$190$ mph</li>
+    <li class="correct">$75$ mph</li>
+    <li>$120$ mph</li>
+    <li>$37$ mph</li>
+  </ol>
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p><strong>(B) $75$ mph.</strong> HW 8/24 P5: $120 \div 1.6 = 75$.</p>
+  </div>
+</div>
+
+<p class="grading-note">Grading (Q1):</p>
+<p>1 pt per correct letter, no partial credit.</p>
+
+<h2 class="section">Question 2: Free Response <span class="pts">[6 pts]</span></h2>
+
+<p>A nanoscale sensor pod accelerates from rest with speed
+$$v(t) = \begin{cases} 3t & \text{for } 0 \le t \le 4,\\ 12 & \text{for } t > 4, \end{cases}$$
+in $\mu$m/s, with $t$ in seconds. Answer all parts below. Show your work &mdash; partial credit will be awarded.</p>
+
+<!-- ===== Part (a) ===== -->
+<div class="part">
+  <div class="part-head">(a) [1 pt] Sketch $v(t)$ for $0 \le t \le 6$ s.</div>
+
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p>Reference sketch of $v(t)$: straight line from $(0,0)$ to $(4,12)$, then a horizontal line at $v = 12$ through $t = 6$ s.</p>
+
+    <div class="plot">
+      <!-- v(t) solution: line (0,0)->(4,12), then flat to (6,12) -->
+      <svg width="400" height="270" viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrV" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <!-- axes -->
+        <line x1="60" y1="220" x2="380" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrV)"/>
+        <line x1="60" y1="220" x2="60" y2="30" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrV)"/>
+        <!-- t ticks: 2,4,6 -> x = 60 + t*50 -->
+        <g class="tick-label">
+          <line x1="160" y1="215" x2="160" y2="225" stroke="#1a1a1a"/>
+          <text x="160" y="240" text-anchor="middle">2</text>
+          <line x1="260" y1="215" x2="260" y2="225" stroke="#1a1a1a"/>
+          <text x="260" y="240" text-anchor="middle">4</text>
+          <line x1="360" y1="215" x2="360" y2="225" stroke="#1a1a1a"/>
+          <text x="360" y="240" text-anchor="middle">6</text>
+          <!-- v ticks: v=6 -> y=220-6*13.57=138.6 ; v=12 -> y=220-162.9=57.1 -->
+          <line x1="55" y1="139" x2="65" y2="139" stroke="#1a1a1a"/>
+          <text x="52" y="143" text-anchor="end">6</text>
+          <line x1="55" y1="57" x2="65" y2="57" stroke="#1a1a1a"/>
+          <text x="52" y="61" text-anchor="end">12</text>
+        </g>
+        <!-- axis labels -->
+        <text class="axis-label" x="388" y="225" font-style="italic">t (s)</text>
+        <text class="axis-label" x="60" y="22" text-anchor="middle">v(t) (μm/s)</text>
+        <!-- dashed projections to key point (4,12) -->
+        <line class="sol-dash" x1="260" y1="57" x2="260" y2="220"/>
+        <line class="sol-dash" x1="60" y1="57" x2="260" y2="57"/>
+        <!-- solution curve: line (0,0)->(4,12) then flat -->
+        <path class="sol-curve" d="M 60,220 L 260,57 L 360,57"/>
+        <!-- key points -->
+        <circle class="sol-point" cx="260" cy="57" r="3.5"/>
+        <circle class="sol-point" cx="360" cy="57" r="3.5"/>
+        <!-- point labels -->
+        <text class="point-label" x="268" y="50">(4, 12)</text>
+        <text class="point-label" x="318" y="48">(6, 12)</text>
+      </svg>
+    </div>
+    <div class="plot-caption">Slope of the rising segment is $3\ \mu\text{m/s}^2$; for $t &gt; 4$ the slope (acceleration) is $0$.</div>
+  </div>
+</div>
+
+<!-- ===== Part (b) ===== -->
+<div class="part">
+  <div class="part-head">(b) [2 pts] Write down the integral for the displacement $x(t) = \displaystyle\int_0^{t} v(\tau)\, d\tau$ for $t \le 4$ s. Evaluate that integral.</div>
+  <p><em>Hint: $\tau$ is a &ldquo;dummy variable&rdquo; standing in for time inside the integral, so the answer comes out as a function of the upper limit $t$, not of $\tau$.</em></p>
+
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p>With $\tau$ as the dummy time variable, the displacement is</p>
+    $$x(t) = \int_0^{t} v(\tau)\, d\tau = \int_0^{t} 3\tau\, d\tau = \frac{3}{2}t^2 \qquad (t \le 4).$$
+    <p>So $x(t) = <span class="boxed">$\tfrac{3}{2}t^2$</span>$ for $t \le 4$ s ($\tau$ is the dummy variable; $t$ is the upper limit).</p>
+  </div>
+</div>
+
+<!-- ===== Part (c) ===== -->
+<div class="part">
+  <div class="part-head">(c) [2 pts] Find the displacement at $t = 6$ s. (In other words, how much has the pod moved?) Include units in your final answer.</div>
+
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p>From part (b), $x(4) = 24\ \mu$m. For $t &gt; 4$, the pod moves at constant speed $12\ \mu$m/s:</p>
+    $$x(t) = x(4) + 12\,(t - 4) \quad\Longrightarrow\quad x(6) = 24 + 12(2) = \boxed{\,48\ \mu\text{m}\,}.$$
+  </div>
+</div>
+
+<!-- ===== Part (d) ===== -->
+<div class="part">
+  <div class="part-head">(d) [1 pt] Sketch $x(t)$ for $0 \le t \le 6$ s.</div>
+
+  <div class="solution-box">
+    <div class="sol-title">Solution</div>
+    <p>Reference sketch of $x(t)$: upward-opening parabola from $(0,0)$ through $(4, 24)$, transitioning smoothly (slope $= 12$) into a straight line through $(6, 48)$.</p>
+
+    <div class="plot">
+      <!-- x(t) solution: parabola (0,0)->(4,24), then line to (6,48) -->
+      <svg width="400" height="290" viewBox="0 0 400 290" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrX" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <!-- axes -->
+        <line x1="60" y1="240" x2="380" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrX)"/>
+        <line x1="60" y1="240" x2="60" y2="30" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrX)"/>
+        <!-- t ticks: 2,4,6 -->
+        <g class="tick-label">
+          <line x1="160" y1="235" x2="160" y2="245" stroke="#1a1a1a"/>
+          <text x="160" y="260" text-anchor="middle">2</text>
+          <line x1="260" y1="235" x2="260" y2="245" stroke="#1a1a1a"/>
+          <text x="260" y="260" text-anchor="middle">4</text>
+          <line x1="360" y1="235" x2="360" y2="245" stroke="#1a1a1a"/>
+          <text x="360" y="260" text-anchor="middle">6</text>
+          <!-- x ticks: x=20 -> y=240-20*4.2=156 ; x=40 -> y=240-168=72 -->
+          <line x1="55" y1="156" x2="65" y2="156" stroke="#1a1a1a"/>
+          <text x="52" y="160" text-anchor="end">20</text>
+          <line x1="55" y1="72" x2="65" y2="72" stroke="#1a1a1a"/>
+          <text x="52" y="76" text-anchor="end">40</text>
+        </g>
+        <text class="axis-label" x="388" y="245" font-style="italic">t (s)</text>
+        <text class="axis-label" x="60" y="22" text-anchor="middle">x(t) (μm)</text>
+        <!-- dashed projections to (4,24) and (6,48) -->
+        <!-- (4,24): x=260, y=240-24*4.2=240-100.8=139.2 -->
+        <!-- (6,48): x=360, y=240-48*4.2=240-201.6=38.4 -->
+        <line class="sol-dash" x1="260" y1="139" x2="260" y2="240"/>
+        <line class="sol-dash" x1="60" y1="139" x2="260" y2="139"/>
+        <line class="sol-dash" x1="360" y1="38" x2="360" y2="240"/>
+        <line class="sol-dash" x1="60" y1="38" x2="360" y2="38"/>
+        <!-- parabola: M (60,240) Q control(160,240) end(260,139)
+             (control at t=2, x=0 -> (160,240) for parabola x=(3/2)t^2) -->
+        <path class="sol-curve" d="M 60,240 Q 160,240 260,139 L 360,38"/>
+        <!-- key points -->
+        <circle class="sol-point" cx="260" cy="139" r="3.5"/>
+        <circle class="sol-point" cx="360" cy="38" r="3.5"/>
+        <!-- point labels -->
+        <text class="point-label" x="232" y="132">(4, 24)</text>
+        <text class="point-label" x="318" y="32">(6, 48)</text>
+      </svg>
+    </div>
+    <div class="plot-caption">Parabola $x = \tfrac{3}{2}t^2$ for $t \le 4$ (slope at $t=4$ is $12$), continuing as a straight line of slope $12$ for $t &gt; 4$.</div>
+  </div>
+</div>
+
+<!-- ===== Rubric ===== -->
+<h3 class="subsection">Grading Rubric (6 pts total)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:8%;">Pts</th>
+      <th>Criterion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>(a) Correct $v(t)$ shape: rising line to $t = 4$, then flat. Shape must be right; exact scale is not required.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>(b) Correct integral setup with dummy variable $\tau$ and limits $0$ to $t$ <strong>(1 pt)</strong>, and correct evaluation to $x(t) = \tfrac{3}{2}t^2$ <strong>(1 pt)</strong>. Using $t$ as the integration variable or answering in terms of $\tau$: &minus;0.5 from this part.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>(c) Applies the result at $t = 4$ s ($x(4) = 24\ \mu$m) <strong>(1 pt)</strong>, and correct accumulation for $t &gt; 4$ giving $x(6) = 48\ \mu$m with units <strong>(1 pt)</strong>. Arithmetic slip with correct method: 1/2. Error carried forward earns full credit.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>(d) Correct $x(t)$ shape: concave-up curve for $t \le 4$, then a continuous straight segment for $t &gt; 4$. 0.5 pt if only one of the two regimes has the right shape.</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
