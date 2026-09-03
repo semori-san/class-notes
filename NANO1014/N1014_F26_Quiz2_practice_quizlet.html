@@ -254,16 +254,16 @@ const poolDynamic = [
     };
   },
   () => { // D4: 1D Fit Area
-    const chipE = -(ri(3) + 2); const cellE = -(ri(3) + 12); const ans = chipE - cellE;
+    const chipE = -(ri(3) + 4); const cellE = -(ri(3) + 12); const ans = chipE - cellE;
     return {
-      prompt: `A computer chip has an area of 10<sup>${MINUS}${Math.abs(chipE)}</sup> m<sup>2</sup>. Each transistor occupies an area of about 10<sup>${MINUS}${Math.abs(cellE)}</sup> m<sup>2</sup>. Roughly how many transistors fit on the chip?`,
+      prompt: `A device has an area of 10<sup>${MINUS}${Math.abs(chipE)}</sup> m<sup>2</sup>. Each transistor occupies an area of about 10<sup>${MINUS}${Math.abs(cellE)}</sup> m<sup>2</sup>. Roughly how many transistors fit on the device?`,
       options: shuffle([{html: pw(ans), correct: true}, {html: `${pw(ans)} m<sup>2</sup>`, correct: false}, {html: pw(ans / 2), correct: false}, {html: pw(Math.abs(chipE+cellE)), correct: false}, {html: `${pw(ans / 2)} m<sup>2</sup>`, correct: false}]),
       hint: "Divide the big area by the small area. Remember that when you divide identical units, they cancel out completely.",
       sol: `<div class="math">Count = (10<sup>${MINUS}${Math.abs(chipE)}</sup> m<sup>2</sup>) / (10<sup>${MINUS}${Math.abs(cellE)}</sup> m<sup>2</sup>) = 10<sup>${ans}</sup></div><p>A count is a pure number and never carries area units.</p>`
     };
   },
   () => { // D5: Width from Area
-    const area = -(ri(3) + 2); const count = (ri(3) + 3) * 2; const cellArea = area - count; const width = cellArea / 2;
+    const area = -(ri(2)*2 + 2); const count = (ri(3) + 3) * 2; const cellArea = area - count; const width = cellArea / 2;
     return {
       prompt: `A square panel of area 10<sup>${MINUS}${Math.abs(area)}</sup> m<sup>2</sup> is completely covered by 10<sup>${count}</sup> identical square cells. How wide is one cell?`,
       options: shuffle([{html: `${pw(width)} m`, correct: true}, {html: `${pw(cellArea)} m<sup>2</sup>`, correct: false}, {html: `${pw(width)} m<sup>2</sup>`, correct: false}, {html: `${pw(cellArea)} m`, correct: false}, {html: `${pw(area)} m`, correct: false}]),
@@ -329,7 +329,7 @@ const poolDynamic = [
   () => { // D12: Span Human
     return {
       prompt: `A human is about 1 m tall. A sesame seed is about 10<sup>${MINUS}3</sup> m wide. If you lined sesame seeds up end to end, about how many would it take to span the height of a human?`,
-      options: shuffle([{html: "1,000", correct: true}, {html: "3", correct: false}, {html: "100", correct: false}, {html: "10,000", correct: false}, {html: "10<sup>${MINUS}3</sup>", correct: false}]),
+      options: shuffle([{html: "1,000", correct: true}, {html: "3", correct: false}, {html: "100", correct: false}, {html: "10,000", correct: false}, {html: `10<sup>${MINUS}3</sup>`, correct: false}]),
       hint: "Divide 1 m (which is 10^0 m) by 10^-3 m. Note that it asks for 'how many' (the factor), not the orders of magnitude.",
       sol: `<div class="math">10<sup>0</sup> m / 10<sup>${MINUS}3</sup> m = 10<sup>3</sup> = 1,000.</div><p>3 is the number of orders of magnitude, not the actual count.</p>`
     };
