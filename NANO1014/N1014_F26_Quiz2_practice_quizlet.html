@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 1014 — Quiz 2 Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F3;
+  --surface:#FFFFFF;
+  --surface2:#F6F8FA;
+  --ink:#131C26;
+  --ink2:#4A5A6A;
+  --ink3:#8494A3;
+  --line:#D6DEE5;
+  --line2:#E7EDF1;
+  --accent:#861F41; /* VT Maroon */
+  --accent-soft:#F3E8EC;
+  --cyan:#E5751F; /* VT Orange */
+  --ok:#0B7A5A;
+  --ok-bg:#E3F3EE;
+  --ok-line:#A9D9CA;
+  --no:#B93B32;
+  --no-bg:#FBEAE8;
+  --no-line:#EFC0BB;
+  --disp:"IBM Plex Sans Condensed",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+sup{font-size:.68em;line-height:0;vertical-align:super}
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 72px}
+.masthead{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:26px;position:relative}
+.masthead::after{
+  content:"";position:absolute;left:0;bottom:-1px;height:2px;width:132px;
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
+}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 6px
+}
+.masthead h1{
+  font-family:var(--disp);font-weight:700;font-size:clamp(28px,4.6vw,40px);
+  letter-spacing:-.015em;margin:0;line-height:1.08
+}
+.masthead p{margin:8px 0 0;color:var(--ink2);font-size:15px}
+
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:26px 28px 28px
+}
+.qmeta{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.qcount{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}
+.progress{height:3px;background:var(--line2);border-radius:2px;overflow:hidden;margin:14px 0 22px}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .35s ease}
+
+.qtext{font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.5vw,23px);line-height:1.32;letter-spacing:-.005em;margin:0 0 20px}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.opt{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--surface2);border:1px solid var(--line);border-radius:3px;
+  padding:12px 14px;cursor:pointer;font:inherit;color:inherit;
+  transition:border-color .13s ease,background .13s ease
+}
+.opt:hover:not(:disabled){border-color:var(--accent);background:#fff}
+.opt:disabled{cursor:default}
+.opt .key{
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink3);
+  width:20px;flex:none;text-align:center
+}
+.opt .val{font-size:15px;letter-spacing:0}
+.opt.right{border-color:var(--ok-line);background:var(--ok-bg)}
+.opt.right .key{color:var(--ok)}
+.opt.wrong{border-color:var(--no-line);background:var(--no-bg)}
+.opt.wrong .key{color:var(--no)}
+
+.btn{
+  font-family:var(--body);font-size:14.5px;font-weight:500;padding:10px 18px;border-radius:3px;
+  border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;
+  transition:opacity .13s ease
+}
+.btn:hover{opacity:.86}
+.btn.quiet{background:transparent;border-color:transparent;color:var(--accent);padding:10px 6px;text-decoration:underline}
+.btn.quiet:hover{opacity:.7}
+
+.verdict{border-left:3px solid var(--line);padding:2px 0 2px 16px;margin:22px 0 0}
+.verdict.ok{border-left-color:var(--ok)}
+.verdict.no{border-left-color:var(--no)}
+.vhead{font-family:var(--disp);font-weight:700;font-size:17px;margin:0 0 8px}
+.verdict.ok .vhead{color:var(--ok)}
+.verdict.no .vhead{color:var(--no)}
+.verdict p{margin:0 0 10px;font-size:15px;color:var(--ink2)}
+.math{
+  font-family:var(--mono);font-size:14.5px;color:var(--ink);
+  background:var(--surface2);border:1px solid var(--line2);border-radius:3px;
+  padding:11px 14px;margin:0 0 10px;white-space:pre-wrap;overflow-x:auto;line-height:1.75
+}
+.hintbox{
+  background:var(--accent-soft);border-radius:3px;padding:11px 14px;margin:10px 0 0;
+  font-size:14.5px;color:var(--ink);border-left:3px solid var(--accent);
+}
+
+.score{font-family:var(--disp);font-weight:700;font-size:52px;line-height:1;margin:0}
+.score span{font-size:24px;color:var(--ink3);font-weight:600}
+.note{font-size:14.5px;color:var(--ink2);margin:18px 0 22px}
+.footer{margin-top:26px;font-size:12.5px;color:var(--ink3);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">NANO 1014 · Fall 2026</p>
+    <h1>Quiz 2 Practice (Expanded)</h1>
+    <p>Get the answer correct to advance. If you get it wrong the first try, you can press the "Hint" button.</p>
+  </header>
+  <main id="stage" class="card"></main>
+  <p class="footer">Practice tool for NANO 1014. No grades are recorded.</p>
+</div>
+
+<script>
+/* ============================================================
+   HELPERS & DATA
+   ============================================================ */
+const MINUS = "\u2212";
+const pw = e => `10<sup>${e<0?MINUS:""}${Math.abs(e)}</sup>`;
+const ri = n => Math.floor(Math.random()*n);
+const shuffle = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){ const j=ri(i+1); [b[i],b[j]]=[b[j],b[i]]; } return b; };
+
+const SCALE = [
+  {exp: -5, name:"red blood cell"},
+  {exp: -6, name:"E. coli bacterium"},
+  {exp: -7, name:"COVID virus"},
+  {exp: -8, name:"lipid bilayer"},
+  {exp: -9, name:"glucose molecule"},
+  {exp: -10, name:"atom"}
+];
+
+/* ============================================================
+   POOL A: VERBATIM QUESTIONS (Pulls 3 per run)
+   ============================================================ */
+const poolVerbatim = [
+  () => ({
+    prompt: "In this course, what <em>is</em> a transistor?",
+    options: shuffle([
+      {html: "An electrically controlled switch: a voltage on one terminal turns the current flowing between the other two terminals on or off", correct: true},
+      {html: "A tiny transforming robot that changes shape to do mechanical work inside the chip", correct: false},
+      {html: "A metal wire that carries current between the layers of a chip without controlling it", correct: false},
+      {html: "A material whose electrical resistance falls to exactly zero when it is cooled below a critical temperature", correct: false},
+      {html: "A tiny lens that focuses ultraviolet light onto the silicon surface during chip manufacturing", correct: false}
+    ]),
+    hint: "Think about what controls the flow of electricity without any moving parts.",
+    sol: `<p>A transistor is a switch with no moving parts. A voltage on the gate decides whether current can flow from source to drain.</p>`
+  }),
+  () => ({
+    prompt: `Evaluate ( 10<sup>${MINUS}5</sup> )<sup>3</sup>.`,
+    options: shuffle([
+      {html: `10<sup>${MINUS}15</sup>`, correct: true},
+      {html: `10<sup>${MINUS}2</sup>`, correct: false},
+      {html: `3 &times; 10<sup>${MINUS}5</sup>`, correct: false},
+      {html: `10<sup>${MINUS}8</sup>`, correct: false},
+      {html: `10<sup>15</sup>`, correct: false}
+    ]),
+    hint: "When raising a power to another power, you should multiply the exponents.",
+    sol: `<div class="math">A power raised to a power multiplies the exponents: ${MINUS}5 &times; 3 = ${MINUS}15.</div>`
+  }),
+  () => ({
+    prompt: `A sesame seed is about 10<sup>${MINUS}3</sup> m wide and a red blood cell is about 10<sup>${MINUS}5</sup> m across. How many orders of magnitude larger is the <em>area</em> of the sesame seed?`,
+    options: shuffle([
+      {html: "4", correct: true},
+      {html: "2", correct: false},
+      {html: "6", correct: false},
+      {html: "10<sup>4</sup>", correct: false},
+      {html: "10<sup>2</sup>", correct: false}
+    ]),
+    hint: "Find the 1D ratio first, then square it for area. 'Orders of magnitude' means we just want the exponent.",
+    sol: `<div class="math">1D Ratio: 10<sup>${MINUS}3</sup> / 10<sup>${MINUS}5</sup> = 10<sup>2</sup> (2 orders of magnitude)\nArea Ratio: (10<sup>2</sup>)<sup>2</sup> = 10<sup>4</sup> (4 orders of magnitude)</div>`
+  }),
+  () => ({
+    prompt: "A silicon wafer is 300 &mu;m thick. Expressed in millimeters, that thickness is:",
+    options: shuffle([
+      {html: "0.3 mm", correct: true},
+      {html: "0.03 mm", correct: false},
+      {html: "3 mm", correct: false},
+      {html: "30 mm", correct: false},
+      {html: "300 mm", correct: false}
+    ]),
+    hint: "Anchor to meters first: convert micrometers to meters, and then meters back to millimeters.",
+    sol: `<div class="math">300 &mu;m = 300 &times; 10<sup>${MINUS}6</sup> m = 3 &times; 10<sup>${MINUS}4</sup> m.\nSince 1 mm = 10<sup>${MINUS}3</sup> m, 3 &times; 10<sup>${MINUS}4</sup> m = 3 &times; 10<sup>${MINUS}1</sup> mm = 0.3 mm.</div>`
+  }),
+  () => ({
+    prompt: `Which of the following is about 10<sup>${MINUS}9</sup> m across?`,
+    options: shuffle([
+      {html: "A glucose molecule (a simple sugar)", correct: true},
+      {html: "A COVID virus", correct: false},
+      {html: "The thickness of a lipid bilayer (cell membrane)", correct: false},
+      {html: "A single atom", correct: false},
+      {html: "An <em>E. coli</em> bacterium", correct: false}
+    ]),
+    hint: "Nano means 10 to the negative 9. Which object sits exactly on the 1 nanometer rung?",
+    sol: `<p>10<sup>${MINUS}9</sup> m is 1 nm, the width of a simple sugar molecule. A lipid bilayer is 10 nm, and a COVID virus is 100 nm.</p>`
+  })
+];
+
+/* ============================================================
+   POOL B: DYNAMIC QUESTIONS (Pulls 7 per run)
+   ============================================================ */
+const poolDynamic = [
+  () => { // D1: Division
+    const top = ri(4) + 2; const bot = -(ri(5) + 5); const ans = top - bot;
+    return {
+      prompt: `Evaluate 10<sup>${top}</sup> / 10<sup>${MINUS}${Math.abs(bot)}</sup>.`,
+      options: shuffle([{html: pw(ans), correct: true}, {html: pw(top + bot), correct: false}, {html: pw(-ans), correct: false}, {html: pw(ans + 2), correct: false}, {html: pw(ans - 2), correct: false}]),
+      hint: "When dividing powers with the same base, subtract the bottom exponent from the top exponent.",
+      sol: `<div class="math">Division subtracts exponents: ${top} ${MINUS} (${bot}) = ${top} + ${Math.abs(bot)} = ${ans}.</div>`
+    };
+  },
+  () => { // D2: 2D Conversion
+    const isCmToMm = Math.random() > 0.5;
+    if (isCmToMm) {
+      return {
+        prompt: "1 cm<sup>2</sup> is equal to:",
+        options: shuffle([{html: "10<sup>2</sup> mm<sup>2</sup>", correct: true}, {html: "10 mm<sup>2</sup>", correct: false}, {html: "10<sup>2</sup> mm", correct: false}, {html: "10 mm", correct: false}, {html: "10<sup>3</sup> mm<sup>3</sup>", correct: false}]),
+        hint: "Start with the 1D conversion (1 cm = 10 mm) and square both sides.",
+        sol: `<div class="math">1 cm = 10 mm\n(1 cm)<sup>2</sup> = (10 mm)<sup>2</sup> = 100 mm<sup>2</sup> = 10<sup>2</sup> mm<sup>2</sup></div>`
+      };
+    } else {
+      return {
+        prompt: "1 mm<sup>2</sup> is equal to:",
+        options: shuffle([{html: "10<sup>12</sup> nm<sup>2</sup>", correct: true}, {html: "10<sup>6</sup> nm<sup>2</sup>", correct: false}, {html: "10<sup>6</sup> nm", correct: false}, {html: "10<sup>12</sup> nm", correct: false}, {html: "10<sup>12</sup> nm<sup>3</sup>", correct: false}]),
+        hint: "Start with the 1D conversion (1 mm = 10^6 nm) and square both the number and the unit.",
+        sol: `<div class="math">1 mm = 10<sup>6</sup> nm\n(1 mm)<sup>2</sup> = (10<sup>6</sup> nm)<sup>2</sup> = 10<sup>12</sup> nm<sup>2</sup></div>`
+      };
+    }
+  },
+  () => { // D3: 3D Conversion
+    return {
+      prompt: "1 &mu;m<sup>3</sup> is equal to:",
+      options: shuffle([{html: `10<sup>${MINUS}18</sup> m<sup>3</sup>`, correct: true}, {html: `10<sup>${MINUS}6</sup> m<sup>3</sup>`, correct: false}, {html: `10<sup>${MINUS}12</sup> m<sup>3</sup>`, correct: false}, {html: `10<sup>${MINUS}12</sup> m<sup>2</sup>`, correct: false}, {html: `10<sup>${MINUS}18</sup> m<sup>2</sup>`, correct: false}]),
+      hint: "Find the 1D conversion to meters first, then cube the exponent (multiply it by 3).",
+      sol: `<div class="math">1 &mu;m = 10<sup>${MINUS}6</sup> m\n(1 &mu;m)<sup>3</sup> = (10<sup>${MINUS}6</sup> m)<sup>3</sup> = 10<sup>${MINUS}18</sup> m<sup>3</sup></div>`
+    };
+  },
+  () => { // D4: 1D Fit Area
+    const chipE = -(ri(3) + 2); const cellE = -(ri(3) + 12); const ans = chipE - cellE;
+    return {
+      prompt: `A computer chip has an area of 10<sup>${MINUS}${Math.abs(chipE)}</sup> m<sup>2</sup>. Each transistor occupies an area of about 10<sup>${MINUS}${Math.abs(cellE)}</sup> m<sup>2</sup>. Roughly how many transistors fit on the chip?`,
+      options: shuffle([{html: pw(ans), correct: true}, {html: `${pw(ans)} m<sup>2</sup>`, correct: false}, {html: pw(ans / 2), correct: false}, {html: pw(Math.abs(chipE+cellE)), correct: false}, {html: `${pw(ans / 2)} m<sup>2</sup>`, correct: false}]),
+      hint: "Divide the big area by the small area. Remember that when you divide identical units, they cancel out completely.",
+      sol: `<div class="math">Count = (10<sup>${MINUS}${Math.abs(chipE)}</sup> m<sup>2</sup>) / (10<sup>${MINUS}${Math.abs(cellE)}</sup> m<sup>2</sup>) = 10<sup>${ans}</sup></div><p>A count is a pure number and never carries area units.</p>`
+    };
+  },
+  () => { // D5: Width from Area
+    const area = -(ri(3) + 2); const count = (ri(3) + 3) * 2; const cellArea = area - count; const width = cellArea / 2;
+    return {
+      prompt: `A square panel of area 10<sup>${MINUS}${Math.abs(area)}</sup> m<sup>2</sup> is completely covered by 10<sup>${count}</sup> identical square cells. How wide is one cell?`,
+      options: shuffle([{html: `${pw(width)} m`, correct: true}, {html: `${pw(cellArea)} m<sup>2</sup>`, correct: false}, {html: `${pw(width)} m<sup>2</sup>`, correct: false}, {html: `${pw(cellArea)} m`, correct: false}, {html: `${pw(area)} m`, correct: false}]),
+      hint: "First find the area of ONE cell by dividing. Then take the square root to find its width.",
+      sol: `<div class="math">1. Area of one cell = (10<sup>${MINUS}${Math.abs(area)}</sup>) / 10<sup>${count}</sup> = 10<sup>${cellArea}</sup> m<sup>2</sup>\n2. Width = &radic;(10<sup>${cellArea}</sup>) = 10<sup>${width}</sup> m</div>`
+    };
+  },
+  () => { // D6: Gate Faucet Analogy
+    return {
+      prompt: "Think of a transistor as a water faucet, with electric current in place of water. What plays the role of the <em>handle</em> you turn to start or stop the flow?",
+      options: shuffle([{html: "The voltage applied to the gate terminal", correct: true}, {html: "The current flowing from the source to the drain", correct: false}, {html: "The metal wire that carries current away to the next transistor", correct: false}, {html: "The thin oxide layer sitting underneath the gate", correct: false}, {html: "The temperature of the silicon the transistor is built on", correct: false}]),
+      hint: "Which terminal acts as the input switch that decides whether the current can flow?",
+      sol: `<p>Applying a voltage to the gate is the <em>input</em> (turning the handle) that decides whether a conducting channel forms.</p>`
+    };
+  },
+  () => { // D7: Sort
+    const subset = shuffle(SCALE).slice(0, 4);
+    const wantSmall = Math.random() > 0.5;
+    subset.sort((a,b) => wantSmall ? a.exp - b.exp : b.exp - a.exp);
+    const correctStr = subset.map(s => s.name).join(" &rarr; ");
+    const d1 = [...subset].reverse().map(s => s.name).join(" &rarr; ");
+    const d2 = [subset[0], subset[2], subset[1], subset[3]].map(s => s.name).join(" &rarr; ");
+    const d3 = [subset[1], subset[0], subset[2], subset[3]].map(s => s.name).join(" &rarr; ");
+    return {
+      prompt: `Which list is ordered correctly from <strong>${wantSmall ? 'smallest to largest' : 'largest to smallest'}</strong>?`,
+      options: shuffle([{html: correctStr, correct: true}, {html: d1, correct: false}, {html: d2, correct: false}, {html: d3, correct: false}, {html: "None of the above", correct: false}]),
+      hint: "Remember the ladder: atom < glucose < lipid < COVID < E. coli < red blood cell.",
+      sol: `<p>Check the order of magnitude for each object to determine the sequence.</p>`
+    };
+  },
+  () => { // D8: 1D Conversion mm to nm
+    return {
+      prompt: "A sesame seed is about 1 mm wide. How many nanometers is that?",
+      options: shuffle([{html: "10<sup>6</sup> nm", correct: true}, {html: "10<sup>9</sup> nm", correct: false}, {html: "10<sup>3</sup> nm", correct: false}, {html: "10<sup>12</sup> nm", correct: false}, {html: `10<sup>${MINUS}6</sup> nm`, correct: false}]),
+      hint: "Convert both to meters first (1 mm = 10^-3 m, 1 nm = 10^-9 m) and then divide.",
+      sol: `<div class="math">1 mm = 10<sup>${MINUS}3</sup> m\n1 nm = 10<sup>${MINUS}9</sup> m\n10<sup>${MINUS}3</sup> / 10<sup>${MINUS}9</sup> = 10<sup>6</sup> nm</div>`
+    };
+  },
+  () => { // D9: 1D Fit
+    return {
+      prompt: "How many COVID viruses (100 nm diameter) fit across the 1D width of a standard boardgame die (1 cm)?",
+      options: shuffle([{html: "10<sup>5</sup>", correct: true}, {html: "10<sup>7</sup>", correct: false}, {html: "10<sup>10</sup>", correct: false}, {html: "10<sup>3</sup>", correct: false}, {html: "10<sup>15</sup>", correct: false}]),
+      hint: "Convert the die width (1 cm = 10^-2 m) and the virus width (100 nm = 10^-7 m) to meters, then divide.",
+      sol: `<div class="math">Die = 10<sup>${MINUS}2</sup> m. Virus = 100 nm = 10<sup>${MINUS}7</sup> m.\n10<sup>${MINUS}2</sup> / 10<sup>${MINUS}7</sup> = 10<sup>5</sup></div>`
+    };
+  },
+  () => { // D10: 2D Fit
+    return {
+      prompt: "How many COVID viruses (100 nm diameter) fit within the 2D area of one flat side of a standard boardgame die (1 cm &times; 1 cm)?",
+      options: shuffle([{html: "10<sup>10</sup>", correct: true}, {html: "10<sup>5</sup>", correct: false}, {html: "10<sup>15</sup>", correct: false}, {html: "10<sup>10</sup> m<sup>2</sup>", correct: false}, {html: "10<sup>7</sup>", correct: false}]),
+      hint: "Figure out how many viruses fit along one edge, then square that number to cover the 2D area.",
+      sol: `<div class="math">1D fit = 10<sup>5</sup> viruses across the edge.\n2D area fit = (10<sup>5</sup>)<sup>2</sup> = 10<sup>10</sup> viruses.</div>`
+    };
+  },
+  () => { // D11: 3D Fit
+    return {
+      prompt: "How many COVID viruses (100 nm diameter) fit within the entire 3D volume of a hollow standard boardgame die (1 cm &times; 1 cm &times; 1 cm)?",
+      options: shuffle([{html: "10<sup>15</sup>", correct: true}, {html: "10<sup>10</sup>", correct: false}, {html: "10<sup>5</sup>", correct: false}, {html: "10<sup>15</sup> m<sup>3</sup>", correct: false}, {html: "10<sup>12</sup>", correct: false}]),
+      hint: "Figure out how many viruses fit along one edge, then cube that number to fill the 3D volume.",
+      sol: `<div class="math">1D fit = 10<sup>5</sup> viruses across the edge.\n3D volume fit = (10<sup>5</sup>)<sup>3</sup> = 10<sup>15</sup> viruses.</div>`
+    };
+  },
+  () => { // D12: Span Human
+    return {
+      prompt: `A human is about 1 m tall. A sesame seed is about 10<sup>${MINUS}3</sup> m wide. If you lined sesame seeds up end to end, about how many would it take to span the height of a human?`,
+      options: shuffle([{html: "1,000", correct: true}, {html: "3", correct: false}, {html: "100", correct: false}, {html: "10,000", correct: false}, {html: "10<sup>${MINUS}3</sup>", correct: false}]),
+      hint: "Divide 1 m (which is 10^0 m) by 10^-3 m. Note that it asks for 'how many' (the factor), not the orders of magnitude.",
+      sol: `<div class="math">10<sup>0</sup> m / 10<sup>${MINUS}3</sup> m = 10<sup>3</sup> = 1,000.</div><p>3 is the number of orders of magnitude, not the actual count.</p>`
+    };
+  },
+  () => { // D13: Orders of Mag Chip vs Transistor
+    return {
+      prompt: `A computer chip is about 10<sup>${MINUS}2</sup> m on a side and a transistor is about 10<sup>${MINUS}7</sup> m on a side. How many <em>orders of magnitude</em> larger is the <em>area</em> of the chip?`,
+      options: shuffle([{html: "10", correct: true}, {html: "5", correct: false}, {html: "15", correct: false}, {html: "10<sup>5</sup>", correct: false}, {html: "10<sup>10</sup>", correct: false}]),
+      hint: "Find the 1D ratio first, then square it for the area ratio. The exponent of that result is your orders of magnitude.",
+      sol: `<div class="math">1D ratio = 10<sup>${MINUS}2</sup> / 10<sup>${MINUS}7</sup> = 10<sup>5</sup> (5 orders of magnitude)\nArea ratio = (10<sup>5</sup>)<sup>2</sup> = 10<sup>10</sup> (10 orders of magnitude)</div><p>Orders of magnitude asks for the exponent, not the full ratio.</p>`
+    };
+  },
+  () => { // D14: Basic 1D Logic
+    return {
+      prompt: "Verify mathematically: 1 mm is equal to...",
+      options: shuffle([{html: "0.1 cm", correct: true}, {html: "0.01 cm", correct: false}, {html: "10 cm", correct: false}, {html: "100 cm", correct: false}, {html: "0.001 cm", correct: false}]),
+      hint: "Convert both millimeters and centimeters into meters first to see how they relate.",
+      sol: `<div class="math">1 mm = 10<sup>${MINUS}3</sup> m\n1 cm = 10<sup>${MINUS}2</sup> m\n1 mm = 10<sup>${MINUS}1</sup> &times; 10<sup>${MINUS}2</sup> m = 0.1 cm</div>`
+    };
+  },
+  () => { // D15: Identify Object Size
+    return {
+      prompt: "The width of a standard sesame seed is roughly:",
+      options: shuffle([{html: `10<sup>${MINUS}3</sup> m`, correct: true}, {html: `10<sup>${MINUS}2</sup> m`, correct: false}, {html: `10<sup>${MINUS}4</sup> m`, correct: false}, {html: `10<sup>${MINUS}5</sup> m`, correct: false}, {html: `10<sup>${MINUS}6</sup> m`, correct: false}]),
+      hint: "A sesame seed is about 1 millimeter wide.",
+      sol: `<p>A sesame seed is about 1 mm, which is 10<sup>${MINUS}3</sup> m.</p>`
+    };
+  }
+];
+
+/* ============================================================
+   STATE & RENDER LOGIC
+   ============================================================ */
+let quiz = [];
+function initQuiz() {
+  const v = shuffle(poolVerbatim).slice(0, 3);
+  const d = shuffle(poolDynamic).slice(0, 7);
+  quiz = shuffle([...v, ...d].map(fn => fn()));
+}
+
+let idx = 0, answered = false, correctCount = 0, firstTry = true;
+const stage = document.getElementById("stage");
+const KEYS = ["A","B","C","D","E"];
+
+function render() {
+  const q = quiz[idx];
+  answered = false;
+  firstTry = true;
+  const pct = (idx / quiz.length) * 100;
+
+  let html = `
+    <div class="qmeta">
+      <span class="qcount">Question ${idx+1} of ${quiz.length}</span>
+    </div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
+    <p class="qtext">${q.prompt}</p>
+    <div class="opts" id="opts">
+      ${q.options.map((o,i) => `
+        <button class="opt" data-i="${i}">
+          <span class="key">${KEYS[i]}</span>
+          <span class="val">${o.html}</span>
+        </button>
+      `).join("")}
+    </div>
+    <div id="verdict"></div>
+  `;
+  stage.innerHTML = html;
+
+  document.querySelectorAll(".opt").forEach(b => {
+    b.addEventListener("click", () => submitMC(+b.dataset.i));
+  });
+}
+
+function submitMC(i) {
+  if(answered) return;
+  
+  const q = quiz[idx];
+  const isCorrect = q.options[i].correct;
+  const btn = document.querySelector(`.opt[data-i="${i}"]`);
+
+  if (isCorrect) {
+    answered = true;
+    if (firstTry) correctCount++;
+
+    document.querySelectorAll(".opt").forEach((b, j) => {
+      b.disabled = true;
+      if(q.options[j].correct) b.classList.add("right");
+    });
+
+    document.getElementById("verdict").innerHTML = `
+      <div class="verdict ok">
+        <p class="vhead">Correct</p>
+        ${q.sol}
+      </div>
+      <div style="margin-top:22px">
+        <button class="btn" id="next">${idx + 1 < quiz.length ? "Next question" : "See results"}</button>
+      </div>
+    `;
+
+    document.getElementById("next").addEventListener("click", () => {
+      idx++;
+      if(idx < quiz.length) render();
+      else showResults();
+      window.scrollTo({top: 0, behavior: "smooth"});
+    });
+
+  } else {
+    // Handled incorrect answer
+    btn.disabled = true;
+    btn.classList.add("wrong");
+    
+    let hintHtml = "";
+    if (q.hint) {
+       hintHtml = `
+         <div style="margin-top:12px;">
+           <button class="btn quiet" id="hintbtn">Show Hint</button>
+           <div id="hintbox" class="hintbox" style="display:none;">${q.hint}</div>
+         </div>
+       `;
+    }
+
+    document.getElementById("verdict").innerHTML = `
+      <div class="verdict no">
+        <p class="vhead">Not quite. Try again!</p>
+        ${hintHtml}
+      </div>
+    `;
+
+    if (q.hint) {
+      document.getElementById("hintbtn").addEventListener("click", (e) => {
+         e.target.style.display = 'none';
+         document.getElementById("hintbox").style.display = 'block';
+      });
+    }
+    
+    firstTry = false; 
+  }
+}
+
+function showResults() {
+  stage.innerHTML = `
+    <p class="eyebrow" style="margin-bottom:10px">Set complete</p>
+    <p class="score">${correctCount}<span> / ${quiz.length}</span></p>
+    <p class="note">You scored points for every question you answered correctly on the <em>first try</em>. Run the quiz again to get a newly randomized set of questions.</p>
+    <button class="btn" onclick="idx=0; correctCount=0; initQuiz(); render();">Start new run</button>
+  `;
+}
+
+initQuiz();
+render();
+</script>
+</body>
+</html>
