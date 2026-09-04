@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 2 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 2 — after-quiz review</h1>
+<p class="vnote">Quiz 2 was given on Friday, September 4, 2026. Everyone got the
+same booklet — there were no scrambled versions — so the answer letters below are
+the same for the whole class.</p>
+<p class="vnote">Questions 1–6 are multiple choice (1 point each, circle the letter);
+Question 7 is a free-response problem worth 4 points, graded with partial credit,
+for 10 points total. Every solution starts hidden — work the question yourself
+first, then open the <strong>Solution</strong> strip beneath it to check your
+answer and read the reasoning. Question&nbsp;7 has a separate strip for each of
+its three parts, so you can check part&nbsp;(a) without spoiling (b) and (c). For
+the multiple-choice questions, the correct choice highlights in green while the
+strip is open.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a>
+<a href="#q5">5</a><a href="#q6">6</a><a href="#q7">7</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 2 — September 4, 2026</h2>
+
+<p class="vnote">Questions 1–4 below all refer to this shared setup:</p>
+
+<figure class="graph">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt gd">
+<title id="gt">Speed profile v(t) of the nanoscale motor</title>
+<desc id="gd">Speed ramps up linearly from 0 to 6 micrometres per second over t = 0
+to 3 seconds, holds at 6 from t = 3 to 7 seconds, then ramps down linearly to 0
+by t = 10 seconds.</desc>
+<defs>
+<marker id="arr" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+<!-- axes -->
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr)"></line>
+<text x="440" y="204" class="lbl">t (s)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">v(t) (&#181;m/s)</text>
+<!-- dashed guides -->
+<line x1="162" y1="200" x2="162" y2="38" class="guide"></line>
+<line x1="298" y1="200" x2="298" y2="38" class="guide"></line>
+<line x1="60"  y1="38"  x2="298" y2="38" class="guide"></line>
+<!-- speed profile -->
+<polyline points="60,200 162,38 298,38 400,200" class="prof"></polyline>
+<!-- x ticks -->
+<g class="tick" text-anchor="middle">
+<line x1="94"  y1="196" x2="94"  y2="204" class="ax"></line><text x="94"  y="217">1</text>
+<line x1="128" y1="196" x2="128" y2="204" class="ax"></line><text x="128" y="217">2</text>
+<line x1="162" y1="196" x2="162" y2="204" class="ax"></line><text x="162" y="217">3</text>
+<line x1="196" y1="196" x2="196" y2="204" class="ax"></line><text x="196" y="217">4</text>
+<line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">5</text>
+<line x1="264" y1="196" x2="264" y2="204" class="ax"></line><text x="264" y="217">6</text>
+<line x1="298" y1="196" x2="298" y2="204" class="ax"></line><text x="298" y="217">7</text>
+<line x1="332" y1="196" x2="332" y2="204" class="ax"></line><text x="332" y="217">8</text>
+<line x1="366" y1="196" x2="366" y2="204" class="ax"></line><text x="366" y="217">9</text>
+<line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">10</text>
+</g>
+<!-- y ticks -->
+<g class="tick" text-anchor="end">
+<line x1="56" y1="173" x2="64" y2="173" class="ax"></line><text x="50" y="177">1</text>
+<line x1="56" y1="146" x2="64" y2="146" class="ax"></line><text x="50" y="150">2</text>
+<line x1="56" y1="119" x2="64" y2="119" class="ax"></line><text x="50" y="123">3</text>
+<line x1="56" y1="92"  x2="64" y2="92"  class="ax"></line><text x="50" y="96">4</text>
+<line x1="56" y1="65"  x2="64" y2="65"  class="ax"></line><text x="50" y="69">5</text>
+<line x1="56" y1="38"  x2="64" y2="38"  class="ax"></line><text x="50" y="42">6</text>
+</g>
+</svg>
+<figcaption>A nanoscale motor moves with the speed profile
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">v(t)</annotation></semantics></math> shown: the speed ramps up linearly from 0 to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>&#956;</mi></mrow><annotation encoding="application/x-tex">6\ \mu</annotation></semantics></math>m/s over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t=0</annotation></semantics></math> to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math>&nbsp;s, holds at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>&#956;</mi></mrow><annotation encoding="application/x-tex">6\ \mu</annotation></semantics></math>m/s over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">t=3</annotation></semantics></math> to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math>&nbsp;s, and ramps down linearly to 0 over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">t=7</annotation></semantics></math> to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math>&nbsp;s.</figcaption>
+</figure>
+
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1. (1 pt)</strong> What is the motor's acceleration at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">t = 6</annotation></semantics></math>&nbsp;s?</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-6\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-2\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">0\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">2\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">6\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="C">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: C.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>0</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a = 0\ \mu\text{m/s}^{2}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> Acceleration is the <em>slope</em> of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v(t)</annotation></semantics></math> graph, not its height. At <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">t = 6</annotation></semantics></math>&nbsp;s the motor is in the
+constant-speed phase (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>&nbsp;s to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math>&nbsp;s), where the graph is flat.
+A flat line has zero slope, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">a = 0</annotation></semantics></math>. The motor is moving fast, but it is
+not <em>changing</em> speed.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">The constant-speed segment of v(t)</title>
+<desc id="gd1">The portion of the speed profile from t = 3 to t = 7 seconds is highlighted. It is horizontal, so its slope - the acceleration - is zero at t = 6 seconds.</desc>
+<defs>
+<marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr1)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr1)"></line>
+<text x="440" y="204" class="lbl">t (s)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">v(t) (&#181;m/s)</text>
+<line x1="162" y1="200" x2="162" y2="38" class="guide"></line>
+<line x1="298" y1="200" x2="298" y2="38" class="guide"></line>
+<line x1="60" y1="38" x2="298" y2="38" class="guide"></line>
+<polyline points="60,200 162,38 298,38 400,200" class="prof"></polyline>
+<g class="tick" text-anchor="middle"><line x1="94" y1="196" x2="94" y2="204" class="ax"></line><text x="94" y="217">1</text><line x1="128" y1="196" x2="128" y2="204" class="ax"></line><text x="128" y="217">2</text><line x1="162" y1="196" x2="162" y2="204" class="ax"></line><text x="162" y="217">3</text><line x1="196" y1="196" x2="196" y2="204" class="ax"></line><text x="196" y="217">4</text><line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">5</text><line x1="264" y1="196" x2="264" y2="204" class="ax"></line><text x="264" y="217">6</text><line x1="298" y1="196" x2="298" y2="204" class="ax"></line><text x="298" y="217">7</text><line x1="332" y1="196" x2="332" y2="204" class="ax"></line><text x="332" y="217">8</text><line x1="366" y1="196" x2="366" y2="204" class="ax"></line><text x="366" y="217">9</text><line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">10</text></g>
+<g class="tick" text-anchor="end"><line x1="56" y1="173" x2="64" y2="173" class="ax"></line><text x="50" y="177">1</text><line x1="56" y1="146" x2="64" y2="146" class="ax"></line><text x="50" y="150">2</text><line x1="56" y1="119" x2="64" y2="119" class="ax"></line><text x="50" y="123">3</text><line x1="56" y1="92" x2="64" y2="92" class="ax"></line><text x="50" y="96">4</text><line x1="56" y1="65" x2="64" y2="65" class="ax"></line><text x="50" y="69">5</text><line x1="56" y1="38" x2="64" y2="38" class="ax"></line><text x="50" y="42">6</text></g>
+<line x1="162" y1="38" x2="298" y2="38" class="hl"></line><line x1="264" y1="200" x2="264" y2="38" class="aguide"></line><circle cx="264" cy="38" r="5" class="dot"></circle><text x="230" y="28" text-anchor="middle" class="alabel">slope = 0</text><text x="264" y="217" text-anchor="middle" class="alabel ticklbl">6</text>
+</svg>
+<figcaption>The flat segment through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">t = 6</annotation></semantics></math>&nbsp;s: the rise is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math> over any
+run you pick, so the slope is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.</figcaption>
+</figure>
+<p class="trap"><strong>Watch out:</strong> choice&nbsp;E (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">6\ \mu\text{m/s}^{2}</annotation></semantics></math>)
+is the number you get by reading the <em>height</em> of the curve off the
+vertical axis — but that is the speed, not the acceleration. Choice&nbsp;D
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">2\ \mu\text{m/s}^{2}</annotation></semantics></math>) is the slope of the ramp <em>up</em>, and
+choice&nbsp;B is the slope of the ramp <em>down</em>; both are the right
+calculation performed at the wrong time.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q2">
+<p class="stem"><strong>2. (1 pt)</strong> What is the motor's acceleration at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">t = 8</annotation></semantics></math>&nbsp;s?</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-6\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-2\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">0\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">2\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">6\ \mu\text{m/s}^{2}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="B">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: B.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mi>−</mi><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a = -2\ \mu\text{m/s}^{2}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">t = 8</annotation></semantics></math>&nbsp;s lies on the ramp down, which
+runs from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">t = 7</annotation></semantics></math>&nbsp;s to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">t = 10</annotation></semantics></math>&nbsp;s. Take rise over run across that
+straight segment:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mfrac><mrow><mi mathvariant="normal">Δ</mi><mi>v</mi></mrow><mrow><mi mathvariant="normal">Δ</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>0</mn><mo>−</mo><mn>6</mn></mrow><mrow><mn>10</mn><mo>−</mo><mn>7</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>−</mi><mn>6</mn></mrow><mn>3</mn></mfrac><mo>=</mo><mi>−</mi><mn>2</mn><mspace width="0.222em"></mspace><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">a = \frac{\Delta v}{\Delta t} = \frac{0 - 6}{10 - 7} = \frac{-6}{3} = -2\ \mu\text{m/s}^{2}.</annotation></semantics></math>
+<p>The sign is negative because the motor is slowing down. Since the segment is
+straight, its slope is the same everywhere on it — you get <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math> at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">t = 8</annotation></semantics></math>&nbsp;s, at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">t = 9</annotation></semantics></math>&nbsp;s, or anywhere else in that window.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">Rise over run on the ramp down</title>
+<desc id="gd2">The segment from t = 7 to t = 10 seconds is highlighted, with a right triangle showing a run of 3 seconds and a rise of minus 6 micrometres per second, giving a slope of minus 2.</desc>
+<defs>
+<marker id="arr2" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr2)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr2)"></line>
+<text x="440" y="204" class="lbl">t (s)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">v(t) (&#181;m/s)</text>
+<line x1="162" y1="200" x2="162" y2="38" class="guide"></line>
+<line x1="298" y1="200" x2="298" y2="38" class="guide"></line>
+<line x1="60" y1="38" x2="298" y2="38" class="guide"></line>
+<polyline points="60,200 162,38 298,38 400,200" class="prof"></polyline>
+<g class="tick" text-anchor="middle"><line x1="94" y1="196" x2="94" y2="204" class="ax"></line><text x="94" y="217">1</text><line x1="128" y1="196" x2="128" y2="204" class="ax"></line><text x="128" y="217">2</text><line x1="162" y1="196" x2="162" y2="204" class="ax"></line><text x="162" y="217">3</text><line x1="196" y1="196" x2="196" y2="204" class="ax"></line><text x="196" y="217">4</text><line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">5</text><line x1="264" y1="196" x2="264" y2="204" class="ax"></line><text x="264" y="217">6</text><line x1="298" y1="196" x2="298" y2="204" class="ax"></line><text x="298" y="217">7</text><line x1="332" y1="196" x2="332" y2="204" class="ax"></line><text x="332" y="217">8</text><line x1="366" y1="196" x2="366" y2="204" class="ax"></line><text x="366" y="217">9</text><line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">10</text></g>
+<g class="tick" text-anchor="end"><line x1="56" y1="173" x2="64" y2="173" class="ax"></line><text x="50" y="177">1</text><line x1="56" y1="146" x2="64" y2="146" class="ax"></line><text x="50" y="150">2</text><line x1="56" y1="119" x2="64" y2="119" class="ax"></line><text x="50" y="123">3</text><line x1="56" y1="92" x2="64" y2="92" class="ax"></line><text x="50" y="96">4</text><line x1="56" y1="65" x2="64" y2="65" class="ax"></line><text x="50" y="69">5</text><line x1="56" y1="38" x2="64" y2="38" class="ax"></line><text x="50" y="42">6</text></g>
+<line x1="298" y1="38" x2="400" y2="200" class="hl"></line><line x1="298" y1="38" x2="400" y2="38" class="aguide"></line><line x1="400" y1="38" x2="400" y2="200" class="aguide"></line><circle cx="332" cy="92" r="5" class="dot"></circle><text x="349" y="30" text-anchor="middle" class="alabel">&#916;t = 3 s</text><text x="406" y="114" class="alabel">&#916;v = &#8722;6</text><text x="406" y="130" class="alabel">&#181;m/s</text><text x="332" y="217" text-anchor="middle" class="alabel ticklbl">8</text>
+</svg>
+<figcaption>Rise over run on the ramp down: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>v</mi><mo>=</mo><mi>−</mi><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">\Delta v = -6\ \mu\text{m/s}</annotation></semantics></math> over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>t</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\Delta t = 3</annotation></semantics></math>&nbsp;s.</figcaption>
+</figure>
+<p class="trap"><strong>Watch out:</strong> choice&nbsp;A (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">-6</annotation></semantics></math>) is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">\Delta v</annotation></semantics></math> by itself — the change in speed, without dividing by the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>&nbsp;s it took. An acceleration is always a <em>rate</em>, so that division
+is not optional.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q3">
+<p class="stem"><strong>3. (1 pt)</strong> How far does the motor travel from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math> to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">t = 10</annotation></semantics></math>&nbsp;s?</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>18</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">18\ \mu\text{m}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>24</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">24\ \mu\text{m}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">30\ \mu\text{m}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">42\ \mu\text{m}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>60</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">60\ \mu\text{m}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="D">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: D.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">42\ \mu\text{m}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> Distance is the <em>area under</em> the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v(t)</annotation></semantics></math> curve — that is what <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>v</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\int v\,dt</annotation></semantics></math> means. No calculus is needed here,
+because the region breaks cleanly into two triangles and a rectangle:</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The area under v(t), split into three pieces</title>
+<desc id="gd3">The region under the speed profile is shaded and divided into a triangle of area 9, a rectangle of area 24, and a second triangle of area 9, totalling 42 micrometres.</desc>
+<defs>
+<marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+<polygon points="60,200 162,38 162,200" class="shadeA"></polygon><polygon points="162,38 298,38 298,200 162,200" class="shadeB"></polygon><polygon points="298,38 400,200 298,200" class="shadeA"></polygon>
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr3)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr3)"></line>
+<text x="440" y="204" class="lbl">t (s)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">v(t) (&#181;m/s)</text>
+<line x1="162" y1="200" x2="162" y2="38" class="guide"></line>
+<line x1="298" y1="200" x2="298" y2="38" class="guide"></line>
+<line x1="60" y1="38" x2="298" y2="38" class="guide"></line>
+<polyline points="60,200 162,38 298,38 400,200" class="prof"></polyline>
+<g class="tick" text-anchor="middle"><line x1="94" y1="196" x2="94" y2="204" class="ax"></line><text x="94" y="217">1</text><line x1="128" y1="196" x2="128" y2="204" class="ax"></line><text x="128" y="217">2</text><line x1="162" y1="196" x2="162" y2="204" class="ax"></line><text x="162" y="217">3</text><line x1="196" y1="196" x2="196" y2="204" class="ax"></line><text x="196" y="217">4</text><line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">5</text><line x1="264" y1="196" x2="264" y2="204" class="ax"></line><text x="264" y="217">6</text><line x1="298" y1="196" x2="298" y2="204" class="ax"></line><text x="298" y="217">7</text><line x1="332" y1="196" x2="332" y2="204" class="ax"></line><text x="332" y="217">8</text><line x1="366" y1="196" x2="366" y2="204" class="ax"></line><text x="366" y="217">9</text><line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">10</text></g>
+<g class="tick" text-anchor="end"><line x1="56" y1="173" x2="64" y2="173" class="ax"></line><text x="50" y="177">1</text><line x1="56" y1="146" x2="64" y2="146" class="ax"></line><text x="50" y="150">2</text><line x1="56" y1="119" x2="64" y2="119" class="ax"></line><text x="50" y="123">3</text><line x1="56" y1="92" x2="64" y2="92" class="ax"></line><text x="50" y="96">4</text><line x1="56" y1="65" x2="64" y2="65" class="ax"></line><text x="50" y="69">5</text><line x1="56" y1="38" x2="64" y2="38" class="ax"></line><text x="50" y="42">6</text></g>
+<text x="128" y="170" text-anchor="middle" class="arealbl">9</text><text x="230" y="128" text-anchor="middle" class="arealbl">24</text><text x="332" y="170" text-anchor="middle" class="arealbl">9</text>
+</svg>
+<figcaption>Triangle <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>+</mi><annotation encoding="application/x-tex">+</annotation></semantics></math> rectangle <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>+</mi><annotation encoding="application/x-tex">+</annotation></semantics></math> triangle
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>9</mn><mo>+</mo><mn>24</mn><mo>+</mo><mn>9</mn><mo>=</mo><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">= 9 + 24 + 9 = 42\ \mu\text{m}</annotation></semantics></math>.</figcaption>
+</figure>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mn>9</mn></munder><mspace width="0.278em"></mspace><mo>+</mo><mspace width="0.278em"></mspace><munder><munder><mrow><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mn>24</mn></munder><mspace width="0.278em"></mspace><mo>+</mo><mspace width="0.278em"></mspace><munder><munder><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mn>9</mn></munder><mspace width="0.278em"></mspace><mo>=</mo><mspace width="0.278em"></mspace><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">\underbrace{\tfrac{1}{2}(3)(6)}_{9} \;+\; \underbrace{(4)(6)}_{24} \;+\; \underbrace{\tfrac{1}{2}(3)(6)}_{9} \;=\; 42\ \mu\text{m}.</annotation></semantics></math>
+<p>Check the units as you go: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">\mu\text{m/s}</annotation></semantics></math> times s gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">\mu\text{m}</annotation></semantics></math>, a
+distance. That check is the fastest way to confirm you multiplied a speed by a
+time and not something else.</p>
+<p class="trap"><strong>Watch out:</strong> choice&nbsp;E (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>60</mn><annotation encoding="application/x-tex">60</annotation></semantics></math>) treats the whole
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>&nbsp;s as one rectangle at top speed (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mo>×</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">6 \times 10</annotation></semantics></math>), ignoring the ramps.
+Choice&nbsp;C (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>30</mn><annotation encoding="application/x-tex">30</annotation></semantics></math>) treats the region as one big triangle
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false" form="prefix">(</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\tfrac{1}{2}(10)(6)</annotation></semantics></math>). Choice&nbsp;B (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>24</mn><annotation encoding="application/x-tex">24</annotation></semantics></math>) is the rectangle alone, and
+choice&nbsp;A (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>18</mn><annotation encoding="application/x-tex">18</annotation></semantics></math>) is the two triangles alone — each is a piece of the answer
+rather than the whole of it.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q4">
+<p class="stem"><strong>4. (1 pt)</strong> What is the motor's average speed over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">0 \le t \le 10</annotation></semantics></math>&nbsp;s?</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">0.42\ \mu\text{m/s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">3\ \mu\text{m/s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4.2</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">4.2\ \mu\text{m/s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">6\ \mu\text{m/s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">42\ \mu\text{m/s}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="C">
+<summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: C.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4.2</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">4.2\ \mu\text{m/s}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> Average speed is total distance divided by
+total time, and Question&nbsp;3 already produced the distance:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>v</mi><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mtext mathvariant="normal">total distance</mtext><mtext mathvariant="normal">total time</mtext></mfrac><mo>=</mo><mfrac><mrow><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><mrow><mn>10</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow></mfrac><mo>=</mo><mn>4.2</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">\bar{v} = \frac{\text{total distance}}{\text{total time}} = \frac{42\ \mu\text{m}}{10\ \text{s}} = 4.2\ \mu\text{m/s}.</annotation></semantics></math>
+<p>Geometrically, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>v</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{v}</annotation></semantics></math> is the height of the rectangle that has the same
+area as the region under <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v(t)</annotation></semantics></math> — flatten the trapezoid out and this is the
+level it settles at.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt4 gd4">
+<title id="gt4">The average speed as an equal-area rectangle</title>
+<desc id="gd4">A dashed horizontal line at 4.2 micrometres per second marks the constant speed whose rectangle has the same area, 42 micrometres, as the region under the actual speed profile.</desc>
+<defs>
+<marker id="arr4" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+<rect x="60" y="86.6" width="340" height="113.4" class="shadeB"></rect>
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr4)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr4)"></line>
+<text x="440" y="204" class="lbl">t (s)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">v(t) (&#181;m/s)</text>
+<line x1="162" y1="200" x2="162" y2="38" class="guide"></line>
+<line x1="298" y1="200" x2="298" y2="38" class="guide"></line>
+<line x1="60" y1="38" x2="298" y2="38" class="guide"></line>
+<polyline points="60,200 162,38 298,38 400,200" class="prof"></polyline>
+<g class="tick" text-anchor="middle"><line x1="94" y1="196" x2="94" y2="204" class="ax"></line><text x="94" y="217">1</text><line x1="128" y1="196" x2="128" y2="204" class="ax"></line><text x="128" y="217">2</text><line x1="162" y1="196" x2="162" y2="204" class="ax"></line><text x="162" y="217">3</text><line x1="196" y1="196" x2="196" y2="204" class="ax"></line><text x="196" y="217">4</text><line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">5</text><line x1="264" y1="196" x2="264" y2="204" class="ax"></line><text x="264" y="217">6</text><line x1="298" y1="196" x2="298" y2="204" class="ax"></line><text x="298" y="217">7</text><line x1="332" y1="196" x2="332" y2="204" class="ax"></line><text x="332" y="217">8</text><line x1="366" y1="196" x2="366" y2="204" class="ax"></line><text x="366" y="217">9</text><line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">10</text></g>
+<g class="tick" text-anchor="end"><line x1="56" y1="173" x2="64" y2="173" class="ax"></line><text x="50" y="177">1</text><line x1="56" y1="146" x2="64" y2="146" class="ax"></line><text x="50" y="150">2</text><line x1="56" y1="119" x2="64" y2="119" class="ax"></line><text x="50" y="123">3</text><line x1="56" y1="92" x2="64" y2="92" class="ax"></line><text x="50" y="96">4</text><line x1="56" y1="65" x2="64" y2="65" class="ax"></line><text x="50" y="69">5</text><line x1="56" y1="38" x2="64" y2="38" class="ax"></line><text x="50" y="42">6</text></g>
+<line x1="60" y1="86.6" x2="400" y2="86.6" class="hl dash"></line><text x="230" y="78.6" text-anchor="middle" class="alabel">average speed = 4.2 &#181;m/s</text>
+</svg>
+<figcaption>The dashed line at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4.2</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">4.2\ \mu\text{m/s}</annotation></semantics></math> marks the constant speed
+that would cover the same <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>42</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">42\ \mu\text{m}</annotation></semantics></math> in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>&nbsp;s.</figcaption>
+</figure>
+<p class="trap"><strong>Watch out:</strong> choice&nbsp;B (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>) is the tempting
+"average of the endpoints," <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>+</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(0+6)/2</annotation></semantics></math>. That would be correct only if the speed
+rose steadily across the whole interval. It does not: the motor sits at full
+speed for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math> of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math> seconds, which pulls the average <em>above</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>. Choice&nbsp;D (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>6</mn><annotation encoding="application/x-tex">6</annotation></semantics></math>) is the peak speed, choice&nbsp;E (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>42</mn><annotation encoding="application/x-tex">42</annotation></semantics></math>) is the
+distance wearing the wrong unit, and choice&nbsp;A (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.42</mn><annotation encoding="application/x-tex">0.42</annotation></semantics></math>) is a decimal-point
+slip.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q5">
+<p class="stem"><strong>5. (1 pt)</strong> A different nanoscale motor's position
+is given by</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mi>α</mi><msup><mi>t</mi><mn>2</mn></msup></mfrac><mo>=</mo><mi>α</mi><mspace width="0.167em"></mspace><msup><mi>t</mi><mrow><mi>−</mi><mn>2</mn></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">x(t) = \frac{\alpha}{t^{2}} = \alpha\, t^{-2},</annotation></semantics></math>
+<p class="stem">where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> is measured in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">\mu\text{m}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math> in seconds.
+What units must the constant <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> carry?</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu\text{m/s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m/s</mtext></mrow><annotation encoding="application/x-tex">\mu\text{m/s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">\mu\text{m}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu\text{m}\cdot\text{s}^{2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup><mi>/</mi><mi>μ</mi><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">\text{s}^{2}/\mu\text{m}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="D">
+<summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: D.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu\text{m}\cdot\text{s}^{2}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> Do not try to read the units off the formula
+by inspection — <em>solve for the constant first</em>, then read off what is
+left. Multiply both sides by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mn>2</mn></msup><annotation encoding="application/x-tex">t^{2}</annotation></semantics></math>:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mfrac><mi>α</mi><msup><mi>t</mi><mn>2</mn></msup></mfrac><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>α</mi><mo>=</mo><mi>x</mi><mspace width="0.167em"></mspace><msup><mi>t</mi><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">x = \frac{\alpha}{t^{2}} \quad\Longrightarrow\quad \alpha = x\,t^{2}.</annotation></semantics></math>
+<p>Now the units are forced: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> is a length times a time squared, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>α</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mi>μ</mi><mtext mathvariant="normal">m</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">[\alpha] = \mu\text{m}\cdot\text{s}^{2}</annotation></semantics></math>.</p>
+<p><strong>Then check it</strong> by substituting the units back into the
+original expression and confirming you land on a length:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mo stretchy="false" form="prefix">[</mo><mi>α</mi><mo stretchy="false" form="postfix">]</mo></mrow><mrow><mo stretchy="false" form="prefix">[</mo><mi>t</mi><msup><mo stretchy="false" form="postfix">]</mo><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>μ</mi><mtext mathvariant="normal">m</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup></mrow><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup></mfrac><mo>=</mo><mi>μ</mi><mtext mathvariant="normal">m</mtext><mi>.</mi><mspace width="0.278em"></mspace><mi>✓</mi></mrow><annotation encoding="application/x-tex">\frac{[\alpha]}{[t]^{2}} = \frac{\mu\text{m}\cdot\text{s}^{2}}{\text{s}^{2}} = \mu\text{m}. \;\checkmark</annotation></semantics></math>
+<p class="trap"><strong>Watch out:</strong> choice&nbsp;A
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu\text{m/s}^{2}</annotation></semantics></math>) is the classic slip when an exponent is negative. Seeing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mrow><mi>−</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">t^{-2}</annotation></semantics></math> sitting next to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>, it is easy to carry a "per second squared"
+into <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> as well — but the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mrow><mi>−</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">t^{-2}</annotation></semantics></math> already supplies that, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> has to <em>cancel</em> it, which means multiplying by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{s}^{2}</annotation></semantics></math>, not dividing. Whenever an exponent is negative, isolate the
+constant before you assign it units.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q6">
+<p class="stem"><strong>6. (1 pt)</strong> In general, what is the purpose of a
+<code>for</code> loop in Python?</p>
+<ol class="choices" type="A">
+<li>To define a new function that can be called later</li>
+<li>To repeat a block of code once for each item in a list, with the loop
+variable taking each item's value in turn</li>
+<li>To store rows and columns of data in a table</li>
+<li>To read data from a file on disk into memory</li>
+<li>To print output to the screen</li>
+</ol>
+<details class="sol" data-answer="B">
+<summary>Solution<span class="visually-hidden"> for question 6</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: B.</strong> To repeat a block of code
+once for each item in a list, with the loop variable taking each item's value in
+turn.</p>
+<p class="why"><strong>Why:</strong> A <code>for</code> loop is Python's tool for
+<em>repetition over a collection</em>. The loop variable is rebound to the next
+item on every pass, and the indented block runs again with that new value:</p>
+<pre class="code"><code>for t_idx in range(1, len(df)):
+    dt = t[t_idx] - t[t_idx - 1]
+    distance = distance + v[t_idx] * dt</code></pre>
+<p>Here <code>t_idx</code> takes the values <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi></mrow><annotation encoding="application/x-tex">1, 2, 3, \dots</annotation></semantics></math> in turn, and the
+two indented lines run once per value. That is exactly the numerical-integration
+pattern from the homework: add up one thin slice per time step — the same
+"area under the curve" idea as Question&nbsp;3, done by computer.</p>
+<p class="trap"><strong>Watch out:</strong> every other choice names a real Python
+capability, just not this one. (A) is <code>def</code>, (C) is a DataFrame or an
+array, (D) is something like <code>pd.read_csv</code>, and (E) is
+<code>print</code>. None of them involve <em>repeating</em> anything — that is
+the word to anchor on.</p>
+</div>
+</details>
+</li>
+
+<li class="q" id="q7">
+<p class="stem"><strong>7. (4 pts)</strong> A nanoscale motor's acceleration is</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>6</mn><msup><mi>t</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><msup><mi>t</mi><mn>3</mn></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">a(t) = 6t^{2} - 7t^{3},</annotation></semantics></math>
+<p class="stem">where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> is in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">nm/s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{nm/s}^{2}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math> is in s. Answer
+all parts below. Show your work — partial credit will be awarded.</p>
+<ol class="parts" type="a">
+
+<li>
+<p class="partq"><strong>(2 pts)</strong> Find the indefinite integral
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\int a(t)\, dt</annotation></semantics></math>. Do not forget the constant of integration.</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>Apply the reverse power rule <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><msup><mi>t</mi><mi>n</mi></msup><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mo>=</mo><mstyle displaystyle="true"><mfrac><msup><mi>t</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></mfrac></mstyle></mrow><annotation encoding="application/x-tex">\int t^{n}\,dt = \dfrac{t^{n+1}}{n+1}</annotation></semantics></math> term by
+term — raise the exponent by one, then divide by the new exponent:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mo>=</mo><mo>∫</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>6</mn><msup><mi>t</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><msup><mi>t</mi><mn>3</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>d</mi><mi>t</mi><mo>=</mo><mn>6</mn><mo>⋅</mo><mfrac><msup><mi>t</mi><mn>3</mn></msup><mn>3</mn></mfrac><mo>−</mo><mn>7</mn><mo>⋅</mo><mfrac><msup><mi>t</mi><mn>4</mn></msup><mn>4</mn></mfrac><mo>+</mo><mi>C</mi><mo>=</mo><mn>2</mn><msup><mi>t</mi><mn>3</mn></msup><mo>−</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><msup><mi>t</mi><mn>4</mn></msup><mo>+</mo><mi>C</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">\int a(t)\,dt = \int \left(6t^{2} - 7t^{3}\right) dt = 6\cdot\frac{t^{3}}{3} - 7\cdot\frac{t^{4}}{4} + C = 2t^{3} - \frac{7}{4}t^{4} + C.</annotation></semantics></math>
+<p>The <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">+C</annotation></semantics></math> is not decoration. Every function of the form
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msup><mi>t</mi><mn>3</mn></msup><mo>−</mo><mstyle displaystyle="false"><mfrac><mn>7</mn><mn>4</mn></mfrac></mstyle><msup><mi>t</mi><mn>4</mn></msup><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">2t^{3} - \tfrac{7}{4}t^{4} + C</annotation></semantics></math> has exactly the same derivative, so without
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> you have named only one member of an infinite family.</p>
+<p><strong>What it means physically:</strong> integrating an acceleration gives a
+velocity, so this expression is the motor's <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v(t)</annotation></semantics></math>, in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">nm/s</mtext><annotation encoding="application/x-tex">\text{nm/s}</annotation></semantics></math>. The
+constant <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> is the initial velocity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v(0)</annotation></semantics></math> — the one thing the acceleration
+alone can never tell you.</p>
+</div>
+</details>
+</li>
+
+<li>
+<p class="partq"><strong>(1 pt)</strong> How do you know you computed the integral
+correctly? Show a check of your answer from part (a).</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>Differentiation undoes integration, so <em>differentiate your own answer from
+part (a)</em> and see whether the original <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">a(t)</annotation></semantics></math> comes back:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><msup><mi>t</mi><mn>3</mn></msup><mo>−</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><msup><mi>t</mi><mn>4</mn></msup><mo>+</mo><mi>C</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>3</mn><mo>⋅</mo><mn>2</mn><msup><mi>t</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mo>⋅</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><msup><mi>t</mi><mn>3</mn></msup><mo>+</mo><mn>0</mn><mo>=</mo><mn>6</mn><msup><mi>t</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><msup><mi>t</mi><mn>3</mn></msup><mo>=</mo><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi><mspace width="0.278em"></mspace><mi>✓</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\left(2t^{3} - \frac{7}{4}t^{4} + C\right) = 3\cdot 2t^{2} - 4\cdot\frac{7}{4}t^{3} + 0 = 6t^{2} - 7t^{3} = a(t). \;\checkmark</annotation></semantics></math>
+<p>Term by term: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msup><mi>t</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">2t^{3}</annotation></semantics></math> differentiates to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">6t^{2}</annotation></semantics></math>, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>7</mn><mn>4</mn></mfrac></mstyle><msup><mi>t</mi><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac{7}{4}t^{4}</annotation></semantics></math> differentiates to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><msup><mi>t</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">7t^{3}</annotation></semantics></math>. Both match, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+differentiates to zero whatever its value. This is a check you can run on
+<em>any</em> integral, on any exam, without being told the answer — which is
+precisely why the question asks for it.</p>
+</div>
+</details>
+</li>
+
+<li>
+<p class="partq"><strong>(1 pt)</strong> Evaluate the definite integral
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\int_{0}^{1} a(t)\, dt</annotation></semantics></math>. Include the correct unit in your answer.</p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>By the Fundamental Theorem of Calculus, evaluate the antiderivative from part
+(a) at the upper limit and subtract its value at the lower limit. The <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">+C</annotation></semantics></math>
+cancels in that subtraction, so it can be dropped here:</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mo>=</mo><msubsup><mrow><mo stretchy="true" form="prefix">[</mo><mspace width="0.167em"></mspace><mn>2</mn><msup><mi>t</mi><mn>3</mn></msup><mo>−</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><msup><mi>t</mi><mn>4</mn></msup><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">]</mo></mrow><mn>0</mn><mn>1</mn></msubsup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo>−</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>−</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>=</mo><mn>0.25</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">nm/s</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">\int_{0}^{1} a(t)\,dt = \left[\, 2t^{3} - \frac{7}{4}t^{4} \,\right]_{0}^{1} = \left(2 - \frac{7}{4}\right) - (0 - 0) = \frac{1}{4} = 0.25\ \text{nm/s}.</annotation></semantics></math>
+<p><strong>The unit is where this part is won or lost.</strong> Integrating an
+acceleration (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">nm/s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{nm/s}^{2}</annotation></semantics></math>) with respect to time (s) cancels one power of
+seconds, leaving <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">nm/s</mtext><annotation encoding="application/x-tex">\text{nm/s}</annotation></semantics></math> — a velocity. The answer is the motor's
+<em>change</em> in velocity over <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 \le t \le 1</annotation></semantics></math>&nbsp;s, not an acceleration.</p>
+<p><strong>Sanity check on the sign:</strong> factor the integrand as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>t</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo>−</mo><mn>7</mn><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">a(t) = t^{2}(6 - 7t)</annotation></semantics></math>. On <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0,1]</annotation></semantics></math> it is positive until
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>6</mn><mi>/</mi><mn>7</mn><mo>≈</mo><mn>0.86</mn></mrow><annotation encoding="application/x-tex">t = 6/7 \approx 0.86</annotation></semantics></math> and only slightly negative after that, so the positive
+area dominates — a small positive answer is exactly what you should expect.</p>
+</div>
+</details>
+</li>
+
+</ol>
+</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<p class="vnote">Nothing on this quiz was new. If a question caught you out, this
+is the homework problem that drilled the same skill — rework it before the
+next quiz.</p>
+<ul class="align">
+<li><strong>Q1–Q2 — acceleration is the slope of <em>v(t)</em>:</strong>
+Quiz&nbsp;01 multiple choice; Day&nbsp;2 HW, Problem&nbsp;2 (tangent slopes of
+<em>x(t) = kt</em><sup>2</sup>).</li>
+<li><strong>Q3–Q4 — area under <em>v(t)</em>, and average speed:</strong>
+Day&nbsp;2 HW, Problem&nbsp;1 (counting triangles under <em>v = Ct</em>);
+Integrals HW, Problems&nbsp;1–2 (the slicing picture, and distance from
+&#8747;<em>v dt</em>).</li>
+<li><strong>Q5 — units of a coefficient:</strong> Calc Revisited D3 HW,
+Problem&nbsp;1 (units of &#945;, &#946;, &#947; in
+<em>v = &#945;t</em><sup>2</sup> &#8722; <em>&#946;t</em> + <em>&#947;</em>),
+here with a negative-exponent twist.</li>
+<li><strong>Q6 — what a <code>for</code> loop does:</strong> Integrals HW,
+Problem&nbsp;3(b).</li>
+<li><strong>Q7 — the power rule for integrals, checking by differentiating,
+and the FTC:</strong> Day&nbsp;2 HW, Problem&nbsp;3 (the round-trip check with
+6<em>t</em><sup>4</sup>); Integrals HW, Problem&nbsp;2 (antiderivative,
+<em>+C</em>, definite integral).</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
