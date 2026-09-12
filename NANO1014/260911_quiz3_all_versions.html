@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 1014 Quiz 3 — Review by version</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+h3 { font-size: 1.08rem; color: var(--ink); margin: 1.6rem 0 .3rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+.vnav { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: .6rem;
+  background: #fff; border-bottom: 2px solid var(--rule); padding: .55rem 0;
+  margin-top: 1rem; }
+.vnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  padding: .22rem .85rem; border: 2px solid var(--maroon); border-radius: 999px; }
+.vnav a:hover, .vnav a:focus { background: var(--maroon); color: #fff; }
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem;
+  margin: 1rem 0 .4rem; padding: 0; list-style: none; }
+.stats li { border: 1px solid var(--rule); border-top: 4px solid var(--maroon);
+  border-radius: 6px; padding: .55rem .8rem .6rem; }
+.stats .v { display: block; font-size: 1.55rem; font-weight: 700; line-height: 1.2;
+  color: var(--maroon); font-variant-numeric: tabular-nums; }
+.stats .v small { font-size: .95rem; font-weight: 600; color: #3a3a3a; margin-left: .15rem; }
+.stats .k { display: block; font-size: .92rem; color: #3a3a3a; line-height: 1.35; }
+.statnote { font-size: .92rem; color: #3a3a3a; margin: .2rem 0 0; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+p.also { font-size: .92rem; color: #3a3a3a; }
+p.grading { border-top: 1px solid var(--rule); padding-top: .45rem; margin-top: .55rem;
+  font-size: .95rem; }
+
+.frpart { margin: 1.1rem 0 1.4rem; }
+ul.mistakes { padding-left: 1.3rem; }
+ul.mistakes li { margin: .45rem 0; }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; border-top: 2px solid var(--rule); padding-top: .8rem;
+  font-size: .95rem; color: #3a3a3a; }
+
+@media (max-width: 34rem) { .stats { grid-template-columns: 1fr; } }
+@media print { .vnav { display: none; } body { max-width: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 1014 Quiz 3 — after-quiz review</h1>
+<p class="intro">Quiz 3 was given as two booklets on Friday, September 11, 2026.
+The version letter is the first letter of the stamp printed at the top of each
+page of your booklet: a stamp beginning <strong>A</strong>- is Version A, and one
+beginning <strong>B</strong>- is Version B. Open your version’s section below; the questions and the order of
+the answer choices are exactly as they appeared on your copy.</p>
+<p class="intro">The two logarithm questions appear on both versions, but in
+swapped positions and with their choices in reverse order, so <strong>the
+correct answer letters differ from version to version</strong>: trust the
+solution under each question rather than a classmate’s key. Part II, the free
+response, was the same on both versions. Open a <strong>Solution</strong>
+strip to see the answer and the reasoning; for multiple choice, the correct
+choice is also highlighted in the list.</p>
+
+<h2 id="results-h">How the class did</h2>
+<ul class="stats" aria-labelledby="results-h">
+  <li><span class="v">8.33<small>/ 11</small></span><span class="k">Mean score with extra credit</span></li>
+  <li><span class="v">3.74<small>/ 5</small></span><span class="k">Multiple choice mean</span></li>
+  <li><span class="v">4.04<small>/ 5</small></span><span class="k">Free response mean</span></li>
+</ul>
+<p class="statnote">Based on the 27 booklets graded. The quiz is out of 10
+(5 multiple choice + 5 free response); part (c) of the free response adds up to
+1 extra-credit point, for a possible 11.</p>
+
+<nav class="vnav" aria-label="Quiz sections">
+  <a href="#verA">Version A</a>
+  <a href="#verB">Version B</a>
+  <a href="#fr">Free response</a>
+  <a href="#tips">What tripped people up</a>
+</nav>
+<section id="verA" aria-labelledby="verA-h">
+  <h2 id="verA-h">Version A — multiple choice</h2>
+  <p class="vnote">Booklets with odd numbers (stamp A-0XX). Exactly as
+  administered on Friday, September 11, 2026: 5 questions worth 1 point each.</p>
+  <ol class="quiz">
+      <li class="q">
+        <p class="stem">A digital camera sensor has an area of 1 cm<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> and contains <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{8}</annotation></semantics></math> identical square pixels. What is the <strong>width</strong> of one pixel?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-12}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math> m</li>
+        </ol>
+        <details class="sol" data-answer="B">
+          <summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: B.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m</p>
+            <p class="why"><strong>Why:</strong> Convert the area first: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">cm</mtext><mrow><mn>2</mn></mrow></msup><mo>=</mo><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1\,\text{cm}^{2}=(10^{-2}\,\text{m})^{2}=10^{-4}\,\text{m}^{2}</annotation></semantics></math>. Share it among the pixels: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mn>8</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}\div10^{8}=10^{-12}\,\text{m}^{2}</annotation></semantics></math> per pixel. A width is the square root of a square’s area: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup></msqrt><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\sqrt{10^{-12}}=10^{-6}</annotation></semantics></math> m, about a micrometer. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-12}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> is the area of one pixel, with no square root taken. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> has the right number with an area unit on a width. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m is the sensor’s own area written as if it were a length, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math> m is the sensor’s side, never divided among the pixels.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">On a base-10 <strong>logarithmic</strong> axis, the distance from 10 to 100 is the same as the distance from 100 to 1000. Which statement best explains why?</p>
+        <ol class="choices" type="A">
+          <li>Equal distances represent equal <em>differences</em>, and the two intervals span the same amount.</li>
+          <li>Abraham Lincoln was born in a log cabin built from exactly 100 logs, and 100 appears in both intervals.</li>
+          <li>Large numbers are compressed, so every interval on the axis eventually has the same length.</li>
+          <li>Each of the two intervals contains the same count of whole numbers.</li>
+          <li>Equal distances represent equal <em>multiplying factors</em>, and each interval is one factor of 10.</li>
+        </ol>
+        <details class="sol" data-answer="E">
+          <summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: E.</strong> Equal distances represent equal <em>multiplying factors</em>, and each interval is one factor of 10.</p>
+            <p class="why"><strong>Why:</strong> One step along a base-10 log axis means <em>multiply by 10</em>, not <em>add</em> a fixed amount: 10 to 100 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\times10</annotation></semantics></math>, and so is 100 to 1000. That is the whole point of a log scale (HW Problem 1: a linear step is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>x</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x\to x+c</annotation></semantics></math>, a log step is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>x</mi><mo>×</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x\to x\times c</annotation></semantics></math>). The “equal differences” choice is the linear-axis intuition, and it is false here anyway, since <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo>−</mo><mn>10</mn><mo>≠</mo><mn>1000</mn><mo>−</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">100-10\neq1000-100</annotation></semantics></math>. The two intervals do not hold the same count of whole numbers either (91 versus 901). “Large numbers are compressed” describes how a log axis looks, but it is not the rule, and it is false as stated: the stretch from 1000 to 1001 is nowhere near as long as the one from 100 to 1000. The Lincoln choice is only a pun on “log.”</p>
+            <p class="also">This question also appears on Version B (as question 4) with its choices in reverse order.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">A square solar panel is tiled with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{6}</annotation></semantics></math> identical square cells. Each cell has an area of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>. What is the <strong>width</strong> of the panel?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{2}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{2}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="B">
+          <summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: B.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math> m</p>
+            <p class="why"><strong>Why:</strong> Total area first: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{6}\times10^{-4}\,\text{m}^{2}=10^{2}\,\text{m}^{2}</annotation></semantics></math>. Then the width of that square: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></msqrt><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\sqrt{10^{2}}=10</annotation></semantics></math> m. Choosing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{2}</annotation></semantics></math> m means finding the area correctly and then writing that number down as a width. This was the most common slip on the width questions: <strong>a width is always the square root of the area</strong>. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{2}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> is the panel’s area, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> puts an area unit on a width, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math> m is one cell’s width, never scaled up to the whole panel.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\log(1)=0</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\log(10)=1</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>100</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\log(100)=2</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>1000</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\log(1000)=3</annotation></semantics></math>, then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>30</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(30)</annotation></semantics></math> is approximately:</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn></mrow><annotation encoding="application/x-tex">0.5</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.2</mn></mrow><annotation encoding="application/x-tex">1.2</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn></mrow><annotation encoding="application/x-tex">1.5</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8</mn></mrow><annotation encoding="application/x-tex">1.8</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2.5</mn></mrow><annotation encoding="application/x-tex">2.5</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="C">
+          <summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: C.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn></mrow><annotation encoding="application/x-tex">1.5</annotation></semantics></math></p>
+            <p class="why"><strong>Why:</strong> Split 30 into a factor of 10 and a factor of 3: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>30</mn><mo stretchy="false">)</mo><mo>=</mo><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>+</mo><mi>log</mi><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>≈</mo><mn>0.5</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>1.5</mn></mrow><annotation encoding="application/x-tex">\log(30)=\log(3)+\log(10)\approx0.5+1=1.5</annotation></semantics></math>. Why is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>≈</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\log(3)\approx0.5</annotation></semantics></math>? Halfway across a decade on a log axis is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>10</mn></msqrt><mo>≈</mo><mn>3.16</mn></mrow><annotation encoding="application/x-tex">\sqrt{10}\approx3.16</annotation></semantics></math> (HW Problem 2(c)), so 3 sits almost exactly halfway between 1 and 10. The most common wrong answer on the quiz was <strong>1.2</strong>. It comes from placing 30 about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mo>/</mo><mn>90</mn><mo>≈</mo><mn>0.22</mn></mrow><annotation encoding="application/x-tex">20/90\approx0.22</annotation></semantics></math> of the way from 10 to 100, as if the axis were linear. On a log axis equal distances are equal <em>ratios</em>, which is exactly what the other log question on your quiz asks about. 1.8 puts 3 near the top of its decade instead of the middle; 2.5 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>300</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(300)</annotation></semantics></math>, one decade too many; and 0.5 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(3)</annotation></semantics></math> with the factor of 10 left off.</p>
+            <p class="also">This question also appears on Version B (as question 2) with its choices in reverse order.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">A cell-culture plate has a growing region measuring 1 cm <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math> 10 cm. Roughly how many bacteria (1 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics></math>m across, modeled as squares) would cover it in a single layer?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>11</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{11}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>11</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{11}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{9}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{9}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="D">
+          <summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: D.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{9}</annotation></semantics></math></p>
+            <p class="why"><strong>Why:</strong> Convert each side to meters <em>before</em> multiplying: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>1</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}\,\text{m}\times10^{-1}\,\text{m}=10^{-3}\,\text{m}^{2}</annotation></semantics></math>. One bacterium covers <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{-6}\,\text{m})^{2}=10^{-12}\,\text{m}^{2}</annotation></semantics></math>. Area ÷ area: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>12</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}\div10^{-12}=10^{9}</annotation></semantics></math>, a pure count with no units. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>11</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{11}</annotation></semantics></math> comes from turning 10 cm<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> into <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-1}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>, converting an area as if it were a length (1 cm<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>, not <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math>). <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math> treats the bacterium’s width as its area. The m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> choices put an area unit on a count.</p>
+          </div>
+        </details>
+      </li>
+  </ol>
+</section>
+<section id="verB" aria-labelledby="verB-h">
+  <h2 id="verB-h">Version B — multiple choice</h2>
+  <p class="vnote">Booklets with even numbers (stamp B-0XX). Exactly as
+  administered on Friday, September 11, 2026: 5 questions worth 1 point each.</p>
+  <ol class="quiz">
+      <li class="q">
+        <p class="stem">A lab-on-a-chip device has an area of 1 mm<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> and carries <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{10}</annotation></semantics></math> identical square sensor spots. What is the <strong>width</strong> of one spot?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>16</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-16}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="D">
+          <summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: D.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m</p>
+            <p class="why"><strong>Why:</strong> Convert the area: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">mm</mtext><mrow><mn>2</mn></mrow></msup><mo>=</mo><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1\,\text{mm}^{2}=(10^{-3}\,\text{m})^{2}=10^{-6}\,\text{m}^{2}</annotation></semantics></math>. Share it among the spots: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mn>10</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>16</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}\div10^{10}=10^{-16}\,\text{m}^{2}</annotation></semantics></math> per spot. Take the square root for a width: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><msup><mn>10</mn><mrow><mo>−</mo><mn>16</mn></mrow></msup></msqrt><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\sqrt{10^{-16}}=10^{-8}</annotation></semantics></math> m, which is 10 nm. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>16</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-16}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> is the per-spot area, with no square root taken. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> puts an area unit on a width. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math> m is the chip’s own area written as a length, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math> m is the chip’s side, never divided among the spots.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\log(1)=0</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\log(10)=1</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>100</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\log(100)=2</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>1000</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\log(1000)=3</annotation></semantics></math>, then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>30</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(30)</annotation></semantics></math> is approximately:</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2.5</mn></mrow><annotation encoding="application/x-tex">2.5</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.8</mn></mrow><annotation encoding="application/x-tex">1.8</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn></mrow><annotation encoding="application/x-tex">1.5</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.2</mn></mrow><annotation encoding="application/x-tex">1.2</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn></mrow><annotation encoding="application/x-tex">0.5</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="C">
+          <summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: C.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn></mrow><annotation encoding="application/x-tex">1.5</annotation></semantics></math></p>
+            <p class="why"><strong>Why:</strong> Split 30 into a factor of 10 and a factor of 3: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>30</mn><mo stretchy="false">)</mo><mo>=</mo><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>+</mo><mi>log</mi><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>≈</mo><mn>0.5</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>1.5</mn></mrow><annotation encoding="application/x-tex">\log(30)=\log(3)+\log(10)\approx0.5+1=1.5</annotation></semantics></math>. Why is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>≈</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\log(3)\approx0.5</annotation></semantics></math>? Halfway across a decade on a log axis is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>10</mn></msqrt><mo>≈</mo><mn>3.16</mn></mrow><annotation encoding="application/x-tex">\sqrt{10}\approx3.16</annotation></semantics></math> (HW Problem 2(c)), so 3 sits almost exactly halfway between 1 and 10. The most common wrong answer on the quiz was <strong>1.2</strong>. It comes from placing 30 about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mo>/</mo><mn>90</mn><mo>≈</mo><mn>0.22</mn></mrow><annotation encoding="application/x-tex">20/90\approx0.22</annotation></semantics></math> of the way from 10 to 100, as if the axis were linear. On a log axis equal distances are equal <em>ratios</em>, which is exactly what the other log question on your quiz asks about. 1.8 puts 3 near the top of its decade instead of the middle; 2.5 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>300</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(300)</annotation></semantics></math>, one decade too many; and 0.5 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(3)</annotation></semantics></math> with the factor of 10 left off.</p>
+            <p class="also">This question also appears on Version A (as question 4) with its choices in reverse order.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">A square graphene flake is tiled by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{10}</annotation></semantics></math> identical square patches. Each patch has an area of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>18</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-18}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>. What is the <strong>width</strong> of the flake?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-9}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m</li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="D">
+          <summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: D.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m</p>
+            <p class="why"><strong>Why:</strong> Total area first: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>10</mn></mrow></msup><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>18</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{10}\times10^{-18}\,\text{m}^{2}=10^{-8}\,\text{m}^{2}</annotation></semantics></math>. Width of that square: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></msqrt><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\sqrt{10^{-8}}=10^{-4}</annotation></semantics></math> m, a tenth of a millimeter. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-9}</annotation></semantics></math> m is the width of a single patch, never scaled up to the whole flake. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m is the flake’s area written down as a width. <strong>A width is always the square root of the area.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> is the flake’s area, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> puts an area unit on a width.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">On a base-10 <strong>logarithmic</strong> axis, the distance from 10 to 100 is the same as the distance from 100 to 1000. Which statement best explains why?</p>
+        <ol class="choices" type="A">
+          <li>Equal distances represent equal <em>multiplying factors</em>, and each interval is one factor of 10.</li>
+          <li>Each of the two intervals contains the same count of whole numbers.</li>
+          <li>Large numbers are compressed, so every interval on the axis eventually has the same length.</li>
+          <li>Abraham Lincoln was born in a log cabin built from exactly 100 logs, and 100 appears in both intervals.</li>
+          <li>Equal distances represent equal <em>differences</em>, and the two intervals span the same amount.</li>
+        </ol>
+        <details class="sol" data-answer="A">
+          <summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: A.</strong> Equal distances represent equal <em>multiplying factors</em>, and each interval is one factor of 10.</p>
+            <p class="why"><strong>Why:</strong> One step along a base-10 log axis means <em>multiply by 10</em>, not <em>add</em> a fixed amount: 10 to 100 is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\times10</annotation></semantics></math>, and so is 100 to 1000. That is the whole point of a log scale (HW Problem 1: a linear step is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>x</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x\to x+c</annotation></semantics></math>, a log step is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>x</mi><mo>×</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x\to x\times c</annotation></semantics></math>). The “equal differences” choice is the linear-axis intuition, and it is false here anyway, since <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo>−</mo><mn>10</mn><mo>≠</mo><mn>1000</mn><mo>−</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">100-10\neq1000-100</annotation></semantics></math>. The two intervals do not hold the same count of whole numbers either (91 versus 901). “Large numbers are compressed” describes how a log axis looks, but it is not the rule, and it is false as stated: the stretch from 1000 to 1001 is nowhere near as long as the one from 100 to 1000. The Lincoln choice is only a pun on “log.”</p>
+            <p class="also">This question also appears on Version A (as question 2) with its choices in reverse order.</p>
+          </div>
+        </details>
+      </li>
+      <li class="q">
+        <p class="stem">A microscope slide region measures 1 cm <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math> 1 cm. Roughly how many skin cells (10 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics></math>m across, modeled as squares) cover it in a single layer?</p>
+        <ol class="choices" type="A">
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{6}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{6}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{8}</annotation></semantics></math></li>
+          <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{8}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math></li>
+        </ol>
+        <details class="sol" data-answer="B">
+          <summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+          <div class="sol-body">
+            <p class="verdict"><strong>Correct answer: B.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{6}</annotation></semantics></math></p>
+            <p class="why"><strong>Why:</strong> Region: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{-2}\,\text{m})^{2}=10^{-4}\,\text{m}^{2}</annotation></semantics></math>. One cell: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{-5}\,\text{m})^{2}=10^{-10}\,\text{m}^{2}</annotation></semantics></math>. Area ÷ area: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}\div10^{-10}=10^{6}</annotation></semantics></math> cells. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math> counts the cells along one edge only (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}\div10^{-5}</annotation></semantics></math>) and forgets the second dimension. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{8}</annotation></semantics></math> comes from converting 1 cm<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> as if it were a length (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math> m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>). The m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math> choices put an area unit on a count.</p>
+          </div>
+        </details>
+      </li>
+  </ol>
+</section>
+<section id="fr" aria-labelledby="fr-h">
+  <h2 id="fr-h">Part II — free response (both versions)</h2>
+  <p class="vnote">5 points, plus 1 extra-credit point for part (c).</p>
+  <p class="stem">In the far future, the “ultimate transistor” might be only
+  <strong>ten (10) atoms</strong> wide.</p>
+    <div class="frpart">
+      <p class="stem"><strong>(a)</strong> <em>(1.5 pt)</em> What would be the approximate width of this “ultimate transistor” in the unit of nm? <strong>Clearly indicate your assumption for the width of each atom.</strong></p>
+      <details class="sol">
+        <summary>Solution<span class="visually-hidden"> for part (a)</span></summary>
+        <div class="sol-body">
+          <p>Assume one atom is about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1</mn></mrow><annotation encoding="application/x-tex">0.1</annotation></semantics></math> nm across (that is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math> Å, or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-10}</annotation></semantics></math> m). Ten atoms side by side: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>×</mo><mn>0.1</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">nm</mtext><mo>=</mo><mn>1</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">nm</mtext></mrow><annotation encoding="application/x-tex">10\times0.1\,\text{nm}=1\,\text{nm}</annotation></semantics></math>. Any atom width from about 0.05 to 0.5 nm is reasonable, so a width from 0.5 to 5 nm is a good answer.</p>
+          <p><strong>Watch out:</strong> converting <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-10}</annotation></semantics></math> m to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1</mn></mrow><annotation encoding="application/x-tex">0.1</annotation></semantics></math> nm gives the width of <em>one atom</em>. The transistor is ten of them, so you still have to multiply by 10.</p>
+          <p class="grading"><strong>How it was graded:</strong> 0.5 for stating an atom width with a unit; 0.5 for multiplying it by ten; 0.5 for a final width with a length unit that works out to 0.5–5 nm. Any length unit is fine: 1 nm, 10 Å and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-9}</annotation></semantics></math> m all earn it.</p>
+        </div>
+      </details>
+    </div>
+    <div class="frpart">
+      <p class="stem"><strong>(b)</strong> <em>(3.5 pt)</em> Based on your answer above, about how many “ultimate transistors” would fit in the area of a 10 mm × 10 mm chip? Show your calculations to perform the estimate. As per usual, you may treat each transistor as a square.</p>
+      <details class="sol">
+        <summary>Solution<span class="visually-hidden"> for part (b)</span></summary>
+        <div class="sol-body">
+          <p><strong>Route 1: area ÷ area (in meters).</strong> Chip edge: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">mm</mtext><mo>=</mo><mn>10</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext></mrow><annotation encoding="application/x-tex">10\,\text{mm}=10\times10^{-3}\,\text{m}=10^{-2}\,\text{m}</annotation></semantics></math>, so the chip area is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{-2}\,\text{m})^{2}=10^{-4}\,\text{m}^{2}</annotation></semantics></math>. One transistor: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>18</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{-9}\,\text{m})^{2}=10^{-18}\,\text{m}^{2}</annotation></semantics></math>. Count: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup><mo>÷</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>18</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>14</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}\div10^{-18}=10^{14}</annotation></semantics></math> transistors.</p>
+          <p><strong>Route 2: count along one edge, then square.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">mm</mtext><mo>=</mo><msup><mn>10</mn><mrow><mn>7</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">nm</mtext></mrow><annotation encoding="application/x-tex">10\,\text{mm}=10^{7}\,\text{nm}</annotation></semantics></math>, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>7</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{7}</annotation></semantics></math> transistors fit along one edge, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mn>7</mn></mrow></msup><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>14</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{7})^{2}=10^{14}</annotation></semantics></math> fit on the chip.</p>
+          <p><strong>Does it make sense?</strong> A modern chip holds roughly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{10}</annotation></semantics></math> transistors, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>14</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{14}</annotation></semantics></math> ultimate transistors is about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{4}</annotation></semantics></math> times more. That is plausible for transistors about 100 times narrower. An answer below 1, or one carrying m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>, is a sign the division ran the wrong way or the units did not cancel.</p>
+          <p class="grading"><strong>How it was graded:</strong> 0.75 for getting the 10 mm chip size into the right units; 0.5 for using your own part-(a) transistor size in the division; 1.5 for accounting for <em>both</em> dimensions (squaring); 0.75 for a final answer that is a plain count, greater than one, with no units. A mistake was charged once, where it happened. Later steps were graded against <em>your</em> numbers, so a wrong width in (a) did not cost you again in (b).</p>
+        </div>
+      </details>
+    </div>
+    <div class="frpart">
+      <p class="stem"><strong>(c)</strong> <em>(1 extra-credit pt)</em> <strong>Extra credit.</strong> About how many orders of magnitude smaller is the <u>area</u> of one “ultimate transistor” than the <u>area</u> of a transistor built today? <strong>Clearly state the width you assume for a transistor built today.</strong></p>
+      <details class="sol">
+        <summary>Solution<span class="visually-hidden"> for part (c)</span></summary>
+        <div class="sol-body">
+          <p>Assume today’s transistor is about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">100</annotation></semantics></math> nm wide. Its area is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>100</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">nm</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>4</mn></mrow></msup><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">nm</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(100\,\text{nm})^{2}=10^{4}\,\text{nm}^{2}</annotation></semantics></math>; the ultimate transistor’s is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">nm</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><mn>1</mn><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">nm</mtext><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(1\,\text{nm})^{2}=1\,\text{nm}^{2}</annotation></semantics></math>. Ratio: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{4}</annotation></semantics></math>, so about <strong>4 orders of magnitude</strong> smaller in area.</p>
+          <p><strong>Why not 2?</strong> The widths differ by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{2}</annotation></semantics></math>, but area goes as width squared, so the areas differ by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mn>10</mn><mrow><mn>2</mn></mrow></msup><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo>=</mo><msup><mn>10</mn><mrow><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(10^{2})^{2}=10^{4}</annotation></semantics></math>. Comparing widths instead of areas halves the exponent.</p>
+          <p class="grading"><strong>How it was graded:</strong> 0.25 for stating today’s transistor width with a unit (anything from 1 nm to 10 µm was accepted); 0.75 for comparing areas and getting an order-of-magnitude count that follows from your own two widths. Comparing widths only earned 0.25 of that. Extra credit can only add to your score.</p>
+        </div>
+      </details>
+    </div>
+</section>
+<section id="tips" aria-labelledby="tips-h">
+  <h2 id="tips-h">What tripped people up</h2>
+  <p>The slips that cost the most points across the class, most common first.
+  If one of these is yours, it is worth redoing that question from scratch.</p>
+  <ul class="mistakes">
+  <li><strong>Converting 10 mm to meters.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mspace width="0.167em"></mspace><mtext mathvariant="normal">mm</mtext><mo>=</mo><mn>10</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mspace width="0.167em"></mspace><mtext mathvariant="normal">m</mtext><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10\,\text{mm}=10\times10^{-3}\,\text{m}=10^{-2}</annotation></semantics></math> m, not <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math> m. Losing that factor of 10 (or squaring it into a factor of 100) was the most common slip in part (b).</li>
+  <li><strong>Estimating a log that falls between powers of ten.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>30</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(30)</annotation></semantics></math> is not 1.2. Split it into <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>+</mo><mi>log</mi><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(3)+\log(10)</annotation></semantics></math>, and remember that 3 is roughly halfway across a decade.</li>
+  <li><strong>Getting a width from an area.</strong> Once you have the total area of a square, take the square root. Writing the area’s number down with a length unit was the usual wrong answer on the width questions.</li>
+  <li><strong>The “ten atoms” step.</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-10}</annotation></semantics></math> m <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">=0.1</annotation></semantics></math> nm is one atom. The transistor is ten atoms, so multiply by 10.</li>
+  <li><strong>Checking the answer.</strong> A count of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math> transistors, or a count in m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mrow><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">^{2}</annotation></semantics></math>, cannot be right. A ten-second sanity check catches an upside-down division.</li>
+  <li><strong>Areas in part (c).</strong> The question compares <em>areas</em>. Squaring both widths turns “2 orders of magnitude” into the correct “4.”</li>
+  </ul>
+</section>
+<footer class="foot">
+<p>Still stuck? Bring it to office hours. If a
+question felt unfair rather than just hard, say so — that is useful information
+for me.</p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+}());
+</script>
+</body>
+</html>
