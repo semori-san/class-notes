@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 4 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 4 — after-quiz review</h1>
+<p>Quiz 4 was given on Friday, September 18, 2026. Everyone got the same
+booklet — there were no scrambled versions — so the answer letters below
+are the same for the whole class.</p>
+<p>Questions 1–4 are multiple choice (1 point each, filled bubble).
+Question 5 is a sketch plus a short explanation (2 points), Question 6
+is a free-response problem worth 4 points graded with partial credit,
+and Question 7 is worth 1 extra-credit point. Scores are out of 10 (up
+to 11 with extra credit).</p>
+<p>Every solution starts hidden — work the question yourself first, then
+open the <strong>Solution</strong> strip beneath it to check your answer
+and read the reasoning. Question 6 has a separate strip for each of its
+three parts, so you can check part (a) without spoiling (b) and (c). For
+the multiple-choice questions, the correct choice highlights in green
+while the strip is open.</p>
+<p>Questions 1–3 share one list of choices and ask about one idea from
+three sides: the exponent is a pure number, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+carries inverse time, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">\tau = 1/r</annotation></semantics></math>
+carries time.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#q6">6</a><a href="#q7">7</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 4 — September 18, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(1 pt)</strong> A plausible physical unit for the product
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+(decay constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+multiplied by time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>)
+in the exponential decay function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>
+is</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>nanometers</li>
+<li>inverse nanometers</li>
+<li>none of the above</li>
+</ol>
+<details class="sol" data-answer="E">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: E.</strong> none of the above</p>
+<p class="why"><strong>Why:</strong> An exponent has to be a <strong>pure number</strong> — no unit at
+all. You can see why from the series in Question 6:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mn>1</mn><mo>−</mo><mi>r</mi><mi>t</mi><mo>+</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>−</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">e^{-rt} = 1 - rt + \tfrac{1}{2}(rt)^{2} - \cdots</annotation></semantics></math></p>
+<p>You cannot add the pure number
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+to something measured in seconds, so every power of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+— and therefore
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+itself — must be dimensionless. None of A–D is dimensionless, so the
+answer is E.</p>
+<p class="trap"><strong>Watch out:</strong> choice A is the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+alone; multiplying by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+is exactly what cancels the seconds. Choice B is the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+alone (Question 2) — in the <em>product</em> the units cancel,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mtext mathvariant="normal">s</mtext><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">s</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(1/\text{s})(\text{s}) = 1</annotation></semantics></math>.
+Choices C and D bring in a length, which nothing in a decay-in-time
+problem supplies; inverse nanometers would be the unit of a decay
+constant for decay in <em>space</em>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>x</mi><mi>/</mi><mi>λ</mi></mrow></msup><annotation encoding="application/x-tex">e^{-x/\lambda}</annotation></semantics></math>,
+and even there it is the constant, not the exponent, that carries
+it.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(1 pt)</strong> If time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is measured in seconds, then the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>
+must be</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>nanometers</li>
+<li>inverse nanometers</li>
+<li>none of the above</li>
+</ol>
+<details class="sol" data-answer="B">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: B.</strong> inverse seconds</p>
+<p class="why"><strong>Why:</strong> From Question 1,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+has no unit. If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is in seconds,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+must cancel them:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>r</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo stretchy="false" form="prefix">[</mo><mi>t</mi><mo stretchy="false" form="postfix">]</mo></mrow></mfrac><mo>=</mo><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">[r] = \frac{1}{[t]} = \text{s}^{-1}.</annotation></semantics></math></p>
+<p>Read it as “the fraction lost per second.”</p>
+<p class="trap"><strong>Watch out:</strong> choice A would make
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+come out in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{s}^{2}</annotation></semantics></math>
+— still not a pure number, which contradicts Question 1. Choice C is a
+length;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+sets how fast something decays in <em>time</em>. Choice D has the right
+<em>form</em> for a decay constant (one over the variable in the
+exponent) but the wrong variable — it goes with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>x</mi><mi>/</mi><mi>λ</mi></mrow></msup><annotation encoding="application/x-tex">e^{-x/\lambda}</annotation></semantics></math>.
+Choice E: inverse seconds <em>is</em> listed, as B. Answering E here and
+E in Question 1 is worth a second look — it is precisely because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+has no unit that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+must carry the inverse of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>’s
+unit.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(1 pt)</strong> The decay
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>
+can also be written as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>t</mi><mi>/</mi><mi>τ</mi></mrow></msup><annotation encoding="application/x-tex">e^{-t/\tau}</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+is called the decay time. If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is measured in seconds, then the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+must be</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>nanometers</li>
+<li>inverse nanometers</li>
+<li>none of the above</li>
+</ol>
+<details class="sol" data-answer="A">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: A.</strong> seconds</p>
+<p class="why"><strong>Why:</strong> Now the constant <strong>divides</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+instead of multiplying it. For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>/</mi><mi>τ</mi></mrow><annotation encoding="application/x-tex">t/\tau</annotation></semantics></math>
+to be a pure number,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+must have the <em>same</em> unit as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.
+Comparing the two forms,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mi>−</mi><mi>t</mi><mi>/</mi><mi>τ</mi></mrow></msup><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>τ</mi><mo>=</mo><mfrac><mn>1</mn><mi>r</mi></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mn>1</mn><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mfrac><mo>=</mo><mtext mathvariant="normal">s</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">e^{-rt} = e^{-t/\tau} \quad\Longrightarrow\quad \tau = \frac{1}{r}, \qquad \frac{1}{\text{s}^{-1}} = \text{s}.</annotation></semantics></math></p>
+<p>That is why
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+is called the decay <em>time</em>: after
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">t = \tau</annotation></semantics></math>
+the quantity has fallen to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>e</mi><mo>≈</mo><mn>37</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">1/e \approx 37\%</annotation></semantics></math>
+of its starting value.</p>
+<p class="trap"><strong>Watch out:</strong> choice B is the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>,
+carried over from Question 2 — the classic
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>/<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+swap. Because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">\tau = 1/r</annotation></semantics></math>,
+their units are reciprocals too. Choice C is a decay <em>length</em>,
+which belongs to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>x</mi><mi>/</mi><mi>λ</mi></mrow></msup><annotation encoding="application/x-tex">e^{-x/\lambda}</annotation></semantics></math>.
+Choice D is wrong on both counts. Choice E: seconds <em>is</em> listed,
+as A. Of the three questions, this is the one where the constant has the
+same unit as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q4">
+<p class="stem"><strong>4.</strong> <strong>(1 pt)</strong> In the function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi><msup><mi>z</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">a + bz^{m}</annotation></semantics></math>,
+the variable is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>;
+the letters
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+are constants. Then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>z</mi></mrow></mfrac></mstyle><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><msup><mi>z</mi><mi>m</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\dfrac{d}{dz}\left(a + bz^{m}\right)</annotation></semantics></math>
+is</p>
+<ol class="choices" type="A">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">b\,z^{m-1}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mspace width="0.167em"></mspace><mi>b</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">m\,b\,z^{m-1}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mi>m</mi><mspace width="0.167em"></mspace><mi>b</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1 + m\,b\,z^{m-1}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>m</mi><mspace width="0.167em"></mspace><mi>b</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">a + m\,b\,z^{m-1}</annotation></semantics></math></li>
+</ol>
+<details class="sol" data-answer="C">
+<summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: C.</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mspace width="0.167em"></mspace><mi>b</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">m\,b\,z^{m-1}</annotation></semantics></math></p>
+<p class="why"><strong>Why:</strong> Treat every letter other than
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+as a number. Then differentiate term by term:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>z</mi></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>z</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><msup><mi>z</mi><mi>m</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>b</mi><mo>⋅</mo><mi>m</mi><mspace width="0.167em"></mspace><msup><mi>z</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dz}(a) = 0, \qquad \frac{d}{dz}\left(bz^{m}\right) = b\cdot m\,z^{m-1}.</annotation></semantics></math></p>
+<p>The constant term disappears, the constant factor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
+rides along unchanged, and the power rule brings the exponent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+down. This is exactly the skill used on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{2}r^{2}t^{2}</annotation></semantics></math>
+in Question 6, where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+plays the role of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>.</p>
+<p class="trap"><strong>Watch out:</strong> choice E is the most common slip: the constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+was carried through instead of differentiated — but
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>z</mi></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{d}{dz}(a) = 0</annotation></semantics></math>.
+Choice D differentiates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+as if it were the variable
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>z</mi></mrow></mfrac><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\frac{d}{dz}z = 1</annotation></semantics></math>).
+Choice B lowers the exponent but forgets to bring it down as a factor.
+Choice A over-applies “constants differentiate to zero”:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><msup><mi>z</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">bz^{m}</annotation></semantics></math>
+genuinely depends on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q5">
+<p class="stem"><strong>5.</strong> <strong>(2 pts)</strong> An object cools in surroundings held at the ambient temperature
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+(say
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><msup><mn>76</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">T_a = 76^{\circ}</annotation></semantics></math>F).
+Its temperature
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+at time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is</p>
+<p class="stem"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">T = Ce^{-rt} + T_a.</annotation></semantics></math></p>
+<ol type="i">
+<li><strong>Sketch</strong> this function for an object that starts
+<em>hotter</em> than its surroundings. Draw and label both axes
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+horizontal,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+vertical), and <strong>label
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math></strong>
+on your sketch. (ii) <strong>Explain</strong> why
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is <em>not</em> the temperature
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+and state what
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is instead.</li>
+</ol>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+<div class="sol-body">
+<p><strong>(i) The sketch.</strong> The curve starts at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>C</mi><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T(0) = C + T_a</annotation></semantics></math>,
+above
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+for a hot object. It falls steeply at first and then more and more
+gently (decreasing, bending upward), and it levels off toward the
+horizontal line
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T = T_a</annotation></semantics></math>
+— which it approaches but never crosses. Draw that line and label it
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>.</p>
+<p>What the sketch is saying: the part that decays is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">Ce^{-rt}</annotation></semantics></math>,
+the <em>difference</em> from the room temperature. That difference dies
+away to zero, leaving
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T \to T_a</annotation></semantics></math>.
+A curve that decays toward the time axis
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">T \to 0</annotation></semantics></math>)
+would describe a room at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>0</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">0^{\circ}</annotation></semantics></math>F.</p>
+<p><strong>(ii) Why
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is not
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(0)</annotation></semantics></math>.</strong>
+Set
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mn>0</mn></msup><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">e^{0} = 1</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>C</mi><mo>⋅</mo><mn>1</mn><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mi>C</mi><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>C</mi><mo>=</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">T(0) = C\cdot 1 + T_a = C + T_a \quad\Longrightarrow\quad C = T(0) - T_a.</annotation></semantics></math></p>
+<p>So
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is the <strong>initial temperature difference</strong> between the
+object and its surroundings — positive for an object that starts hotter
+and cools, negative for one that starts colder and warms. It equals
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(0)</annotation></semantics></math>
+only if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">T_a = 0</annotation></semantics></math>.</p>
+<p><strong>Sanity check with units:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>
+is a pure number (Question 1), so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+must be a temperature, just like
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">Cooling curve T = Ce^(-rt) + T_a</title>
+<desc id="gd1">Temperature falls from 196 degrees F at t = 0, steeply at first and then more and more gently, levelling off toward the dashed horizontal line at the ambient temperature T_a = 76 degrees F, which it approaches but never crosses.</desc>
+<defs>
+<marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr1)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr1)"></line>
+<text x="440" y="204" class="lbl">t (min)</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">T (°F)</text>
+<g class="tick" text-anchor="middle"><line x1="145" y1="196" x2="145" y2="204" class="ax"></line><text x="145" y="217">20</text><line x1="230" y1="196" x2="230" y2="204" class="ax"></line><text x="230" y="217">40</text><line x1="315" y1="196" x2="315" y2="204" class="ax"></line><text x="315" y="217">60</text><line x1="400" y1="196" x2="400" y2="204" class="ax"></line><text x="400" y="217">80</text></g>
+<g class="tick" text-anchor="end"><line x1="56" y1="170.545" x2="64" y2="170.545" class="ax"></line><text x="50" y="174.545">40</text><line x1="56" y1="141.091" x2="64" y2="141.091" class="ax"></line><text x="50" y="145.091">80</text><line x1="56" y1="111.636" x2="64" y2="111.636" class="ax"></line><text x="50" y="115.636">120</text><line x1="56" y1="82.1818" x2="64" y2="82.1818" class="ax"></line><text x="50" y="86.1818">160</text><line x1="56" y1="52.7273" x2="64" y2="52.7273" class="ax"></line><text x="50" y="56.7273">200</text></g>
+<line x1="60" y1="144.036" x2="400" y2="144.036" class="hl dash"></line>
+<text x="332" y="160.036" text-anchor="middle" class="alabel">T_a = 76 °F (the level it approaches)</text>
+<polyline points="60,55.6727 64.25,59.9823 68.5,64.0816 72.75,67.9811 77,71.6903 81.25,75.2187 85.5,78.575 89.75,81.7676 94,84.8044 98.25,87.6932 102.5,90.4411 106.75,93.055 111,95.5414 115.25,97.9065 119.5,100.156 123.75,102.296 128,104.332 132.25,106.268 136.5,108.11 140.75,109.863 145,111.529 149.25,113.115 153.5,114.623 157.75,116.057 162,117.422 166.25,118.72 170.5,119.954 174.75,121.129 179,122.246 183.25,123.309 187.5,124.32 191.75,125.281 196,126.196 200.25,127.066 204.5,127.894 208.75,128.681 213,129.43 217.25,130.142 221.5,130.82 225.75,131.465 230,132.078 234.25,132.661 238.5,133.216 242.75,133.743 247,134.245 251.25,134.723 255.5,135.177 259.75,135.609 264,136.02 268.25,136.411 272.5,136.783 276.75,137.137 281,137.473 285.25,137.793 289.5,138.098 293.75,138.387 298,138.663 302.25,138.925 306.5,139.174 310.75,139.411 315,139.637 319.25,139.852 323.5,140.056 327.75,140.25 332,140.434 336.25,140.61 340.5,140.777 344.75,140.936 349,141.087 353.25,141.231 357.5,141.368 361.75,141.498 366,141.622 370.25,141.74 374.5,141.852 378.75,141.958 383,142.06 387.25,142.156 391.5,142.248 395.75,142.335 400,142.418" class="prof"></polyline>
+<circle cx="60" cy="55.6727" r="5" class="dot"></circle>
+<text x="72.75" y="59.6727" text-anchor="start" class="alabel">T(0) = C + T_a = 196 °F</text>
+<line x1="145" y1="144.036" x2="145" y2="111.529" class="hl"></line>
+<text x="149.25" y="102.693" text-anchor="start" class="alabel">gap = Ce^(-rt), shrinking</text>
+</svg>
+<figcaption>The sketch drawn with the numbers from Question 7: coffee at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>196</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">196^{\circ}</annotation></semantics></math>F
+in a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>76</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">76^{\circ}</annotation></semantics></math>F
+room, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><msup><mn>120</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">C = 120^{\circ}</annotation></semantics></math>F.
+The highlighted gap between the curve and the dashed line is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">Ce^{-rt}</annotation></semantics></math>;
+it shrinks toward zero while
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+levels off at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li class="q" id="q6">
+<p class="stem"><strong>6.</strong> <strong>(4 pts)</strong> You are given</p>
+<p class="stem"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mn>1</mn><mo>−</mo><mi>r</mi><mi>t</mi><mo>+</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup><mo>−</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>6</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>3</mn></msup><mo>+</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">e^{-rt} = 1 - rt + \tfrac{1}{2}r^{2}t^{2} - \tfrac{1}{6}r^{3}t^{3} + \cdots</annotation></semantics></math></p>
+<ol class="parts" type="a">
+<li>
+<p class="partq"><strong>(1.5 pts)</strong> Take the derivative with respect to time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+of each of the four terms
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">-rt</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{2}r^{2}t^{2}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>6</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">-\tfrac{1}{6}r^{3}t^{3}</annotation></semantics></math>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p>Here
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+is a constant — exactly like
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
+in Question 4 — so only the powers of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+change. Each drops by one and the old exponent comes down as a
+factor:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mi>r</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mi>r</mi><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>r</mi><mn>2</mn></msup><mi>t</mi><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>6</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>3</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>−</mi><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dt}(1) = 0, \qquad \frac{d}{dt}(-rt) = -r, \qquad \frac{d}{dt}\left(\tfrac{1}{2}r^{2}t^{2}\right) = r^{2}t, \qquad \frac{d}{dt}\left(-\tfrac{1}{6}r^{3}t^{3}\right) = -\tfrac{1}{2}r^{3}t^{2}.</annotation></semantics></math></p>
+<p><strong>Keep the minus signs.</strong> The alternating signs are what
+make part (b) come out as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>
+rather than
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">+r</annotation></semantics></math>.</p>
+<p><strong>Quick check:</strong> every power of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+went <em>down</em> by one, the constant vanished, and no power of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+changed.</p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(1.5 pts)</strong> Use your answer from (a) to make a case that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\dfrac{d}{dt}\,e^{-rt} = -r\,e^{-rt}</annotation></semantics></math>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p>Add the four derivatives from (a) and factor out
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>−</mo><mi>r</mi><mo>+</mo><msup><mi>r</mi><mn>2</mn></msup><mi>t</mi><mo>−</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>2</mn></msup><mo>=</mo><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mspace width="0.167em"></mspace><mn>1</mn><mo>−</mo><mi>r</mi><mi>t</mi><mo>+</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><msup><mi>r</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">0 - r + r^{2}t - \tfrac{1}{2}r^{3}t^{2} = -r\left[\,1 - rt + \tfrac{1}{2}r^{2}t^{2}\,\right].</annotation></semantics></math></p>
+<p>The bracket is exactly the beginning of the given series for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>.
+So differentiating the series gave back
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>
+times the series:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\dfrac{d}{dt}e^{-rt} = -r\,e^{-rt}</annotation></semantics></math>.</p>
+<p><strong>Why the bracket is one term short:</strong> the given series
+was cut off after the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mn>3</mn></msup><annotation encoding="application/x-tex">t^{3}</annotation></semantics></math>
+term, and differentiating removes the constant. The next term,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>24</mn></mfrac></mstyle><msup><mi>r</mi><mn>4</mn></msup><msup><mi>t</mi><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{24}r^{4}t^{4}</annotation></semantics></math>,
+would differentiate to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>6</mn></mfrac></mstyle><msup><mi>r</mi><mn>4</mn></msup><msup><mi>t</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{6}r^{4}t^{3}</annotation></semantics></math>,
+which is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>
+times the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>6</mn></mfrac></mstyle><msup><mi>r</mi><mn>3</mn></msup><msup><mi>t</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">-\tfrac{1}{6}r^{3}t^{3}</annotation></semantics></math>
+we already had. In general</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mspace width="0.167em"></mspace><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>n</mi></msup></mrow><mrow><mi>n</mi><mi>!</mi></mrow></mfrac><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>!</mi></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\,\frac{(-rt)^{n}}{n!} = -r\,\frac{(-rt)^{n-1}}{(n-1)!},</annotation></semantics></math></p>
+<p>so every term becomes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>
+times the one before it, and the whole series reproduces itself times
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">-r</annotation></semantics></math>.</p>
+<p>Note that the question asks for a case built <strong>from
+(a)</strong>. Quoting the chain rule states the result instead of
+showing it, and checking a single term with a number is an example, not
+a case.</p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(1 pt)</strong> Using the result of (b), show that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T = Ce^{-rt} + T_a</annotation></semantics></math>
+is a solution of the differential equation
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\dfrac{d}{dt}\left[T - T_a\right] = -r\left[T - T_a\right]</annotation></semantics></math>.
+<em>(Hint: recall that we defined
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>T</mi><mo>=</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\Delta T = T - T_a</annotation></semantics></math>.)</em></p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p><strong>Show, don’t solve.</strong> You are handed a candidate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>;
+check that it satisfies the equation.</p>
+<p>Because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+is a constant, subtracting it gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>T</mi><mo>=</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">\Delta T = T - T_a = Ce^{-rt}.</annotation></semantics></math></p>
+<p>Differentiate, pulling the constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+out and using (b):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>C</mi><mspace width="0.167em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mi>C</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\left[T - T_a\right] = C\,\frac{d}{dt}e^{-rt} = C\left(-r\,e^{-rt}\right) = -r\left(Ce^{-rt}\right) = -r\left[T - T_a\right].</annotation></semantics></math></p>
+<p>The last step — recognizing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">Ce^{-rt}</annotation></semantics></math>
+as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+again — is what closes the loop: the left side equals the right side, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T = Ce^{-rt} + T_a</annotation></semantics></math>
+is a solution.</p>
+<p><strong>Equally good:</strong> differentiate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+directly.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>T</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>−</mi><mi>r</mi><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>+</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{dT}{dt} = -rCe^{-rt} + 0</annotation></semantics></math>,
+because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+is constant, and since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo stretchy="false" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mfrac><mrow><mi>d</mi><mi>T</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{d}{dt}[T - T_a] = \frac{dT}{dt}</annotation></semantics></math>,
+the same rewriting finishes it.</p>
+<p><strong>Reading it in words:</strong> the rate at which the
+temperature difference shrinks is proportional to the difference itself
+— the hotter the object compared with the room, the faster it cools.
+That is Newton’s law of cooling.</p>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q7">
+<p class="stem"><strong>7.</strong> <strong>(1 pt)</strong> <strong>Extra credit.</strong> A cup of coffee at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>196</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">196^{\circ}</annotation></semantics></math>F
+is set down in a room at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><msup><mn>76</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">T_a = 76^{\circ}</annotation></semantics></math>F.
+At the instant it is set down it is cooling at a rate of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>6</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">6^{\circ}</annotation></semantics></math>F
+per minute. Using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\dfrac{d}{dt}\left[T - T_a\right] = -r\left[T - T_a\right]</annotation></semantics></math>,
+find
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+and give its unit. <em>(The arithmetic works out without a
+calculator.)</em></p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 7</span></summary>
+<div class="sol-body">
+<p><strong>Set up.</strong> Use the equation at the moment the cup is
+set down. The temperature <em>difference</em> then is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow></msub><mo>=</mo><mn>196</mn><mo>−</mo><mn>76</mn><mo>=</mo><msup><mn>120</mn><mo>∘</mo></msup><mtext mathvariant="normal">F</mtext><mo>,</mo></mrow><annotation encoding="application/x-tex">\left[T - T_a\right]_{t=0} = 196 - 76 = 120^{\circ}\text{F},</annotation></semantics></math></p>
+<p>and it is shrinking at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>6</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">6^{\circ}</annotation></semantics></math>F
+per minute, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo stretchy="false" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mi>−</mi><msup><mn>6</mn><mo>∘</mo></msup><mtext mathvariant="normal">F/min</mtext></mrow><annotation encoding="application/x-tex">\frac{d}{dt}[T - T_a] = -6^{\circ}\text{F/min}</annotation></semantics></math>
+(negative, because it is cooling;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+is constant, so the difference falls at the same rate as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>).</p>
+<p><strong>Solve.</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>6</mn><mspace width="0.222em"></mspace><mfrac><mrow><msup><mi></mi><mo>∘</mo></msup><mtext mathvariant="normal">F</mtext></mrow><mtext mathvariant="normal">min</mtext></mfrac><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">(</mo><msup><mn>120</mn><mo>∘</mo></msup><mtext mathvariant="normal">F</mtext><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>r</mi><mo>=</mo><mfrac><mn>6</mn><mn>120</mn></mfrac><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">min</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mfrac><mn>1</mn><mn>20</mn></mfrac><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">min</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mn>0.05</mn><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">min</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">-6\ \frac{^{\circ}\text{F}}{\text{min}} = -r\,(120^{\circ}\text{F}) \quad\Longrightarrow\quad r = \frac{6}{120}\ \text{min}^{-1} = \frac{1}{20}\ \text{min}^{-1} = 0.05\ \text{min}^{-1}.</annotation></semantics></math></p>
+<p><strong>Check the unit:</strong> the degrees cancel, leaving inverse
+minutes — an inverse time, exactly as Question 2 requires. (Equivalently
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>1200</mn><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1/1200\ \text{s}^{-1}</annotation></semantics></math>.)
+And
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+comes out positive: the minus sign in the equation already says
+“decreasing.”</p>
+<p><strong>Sanity check:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>r</mi><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">\tau = 1/r = 20</annotation></semantics></math>
+minutes, so after about 20 minutes the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>120</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">120^{\circ}</annotation></semantics></math>F
+gap has shrunk to about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>37</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">37\%</annotation></semantics></math>
+of itself — roughly
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>44</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">44^{\circ}</annotation></semantics></math>F
+above the room. Plausible for a cup of coffee.</p>
+<p>Two slips to avoid: using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>196</mn><annotation encoding="application/x-tex">196</annotation></semantics></math>
+instead of the difference
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>120</mn><annotation encoding="application/x-tex">120</annotation></semantics></math>
+(the equation is written in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+throughout), and flipping the fraction to get
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">r = 20</annotation></semantics></math>
+— that is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>,
+in minutes, not
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+</ol>
+</section>
+
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
