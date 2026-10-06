@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Midterm — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Midterm — after-exam review</h1>
+<p>The midterm was given on Monday, October 5, 2026. Everyone got the
+same booklet — there were no scrambled versions — so the answer letters
+below are the same for the whole class.</p>
+<p>Questions 1–5 are multiple choice (1 point each, filled bubble), and
+so is part (a) of Question 6. Questions 6–8 are free response, graded
+with partial credit, for a total of <strong>20 points</strong>.
+Questions 9 and 10 are <strong>extra credit</strong>, 1.5 points each;
+they only add to your score.</p>
+<p>Every solution starts hidden — work the question yourself first, then
+open the <strong>Solution</strong> strip beneath it to check your answer
+and read the reasoning. For the multiple-choice questions, the correct
+choice highlights in green while the strip is open.</p>
+<p>The exam pulls together the first half of the course: units inside
+exponentials and cosines (Questions 1–5), the shifted variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+and its solution (Question 6), the series argument for a derivative
+(Question 7), and reading and critiquing a real result (Question 8).</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Midterm — October 5, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(1 pt)</strong> Questions 1–5 refer to the damped oscillation
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo>+</mo><mi>δ</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{-\gamma t}\cos(\omega t + \delta),</annotation></semantics></math>
+where time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is measured in seconds and the displacement
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+is measured in mm.</p>
+<p class="stem">The appropriate unit for the <strong>decay rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></strong>
+is</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>mm</li>
+<li>inverse mm</li>
+<li>unitless</li>
+</ol>
+<details class="sol" data-answer="B">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: B.</strong> inverse seconds</p>
+<p class="why"><strong>Why:</strong> The exponent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math>
+must be a pure number (Question 2), and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is in seconds, so
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>γ</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo stretchy="false" form="prefix">[</mo><mi>t</mi><mo stretchy="false" form="postfix">]</mo></mrow></mfrac><mo>=</mo><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">[\gamma] = \frac{1}{[t]} = \text{s}^{-1}.</annotation></semantics></math>
+It is the same as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>
+on Quiz 4.</p>
+<p class="trap"><strong>Watch out:</strong> Choice A is the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+— and of the decay <em>time</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">\tau = 1/\gamma</annotation></semantics></math>
+— not of the rate; it would make
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math>
+come out in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{s}^{2}</annotation></semantics></math>,
+which cannot sit in an exponent. Choice C: the length lives in the
+amplitude
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>,
+outside the exponential. Choice D has the right <em>form</em> for a
+decay constant (one over the variable in the exponent) but the wrong
+variable: inverse mm would go with decay in space,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>x</mi><mi>/</mi><mi>λ</mi></mrow></msup><annotation encoding="application/x-tex">e^{-x/\lambda}</annotation></semantics></math>.
+Choice E: only the <em>product</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math>
+is unitless;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+itself has to cancel the second.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(1 pt)</strong> The appropriate unit for the <strong>product
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math></strong>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-\gamma t}</annotation></semantics></math>
+is</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>mm</li>
+<li>inverse mm</li>
+<li>unitless</li>
+</ol>
+<details class="sol" data-answer="E">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: E.</strong> unitless</p>
+<p class="why"><strong>Why:</strong> An exponent must be a pure number. From the series
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><mo>=</mo><mn>1</mn><mo>−</mo><mi>γ</mi><mi>t</mi><mo>+</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false" form="prefix">(</mo><mi>γ</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>−</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">e^{-\gamma t} = 1 - \gamma t + \tfrac{1}{2}(\gamma t)^{2} - \cdots</annotation></semantics></math>
+you cannot add the pure number
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+to something measured in seconds. In the product the seconds cancel:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mtext mathvariant="normal">s</mtext><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">s</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(1/\text{s})(\text{s}) = 1</annotation></semantics></math>.
+Same idea as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+on Quiz 4 and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\omega t</annotation></semantics></math>
+on Quiz 5.</p>
+<p class="trap"><strong>Watch out:</strong> Choice A is the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+alone and Choice B the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+alone (Question 1); multiplying them is exactly what removes the second.
+Choices C and D are lengths, and nothing in the exponent involves a
+length — the mm lives in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(1 pt)</strong> Which of the following is a widely used “unit” that is actually
+unitless?</p>
+<ol class="choices" type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>mm</li>
+<li>inverse mm</li>
+<li>radians</li>
+</ol>
+<details class="sol" data-answer="E">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: E.</strong> radians</p>
+<p class="why"><strong>Why:</strong> A radian is arc length divided by radius (mm/mm), a pure number. That
+is why the cosine’s argument
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi><mo>+</mo><mi>δ</mi></mrow><annotation encoding="application/x-tex">\omega t + \delta</annotation></semantics></math>
+can be “in radians” and still be dimensionless, and why
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">rad/s</mtext><annotation encoding="application/x-tex">\text{rad/s}</annotation></semantics></math>
+is the same as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-1}</annotation></semantics></math>.</p>
+<p class="trap"><strong>Watch out:</strong> Choices A–D are all real dimensions: time, inverse time, length and
+inverse length.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q4">
+<p class="stem"><strong>4.</strong> <strong>(1 pt)</strong> The parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+is called ________ and its unit should be ________.</p>
+<ol class="choices" type="A">
+<li>period; inverse seconds</li>
+<li>phase constant; seconds</li>
+<li>frequency; unitless</li>
+<li>angular frequency; radians per second</li>
+<li>phase constant; radians</li>
+</ol>
+<details class="sol" data-answer="D">
+<summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: D.</strong> angular frequency; radians per
+second</p>
+<p class="why"><strong>Why:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\omega t</annotation></semantics></math>
+must be an angle in radians and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is in seconds, so
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>ω</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mfrac><mtext mathvariant="normal">rad</mtext><mtext mathvariant="normal">s</mtext></mfrac><mspace width="0.278em"></mspace><mo stretchy="false" form="prefix">(</mo><mo>=</mo><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">[\omega] = \frac{\text{rad}}{\text{s}} \;(= \text{s}^{-1}).</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+is the <strong>angular frequency</strong>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>f</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">\omega = 2\pi f = 2\pi/T</annotation></semantics></math>.
+Same as Quiz 5, Question 2.</p>
+<p class="trap"><strong>Watch out:</strong> Choice A:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+is not the period
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">\omega = 2\pi/T</annotation></semantics></math>),
+and a period is measured in seconds, not inverse seconds. Choices B and
+E describe
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+(Question 5). Choice C: the ordinary frequency is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">f = 1/T</annotation></semantics></math>;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+is the <em>angular</em> frequency, and neither is unitless — a unitless
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+would leave seconds in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\omega t</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q5">
+<p class="stem"><strong>5.</strong> <strong>(1 pt)</strong> The parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+is called ________ and its unit should be ________.</p>
+<ol class="choices" type="A">
+<li>period; inverse seconds</li>
+<li>phase constant; seconds</li>
+<li>frequency; unitless</li>
+<li>angular frequency; radians per second</li>
+<li>phase constant; radians</li>
+</ol>
+<details class="sol" data-answer="E">
+<summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: E.</strong> phase constant; radians</p>
+<p class="why"><strong>Why:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+is <strong>added</strong> to the angle
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\omega t</annotation></semantics></math>
+inside the cosine, so it is itself an angle, in radians. It is the
+<strong>phase constant</strong>: it sets where in the cycle the
+oscillation is at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mi>δ</mi></mrow><annotation encoding="application/x-tex">x(0) = A\cos\delta</annotation></semantics></math>.</p>
+<p class="trap"><strong>Watch out:</strong> Choice B has the right name but the wrong unit: only like quantities
+can be added, and radians plus seconds has no meaning. Choice A:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+is neither a time nor an inverse time. Choice C:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+does not set how fast the motion repeats. Choice D describes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+(Question 4).</p>
+</div>
+</details>
+</li>
+<li class="q" id="q6">
+<p class="stem"><strong>6.</strong> <strong>(5 pts)</strong> A <strong>cold</strong> drink sits in a room with an ambient
+temperature of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><msup><mn>76</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">T_a = 76^{\circ}</annotation></semantics></math>F.
+Initially (at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>),
+the drink’s temperature
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>36</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">36^{\circ}</annotation></semantics></math>F.
+The drink’s temperature as a function of time,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(t)</annotation></semantics></math>,
+follows the first-order differential equation
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mspace width="0.167em"></mspace><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\left[T - T_a\right] = -\,r\left[T - T_a\right],</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r &gt; 0</annotation></semantics></math>
+is the decay rate.</p>
+<ol class="parts" type="a">
+<li>
+<p class="partq"><strong>(1 pt)</strong> In the situation described here, the sign of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+is (fill in one bubble) A. positive, B. negative, C. undefined.</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p><strong>Negative — B.</strong> At
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mn>36</mn><mo>−</mo><mn>76</mn><mo>=</mo><mi>−</mi><msup><mn>40</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">T - T_a = 36 - 76 = -40^{\circ}</annotation></semantics></math>F.
+The drink warms toward
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>76</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">76^{\circ}</annotation></semantics></math>F
+but never passes it, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+stays negative the whole time.</p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(2 pts)</strong> <strong>Sketch</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+vs. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+(<em>not</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+vs. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>).
+<strong>Label</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+= the initial temperature deviation
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p>Put
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+on the vertical axis and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+on the horizontal axis. The curve starts <strong>below</strong> the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis
+at
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mi>−</mi><msup><mn>40</mn><mo>∘</mo></msup><mtext mathvariant="normal">F</mtext></mrow><annotation encoding="application/x-tex">C = T(0) - T_a = -40^{\circ}\text{F}</annotation></semantics></math>
+and rises toward
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+— steepest at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+then flattening out — approaching the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis
+without ever crossing it. Label
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+at that starting point. This is the mirror image of Quiz 4’s hot object,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+was positive and the curve fell toward
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+from above. Two common slips: plotting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+itself (rising from 36 to 76), and calling
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+the initial <em>temperature</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo>=</mo><msup><mn>36</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">T_0 = 36^{\circ}</annotation></semantics></math>F
+—
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is the initial <em>deviation</em> from room temperature.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">The cold drink: T - Ta against t</title>
+<desc id="gd1">A curve that starts below the dashed zero line at C = -40 degrees F at t = 0, rises steeply at first and then more and more slowly, and approaches the zero line (the drink at room temperature) without ever crossing it.</desc>
+<defs>
+<marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+
+<line x1="56" y1="200" x2="434" y2="200" class="ax" marker-end="url(#arr1)"></line>
+<line x1="60" y1="204" x2="60" y2="16" class="ax" marker-end="url(#arr1)"></line>
+<text x="440" y="204" class="lbl">t</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">T - Ta (F)</text>
+<g class="tick" text-anchor="middle"></g>
+<g class="tick" text-anchor="end"></g>
+<line x1="60" y1="65" x2="400" y2="65" class="hl dash"></line>
+<text x="396.6" y="57" text-anchor="end" class="alabel">T - Ta = 0 (room temperature)</text>
+<polyline points="60,173 61.7,170.333 63.4,167.733 65.1,165.196 66.8,162.722 68.5,160.31 70.2,157.956 71.9,155.661 73.6,153.423 75.3,151.24 77,149.11 78.7,147.034 80.4,145.008 82.1,143.033 83.8,141.106 85.5,139.227 87.2,137.395 88.9,135.607 90.6,133.864 92.3,132.164 94,130.505 95.7,128.888 97.4,127.311 99.1,125.772 100.8,124.272 102.5,122.808 104.2,121.381 105.9,119.989 107.6,118.631 109.3,117.307 111,116.016 112.7,114.756 114.4,113.528 116.1,112.329 117.8,111.161 119.5,110.021 121.2,108.91 122.9,107.825 124.6,106.768 126.3,105.737 128,104.731 129.7,103.75 131.4,102.793 133.1,101.86 134.8,100.95 136.5,100.062 138.2,99.1968 139.9,98.3524 141.6,97.529 143.3,96.7258 145,95.9425 146.7,95.1785 148.4,94.4334 150.1,93.7067 151.8,92.9979 153.5,92.3067 155.2,91.6325 156.9,90.9749 158.6,90.3336 160.3,89.7081 162,89.0981 163.7,88.5031 165.4,87.9228 167.1,87.3568 168.8,86.8048 170.5,86.2665 172.2,85.7414 173.9,85.2293 175.6,84.7298 177.3,84.2427 179,83.7676 180.7,83.3042 182.4,82.8523 184.1,82.4115 185.8,81.9816 187.5,81.5623 189.2,81.1534 190.9,80.7546 192.6,80.3656 194.3,79.9862 196,79.6162 197.7,79.2553 199.4,78.9034 201.1,78.5601 202.8,78.2253 204.5,77.8988 206.2,77.5803 207.9,77.2697 209.6,76.9667 211.3,76.6713 213,76.3831 214.7,76.1021 216.4,75.828 218.1,75.5606 219.8,75.2999 221.5,75.0456 223.2,74.7975 224.9,74.5556 226.6,74.3197 228.3,74.0896 230,73.8652 231.7,73.6463 233.4,73.4328 235.1,73.2246 236.8,73.0215 238.5,72.8235 240.2,72.6303 241.9,72.4419 243.6,72.2582 245.3,72.079 247,71.9042 248.7,71.7337 250.4,71.5675 252.1,71.4053 253.8,71.2472 255.5,71.0929 257.2,70.9425 258.9,70.7958 260.6,70.6527 262.3,70.5131 264,70.377 265.7,70.2442 267.4,70.1148 269.1,69.9885 270.8,69.8653 272.5,69.7452 274.2,69.628 275.9,69.5138 277.6,69.4023 279.3,69.2936 281,69.1876 282.7,69.0842 284.4,68.9834 286.1,68.885 287.8,68.7891 289.5,68.6956 291.2,68.6043 292.9,68.5153 294.6,68.4285 296.3,68.3439 298,68.2613 299.7,68.1808 301.4,68.1023 303.1,68.0257 304.8,67.951 306.5,67.8781 308.2,67.807 309.9,67.7377 311.6,67.6701 313.3,67.6042 315,67.5399 316.7,67.4772 318.4,67.416 320.1,67.3564 321.8,67.2982 323.5,67.2415 325.2,67.1861 326.9,67.1322 328.6,67.0795 330.3,67.0282 332,66.9781 333.7,66.9292 335.4,66.8816 337.1,66.8352 338.8,66.7898 340.5,66.7457 342.2,66.7026 343.9,66.6605 345.6,66.6195 347.3,66.5795 349,66.5405 350.7,66.5025 352.4,66.4654 354.1,66.4292 355.8,66.3939 357.5,66.3595 359.2,66.326 360.9,66.2932 362.6,66.2613 364.3,66.2301 366,66.1998 367.7,66.1701 369.4,66.1413 371.1,66.1131 372.8,66.0856 374.5,66.0588 376.2,66.0327 377.9,66.0072 379.6,65.9823 381.3,65.958 383,65.9344 384.7,65.9113 386.4,65.8888 388.1,65.8669 389.8,65.8455 391.5,65.8246 393.2,65.8042 394.9,65.7844 396.6,65.765 398.3,65.7461 400,65.7277" class="prof"></polyline>
+<circle cx="60" cy="173" r="5" class="dot"></circle>
+<text x="68.16" y="177" text-anchor="start" class="alabel">C = -40 F at t = 0</text>
+</svg>
+<figcaption><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mi>−</mi><mn>40</mn><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">T - T_a = -40\,e^{-rt}</annotation></semantics></math>
+(in °F), drawn against
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.
+The dashed line is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">T - T_a = 0</annotation></semantics></math>,
+the drink at room temperature. The curve starts at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mi>−</mi><mn>40</mn></mrow><annotation encoding="application/x-tex">C = -40</annotation></semantics></math>°F,
+is steepest at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+and rises toward the dashed line without crossing it.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(2 pts)</strong> Write a legitimate solution of the differential equation above, and
+<strong>verify</strong> it by substitution and differentiation.</p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 6</span></summary>
+<div class="sol-body">
+<p><strong>A solution:</strong>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo>=</mo><mi>C</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">i.e.</mtext><mspace width="2.0em"></mspace><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>T</mi><mi>a</mi></msub><mo>+</mo><mi>C</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">T - T_a = C\,e^{-rt}, \qquad\text{i.e.}\qquad T(t) = T_a + C\,e^{-rt},</annotation></semantics></math>
+with any constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+(for this drink
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mi>−</mi><msup><mn>40</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">C = -40^{\circ}</annotation></semantics></math>F,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>76</mn><mo>−</mo><mn>40</mn><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">T = 76 - 40\,e^{-rt}</annotation></semantics></math>).</p>
+<p><strong>Verify.</strong> Left side:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\left[C e^{-rt}\right] = -r\,C e^{-rt}.</annotation></semantics></math>
+Right side:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>r</mi><mspace width="0.167em"></mspace><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">-r\left[T - T_a\right] = -r\,C e^{-rt}.</annotation></semantics></math>
+The two sides are equal, so the solution is legitimate. A verification
+has to <em>differentiate</em>: writing the equation again, or plugging
+in numbers at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>,
+does not check anything. And
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">T = C e^{-rt}</annotation></semantics></math>
+on its own is <strong>not</strong> a solution for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+— the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>a</mi></msub><annotation encoding="application/x-tex">T_a</annotation></semantics></math>
+is what makes the drink approach room temperature.</p>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q7">
+<p class="stem"><strong>7.</strong> <strong>(6 pts)</strong> Just as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{rt}</annotation></semantics></math>
+can be written as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>r</mi><mi>t</mi></mrow></msup><mo>=</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mi>/</mi><mn>2</mn><mi>!</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>3</mn></msup><mi>/</mi><mn>3</mn><mi>!</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>4</mn></msup><mi>/</mi><mn>4</mn><mi>!</mi><mo>+</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">e^{rt} = 1 + (rt) + (rt)^{2}/2! + (rt)^{3}/3! + (rt)^{4}/4! + \cdots</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\cos(\omega t)</annotation></semantics></math>
+can be written as
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>6</mn></msup></mrow><mrow><mn>6</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">\cos(\omega t) = 1 - \frac{(\omega t)^{2}}{2!} + \frac{(\omega t)^{4}}{4!} - \frac{(\omega t)^{6}}{6!} + \cdots</annotation></semantics></math></p>
+<ol class="parts" type="a">
+<li>
+<p class="partq"><strong>(2 pts)</strong> Take the <strong>first</strong> derivative with respect to time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+of each of the four terms
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>6</mn></msup></mrow><mrow><mn>6</mn><mi>!</mi></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">1, \qquad -\frac{(\omega t)^{2}}{2!}, \qquad \frac{(\omega t)^{4}}{4!}, \qquad -\frac{(\omega t)^{6}}{6!}.</annotation></semantics></math></p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>Expand each power,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>n</mi></msup><mo>=</mo><msup><mi>ω</mi><mi>n</mi></msup><msup><mi>t</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">(\omega t)^{n} = \omega^{n}t^{n}</annotation></semantics></math>,
+and use the power rule with every letter except
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+held constant:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mn>1</mn><mo>=</mo><mn>0</mn><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mfrac><mrow><msup><mi>ω</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mfrac><mrow><mn>2</mn><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mi>t</mi></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mi>t</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">\frac{d}{dt}1 = 0, \qquad \frac{d}{dt}\left[-\frac{\omega^{2}t^{2}}{2!}\right] = -\frac{2\,\omega^{2}t}{2!} = -\omega^{2}t,</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mfrac><mrow><mn>4</mn><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>3</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>3</mn></msup></mrow><mrow><mn>3</mn><mi>!</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mfrac><mrow><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>6</mn></msup></mrow><mrow><mn>6</mn><mi>!</mi></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mfrac><mrow><mn>6</mn><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>5</mn></msup></mrow><mrow><mn>6</mn><mi>!</mi></mrow></mfrac><mo>=</mo><mi>−</mi><mfrac><mrow><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>5</mn></msup></mrow><mrow><mn>5</mn><mi>!</mi></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d}{dt}\left[\frac{\omega^{4}t^{4}}{4!}\right] = \frac{4\,\omega^{4}t^{3}}{4!} = \frac{\omega^{4}t^{3}}{3!}, \qquad \frac{d}{dt}\left[-\frac{\omega^{6}t^{6}}{6!}\right] = -\frac{6\,\omega^{6}t^{5}}{6!} = -\frac{\omega^{6}t^{5}}{5!}.</annotation></semantics></math>
+Watch the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>’s:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>=</mo><msup><mi>ω</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">(\omega t)^{2} = \omega^{2}t^{2}</annotation></semantics></math>,
+so its derivative is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msup><mi>ω</mi><mn>2</mn></msup><mi>t</mi></mrow><annotation encoding="application/x-tex">2\omega^{2}t</annotation></semantics></math>,
+not
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">2\omega t</annotation></semantics></math>.
+And bring the exponent down: the derivative of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>4</mn></msup><mi>/</mi><mn>4</mn><mi>!</mi></mrow><annotation encoding="application/x-tex">\omega^{4}t^{4}/4!</annotation></semantics></math>
+is not
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>3</mn></msup><mi>/</mi><mn>4</mn><mi>!</mi></mrow><annotation encoding="application/x-tex">\omega^{4}t^{3}/4!</annotation></semantics></math>.
+Unsimplified factorials
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>3</mn></msup><mi>/</mi><mn>24</mn></mrow><annotation encoding="application/x-tex">4\omega^{4}t^{3}/24</annotation></semantics></math>)
+are perfectly fine.</p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(2 pts)</strong> Take the <strong>second</strong> derivative with respect to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+of each of the same four terms.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>Differentiate the results of (a) once more:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup><mo>,</mo><mspace width="2.0em"></mspace><mfrac><mrow><mn>3</mn><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><mrow><mn>3</mn><mi>!</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><mfrac><mrow><mn>5</mn><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>4</mn></msup></mrow><mrow><mn>5</mn><mi>!</mi></mrow></mfrac><mo>=</mo><mi>−</mi><mfrac><mrow><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">0, \qquad -\omega^{2}, \qquad \frac{3\,\omega^{4}t^{2}}{3!} = \frac{\omega^{4}t^{2}}{2!}, \qquad -\frac{5\,\omega^{6}t^{4}}{5!} = -\frac{\omega^{6}t^{4}}{4!}.</annotation></semantics></math></p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(2 pts)</strong> Using your answer from (b), make a case that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac></mstyle><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\dfrac{d^{2}}{dt^{2}}\cos(\omega t) = -\,\omega^{2}\cos(\omega t)</annotation></semantics></math>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 7</span></summary>
+<div class="sol-body">
+<p>Add the results of (b) and <strong>factor out
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-\omega^{2}</annotation></semantics></math></strong>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mo>+</mo><mfrac><mrow><msup><mi>ω</mi><mn>4</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>−</mo><mfrac><mrow><msup><mi>ω</mi><mn>6</mn></msup><msup><mi>t</mi><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mi>⋯</mi><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>−</mo><mi>⋯</mi><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">-\omega^{2} + \frac{\omega^{4}t^{2}}{2!} - \frac{\omega^{6}t^{4}}{4!} + \cdots = -\omega^{2}\left[1 - \frac{(\omega t)^{2}}{2!} + \frac{(\omega t)^{4}}{4!} - \cdots\right].</annotation></semantics></math>
+The bracket <strong>is the series for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\cos(\omega t)</annotation></semantics></math></strong>,
+so
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d^{2}}{dt^{2}}\cos(\omega t) = -\omega^{2}\cos(\omega t).</annotation></semantics></math>
+Four terms in give three non-zero terms out, because the constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+differentiates to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>;
+the next term of the series,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>8</mn></msup><mi>/</mi><mn>8</mn><mi>!</mi></mrow><annotation encoding="application/x-tex">+(\omega t)^{8}/8!</annotation></semantics></math>,
+supplies the next bracket term, so the pattern continues forever. The
+chain rule
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo>→</mo><mi>−</mi><mi>ω</mi><mrow><mi mathvariant="normal">sin</mi><mo>&#8289;</mo></mrow><mo>→</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mi mathvariant="normal">cos</mi></mrow><annotation encoding="application/x-tex">\cos \to -\omega\sin \to -\omega^{2}\cos</annotation></semantics></math>)
+gives the same answer, but the question asks you to <em>build</em> the
+case from your (b) — that is the point of the series argument (Quizzes 3
+and 4).</p>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q8">
+<p class="stem"><strong>8.</strong> <strong>(4 pts)</strong> You’re supervising an inexperienced intern named Urotas Irome, who is
+quantifying the stiffness
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+of a cantilever. Urotas has measured the oscillation period
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+for 6 different samples with different masses. The dynamics of the
+cantilever is approximated by the undamped harmonic oscillator (a
+second-order differential equation without a damping term)
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mspace width="0.167em"></mspace><mi>z</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mspace width="0.167em"></mspace><mi>z</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\frac{d^{2}}{dt^{2}}\,z(t) = -\,\omega^{2}\,z(t),</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mi>k</mi><mi>/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">\omega^{2} = k/m</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+is the mass of the sample cantilever.</p>
+<ol class="parts" type="a">
+<li>
+<p class="partq"><strong>(2 pts)</strong> As usual,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">\omega = 2\pi/T</annotation></semantics></math>.
+What is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+in terms of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>?</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 8</span></summary>
+<div class="sol-body">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mi>π</mi></mrow><mi>ω</mi></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn><mi>π</mi></mrow><msqrt><mrow><mi>k</mi><mi>/</mi><mi>m</mi></mrow></msqrt></mfrac><mo>=</mo><mn>2</mn><mi>π</mi><msqrt><mfrac><mi>m</mi><mi>k</mi></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">T = \frac{2\pi}{\omega} = \frac{2\pi}{\sqrt{k/m}} = 2\pi\sqrt{\frac{m}{k}}.</annotation></semantics></math>
+One over the square root of a fraction is the square root of the
+<strong>flipped</strong> fraction. Check it: a heavier sample swings
+more slowly (longer
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>,
+as in Urotas’s graph), and a stiffer cantilever faster. It is the twin
+of the pendulum’s
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>2</mn><mi>π</mi><msqrt><mrow><mi>L</mi><mi>/</mi><mi>g</mi></mrow></msqrt></mrow><annotation encoding="application/x-tex">T = 2\pi\sqrt{L/g}</annotation></semantics></math>
+from Quiz 5.</p>
+</div>
+</details>
+</li>
+<li>
+<p class="partq"><strong>(2 pts)</strong> Urotas has given you a graph of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+(vertical axis) against
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+(horizontal axis): six data points at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">m = 1, 2, \ldots, 6</annotation></semantics></math>
+with error bars, a square-root fit curve through them, tick numbers on
+both axes but no units, and a legend reading “Fit result:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>6.762026767</mn></mrow><annotation encoding="application/x-tex">k = 6.762026767</annotation></semantics></math>”.
+What should you tell or advise Urotas?</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 8</span></summary>
+<div class="sol-body">
+<p>Four things are wrong with the <em>report</em>:</p>
+<ol type="1">
+<li>The vertical axis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+has <strong>no unit</strong> (seconds? microseconds?).</li>
+<li>The horizontal axis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+has <strong>no unit</strong> (kg? ng?).</li>
+<li>The fit result
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+has <strong>no unit</strong>.</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>6.762026767</mn></mrow><annotation encoding="application/x-tex">k = 6.762026767</annotation></semantics></math>
+has <strong>ten significant figures and no uncertainty</strong>,
+although the data scatter and carry error bars of several percent.
+Report the fit uncertainty and round to it — something like
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>6.8</mn><mo>±</mo><mn>0.3</mn></mrow><annotation encoding="application/x-tex">k = 6.8 \pm 0.3</annotation></semantics></math>,
+in its unit.</li>
+</ol>
+<p><strong>What is fine:</strong> the data do follow the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mi>m</mi></msqrt><annotation encoding="application/x-tex">\sqrt{m}</annotation></semantics></math>
+trend, and the points carry error bars. “The fit looks good” is not
+advice: the problems are the missing units and the unjustified
+precision. For reference, one consistent set of units is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>s,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+in ng and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+in N/m. The unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+is Question 9.</p>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q9">
+<p class="stem"><strong>9.</strong> <strong>(1.5 pts)</strong> <strong>Extra credit.</strong> What could be an appropriate unit for
+the stiffness
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+in Question 8?</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 9</span></summary>
+<div class="sol-body">
+<p>From
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mi>k</mi><mi>/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">\omega^{2} = k/m</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mi>m</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mo>,</mo><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">[</mo><mi>k</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mtext mathvariant="normal">kg</mtext><mo>⋅</mo><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>2</mn></mrow></msup><mo>=</mo><msup><mtext mathvariant="normal">kg/s</mtext><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">k = m\,\omega^{2}, \qquad [k] = \text{kg}\cdot\text{s}^{-2} = \text{kg/s}^{2}.</annotation></semantics></math>
+Since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">N</mtext><mo>=</mo><mtext mathvariant="normal">kg</mtext><mspace width="0.167em"></mspace><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\text{N} = \text{kg}\,\text{m/s}^{2}</annotation></semantics></math>,
+this is the same as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">N/m</mtext><annotation encoding="application/x-tex">\text{N/m}</annotation></semantics></math>
+— force per unit deflection, as in Hooke’s law
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mi>−</mi><mi>k</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">F = -kz</annotation></semantics></math>.
+Any mass unit over seconds squared (such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">g/s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{g/s}^{2}</annotation></semantics></math>)
+is an appropriate unit too. AFM data sheets quote cantilever stiffness
+in N/m (equivalently nN/nm).</p>
+</div>
+</details>
+</li>
+<li class="q" id="q10">
+<p class="stem"><strong>10.</strong> <strong>(1.5 pts)</strong> <strong>Extra credit.</strong> Consider the differential equation
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mspace width="0.167em"></mspace><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mspace width="0.167em"></mspace><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d^{2}}{dt^{2}}\,x(t) = -\,\omega^{2}\,x(t).</annotation></semantics></math>
+Show that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x(t) = A\cos(\omega t) + x_{0}</annotation></semantics></math>,
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_{0} \neq 0</annotation></semantics></math>,
+is <strong>NOT</strong> a legitimate solution (e.g., by substitution and
+differentiation). How can you modify the differential equation to make
+it a legitimate solution?</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 10</span></summary>
+<div class="sol-body">
+<p><strong>Substitute.</strong> Left side — the constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+differentiates to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>A</mi><mi mathvariant="normal">cos</mi><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d^{2}}{dt^{2}}\left[A\cos(\omega t) + x_{0}\right] = -A\,\omega^{2}\cos(\omega t).</annotation></semantics></math>
+Right side — the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+stays:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">[</mo><mi>A</mi><mi mathvariant="normal">cos</mi><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>x</mi><mn>0</mn></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">-\omega^{2}\left[A\cos(\omega t) + x_{0}\right] = -A\,\omega^{2}\cos(\omega t) - \omega^{2}x_{0}.</annotation></semantics></math>
+The two sides differ by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>x</mi><mn>0</mn></msub><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\omega^{2}x_{0} \neq 0</annotation></semantics></math>,
+so it is <strong>not</strong> a solution.
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+drops out of the left side only — not out of both.)</p>
+<p><strong>Fix the equation</strong>, not the solution: measure the
+displacement from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+— the same move as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+in Question 6:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">[</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">i.e.</mtext><mspace width="2.0em"></mspace><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi><mo>+</mo><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>x</mi><mn>0</mn></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{d^{2}}{dt^{2}}\left[x - x_{0}\right] = -\omega^{2}\left[x - x_{0}\right], \qquad\text{i.e.}\qquad \frac{d^{2}x}{dt^{2}} = -\omega^{2}\left(x - x_{0}\right) = -\omega^{2}x + \omega^{2}x_{0}.</annotation></semantics></math>
+Now both sides equal
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>A</mi><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">-A\omega^{2}\cos(\omega t)</annotation></semantics></math>.
+Physically, the oscillation is about an equilibrium at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+instead of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+— a mass hanging on a vertical spring, for example. Note the
+coefficient: the added term is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\omega^{2}x_{0}</annotation></semantics></math>,
+not just
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth" id="class-results">Class results</h3>
+<p>14 exams were graded.</p>
+<ul>
+<li><strong>Midterm score (out of 20):</strong> average 16.7, median
+17.6</li>
+<li><strong>Multiple choice, Questions 1–5 and 6(a) (out of 6):</strong>
+average 5.9 — nearly everyone got every one</li>
+<li><strong>Free response, Questions 6(b)–8 (out of 14):</strong>
+average 10.8</li>
+<li><strong>Extra credit, Questions 9–10 (out of 3):</strong> average
+1.3</li>
+</ul>
+<h3 class="parth" id="where-the-class-had-the-most-trouble">Where the
+class had the most trouble</h3>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Question 8(b) — the missing units.</strong> Everyone caught
+that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>6.762026767</mn></mrow><annotation encoding="application/x-tex">k = 6.762026767</annotation></semantics></math>
+has far too many digits, and most said
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+has no unit, but only about a third noticed that <strong>neither axis
+has a unit</strong>. A graph whose axes have no units cannot be read:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+in seconds and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+in microseconds are very different experiments. This is the same lesson
+as the intern on Quiz 5.</li>
+<li><strong>Question 6(b) — plotting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>,
+not
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>.</strong>
+Every bubble in 6(a) was right
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+is negative), yet several sketches showed
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+rising from 36 to 76, or a curve above the axis. If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+is negative, its graph lives below the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is the starting value there,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><msup><mn>40</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">-40^{\circ}</annotation></semantics></math>F
+— not the starting temperature.</li>
+<li><strong>Question 10 — fixing the equation.</strong> Most who tried
+showed that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+breaks the equation, but only one wrote a correct modified equation.
+Adding
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>
+alone is not enough — the term is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\omega^{2}x_{0}</annotation></semantics></math>
+— and changing the <em>solution</em> (dropping
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>0</mn></msub><annotation encoding="application/x-tex">x_{0}</annotation></semantics></math>,
+adding a phase constant) does not answer the question.</li>
+<li><strong>Question 7 — the details of the derivatives.</strong> Hold
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+constant and keep it:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">(\omega t)^{2}</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\omega^{2}t^{2}</annotation></semantics></math>.
+Bring the exponent down, keep the minus signs, and remember that the
+derivative of the constant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.
+In (c), factor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-\omega^{2}</annotation></semantics></math>
+out of <em>your</em> (b) — the chain rule alone does not use the
+series.</li>
+<li><strong>Question 6(c) — a solution is a function of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.</strong>
+Plugging numbers in at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
+gives one value, not a solution, and a verification has to
+differentiate.</li>
+</ol>
+<h3 class="parth" id="where-to-review-each-idea">Where to review each
+idea</h3>
+<ul>
+<li><strong>Q1–Q5 (units inside exponentials and cosines):</strong> Quiz
+4, Questions 1–2
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">rt</annotation></semantics></math>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>)
+and Quiz 5, Questions 1–2
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\omega t</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>).</li>
+<li><strong>Q6
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+and the solution):</strong> Quiz 3, Question 5 and Quiz 4, Questions 5–6
+— the same equation with a hot object, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">C &gt; 0</annotation></semantics></math>
+there.</li>
+<li><strong>Q7 (the series argument):</strong> Quiz 3, Question 6 and
+Quiz 4, Question 6 — the same factoring for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{rt}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>r</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-rt}</annotation></semantics></math>,
+one derivative shallower.</li>
+<li><strong>Q8 (the period and the intern):</strong> Quiz 5, Question 5
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mi>g</mi><mi>/</mi><mi>L</mi></mrow><annotation encoding="application/x-tex">\omega^{2} = g/L</annotation></semantics></math>,
+inverting a root) and Question 7 (units and precision of a reported
+result).</li>
+<li><strong>Q9–Q10:</strong> Quiz 5, Question 7 (units of a fitted
+constant), and Question 6 above — the shift
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
+is the first-order version of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x - x_{0}</annotation></semantics></math>.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
