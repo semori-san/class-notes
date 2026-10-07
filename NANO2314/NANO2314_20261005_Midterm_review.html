@@ -117,6 +117,8 @@ math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
 .qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
 
 ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
 p.partq { margin: .1rem 0 .4rem; }
 ol.parts details.sol { margin-top: .45rem; }
 
@@ -370,7 +372,7 @@ where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r &gt; 0</annotation></semantics></math>
 is the decay rate.</p>
 <ol class="parts" type="a">
-<li>
+<li id="q6a">
 <p class="partq"><strong>(1 pt)</strong> In the situation described here, the sign of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
 is (fill in one bubble) A. positive, B. negative, C. undefined.</p>
@@ -388,7 +390,7 @@ stays negative the whole time.</p>
 </div>
 </details>
 </li>
-<li>
+<li id="q6b">
 <p class="partq"><strong>(2 pts)</strong> <strong>Sketch</strong>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">T - T_a</annotation></semantics></math>
 vs. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
@@ -470,7 +472,7 @@ and rises toward the dashed line without crossing it.</figcaption>
 </div>
 </details>
 </li>
-<li>
+<li id="q6c">
 <p class="partq"><strong>(2 pts)</strong> Write a legitimate solution of the differential equation above, and
 <strong>verify</strong> it by substitution and differentiation.</p>
 <details class="sol">
@@ -513,7 +515,7 @@ can be written as
 can be written as
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>4</mn></msup></mrow><mrow><mn>4</mn><mi>!</mi></mrow></mfrac><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>6</mn></msup></mrow><mrow><mn>6</mn><mi>!</mi></mrow></mfrac><mo>+</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">\cos(\omega t) = 1 - \frac{(\omega t)^{2}}{2!} + \frac{(\omega t)^{4}}{4!} - \frac{(\omega t)^{6}}{6!} + \cdots</annotation></semantics></math></p>
 <ol class="parts" type="a">
-<li>
+<li id="q7a">
 <p class="partq"><strong>(2 pts)</strong> Take the <strong>first</strong> derivative with respect to time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
 of each of the four terms
@@ -545,7 +547,7 @@ are perfectly fine.</p>
 </div>
 </details>
 </li>
-<li>
+<li id="q7b">
 <p class="partq"><strong>(2 pts)</strong> Take the <strong>second</strong> derivative with respect to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
 of each of the same four terms.</p>
@@ -557,7 +559,7 @@ of each of the same four terms.</p>
 </div>
 </details>
 </li>
-<li>
+<li id="q7c">
 <p class="partq"><strong>(2 pts)</strong> Using your answer from (b), make a case that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true"><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac></mstyle><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\dfrac{d^{2}}{dt^{2}}\cos(\omega t) = -\,\omega^{2}\cos(\omega t)</annotation></semantics></math>.</p>
 <details class="sol">
@@ -603,7 +605,7 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
 is the mass of the sample cantilever.</p>
 <ol class="parts" type="a">
-<li>
+<li id="q8a">
 <p class="partq"><strong>(2 pts)</strong> As usual,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">\omega = 2\pi/T</annotation></semantics></math>.
 What is
@@ -627,7 +629,7 @@ from Quiz 5.</p>
 </div>
 </details>
 </li>
-<li>
+<li id="q8b">
 <p class="partq"><strong>(2 pts)</strong> Urotas has given you a graph of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
 (vertical axis) against
@@ -833,8 +835,9 @@ Plugging numbers in at
 gives one value, not a solution, and a verification has to
 differentiate.</li>
 </ol>
-<h3 class="parth" id="where-to-review-each-idea">Where to review each
-idea</h3>
+<h3 class="parth"
+id="earlier-quizzes-to-revisit-question-by-question">Earlier quizzes to
+revisit, question by question</h3>
 <ul>
 <li><strong>Q1–Q5 (units inside exponentials and cosines):</strong> Quiz
 4, Questions 1–2
@@ -885,6 +888,19 @@ is the first-order version of
     var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
     if (li) { li.classList.toggle("is-correct", d.open); }
   }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
 
   var btn = document.getElementById("toggle-all");
   if (btn) {
