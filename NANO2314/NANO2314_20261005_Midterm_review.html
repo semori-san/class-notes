@@ -897,10 +897,18 @@ is the first-order version of
     if (!el || el.tagName !== "LI") { return; }
     var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
     for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
-    el.scrollIntoView();
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
   }
   window.addEventListener("hashchange", openFromHash);
   openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
 
   var btn = document.getElementById("toggle-all");
   if (btn) {
