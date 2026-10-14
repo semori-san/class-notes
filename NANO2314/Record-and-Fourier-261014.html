@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scope Trace Digitizer</title><style>body{margin:0}[hidden]{display:none!important}</style></head><body><title>Scope Trace Digitizer</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Record And Fourier Transform</title><style>body{margin:0}[hidden]{display:none!important}</style></head><body><title>Record And Fourier Transform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -7,7 +7,7 @@
 :root{
   --bg:#e8edef; --panel:#fbfcfc; --ink:#15212a; --muted:#56666f; --line:#cbd5d9;
   --accent:#0a6d8e; --accent-ink:#ffffff; --trace:#d81b60; --ok:#2b7a4b; --warn:#9a5600; --err:#b3261e;
-  --field:#ffffff; --screen:#f3f6f7; --soft:#dfe8eb;
+  --field:#ffffff; --screen:#f3f6f7; --soft:#dfe8eb; --err-ink:#ffffff;
   --f-display:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -16,13 +16,13 @@
   :root:not([data-theme="light"]){
     --bg:#0d1417; --panel:#141d21; --ink:#e2e9ec; --muted:#91a2aa; --line:#2a373d;
     --accent:#47c0e0; --accent-ink:#04212b; --trace:#ff5a92; --ok:#5fc68c; --warn:#f0a63c; --err:#ff7b72;
-    --field:#0f171a; --screen:#0f171a; --soft:#1b282e; color-scheme:dark;
+    --field:#0f171a; --screen:#0f171a; --soft:#1b282e; --err-ink:#2a0705; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0d1417; --panel:#141d21; --ink:#e2e9ec; --muted:#91a2aa; --line:#2a373d;
   --accent:#47c0e0; --accent-ink:#04212b; --trace:#ff5a92; --ok:#5fc68c; --warn:#f0a63c; --err:#ff7b72;
-  --field:#0f171a; --screen:#0f171a; --soft:#1b282e; color-scheme:dark;
+  --field:#0f171a; --screen:#0f171a; --soft:#1b282e; --err-ink:#2a0705; color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -148,7 +148,7 @@ h1{font-size:1.75rem}
 .fftctl .field{width:5em;padding:5px 6px}
 .fftctl select.field{width:auto}
 .plots{gap:4px;padding:8px 10px 10px}
-.plot canvas{height:clamp(160px,calc((100vh - 410px) / 2),340px)}
+.plot canvas{height:clamp(130px,calc((100vh - 455px) / 2),330px)}
 .fftline{margin:2px 0 0;display:flex;flex-wrap:wrap;gap:4px 18px;font:500 .8rem var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink)}
 .fftline b{font:500 .78rem var(--f-body);color:var(--muted);margin-right:4px}
 .fftside .sec{padding:12px 14px}
@@ -157,12 +157,31 @@ h1{font-size:1.75rem}
 button.mini{padding:5px 9px;font-size:.78rem;font-weight:500}
 #spec{cursor:crosshair;touch-action:pan-y}
 .zoomband{position:absolute;background:color-mix(in srgb,var(--accent) 18%,transparent);border-inline:1.5px solid var(--accent);pointer-events:none}
+
+.plothead{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:2px 2px 0}
+.plothead .ptitle{margin:0;font:700 1.02rem/1.2 var(--f-display);letter-spacing:.01em;margin-right:4px}
+.plothead .ptitle small{font:500 .8rem var(--f-body);color:var(--muted);margin-left:6px}
+.prange{display:inline-flex;align-items:center;gap:5px;font-size:.82rem;color:var(--muted)}
+.prange .field{width:4.6em;padding:3px 6px;font-size:.82rem}
+.plothead .readout{position:static;margin-left:auto;font-size:.78rem;color:var(--muted)}
+#wave{cursor:crosshair;touch-action:pan-y}
+
+#treset,#freset{background:var(--err);border-color:var(--err);color:var(--err-ink);font-size:1.01rem;font-weight:600;padding:6.5px 12px;border-radius:8px}
+#treset:hover,#freset:hover{filter:brightness(1.1);border-color:var(--err)}
+.plots .plot + .plot{margin-top:2.6rem}
+
+.impctl{display:inline-flex;align-items:center;gap:6px}
+.btn.mini{padding:5px 9px;font-size:.78rem;font-weight:500;border-radius:6px}
+.impbadge{display:inline-flex;align-items:center;gap:2px;font-size:.78rem;background:var(--soft);color:var(--accent);border-radius:999px;padding:2px 2px 2px 10px;max-width:12em}
+.impbadge > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.impbadge .x{border:0;background:transparent;padding:3px 7px;font-size:.78rem;color:var(--muted);border-radius:999px}
+.impbadge .x:hover{color:var(--err)}
 </style>
 
 <div class="wrap">
   <header>
     <div class="brand">
-      <h1>Scope Trace <span>Digitizer</span></h1>
+      <h1>Record And <span>Fourier Transform</span></h1>
       <p class="lede">Record a sound or digitize a scope screenshot, then see its waveform and frequency spectrum together.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Signal source">
@@ -278,35 +297,46 @@ button.mini{padding:5px 9px;font-size:.78rem;font-weight:500}
   </div>
 
   <section class="pane analysis" id="fftbox" aria-label="Waveform and spectrum">
-    <div class="toolbar">
-      <h2 class="ptitle">Waveform and spectrum</h2>
-      <div class="fftctl">
-        <span class="frange"><label for="fmin">From</label> <input id="fmin" class="field" type="number" min="0" step="any" value="0"> <label for="fmax">to</label> <input id="fmax" class="field" type="number" min="1" step="any" value="4000"> Hz <button id="freset" class="mini" title="Back to 0–4000 Hz">Reset</button></span>
-        <label for="fstep">Grid <input id="fstep" class="field" type="number" min="1" step="any" value="220"> Hz</label>
-        <label for="win">Window <select id="win" class="field"><option value="none">None</option><option value="hann">Hann</option></select></label>
-        <label for="zpad">Zero-pad <select id="zpad" class="field"><option value="1">None</option><option value="4">× 4</option><option value="8">× 8</option></select></label>
-        <label class="chk" for="dc"><input id="dc" type="checkbox"> Remove DC</label>
-      </div>
-    </div>
     <div class="fftbody">
       <div class="plots">
-        <div class="plot"><canvas id="wave" aria-label="Waveform plot"></canvas><span class="readout" id="waveread"></span></div>
-        <div class="plot"><canvas id="spec" aria-label="Frequency spectrum plot"></canvas><span class="readout" id="specread"></span></div>
+        <div class="plot">
+          <div class="plothead">
+            <h2 class="ptitle" id="wavetitle">Waveform (time domain)</h2>
+            <span class="prange"><label for="tmin">From</label> <input id="tmin" class="field" type="number" step="any"> <label for="tmax">to</label> <input id="tmax" class="field" type="number" step="any"> ms <button id="treset" class="mini" title="Show the whole window">Reset</button></span>
+            <span class="prange"><label for="tstep">Grid</label> <input id="tstep" class="field" type="number" min="0" step="any"> ms</span>
+            <span class="impctl"><label class="btn mini" for="wfile" title="Open a waveform CSV saved earlier (time, signal)">Import waveform</label><input id="wfile" class="sr" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain"><span class="impbadge" id="wimp" hidden><span id="wimpname"></span><button id="wclose" class="x" aria-label="Close the imported waveform" title="Close the imported waveform">✕</button></span></span>
+            <span class="readout" id="waveread"></span>
+          </div>
+          <canvas id="wave" aria-label="Waveform plot. Drag across it to zoom in time."></canvas>
+        </div>
+        <div class="plot">
+          <div class="plothead">
+            <h2 class="ptitle">Fourier transform (frequency domain)</h2>
+            <span class="prange"><label for="fmin">From</label> <input id="fmin" class="field" type="number" min="0" step="any" value="0"> <label for="fmax">to</label> <input id="fmax" class="field" type="number" min="1" step="any" value="5000"> Hz <button id="freset" class="mini" title="Back to 0–5000 Hz, 500 Hz grid">Reset</button></span>
+            <span class="prange"><label for="fstep">Grid</label> <input id="fstep" class="field" type="number" min="1" step="any" value="500"> Hz</span>
+            <span class="impctl"><label class="btn mini" for="sfile" title="Open a spectrum CSV saved earlier (frequency, magnitude)">Import spectrum</label><input id="sfile" class="sr" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain"><span class="impbadge" id="simp" hidden><span id="simpname"></span><button id="sclose" class="x" aria-label="Close the imported spectrum" title="Close the imported spectrum">✕</button></span></span>
+            <span class="readout" id="specread"></span>
+          </div>
+          <canvas id="spec" aria-label="Frequency spectrum plot. Drag across it to zoom in frequency."></canvas>
+        </div>
         <p class="fftline" id="fftstats"></p>
         <p class="note" id="fftmsg" data-k="warn" hidden></p>
+        <p class="note" id="impmsg" data-k="ok" role="status" hidden></p>
       </div>
       <div class="fftside">
         <div class="sec"><h2>Strongest peaks</h2>
           <div class="peakhead"><span>#</span><span>Frequency</span><span>Magnitude</span><span>Rel.</span></div>
           <ol class="peaks" id="peaks"></ol>
-          <p class="small">Drag across the spectrum to zoom into a frequency range; double-click or press Reset to go back. Magnitude of the FFT, positive frequencies only, as scipy's <code>fft</code> with <code>fftfreq</code>. Peaks are found on the plain FFT; with zero-padding on, each frequency is refined on the finer curve. True resolution is still F<sub>s</sub>/N.</p>
+          <p class="small">Drag across either plot to zoom in; double-click it or press Reset to go back. Magnitude of the FFT, positive frequencies only, as scipy's <code>fft</code> with <code>fftfreq</code>. Each peak frequency is accurate to about one bin width, F<sub>s</sub>/N.</p>
         </div>
         <div class="sec"><h2>Export</h2>
           <div class="actions">
-            <button id="sigcsv" class="primary" disabled>Waveform CSV</button>
+            <button id="expall" class="primary" disabled>Export all</button>
+            <button id="sigcsv" disabled>Waveform CSV</button>
             <button id="fftcsv" disabled>Spectrum CSV</button>
             <button id="fftpng" disabled>Plots PNG</button>
           </div>
+          <p class="small">“Export all” saves the waveform CSV, spectrum CSV and plots PNG together. File names end with the date and time (yymmdd-hhmm).</p>
           <p class="note" id="fftnote" data-k="ok" role="status" hidden></p>
           <details id="sigraw"><summary>Show waveform CSV text</summary>
             <textarea id="sigtext" readonly aria-label="Waveform CSV text"></textarea>
@@ -327,7 +357,7 @@ const SAMPLE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA08AAAJRCAYAAACdlY
 const OFFLINE = true;
 const $ = s => document.querySelector(s);
 const cv = $('#screen'), cx = cv.getContext('2d');
-let S = null, PTS = [], R = null, CSV = '', mode = 'read', dlP = null;
+let S = null, PTS = [], R = null, CSV = '', mode = 'read', dlP = null, IMPW = null, IMPS = null;
 
 const num = (el, def) => { const v = parseFloat(el.value); return isFinite(v) ? v : def; };
 const hex = c => '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
@@ -349,6 +379,7 @@ function loadFile(f) {
   loadURL(URL.createObjectURL(f), f.name, false);
 }
 function setup(img, name, isSample) {
+  resetTime(); clearImports();
   const w = img.naturalWidth, h = img.naturalHeight;
   const oc = document.createElement('canvas'); oc.width = w; oc.height = h;
   const o = oc.getContext('2d', { willReadFrequently: true });
@@ -648,7 +679,7 @@ new MutationObserver(render).observe(document.documentElement, { attributes: tru
 /* ---------- export ---------- */
 function fname() { return S && !S.isSample ? S.name.replace(/\.[^.]+$/, '').replace(/[^\w.-]+/g, '_') + '_trace.csv' : 'scope_trace.csv'; }
 function getDl() {
-  if (OFFLINE) return Promise.resolve({ save: ({ filename, data }) => { const u = URL.createObjectURL(data instanceof Blob ? data : new Blob([data], { type: 'text/csv' })), a = document.createElement('a'); a.href = u; a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); return Promise.resolve({ status: 'saved' }); } });
+  if (OFFLINE) return Promise.resolve({ save: ({ filename, data }) => { const u = URL.createObjectURL(data instanceof Blob ? data : new Blob([data], { type: 'text/csv' })), a = document.createElement('a'); a.href = u; a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 5000); return Promise.resolve({ status: 'saved' }); } });
   if (!dlP) dlP = (async () => { try { return window.claude && window.claude.use ? await window.claude.use('downloads') : null; } catch { return null; } })();
   return dlP;
 }
@@ -657,7 +688,8 @@ $('#dl').addEventListener('click', async () => {
   if (!CSV) return;
   const ns = await getDl();
   if (!ns) { dlP = null; fallback('Downloads are not available in this view. Copy the CSV text below instead.'); return; }
-  try { await ns.save({ filename: fname(), data: CSV }); say('#msg', 'ok', 'Saved ' + fname() + '.'); }
+  const fn = fname().replace(/\.csv$/, '_' + stamp() + '.csv');
+  try { await ns.save({ filename: fn, data: CSV }); say('#msg', 'ok', 'Saved ' + fn + '.'); }
   catch (e) {
     const c = e && e.code;
     if (c === 'declined') say('#msg', 'warn', 'Download cancelled.');
@@ -708,49 +740,37 @@ function dftReal(x) {
 let F = null;
 function updateFFT() {
   F = null;
-  const sig = SRC === 'audio' ? audioSignal() : shotSignal();
-  if (!sig) {
+  const sig = IMPW ? impSignal() : SRC === 'audio' ? audioSignal() : shotSignal();
+  $('#fftmsg').hidden = true;
+  if (sig) {
+    const { t, v } = sig, N = v.length, dt = (t[N - 1] - t[0]) / (N - 1), Fs = 1 / dt;
+    const x = Float64Array.from(v);
+    const B = dftReal(x), half = N >> 1, freqs = new Float64Array(half), mag = new Float64Array(half);
+    for (let k = 0; k < half; k++) { freqs[k] = k / (N * dt); mag[k] = Math.hypot(B.re[k], B.im[k]); }
+    F = { t, v, N, dt, Fs, freqs, mag, peaks: peaksOf(freqs, mag), sig };
+  }
+  if (IMPS) { F = F || { sig: null }; F.freqs = IMPS.f; F.mag = IMPS.m; F.peaks = peaksOf(IMPS.f, IMPS.m); F.impSpec = true; }
+  if (!F) {
     $('#fftstats').innerHTML = ''; $('#peaks').innerHTML = ''; $('#fftmsg').hidden = false;
     $('#fftmsg').textContent = SRC === 'audio' ? 'Open or record audio to see its waveform and spectrum.' : 'The waveform and spectrum appear once a trace has been extracted.';
-    ['#fftpng', '#fftcsv'].forEach(i => $(i).disabled = true); drawFFT(); return;
+    ['#fftpng', '#fftcsv', '#expall'].forEach(i => $(i).disabled = true); drawFFT(); updateSigExport(); return;
   }
-  $('#fftmsg').hidden = true;
-  const { t, v } = sig, N = v.length, dt = (t[N - 1] - t[0]) / (N - 1), Fs = 1 / dt;
-  const x = Float64Array.from(v);
-  if ($('#dc').checked) { let m = 0; for (const q of x) m += q; m /= N; for (let i = 0; i < N; i++) x[i] -= m; }
-  if ($('#win').value === 'hann') for (let i = 0; i < N; i++) x[i] *= 0.5 * (1 - Math.cos(2 * Math.PI * i / (N - 1)));
-  // plain FFT (what the notebook computes) for the peak list
-  const B = dftReal(x), half = N >> 1, mag0 = new Float64Array(half);
-  for (let k = 0; k < half; k++) mag0[k] = Math.hypot(B.re[k], B.im[k]);
-  // curve for the plot: zero-padded if asked
-  const z = +$('#zpad').value || 1; let freqs, mag;
-  if (z > 1) {
-    const xp = new Float64Array(N * z); xp.set(x); const P = dftReal(xp), hp = (N * z) >> 1;
-    freqs = new Float64Array(hp); mag = new Float64Array(hp);
-    for (let k = 0; k < hp; k++) { freqs[k] = k / (N * z * dt); mag[k] = Math.hypot(P.re[k], P.im[k]); }
+  let st;
+  if (F.impSpec) {
+    const n = IMPS.f.length, df = n > 1 ? (IMPS.f[n - 1] - IMPS.f[0]) / (n - 1) : 0;
+    st = [['Imported spectrum', IMPS.name], ['Points', n.toLocaleString()], ['Step', df.toPrecision(5) + ' Hz'], ['Range', `${+IMPS.f[0].toPrecision(5)}–${+IMPS.f[n - 1].toPrecision(6)} Hz`]];
   } else {
-    freqs = new Float64Array(half); mag = mag0;
-    for (let k = 0; k < half; k++) freqs[k] = k / (N * dt);
+    st = [['Sampling rate F<sub>s</sub>', fmtHz(F.Fs)], ['Samples N', F.N.toLocaleString()], ['Length N/F<sub>s</sub>', (F.N * F.dt * 1e3).toFixed(2) + ' ms'],
+      ['Resolution F<sub>s</sub>/N', (F.Fs / F.N).toFixed(4) + ' Hz'], ['Nyquist F<sub>s</sub>/2', fmtHz(F.Fs / 2)]];
   }
-  let mx = 0; for (let k = 1; k < half; k++) mx = Math.max(mx, mag0[k]);
-  const ks = [];
-  for (let k = 1; k < half - 1; k++) if (mag0[k] > mag0[k - 1] && mag0[k] >= mag0[k + 1] && mag0[k] >= 0.1 * mx) ks.push(k);
-  ks.sort((a, b) => mag0[b] - mag0[a]);
-  const peaks = ks.slice(0, 6).map(k => {
-    if (z === 1) return { f: k / (N * dt), m: mag0[k], rel: mag0[k] / mx };
-    let bi = (k - 1) * z; for (let j = (k - 1) * z; j <= Math.min(mag.length - 1, (k + 1) * z); j++) if (mag[j] > mag[bi]) bi = j;
-    return { f: freqs[bi], m: mag[bi], rel: mag0[k] / mx };
-  });
-  F = { t, v, N, dt, Fs, freqs, mag, peaks, sig };
-  const st = [['Sampling rate F<sub>s</sub>', fmtHz(Fs)], ['Samples N', N.toLocaleString()], ['Length N/F<sub>s</sub>', (N * dt * 1e3).toFixed(2) + ' ms'],
-    ['Resolution F<sub>s</sub>/N', (Fs / N).toFixed(4) + ' Hz'], ['Nyquist F<sub>s</sub>/2', fmtHz(Fs / 2)]];
-  $('#fftstats').innerHTML = st.map(([k, val]) => `<span><b>${k}</b>${val}</span>`).join('');
+  $('#fftstats').innerHTML = '';
+  for (const [k, val] of st) { const sp = document.createElement('span'), b = document.createElement('b'); b.innerHTML = k; sp.append(b, document.createTextNode(val)); $('#fftstats').append(sp); }
   const pk = $('#peaks'); pk.innerHTML = '';
-  if (!peaks.length) pk.innerHTML = '<li class="small">No clear peaks.</li>';
-  for (const p of peaks) { const li = document.createElement('li'); li.innerHTML = `<span>${p.f.toFixed(1)} Hz</span><span>${p.m.toPrecision(4)}</span><span>${Math.round(100 * p.rel)}%</span>`; pk.append(li); }
-  if (sig.filled) { $('#fftmsg').hidden = false; $('#fftmsg').textContent = `${sig.filled} missing sample${sig.filled > 1 ? 's were' : ' was'} filled by straight-line interpolation so the samples are evenly spaced.`; }
-  ['#fftpng', '#fftcsv'].forEach(i => $(i).disabled = false);
-  drawFFT();
+  if (!F.peaks.length) pk.innerHTML = '<li class="small">No clear peaks.</li>';
+  for (const p of F.peaks) { const li = document.createElement('li'); li.innerHTML = `<span>${p.f.toFixed(1)} Hz</span><span>${p.m.toPrecision(4)}</span><span>${Math.round(100 * p.rel)}%</span>`; pk.append(li); }
+  if (sig && sig.filled) { $('#fftmsg').hidden = false; $('#fftmsg').textContent = `${sig.filled} missing sample${sig.filled > 1 ? 's were' : ' was'} filled by straight-line interpolation so the samples are evenly spaced.`; }
+  ['#fftpng', '#fftcsv', '#expall'].forEach(i => $(i).disabled = false);
+  drawFFT(); updateSigExport();
 }
 function shotSignal() {
   if (!R || R.length < 8) return null;
@@ -777,9 +797,9 @@ function palette(fixedLight) {
   return { bg: token('--panel'), ink: token('--ink'), muted: token('--muted'), grid: token('--line'), a: token('--accent'), b: token('--trace') };
 }
 function plotXY(ctx, X, Y, W, H, o, pal) {
-  const fs = Math.max(11, Math.min(14, W / 55)), L = X + fs * 4.6, Rr = X + W - fs * 2, T = Y + fs * 2.2, B = Y + H - fs * 3.2;
+  const fs = Math.max(11, Math.min(14, W / 55)), L = X + fs * 4.6, Rr = X + W - fs * 2, T = Y + (o.noTitle ? fs * 0.7 : fs * 2.2), B = Y + H - fs * 3.2;
   ctx.save(); ctx.font = `600 ${fs * 1.1}px "IBM Plex Sans", system-ui, sans-serif`; ctx.fillStyle = pal.ink; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-  ctx.fillText(o.title, L, Y + fs * 1.3);
+  if (!o.noTitle) ctx.fillText(o.title, L, Y + fs * 1.3);
   const sx = q => L + (q - o.x0) / (o.x1 - o.x0) * (Rr - L), sy = q => B - (q - o.y0) / (o.y1 - o.y0) * (B - T);
   ctx.strokeStyle = pal.grid; ctx.lineWidth = 1; ctx.font = `${fs * 0.9}px "IBM Plex Mono", monospace`; ctx.fillStyle = pal.muted;
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -788,7 +808,7 @@ function plotXY(ctx, X, Y, W, H, o, pal) {
   for (const q of o.yt) { const py = Math.round(sy(q)) + .5; ctx.beginPath(); ctx.moveTo(L, py); ctx.lineTo(Rr, py); ctx.stroke(); ctx.fillText(o.yf(q), L - fs * .4, py); }
   ctx.strokeStyle = pal.muted; ctx.strokeRect(L + .5, T + .5, Rr - L, B - T);
   ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText(o.xl, (L + Rr) / 2, Y + H - fs * .2);
-  ctx.save(); ctx.translate(X + fs * 1.1, (T + B) / 2); ctx.rotate(-Math.PI / 2); ctx.textBaseline = 'middle'; ctx.fillText(o.yl, 0, 0); ctx.restore();
+  ctx.save(); ctx.translate(X + fs * 1.1, (T + B) / 2); ctx.rotate(-Math.PI / 2); ctx.textBaseline = 'middle'; { let yl = o.yl; if (ctx.measureText(yl).width > B - T) yl = yl.replace(/\s*\(.*\)\s*$/, ''); ctx.fillText(yl, 0, 0); } ctx.restore();
   ctx.beginPath(); ctx.rect(L, T, Rr - L, B - T); ctx.clip();
   ctx.strokeStyle = o.color; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.beginPath();
   for (let i = 0; i < o.xs.length; i++) { const px = sx(o.xs[i]), py = sy(o.ys[i]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
@@ -799,15 +819,33 @@ function plotXY(ctx, X, Y, W, H, o, pal) {
 }
 function plotSpecs() {
   if (!F) return null;
+  let waveSpec = null;
+  const sig = q => Math.abs(q) < 1e-12 ? '0' : Math.abs(q) >= 1000 ? q.toFixed(0) : +q.toPrecision(4) + '';
+  if (F.sig) {
   const tms = F.t.map(q => q * 1e3);
-  let vmin = Infinity, vmax = -Infinity; for (const q of F.v) { vmin = Math.min(vmin, q); vmax = Math.max(vmax, q); }
+  const tA = tms[0], tB = F.sig.div ? tms[0] + F.sig.div * 10 : tms[tms.length - 1];
+  let t0 = num($('#tmin'), NaN), t1 = num($('#tmax'), NaN);
+  if (!isFinite(t0)) t0 = tA; if (!isFinite(t1)) t1 = tB;
+  t0 = Math.max(tA, t0); t1 = Math.min(tB, t1); if (!(t1 > t0)) { t0 = tA; t1 = tB; }
+  const full = t0 === tA && t1 === tB;
+  let tg = num($('#tstep'), NaN), txt;
+  if (tg > 0 && (t1 - t0) / tg <= 40 && (t1 - t0) / tg >= 1) { txt = []; for (let q = Math.ceil((t0 - tA) / tg - 1e-9) * tg + tA; q <= t1 + 1e-9; q += tg) txt.push(+q.toPrecision(12)); }
+  else if (full && F.sig.div) { tg = F.sig.div; txt = Array.from({ length: 11 }, (_, i) => tA + i * tg); }
+  else { txt = niceTicks(t0, t1, 8).filter(q => q >= t0 - 1e-9 && q <= t1 + 1e-9); tg = txt.length > 1 ? txt[1] - txt[0] : t1 - t0; }
+  F.tview = { tA, tB, tg };
+  let vmin = Infinity, vmax = -Infinity;
+  for (let i = 0; i < tms.length; i++) if (tms[i] >= t0 - 1e-9 && tms[i] <= t1 + 1e-9) { vmin = Math.min(vmin, F.v[i]); vmax = Math.max(vmax, F.v[i]); }
+  if (!isFinite(vmin)) { vmin = -1; vmax = 1; }
   const pad = (vmax - vmin) * 0.08 || 1, yt = niceTicks(vmin - pad, vmax + pad, 5);
-  const ny = F.Fs / 2;
-  let fmax = num($('#fmax'), 4000); if (!(fmax > 0)) fmax = 4000; fmax = Math.min(fmax, ny);
+  waveSpec = { title: (F.sig.wtitle || 'Original waveform') + ' (time domain)', xs: tms, ys: F.v, x0: t0, x1: t1, y0: yt[0], y1: yt[yt.length - 1],
+      xt: txt, yt, xf: sig, yf: sig, xl: F.sig.div ? 'Time from window start (ms)' : 'Time (ms)', yl: F.sig.yl, key: 'a' };
+  } else F.tview = null;
+  const ny = F.impSpec ? F.freqs[F.freqs.length - 1] : F.Fs / 2;
+  let fmax = num($('#fmax'), 5000); if (!(fmax > 0)) fmax = 5000; fmax = Math.min(fmax, ny);
   let fmin = num($('#fmin'), 0); if (!(fmin >= 0)) fmin = 0;
   if (fmin >= fmax) fmin = Math.max(0, fmax - Math.max(1, fmax * 0.01));
   const span = fmax - fmin;
-  let fstep = num($('#fstep'), 220); if (!(fstep > 0) || span / fstep > 40 || span / fstep < 2) fstep = niceTicks(fmin, fmax, 7)[1] - niceTicks(fmin, fmax, 7)[0];
+  let fstep = num($('#fstep'), 500); if (!(fstep > 0) || span / fstep > 40 || span / fstep < 2) fstep = niceTicks(fmin, fmax, 7)[1] - niceTicks(fmin, fmax, 7)[0];
   const xs = [], ys = []; let mmax = 0;
   for (let k = 0; k < F.freqs.length && F.freqs[k] <= fmax * 1.0001; k++) {
     // keep one point either side of the range so the curve reaches the edges
@@ -816,11 +854,9 @@ function plotSpecs() {
   }
   { const k = xs.length ? F.freqs.indexOf(xs[xs.length - 1]) + 1 : -1; if (k > 0 && k < F.freqs.length) { xs.push(F.freqs[k]); ys.push(F.mag[k]); } }
   const myt = niceTicks(0, mmax * 1.05 || 1, 5), xt = []; for (let f = Math.ceil(fmin / fstep - 1e-9) * fstep; f <= fmax + 1e-9; f += fstep) xt.push(+f.toPrecision(12));
-  const sig = q => Math.abs(q) < 1e-12 ? '0' : Math.abs(q) >= 1000 ? q.toFixed(0) : +q.toPrecision(4) + '';
   return [
-    { title: F.sig.wtitle || 'Original waveform', xs: tms, ys: F.v, x0: tms[0], x1: F.sig.div ? tms[0] + F.sig.div * 10 : tms[tms.length - 1], y0: yt[0], y1: yt[yt.length - 1],
-      xt: F.sig.div ? Array.from({ length: 11 }, (_, i) => tms[0] + i * F.sig.div) : niceTicks(tms[0], tms[tms.length - 1], 8), yt, xf: sig, yf: sig, xl: F.sig.div ? 'Time from window start (ms)' : 'Time (ms)', yl: F.sig.yl, key: 'a' },
-    { title: 'Fourier transform (frequency spectrum)', xs, ys, x0: fmin, x1: fmax, y0: 0, y1: myt[myt.length - 1], xt, yt: myt, xf: sig, yf: sig, xl: 'Frequency (Hz)', yl: 'Magnitude', key: 'b',
+    waveSpec,
+    { title: 'Fourier transform (frequency domain)' + (F.impSpec ? ' · imported' : ''), xs, ys, x0: fmin, x1: fmax, y0: 0, y1: myt[myt.length - 1], xt, yt: myt, xf: sig, yf: sig, xl: 'Frequency (Hz)', yl: 'Magnitude', key: 'b',
       marks: F.peaks.filter(p => p.f >= fmin && p.f <= fmax).map(p => [p.f, p.m]) }
   ];
 }
@@ -831,79 +867,112 @@ function drawFFT() {
     const c = $(id), r = window.devicePixelRatio || 1, W = c.clientWidth || 600, H = c.clientHeight || 260;
     c.width = Math.round(W * r); c.height = Math.round(H * r);
     const ctx = c.getContext('2d'); ctx.setTransform(r, 0, 0, r, 0, 0); ctx.clearRect(0, 0, W, H);
-    if (!specs) { plotMaps[id] = null; return; }
-    const o = specs[i]; o.color = pal[o.key];
+    const o = specs && specs[i];
+    if (!o) {
+      plotMaps[id] = null;
+      if (specs) { ctx.fillStyle = token('--muted'); ctx.font = '14px "IBM Plex Sans", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('No waveform. The spectrum shown is an imported file.', W / 2, H / 2); }
+      return;
+    } o.color = pal[o.key]; o.noTitle = true;
+    if (H < 200 && o.yt.length > 4) o.yt = o.yt.filter((_, j) => j % 2 === 0 || j === o.yt.length - 1);
     plotMaps[id] = { o, m: plotXY(ctx, 0, 0, W, H, o, pal) };
   });
+  const wt = $('#wavetitle'), g = x => +(+x).toPrecision(4);
+  if (specs && F.tview) {
+    wt.textContent = SRC === 'shot' && !IMPW ? 'Digitized waveform (time domain) ' : 'Waveform (time domain) ';
+    const sm = document.createElement('small'); sm.textContent = `${g(F.tview.tB - F.tview.tA)} ms · ${g(F.tview.tg)} ms/div`; wt.append(sm);
+    $('#tmin').placeholder = g(F.tview.tA); $('#tmax').placeholder = g(F.tview.tB); $('#tstep').placeholder = g(F.tview.tg);
+  } else wt.textContent = 'Waveform (time domain)';
 }
+function resetTime() { ['#tmin', '#tmax', '#tstep'].forEach(i => $(i).value = ''); }
 function hoverPlot(id, e) {
   const p = plotMaps[id], out = $(id === '#wave' ? '#waveread' : '#specread'); if (!p) { out.textContent = ''; return; }
   const r = $(id).getBoundingClientRect(), px = e.clientX - r.left, { o, m } = p;
   if (px < m.L || px > m.Rr) { out.textContent = ''; return; }
   const xv = o.x0 + (px - m.L) / (m.Rr - m.L) * (o.x1 - o.x0); let bi = 0, bd = Infinity;
   for (let i = 0; i < o.xs.length; i++) { const d = Math.abs(o.xs[i] - xv); if (d < bd) { bd = d; bi = i; } }
-  out.textContent = id === '#wave' ? `${o.xs[bi].toFixed(3)} ms   ${o.ys[bi].toFixed(4)} ${F.sig.unit}` : `${o.xs[bi].toFixed(1)} Hz   magnitude ${o.ys[bi].toPrecision(4)}`;
+  out.textContent = id === '#wave' ? `${o.xs[bi].toFixed(3)} ms   ${o.ys[bi].toFixed(4)} ${F.sig ? F.sig.unit : ''}` : `${o.xs[bi].toFixed(1)} Hz   magnitude ${o.ys[bi].toPrecision(4)}`;
 }
 ['#wave', '#spec'].forEach(id => { $(id).addEventListener('mousemove', e => hoverPlot(id, e)); $(id).addEventListener('mouseleave', () => { $(id === '#wave' ? '#waveread' : '#specread').textContent = ''; }); });
 ['#fmin', '#fmax', '#fstep'].forEach(id => $(id).addEventListener('input', () => later(drawFFT)));
-$('#freset').addEventListener('click', () => { $('#fmin').value = 0; $('#fmax').value = 4000; $('#fstep').value = 220; drawFFT(); });
+$('#freset').addEventListener('click', () => { $('#fmin').value = 0; $('#fmax').value = 5000; $('#fstep').value = 500; drawFFT(); });
 
-/* drag across the spectrum to zoom into that frequency range */
-(() => {
-  const c = $('#spec'), band = document.createElement('div'); band.className = 'zoomband'; band.hidden = true; c.parentElement.append(band);
+/* drag across a plot to zoom into that range */
+function zoomable(id, minSel, maxSel, onReset) {
+  const c = $(id), band = document.createElement('div'); band.className = 'zoomband'; band.hidden = true; c.parentElement.append(band);
   let x0 = null;
-  const fAt = px => { const p = plotMaps['#spec']; if (!p) return null; const { o, m } = p; const cl = Math.max(m.L, Math.min(m.Rr, px)); return o.x0 + (cl - m.L) / (m.Rr - m.L) * (o.x1 - o.x0); };
+  const vAt = px => { const p = plotMaps[id]; if (!p) return null; const { o, m } = p; const cl = Math.max(m.L, Math.min(m.Rr, px)); return o.x0 + (cl - m.L) / (m.Rr - m.L) * (o.x1 - o.x0); };
   const local = e => e.clientX - c.getBoundingClientRect().left;
-  c.addEventListener('pointerdown', e => { const p = plotMaps['#spec']; if (!p || e.button !== 0) return; const px = local(e); if (px < p.m.L || px > p.m.Rr) return; x0 = px; c.setPointerCapture?.(e.pointerId); band.hidden = true; });
+  c.addEventListener('pointerdown', e => { const p = plotMaps[id]; if (!p || e.button !== 0) return; const px = local(e); if (px < p.m.L || px > p.m.Rr) return; x0 = px; c.setPointerCapture?.(e.pointerId); band.hidden = true; });
   c.addEventListener('pointermove', e => {
-    if (x0 === null) return; const p = plotMaps['#spec'], px = Math.max(p.m.L, Math.min(p.m.Rr, local(e)));
+    if (x0 === null) return; const p = plotMaps[id], px = Math.max(p.m.L, Math.min(p.m.Rr, local(e)));
     if (Math.abs(px - x0) < 4) { band.hidden = true; return; }
-    band.hidden = false; band.style.left = Math.min(px, x0) + 'px'; band.style.width = Math.abs(px - x0) + 'px'; band.style.top = p.m.T + 'px'; band.style.height = (p.m.B - p.m.T) + 'px';
+    band.hidden = false; band.style.left = (c.offsetLeft + Math.min(px, x0)) + 'px'; band.style.width = Math.abs(px - x0) + 'px';
+    band.style.top = (c.offsetTop + p.m.T) + 'px'; band.style.height = (p.m.B - p.m.T) + 'px';
   });
-  const end = e => {
-    if (x0 === null) return; const px = local(e), a = fAt(Math.min(px, x0)), b = fAt(Math.max(px, x0)); const moved = Math.abs(px - x0) >= 4; x0 = null; band.hidden = true;
+  c.addEventListener('pointerup', e => {
+    if (x0 === null) return; const px = local(e), a = vAt(Math.min(px, x0)), b = vAt(Math.max(px, x0)), moved = Math.abs(px - x0) >= 4; x0 = null; band.hidden = true;
     if (!moved || a === null || !(b > a)) return;
-    const dec = (b - a) >= 100 ? 0 : (b - a) >= 10 ? 1 : 2;
-    $('#fmin').value = +a.toFixed(dec); $('#fmax').value = +b.toFixed(dec); drawFFT();
-  };
-  c.addEventListener('pointerup', end); c.addEventListener('pointercancel', () => { x0 = null; band.hidden = true; });
-  c.addEventListener('dblclick', () => $('#freset').click());
-})();
-['#dc', '#win', '#zpad'].forEach(id => $(id).addEventListener('change', updateFFT));
-window.addEventListener('resize', () => later(drawFFT));
-new MutationObserver(drawFFT).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', drawFFT);
-
-function baseName() { return F ? F.sig.base : 'signal'; }
-async function offer(filename, data, label) {
-  const ns = await getDl();
-  if (!ns) { dlP = null; say('#fftnote', 'warn', 'Downloads are not available in this view.' + (label === 'waveform CSV' ? ' Copy the CSV text below instead.' : '')); if (label === 'waveform CSV') $('#sigraw').open = true; return; }
-  try { await ns.save({ filename, data }); say('#fftnote', 'ok', 'Saved ' + filename + '.'); }
-  catch (e) { const c = e && e.code; say('#fftnote', 'warn', c === 'declined' ? 'Download cancelled.' : c === 'rate_limited' ? 'A save prompt is already open. Finish it, then try again.' : 'The ' + label + ' could not be saved.'); }
+    const dec = Math.max(0, Math.min(6, 2 - Math.floor(Math.log10(b - a))));
+    $(minSel).value = +a.toFixed(dec); $(maxSel).value = +b.toFixed(dec); drawFFT();
+  });
+  c.addEventListener('pointercancel', () => { x0 = null; band.hidden = true; });
+  c.addEventListener('dblclick', onReset);
 }
-$('#fftcsv').addEventListener('click', () => {
+zoomable('#spec', '#fmin', '#fmax', () => $('#freset').click());
+zoomable('#wave', '#tmin', '#tmax', () => $('#treset').click());
+['#tmin', '#tmax', '#tstep'].forEach(id => $(id).addEventListener('input', () => later(drawFFT)));
+$('#treset').addEventListener('click', () => { resetTime(); drawFFT(); });
+
+
+
+function baseName() { return F && F.sig ? F.sig.base : IMPS ? IMPS.base : 'signal'; }
+async function offer(filename, data, label, quiet) {
+  const ns = await getDl();
+  if (!ns) { dlP = null; if (!quiet) { say('#fftnote', 'warn', 'Downloads are not available in this view.' + (label === 'waveform CSV' ? ' Copy the CSV text below instead.' : '')); if (label === 'waveform CSV') $('#sigraw').open = true; } return 'unavailable'; }
+  try { await ns.save({ filename, data }); if (!quiet) say('#fftnote', 'ok', 'Saved ' + filename + '.'); return 'saved'; }
+  catch (e) { const c = e && e.code; if (!quiet) say('#fftnote', 'warn', c === 'declined' ? 'Download cancelled.' : c === 'rate_limited' ? 'A save prompt is already open. Finish it, then try again.' : 'The ' + label + ' could not be saved.'); return c === 'declined' ? 'declined' : 'error'; }
+}
+function specCSV() { let s = 'frequency_Hz,magnitude\n'; for (let k = 0; k < F.freqs.length; k++) s += F.freqs[k].toPrecision(8) + ',' + F.mag[k].toPrecision(8) + '\n'; return s; }
+function plotsPNG() {
+  return new Promise(res => {
+    const specs = plotSpecs(); if (!specs) return res(null);
+    const panels = specs.filter(Boolean), W = 1200, H = 120 + panels.length * 560 + 20, c = document.createElement('canvas'); c.width = W; c.height = H;
+    const ctx = c.getContext('2d'), pal = palette(true);
+    ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = pal.ink; ctx.font = '700 30px "IBM Plex Sans", system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Fourier Analysis of ' + (F.sig ? F.sig.title : IMPS.name), W / 2, 52);
+    panels.forEach((o, i) => { o.color = pal[o.key]; plotXY(ctx, 30, 90 + i * 560, W - 60, 540, o, pal); });
+    ctx.fillStyle = pal.muted; ctx.font = '18px "IBM Plex Mono", monospace';
+    ctx.fillText(F.impSpec ? `Spectrum imported from ${IMPS.name}` : `Fs = ${fmtHz(F.Fs)}   N = ${F.N}   Fs/N = ${(F.Fs / F.N).toFixed(4)} Hz`, W / 2, H - 22);
+    c.toBlob(b => res(b), 'image/png');
+  });
+}
+$('#fftcsv').addEventListener('click', () => { if (F) offer(`${baseName()}_spectrum_${stamp()}.csv`, specCSV(), 'spectrum'); });
+$('#fftpng').addEventListener('click', async () => { const b = await plotsPNG(); b ? offer(`${baseName()}_plots_${stamp()}.png`, b, 'image') : say('#fftnote', 'warn', 'The image could not be created.'); });
+$('#expall').addEventListener('click', async () => {
   if (!F) return;
-  let s = 'frequency_Hz,magnitude\n'; for (let k = 0; k < F.freqs.length; k++) s += F.freqs[k].toPrecision(8) + ',' + F.mag[k].toPrecision(8) + '\n';
-  offer(baseName() + '_spectrum.csv', s, 'spectrum');
-});
-$('#fftpng').addEventListener('click', () => {
-  const specs = plotSpecs(); if (!specs) return;
-  const W = 1200, H = 1260, c = document.createElement('canvas'); c.width = W; c.height = H;
-  const ctx = c.getContext('2d'), pal = palette(true);
-  ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = pal.ink; ctx.font = '700 30px "IBM Plex Sans", system-ui, sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('Fourier Analysis of ' + F.sig.title, W / 2, 52);
-  specs.forEach((o, i) => { o.color = pal[o.key]; plotXY(ctx, 30, 90 + i * 560, W - 60, 540, o, pal); });
-  ctx.fillStyle = pal.muted; ctx.font = '18px "IBM Plex Mono", monospace';
-  ctx.fillText(`Fs = ${fmtHz(F.Fs)}   N = ${F.N}   Fs/N = ${(F.Fs / F.N).toFixed(4)} Hz`, W / 2, H - 22);
-  c.toBlob(b => b ? offer(baseName() + '_fourier.png', b, 'image') : say('#fftnote', 'warn', 'The image could not be created.'), 'image/png');
+  const ts = stamp(), sg = curSig(), btn = $('#expall'), jobs = [];
+  if (sg && sg.csv) jobs.push(() => [`${sg.base}_waveform_${ts}.csv`, sg.csv, 'waveform CSV']);
+  jobs.push(() => [`${baseName()}_spectrum_${ts}.csv`, specCSV(), 'spectrum']);
+  jobs.push(async () => { const b = await plotsPNG(); return b ? [`${baseName()}_plots_${ts}.png`, b, 'image'] : null; });
+  btn.disabled = true; const saved = [], skipped = [];
+  try {
+    for (const job of jobs) {
+      const j = await job(); if (!j) { skipped.push('plots PNG'); continue; }
+      const r = await offer(j[0], j[1], j[2], true);
+      if (r === 'unavailable') { say('#fftnote', 'warn', 'Downloads are not available in this view.'); return; }
+      (r === 'saved' ? saved : skipped).push(j[0]);
+      if (OFFLINE) await new Promise(q => setTimeout(q, 350));
+    }
+    say('#fftnote', skipped.length ? 'warn' : 'ok', saved.length ? `Saved ${saved.length} file${saved.length > 1 ? 's' : ''}: ${saved.join(', ')}.` + (skipped.length ? ` ${skipped.length} not saved.` : '') : 'No files were saved.');
+  } finally { btn.disabled = false; }
 });
 
 
 /* ---------- source tabs ---------- */
 let SRC = 'audio';
 function setSource(src) {
-  SRC = src;
+  SRC = src; resetTime(); clearImports();
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.src === src)));
   $('#src-shot').hidden = src !== 'shot'; $('#src-audio').hidden = src !== 'audio';
   $('#how-shot').hidden = src !== 'shot';
@@ -916,6 +985,7 @@ document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click
 let A = null, AC = null, ACSV = '';
 function audioCtx() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); return AC; }
 function setAudio(data, sr, name, info) {
+  resetTime(); clearImports();
   A = { data, sr, name, info, dur: data.length / sr, start: 0, len: 200 };
   A.len = Math.max(1, num($('#alen'), 200));
   loudest();
@@ -1023,18 +1093,90 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', drawAudi
 
 
 /* ---------- shared waveform export ---------- */
-function curSig() { return SRC === 'audio' ? (A ? audioSignal() : null) : shotSignal(); }
+function curSig() { return IMPW ? impSignal() : SRC === 'audio' ? (A ? audioSignal() : null) : shotSignal(); }
 function updateSigExport() {
   const sg = curSig(), csv = sg ? sg.csv : '';
   $('#sigcsv').disabled = !csv; $('#sigtext').value = csv || '';
   $('#unitnote').textContent = sg ? sg.note : '';
 }
-$('#sigcsv').addEventListener('click', () => { const sg = curSig(); if (sg && sg.csv) offer(sg.base + (SRC === 'audio' ? '' : '_trace') + '.csv', sg.csv, 'waveform CSV'); });
+$('#sigcsv').addEventListener('click', () => { const sg = curSig(); if (sg && sg.csv) offer(`${sg.base}_waveform_${stamp()}.csv`, sg.csv, 'waveform CSV'); });
 $('#sigcopy').addEventListener('click', () => {
   const sg = curSig(); if (!sg || !sg.csv) return;
   const sel = () => { const t = $('#sigtext'); t.focus(); t.select(); say('#fftnote', 'warn', 'The CSV text is selected. Press Ctrl+C (or ⌘C) to copy it.'); };
   try { navigator.clipboard.writeText(sg.csv).then(() => say('#fftnote', 'ok', 'Waveform CSV copied to the clipboard.'), sel); } catch { sel(); }
 });
+
+
+/* ---------- date-time stamp for exported file names: yymmdd-hhmm, 24 h ---------- */
+function stamp(d = new Date()) { const p = n => String(n).padStart(2, '0'); return `${p(d.getFullYear() % 100)}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`; }
+function cleanBase(name) {
+  return (name.replace(/\.[^.]+$/, '').replace(/_\d{6}-\d{4}$/, '').replace(/_(waveform|spectrum|plots|trace)$/, '').replace(/[^\w.-]+/g, '_')) || 'imported';
+}
+
+/* ---------- import a saved waveform or spectrum CSV ---------- */
+function readTable(text) {
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  const probe = lines.slice(0, 5).join('\n');
+  const split = probe.includes(',') ? (l => l.split(',')) : probe.includes('\t') ? (l => l.split('\t')) : probe.includes(';') ? (l => l.split(';')) : (l => l.split(/\s+/));
+  let h = null; const rows = [];
+  for (const l of lines) {
+    const f = split(l).map(x => x.trim().replace(/^"(.*)"$/, '$1'));
+    if (f.length < 2) continue;
+    const a = f[0] === '' ? NaN : Number(f[0]), b = f[1] === '' ? NaN : Number(f[1]);
+    if (isFinite(a) && isFinite(b)) rows.push([a, b]);
+    else if (!rows.length) h = f;
+  }
+  return { h, rows };
+}
+function impNote(k, text) { say('#impmsg', k, text); }
+function setBadge(which, name) {
+  $(which === 'w' ? '#wimp' : '#simp').hidden = !name;
+  $(which === 'w' ? '#wimpname' : '#simpname').textContent = name || '';
+  $(which === 'w' ? '#wimpname' : '#simpname').title = name || '';
+}
+function clearImports() { IMPW = null; IMPS = null; setBadge('w', null); setBadge('s', null); $('#impmsg').hidden = true; }
+async function importWaveform(file) {
+  const { h, rows } = readTable(await file.text()), name = file.name;
+  if (rows.length < 8) { impNote('err', `No waveform found in ${name}. The file needs two columns of numbers: time and signal.`); return; }
+  if (h && /freq|hz/i.test(h[0])) { impNote('err', `${name} looks like a spectrum (its first column is frequency). Use “Import spectrum” by the Fourier transform plot.`); return; }
+  const h0 = h ? h[0] : '', sc = /(^|[^a-z])ms($|[^a-z])|millisec/i.test(h0) ? 1e-3 : /µs|(^|[^a-z])us($|[^a-z])|microsec/i.test(h0) ? 1e-6 : 1;
+  const t = rows.map(r => r[0] * sc), v = rows.map(r => r[1]);
+  for (let i = 1; i < t.length; i++) if (!(t[i] > t[i - 1])) { impNote('err', `The time column in ${name} must increase from row to row (row ${i + 1} does not).`); return; }
+  const N = t.length, mean = (t[N - 1] - t[0]) / (N - 1); let dev = 0;
+  for (let i = 1; i < N; i++) dev = Math.max(dev, Math.abs(t[i] - t[i - 1] - mean) / mean);
+  const yname = h && h[1] ? h[1] : 'signal', isV = /(^|[\s_(\[])V($|[\s)\]])|volt/.test(yname);
+  const yl = isV ? 'Signal (V)' : yname.charAt(0).toUpperCase() + yname.slice(1);
+  const ycol = (h && h[1] ? h[1] : 'signal').replace(/[,\s]+/g, '_');
+  const csv = 'time_s,' + ycol + '\n' + t.map((q, i) => (+q.toPrecision(10)) + ',' + (+v[i].toPrecision(8))).join('\n') + '\n';
+  IMPW = { t, v, name, base: cleanBase(name), yl, unit: isV ? 'V' : '', csv };
+  resetTime(); setBadge('w', name); updateFFT();
+  impNote(dev > 0.01 ? 'warn' : 'ok', `Imported ${N.toLocaleString()} samples from ${name}; the spectrum now comes from this waveform.` +
+    (dev > 0.01 ? ` Time steps vary by up to ${Math.round(dev * 100)}%, so the FFT uses the average step, as your notebook does.` : '') + ' Press ✕ to go back.');
+}
+async function importSpectrum(file) {
+  const { h, rows } = readTable(await file.text()), name = file.name;
+  if (rows.length < 4) { impNote('err', `No spectrum found in ${name}. The file needs two columns of numbers: frequency and magnitude.`); return; }
+  if (h && /time|sec|(^|[^a-z])s($|[^a-z])/i.test(h[0]) && !/freq|hz/i.test(h[0])) { impNote('err', `${name} looks like a waveform (its first column is time). Use “Import waveform” by the waveform plot.`); return; }
+  const sc = h && /khz/i.test(h[0]) ? 1e3 : 1, f = Float64Array.from(rows, r => r[0] * sc), m = Float64Array.from(rows, r => Math.abs(r[1]));
+  for (let i = 1; i < f.length; i++) if (!(f[i] > f[i - 1])) { impNote('err', `The frequency column in ${name} must increase from row to row (row ${i + 1} does not).`); return; }
+  IMPS = { f, m, name, base: cleanBase(name) };
+  setBadge('s', name); updateFFT();
+  impNote('ok', `Showing the spectrum saved in ${name} (${f.length.toLocaleString()} points). Press ✕ to go back to the spectrum of the current waveform.`);
+}
+function impSignal() {
+  return { t: IMPW.t, v: IMPW.v, filled: 0, yl: IMPW.yl, unit: IMPW.unit, title: IMPW.name, base: IMPW.base, wtitle: 'Imported waveform', csv: IMPW.csv,
+    note: 'Waveform CSV holds the imported waveform, with time in seconds.' };
+}
+function peaksOf(freqs, mag) {
+  let mx = 0; for (let k = 1; k < mag.length; k++) mx = Math.max(mx, mag[k]);
+  const ks = []; for (let k = 1; k < mag.length - 1; k++) if (mag[k] > mag[k - 1] && mag[k] >= mag[k + 1] && mag[k] >= 0.1 * mx) ks.push(k);
+  ks.sort((a, b) => mag[b] - mag[a]);
+  return ks.slice(0, 6).map(k => ({ f: freqs[k], m: mag[k], rel: mx ? mag[k] / mx : 0 }));
+}
+$('#wfile').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) importWaveform(f); });
+$('#sfile').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) importSpectrum(f); });
+$('#wclose').addEventListener('click', () => { IMPW = null; setBadge('w', null); resetTime(); $('#impmsg').hidden = true; updateFFT(); });
+$('#sclose').addEventListener('click', () => { IMPS = null; setBadge('s', null); $('#impmsg').hidden = true; updateFFT(); });
 
 /* ---------- microphone (standalone copy only) ---------- */
 if (OFFLINE) {
@@ -1055,8 +1197,7 @@ if (OFFLINE) {
       clearInterval(tick); clearTimeout(timer); stream.getTracks().forEach(t => t.stop());
       $('#micbtn').classList.remove('rec'); $('#micbtn').textContent = 'Record from microphone'; $('#arec').hidden = true; rec = null;
       const blob = new Blob(chunks, { type: chunks[0] ? chunks[0].type : 'audio/webm' });
-      const stamp = new Date().toTimeString().slice(0, 8).replace(/:/g, '');
-      decodeAudio(await blob.arrayBuffer(), 'mic-' + stamp + '.webm');
+      decodeAudio(await blob.arrayBuffer(), 'mic-recording.webm');
     };
     rec.start();
     $('#micbtn').classList.add('rec'); $('#micbtn').textContent = 'Stop';
