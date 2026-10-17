@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 6 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+/* No scroll bars on equations (added 2026-10-17). overflow-x: auto also makes the vertical
+   direction scrollable, so a glyph a few pixels above or below the box (superscripts,
+   fractions, underbraces) showed a vertical scroll bar. Padding gives that ink room; a wide
+   equation still scrolls sideways on a phone. Screen only: print sets overflow: visible. */
+@media screen {
+  math[display="block"] { overflow-y: hidden; padding: .4em 0; margin: .45rem 0; }
+}
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* --- per-quiz styles --- */
+/* Quiz 06: the graphical 4(b) solution (step boxes, arrows, color-coded factors), adopted
+   2026-10-17 from Q06/review_build/drafts/. Colors: decay #8B6508 (dark yellow), oscillation
+   #14672A (green), both at least 4.5:1 on their box backgrounds. */
+/* center display equations (the template sets display:block, which left-aligns them) */
+.flow math[display="block"] { display: block math; }
+.factor math[display="block"] { font-size: 1.3em; }
+.flow { display: flex; flex-direction: column; align-items: center; margin: .4rem 0 .2rem; }
+.flow > p { margin: .1rem 0; text-align: center; }
+.fstep { border: 1.5px solid var(--rule); border-radius: 8px; background: #fff;
+  padding: 0 1rem; text-align: center; max-width: 100%; }
+.fstep math[display="block"] { margin: .45rem 0; }
+.arw { color: var(--maroon); font-size: 1.45rem; font-weight: 700; line-height: 1; }
+.alab { color: #3a3a3a; font-size: .92rem; margin-left: .35rem; }
+.factors { display: flex; align-items: stretch; justify-content: center; gap: .5rem;
+  flex-wrap: wrap; width: 100%; margin: .15rem 0; }
+.factor { flex: 1 1 12rem; max-width: 17rem; border: 2px solid; border-radius: 8px;
+  padding: .1rem .7rem .45rem; text-align: center; font-size: .95rem; }
+.factor p { margin: .15rem 0; }
+.times { align-self: center; font-size: 1.7rem; font-weight: 700; color: #3a3a3a; }
+.decay { border-color: #8B6508; background: #FBF6EA; }
+.osc { border-color: #14672A; background: #F1F7F1; }
+.decay strong { color: #8B6508; }
+.osc strong { color: #14672A; }
+.zoom { width: 100%; border-width: 2px; border-style: solid; border-radius: 8px;
+  padding: .35rem .9rem .5rem; margin: .5rem 0 .2rem; text-align: center; }
+.zoom p { margin: .2rem 0; }
+.conclusion { border: 2px solid var(--maroon); width: 100%; padding: .4rem 1rem .55rem; }
+.conclusion > p:first-child strong { color: var(--maroon); }
+.tag { border: 1.5px solid; border-radius: 999px; padding: 0 .55rem; font-weight: 700; }
+.tag.decay { color: #8B6508; }
+.tag.osc { color: #14672A; }
+/* the two factors keep their colors in the conclusion (MathML inherits the color) */
+.cline { display: inline-block; font-size: 1.15em; margin: .35rem 0; }
+.cdecay { color: #8B6508; font-weight: 700; }
+.cosc { color: #14672A; font-weight: 700; }
+/* the decay x oscillation graph at the end of the 4(b) solution is wider than a usual
+   part figure */
+#q4b figure.graph.mini { max-width: 40rem; }
+/* On paper 4(b) and its solution must fit on one page (make_review_pdf.py keeps a part
+   together): tighter spacing for print only; the screen layout is unchanged. */
+@media print {
+  .flow > p { margin: 0; line-height: 1.3; }
+  .fstep { padding: 0 .8rem; }
+  .fstep math[display="block"] { margin: .2rem 0; }
+  .arw { font-size: 1.1rem; }
+  .alab { font-size: .88rem; }
+  .factors { margin: .1rem 0; }
+  .factor { padding: 0 .6rem .2rem; }
+  .factor p { margin: 0; line-height: 1.3; }
+  .factor math[display="block"] { margin: .15rem 0; }
+  .zoom { padding: .15rem .8rem .25rem; margin: .25rem 0 .05rem; }
+  .zoom p { margin: .1rem 0; line-height: 1.35; }
+  .zoom math[display="block"] { margin: .25rem 0; }
+  .conclusion { padding: .15rem .8rem .25rem; }
+  .conclusion p { margin: .05rem 0; }
+  .cline { margin: .1rem 0; }
+  #q4b figure.graph.mini { max-width: 26rem; margin: .3rem auto .1rem; }
+  #q4b figure.graph.mini figcaption { margin-top: .1rem; }
+}
+
+/* Extra credit: the graphical solution (2026-10-17). The marked-up screen and the
+   time => frequency picture are figure slots inside the flow; sizes by figure id (these
+   beat make_review_pdf.py's #qec figure.graph.mini print rule). */
+.fnote { font-size: .88rem; color: #3a3a3a; margin-top: .5rem; }
+#qec figure#fig-ec_scope_marked { max-width: 28rem; margin: .4rem auto .3rem; }
+#qec figure#fig-ec_transform { max-width: 34rem; margin: .4rem auto .3rem; }
+@media print {
+  #qec figure#fig-ec_scope_marked { max-width: 20rem; margin: .15rem auto .05rem; }
+  #qec figure#fig-ec_transform { max-width: 24rem; margin: .15rem auto .05rem; }
+  .fnote { margin-top: .2rem; }
+}
+@media print {
+  /* the question's own trace prints a little smaller than make_review_pdf.py's 18rem, so the
+     extra-credit question and its graphical solution fit on one page */
+  li#qec > figure.graph.mini { max-width: 13.5rem; margin: .3rem auto .2rem; }
+  #qec figure figcaption { margin-top: .1rem; line-height: 1.3; }
+}
+
+/* No scroll bars on equations (instructor, 2026-10-17). The general rule (no vertical scroll,
+   padding for the ink) is in review-kit/template.html. In the step flow there is one more
+   problem: a box that shrinks to fit measures a scrollable equation as narrower than it is,
+   so the equation was clipped. Screen only: the printed layout must not change. */
+@media screen {
+  /* in the step flow the equation sizes its box; the box scrolls sideways only when the
+     equation is wider than the screen (phones) */
+  .flow math[display="block"] { overflow: visible; }
+  .fstep, .factor, .zoom, .conclusion { overflow-x: auto; overflow-y: hidden; }
+  .fstep math[display="block"], .zoom math[display="block"] { margin: .1rem 0; }
+}
+math.rr { padding-top: .15em; }   /* room for exponents raised by rootfix */
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 6 — after-quiz review</h1>
+<p>Quiz 6 was given on Friday, October 16, 2026. Everyone got the same
+booklet — there were no scrambled versions — so the answer letters below
+are the same for the whole class.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#qec">EC</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 6 — October 16, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(1 pt)</strong> Questions 1–3 refer to the differential equation below for a damped
+oscillator of mass
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+are positive constants. Its three left-hand-side terms are labeled A, B
+and C:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mi>m</mi><mspace width="0.167em"></mspace><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mspace width="0.167em"></mspace><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="sans-serif">𝖠</mtext></munder><mo>+</mo><munder><munder><mrow><mn>2</mn><mi>m</mi><mi>γ</mi><mspace width="0.167em"></mspace><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mspace width="0.167em"></mspace><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="sans-serif">𝖡</mtext></munder><mo>+</mo><munder><munder><mrow><mi>m</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mspace width="0.167em"></mspace><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="sans-serif">𝖢</mtext></munder><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\underbrace{m\,\frac{d^{2}}{dt^{2}}\,x(t)}_{\textsf{A}} + \underbrace{2m\gamma\,\frac{d}{dt}\,x(t)}_{\textsf{B}} + \underbrace{m\,\omega^{2}\,x(t)}_{\textsf{C}} = 0</annotation></semantics></math></p>
+<p class="stem">Which term represents the <strong>restoring force</strong>?</p>
+<ol class="choices" type="A">
+<li>term A</li>
+<li>term B</li>
+<li>term C</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+(the right-hand side)</li>
+</ol>
+<details class="sol" data-answer="C">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: C.</strong> term C</p>
+<p class="why"><strong>Why:</strong> Term C,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi></mrow><annotation encoding="application/x-tex">m\omega^{2}x</annotation></semantics></math>,
+is proportional to the <strong>displacement</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>.
+With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mi>k</mi><mi>/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">\omega^{2} = k/m</annotation></semantics></math>
+it is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">kx</annotation></semantics></math>:
+Hooke’s law. Newton’s second law reads
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mspace width="0.167em"></mspace><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mi>−</mi><mn>2</mn><mi>m</mi><mi>γ</mi><mspace width="0.167em"></mspace><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>−</mo><mi>m</mi><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">m\,\frac{d^{2}x}{dt^{2}} = -2m\gamma\,\frac{dx}{dt} - m\omega^{2}x,</annotation></semantics></math>
+and the force
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>m</mi><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi></mrow><annotation encoding="application/x-tex">-m\omega^{2}x</annotation></semantics></math>
+always points back toward
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>.
+Moving it to the left-hand side gives term C. For a pendulum it is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mi>g</mi><mi>/</mi><mi>L</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>x</mi></mrow><annotation encoding="application/x-tex">m(g/L)\,x</annotation></semantics></math>.</p>
+<p class="trap"><strong>Watch out:</strong> Choice A,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mspace width="0.167em"></mspace><mstyle displaystyle="false"><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac></mstyle></mrow><annotation encoding="application/x-tex">m\,\tfrac{d^{2}x}{dt^{2}}</annotation></semantics></math>,
+is mass times acceleration — the
+“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">ma</annotation></semantics></math>”
+side of Newton’s second law, not a force that anything exerts on the
+oscillator. Choice B is proportional to the <em>velocity</em>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>x</mi><mi>/</mi><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">dx/dt</annotation></semantics></math>,
+which makes it the damping force (Question 2); it vanishes when
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma = 0</annotation></semantics></math>.
+Choice D: the right-hand side is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+because nothing drives the oscillator from outside — it is not one of
+the forces from the spring or the drag.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(1 pt)</strong> Which term represents the <strong>damping force</strong>?</p>
+<ol class="choices" type="A">
+<li>term A</li>
+<li>term B</li>
+<li>term C</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+(the right-hand side)</li>
+</ol>
+<details class="sol" data-answer="B">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: B.</strong> term B</p>
+<p class="why"><strong>Why:</strong> Term B,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>m</mi><mi>γ</mi><mspace width="0.167em"></mspace><mstyle displaystyle="false"><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle></mrow><annotation encoding="application/x-tex">2m\gamma\,\tfrac{dx}{dt}</annotation></semantics></math>,
+is proportional to the <strong>velocity</strong>, like viscous drag
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mtext mathvariant="normal">drag</mtext></msub><mo>=</mo><mi>−</mi><mi>b</mi><mspace width="0.167em"></mspace><mstyle displaystyle="false"><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle></mrow><annotation encoding="application/x-tex">F_{\text{drag}} = -b\,\tfrac{dx}{dt}</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mn>2</mn><mi>m</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">b = 2m\gamma</annotation></semantics></math>
+(moved to the left-hand side). Set
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma = 0</annotation></semantics></math>
+and it disappears, leaving the undamped oscillator of Quiz 5.</p>
+<p class="trap"><strong>Watch out:</strong> Choice A is mass times acceleration (inertia), the
+“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">ma</annotation></semantics></math>”
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mi>m</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">F = ma</annotation></semantics></math>;
+it is there with or without damping. Choice C is proportional to the
+<em>displacement</em>: the restoring (spring) force of Question 1, which
+does not depend on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>.
+Choice D: the right-hand side would hold an external driving force, and
+there is none. Damping is a force from the surroundings that depends on
+the motion itself, so it sits on the left with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(3 pts)</strong> <strong>Sketch</strong> a graph of a valid solution
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>
+of the differential equation above, for a <strong>weakly damped</strong>
+oscillator,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>≪</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma \ll \omega</annotation></semantics></math>,
+but sketch it so that it is obvious the damping is <em>not zero</em>.
+Put the displacement
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+on the vertical axis and time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+on the horizontal axis, label both axes, and show several cycles.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p><strong>The solution.</strong> For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>≪</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma \ll \omega</annotation></semantics></math>
+(Question 4),
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><mrow><mi mathvariant="normal">cos</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em" /><msub><mi>ω</mi><mi>d</mi></msub><mo>=</mo><msqrt><mpadded depth="0"><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>−</mo><msup><mi>γ</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>≈</mo><mi>ω</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{-\gamma t}\cos(\omega_{d}t), \qquad \omega_{d} = \sqrt{\omega^{2} - \gamma^{2}} \approx \omega,</annotation></semantics></math>
+a cosine (or sine) whose amplitude shrinks inside the envelope
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>±</mi><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\pm A\,e^{-\gamma t}</annotation></semantics></math>.</p>
+<p><strong>Oscillation.</strong> Smooth, <strong>centered on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math></strong>
+(the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis),
+with an essentially constant period
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>≈</mo><mn>2</mn><mi>π</mi><mi>/</mi><mi>ω</mi></mrow><annotation encoding="application/x-tex">T \approx 2\pi/\omega</annotation></semantics></math>,
+crossing zero between every crest and trough.</p>
+<p><strong>Damping visibly not zero.</strong> Each crest is lower than
+the one before, by the same <em>factor</em> each cycle
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>T</mi></mrow></msup><annotation encoding="application/x-tex">e^{-\gamma T}</annotation></semantics></math>),
+so the crests trace a decaying exponential: steep at first, then
+flatter, approaching
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+without ever stopping abruptly.</p>
+<p><strong>Weak, not strong.</strong> Because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>≪</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma \ll \omega</annotation></semantics></math>,
+the decay is slow on the scale of one period: several full cycles before
+the motion becomes small. A curve that dies out within a cycle, or never
+swings through zero at all, is strong damping.</p>
+<p><strong>Axes.</strong> Displacement
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+on the vertical axis, time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+on the horizontal axis — not the other way round.</p>
+<p><strong>Any start is fine.</strong> No initial condition is given, so
+starting at a crest (cosine), at zero (sine), or anywhere else on the
+decaying oscillation is acceptable.</p>
+<p>Two slips cost points: an oscillation about a level <em>above</em>
+the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis
+(the oscillator swings about its equilibrium,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>),
+and missing or swapped axis labels.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">A weakly damped oscillation x(t) = A e^(-gamma t) cos(omega t)</title>
+<desc id="gd1">Displacement x on the vertical axis against time t on the horizontal axis, which runs through the middle at x = 0. A smooth cosine starts at a crest and swings evenly above and below x = 0 for five full cycles with a constant period. Each crest is lower than the one before, by the same factor each cycle, so the crests and troughs follow two dashed curves, plus and minus A e to the minus gamma t, that flatten out toward zero without reaching it.</desc>
+<defs>
+<marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+<path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path>
+</marker>
+</defs>
+<polyline points="60,48.5652 62.931,49.4402 65.8621,50.3043 68.7931,51.1576 71.7241,52.0004 74.6552,52.8326 77.5862,53.6546 80.5172,54.4663 83.4483,55.268 86.3793,56.0597 89.3103,56.8415 92.2414,57.6137 95.1724,58.3762 98.1034,59.1293 101.034,59.873 103.966,60.6075 106.897,61.3329 109.828,62.0492 112.759,62.7567 115.69,63.4553 118.621,64.1453 121.552,64.8268 124.483,65.4997 127.414,66.1643 130.345,66.8206 133.276,67.4688 136.207,68.1089 139.138,68.7411 142.069,69.3654 145,69.982 147.931,70.5909 150.862,71.1923 153.793,71.7862 156.724,72.3727 159.655,72.9519 162.586,73.5239 165.517,74.0888 168.448,74.6467 171.379,75.1977 174.31,75.7418 177.241,76.2791 180.172,76.8098 183.103,77.3339 186.034,77.8515 188.966,78.3627 191.897,78.8675 194.828,79.366 197.759,79.8583 200.69,80.3446 203.621,80.8248 206.552,81.299 209.483,81.7673 212.414,82.2298 215.345,82.6866 218.276,83.1377 221.207,83.5832 224.138,84.0231 227.069,84.4576 230,84.8867 232.931,85.3105 235.862,85.729 238.793,86.1423 241.724,86.5504 244.655,86.9535 247.586,87.3516 250.517,87.7448 253.448,88.133 256.379,88.5164 259.31,88.8951 262.241,89.2691 265.172,89.6384 268.103,90.0031 271.034,90.3634 273.966,90.7191 276.897,91.0704 279.828,91.4173 282.759,91.76 285.69,92.0984 288.621,92.4325 291.552,92.7626 294.483,93.0885 297.414,93.4104 300.345,93.7282 303.276,94.0422 306.207,94.3522 309.138,94.6584 312.069,94.9608 315,95.2594 317.931,95.5543 320.862,95.8455 323.793,96.1332 326.724,96.4172 329.655,96.6978 332.586,96.9748 335.517,97.2484 338.448,97.5186 341.379,97.7855 344.31,98.049 347.241,98.3092 350.172,98.5663 353.103,98.8201" class="aguide"></polyline>
+<polyline points="60,189.435 62.931,188.56 65.8621,187.696 68.7931,186.842 71.7241,186 74.6552,185.167 77.5862,184.345 80.5172,183.534 83.4483,182.732 86.3793,181.94 89.3103,181.158 92.2414,180.386 95.1724,179.624 98.1034,178.871 101.034,178.127 103.966,177.392 106.897,176.667 109.828,175.951 112.759,175.243 115.69,174.545 118.621,173.855 121.552,173.173 124.483,172.5 127.414,171.836 130.345,171.179 133.276,170.531 136.207,169.891 139.138,169.259 142.069,168.635 145,168.018 147.931,167.409 150.862,166.808 153.793,166.214 156.724,165.627 159.655,165.048 162.586,164.476 165.517,163.911 168.448,163.353 171.379,162.802 174.31,162.258 177.241,161.721 180.172,161.19 183.103,160.666 186.034,160.148 188.966,159.637 191.897,159.133 194.828,158.634 197.759,158.142 200.69,157.655 203.621,157.175 206.552,156.701 209.483,156.233 212.414,155.77 215.345,155.313 218.276,154.862 221.207,154.417 224.138,153.977 227.069,153.542 230,153.113 232.931,152.69 235.862,152.271 238.793,151.858 241.724,151.45 244.655,151.046 247.586,150.648 250.517,150.255 253.448,149.867 256.379,149.484 259.31,149.105 262.241,148.731 265.172,148.362 268.103,147.997 271.034,147.637 273.966,147.281 276.897,146.93 279.828,146.583 282.759,146.24 285.69,145.902 288.621,145.567 291.552,145.237 294.483,144.912 297.414,144.59 300.345,144.272 303.276,143.958 306.207,143.648 309.138,143.342 312.069,143.039 315,142.741 317.931,142.446 320.862,142.154 323.793,141.867 326.724,141.583 329.655,141.302 332.586,141.025 335.517,140.752 338.448,140.481 341.379,140.215 344.31,139.951 347.241,139.691 350.172,139.434 353.103,139.18" class="aguide"></polyline>
+<line x1="56" y1="119" x2="434" y2="119" class="ax" marker-end="url(#arr1)"></line>
+<line x1="60" y1="224" x2="60" y2="16" class="ax" marker-end="url(#arr1)"></line>
+<text x="440" y="123" class="lbl">t</text>
+<text x="60" y="9" text-anchor="middle" class="lbl">x</text>
+<polyline points="60,48.5652 60.4885,48.8081 60.977,49.2423 61.4655,49.8658 61.954,50.6761 62.4425,51.6702 62.931,52.8447 63.4195,54.1955 63.908,55.7182 64.3966,57.4079 64.8851,59.2593 65.3736,61.2668 65.8621,63.424 66.3506,65.7245 66.8391,68.1614 67.3276,70.7274 67.8161,73.415 68.3046,76.2164 68.7931,79.1232 69.2816,82.1273 69.7701,85.2198 70.2586,88.3921 70.7471,91.635 71.2356,94.9394 71.7241,98.296 72.2126,101.695 72.7011,105.128 73.1897,108.584 73.6782,112.055 74.1667,115.53 74.6552,119 75.1437,122.456 75.6322,125.888 76.1207,129.286 76.6092,132.643 77.0977,135.948 77.5862,139.193 78.0747,142.369 78.5632,145.468 79.0517,148.481 79.5402,151.402 80.0287,154.221 80.5172,156.932 81.0057,159.528 81.4943,162.002 81.9828,164.348 82.4713,166.56 82.9598,168.632 83.4483,170.56 83.9368,172.339 84.4253,173.964 84.9138,175.432 85.4023,176.739 85.8908,177.882 86.3793,178.86 86.8678,179.669 87.3563,180.309 87.8448,180.778 88.3333,181.076 88.8218,181.203 89.3103,181.158 89.7989,180.944 90.2874,180.561 90.7759,180.011 91.2644,179.296 91.7529,178.418 92.2414,177.382 92.7299,176.19 93.2184,174.846 93.7069,173.355 94.1954,171.721 94.6839,169.949 95.1724,168.046 95.6609,166.015 96.1494,163.865 96.6379,161.6 97.1264,159.229 97.6149,156.756 98.1034,154.191 98.592,151.54 99.0805,148.811 99.569,146.011 100.057,143.15 100.546,140.233 101.034,137.271 101.523,134.271 102.011,131.242 102.5,128.192 102.989,125.129 103.477,122.062 103.966,119 104.454,115.95 104.943,112.922 105.431,109.922 105.92,106.96 106.408,104.044 106.897,101.18 107.385,98.377 107.874,95.6422 108.362,92.9828 108.851,90.4057 109.339,87.9177 109.828,85.5252 110.316,83.2343 110.805,81.0509 111.293,78.9806 111.782,77.0286 112.27,75.1996 112.759,73.4982 113.247,71.9286 113.736,70.4944 114.224,69.1991 114.713,68.0456 115.201,67.0365 115.69,66.1739 116.178,65.4596 116.667,64.895 117.155,64.481 117.644,64.2181 118.132,64.1063 118.621,64.1453 119.109,64.3345 119.598,64.6727 120.086,65.1583 120.575,65.7893 121.063,66.5635 121.552,67.4782 122.04,68.5302 122.529,69.7161 123.017,71.032 123.506,72.4739 123.994,74.0373 124.483,75.7174 124.971,77.509 125.46,79.4068 125.948,81.4053 126.437,83.4984 126.925,85.6801 127.414,87.944 127.902,90.2835 128.391,92.692 128.879,95.1625 129.368,97.6881 129.856,100.262 130.345,102.876 130.833,105.523 131.322,108.196 131.81,110.888 132.299,113.591 132.787,116.297 133.276,119 133.764,121.691 134.253,124.364 134.741,127.011 135.23,129.625 135.718,132.199 136.207,134.726 136.695,137.2 137.184,139.613 137.672,141.96 138.161,144.234 138.649,146.43 139.138,148.541 139.626,150.563 140.115,152.49 140.603,154.317 141.092,156.04 141.58,157.654 142.069,159.155 142.557,160.54 143.046,161.806 143.534,162.949 144.023,163.967 144.511,164.858 145,165.619 145.489,166.249 145.977,166.747 146.466,167.113 146.954,167.345 147.443,167.444 147.931,167.409 148.42,167.242 148.908,166.944 149.397,166.515 149.885,165.958 150.374,165.275 150.862,164.468 151.351,163.539 151.839,162.493 152.328,161.332 152.816,160.059 153.305,158.679 153.793,157.197 154.282,155.616 154.77,153.941 155.259,152.177 155.747,150.33 156.236,148.405 156.724,146.407 157.213,144.342 157.701,142.217 158.19,140.036 158.678,137.808 159.167,135.537 159.655,133.23 160.144,130.893 160.632,128.534 161.121,126.159 161.609,123.773 162.098,121.385 162.586,119 163.075,116.625 163.563,114.266 164.052,111.93 164.54,109.623 165.029,107.352 165.517,105.122 166.006,102.939 166.494,100.809 166.983,98.7378 167.471,96.7308 167.96,94.7931 168.448,92.9298 168.937,91.1457 169.425,89.4452 169.914,87.8329 170.402,86.3126 170.891,84.8882 171.379,83.5632 171.868,82.3407 172.356,81.2238 172.845,80.215 173.333,79.3166 173.822,78.5308 174.31,77.859 174.799,77.3027 175.287,76.863 175.776,76.5406 176.264,76.3358 176.753,76.2487 177.241,76.2791 177.73,76.4265 178.218,76.6898 178.707,77.068 179.195,77.5595 179.684,78.1624 180.172,78.8748 180.661,79.6941 181.149,80.6176 181.638,81.6425 182.126,82.7655 182.615,83.983 183.103,85.2914 183.592,86.6868 184.08,88.1648 184.569,89.7212 185.057,91.3513 185.546,93.0504 186.034,94.8135 186.523,96.6356 187.011,98.5113 187.5,100.435 187.989,102.402 188.477,104.407 188.966,106.442 189.454,108.504 189.943,110.586 190.431,112.683 190.92,114.787 191.408,116.895 191.897,119 192.385,121.096 192.874,123.178 193.362,125.239 193.851,127.275 194.339,129.279 194.828,131.248 195.316,133.174 195.805,135.054 196.293,136.881 196.782,138.653 197.27,140.363 197.759,142.007 198.247,143.581 198.736,145.082 199.224,146.505 199.713,147.847 200.201,149.104 200.69,150.273 201.178,151.352 201.667,152.337 202.155,153.228 202.644,154.02 203.132,154.714 203.621,155.307 204.109,155.798 204.598,156.186 205.086,156.47 205.575,156.651 206.063,156.728 206.552,156.701 207.04,156.571 207.529,156.339 208.017,156.005 208.506,155.571 208.994,155.039 209.483,154.41 209.971,153.687 210.46,152.872 210.948,151.968 211.437,150.977 211.925,149.902 212.414,148.748 212.902,147.516 213.391,146.212 213.879,144.838 214.368,143.4 214.856,141.9 215.345,140.344 215.833,138.737 216.322,137.081 216.81,135.383 217.299,133.647 217.787,131.879 218.276,130.082 218.764,128.263 219.253,126.425 219.741,124.575 220.23,122.718 220.718,120.857 221.207,119 221.695,117.15 222.184,115.313 222.672,113.494 223.161,111.698 223.649,109.928 224.138,108.192 224.626,106.491 225.115,104.833 225.603,103.22 226.092,101.657 226.58,100.148 227.069,98.6965 227.557,97.307 228.046,95.9827 228.534,94.727 229.023,93.543 229.511,92.4337 230,91.4018 230.489,90.4497 230.977,89.5799 231.466,88.7942 231.954,88.0946 232.443,87.4825 232.931,86.9593 233.42,86.5261 233.908,86.1837 234.397,85.9326 234.885,85.7731 235.374,85.7053 235.862,85.729 236.351,85.8437 236.839,86.0488 237.328,86.3433 237.816,86.7261 238.305,87.1957 238.793,87.7504 239.282,88.3885 239.77,89.1078 240.259,89.906 240.747,90.7805 241.236,91.7287 241.724,92.7477 242.213,93.8344 242.701,94.9855 243.19,96.1976 243.678,97.4672 244.167,98.7904 244.655,100.164 245.144,101.583 245.632,103.043 246.121,104.542 246.609,106.074 247.098,107.635 247.586,109.22 248.075,110.826 248.563,112.447 249.052,114.08 249.54,115.719 250.029,117.361 250.517,119 251.006,120.632 251.494,122.253 251.983,123.859 252.471,125.444 252.96,127.006 253.448,128.538 253.937,130.039 254.425,131.503 254.914,132.926 255.402,134.305 255.891,135.637 256.379,136.918 256.868,138.144 257.356,139.313 257.845,140.421 258.333,141.466 258.822,142.445 259.31,143.355 259.799,144.196 260.287,144.963 260.776,145.657 261.264,146.274 261.753,146.814 262.241,147.276 262.73,147.658 263.218,147.96 263.707,148.182 264.195,148.323 264.684,148.382 265.172,148.362 265.661,148.26 266.149,148.079 266.638,147.819 267.126,147.482 267.615,147.067 268.103,146.578 268.592,146.015 269.08,145.38 269.569,144.675 270.057,143.904 270.546,143.067 271.034,142.168 271.523,141.209 272.011,140.193 272.5,139.123 272.989,138.003 273.477,136.835 273.966,135.623 274.454,134.371 274.943,133.082 275.431,131.759 275.92,130.407 276.408,129.03 276.897,127.631 277.385,126.214 277.874,124.783 278.362,123.342 278.851,121.895 279.339,120.447 279.828,119 280.316,117.559 280.805,116.129 281.293,114.712 281.782,113.313 282.27,111.935 282.759,110.582 283.247,109.258 283.736,107.967 284.224,106.71 284.713,105.493 285.201,104.318 285.69,103.188 286.178,102.105 286.667,101.074 287.155,100.096 287.644,99.1741 288.132,98.3101 288.621,97.5065 289.109,96.765 289.598,96.0876 290.086,95.4757 290.575,94.9308 291.063,94.4542 291.552,94.0467 292.04,93.7093 292.529,93.4426 293.017,93.2471 293.506,93.1228 293.994,93.07 294.483,93.0885 294.971,93.1779 295.46,93.3376 295.948,93.567 296.437,93.8651 296.925,94.2308 297.414,94.6628 297.902,95.1597 298.391,95.7199 298.879,96.3415 299.368,97.0226 299.856,97.7611 300.345,98.5547 300.833,99.401 301.322,100.298 301.81,101.242 302.299,102.23 302.787,103.261 303.276,104.33 303.764,105.435 304.253,106.573 304.741,107.74 305.23,108.933 305.718,110.149 306.207,111.383 306.695,112.634 307.184,113.897 307.672,115.168 308.161,116.445 308.649,117.723 309.138,119 309.626,120.271 310.115,121.534 310.603,122.784 311.092,124.019 311.58,125.235 312.069,126.429 312.557,127.597 313.046,128.737 313.534,129.846 314.023,130.92 314.511,131.957 315,132.954 315.489,133.909 315.977,134.82 316.466,135.683 316.954,136.496 317.443,137.259 317.931,137.968 318.42,138.622 318.908,139.22 319.397,139.76 319.885,140.241 320.374,140.662 320.862,141.021 321.351,141.319 321.839,141.554 322.328,141.727 322.816,141.837 323.305,141.883 323.793,141.867 324.282,141.788 324.77,141.647 325.259,141.445 325.747,141.182 326.236,140.859 326.724,140.477 327.213,140.039 327.701,139.545 328.19,138.996 328.678,138.395 329.167,137.743 329.655,137.043 330.144,136.296 330.632,135.505 331.121,134.672 331.609,133.799 332.098,132.89 332.586,131.946 333.075,130.971 333.563,129.967 334.052,128.937 334.54,127.884 335.029,126.811 335.517,125.722 336.006,124.618 336.494,123.504 336.983,122.381 337.471,121.255 337.96,120.127 338.448,119 338.937,117.878 339.425,116.764 339.914,115.661 340.402,114.571 340.891,113.498 341.379,112.444 341.868,111.413 342.356,110.407 342.845,109.429 343.333,108.481 343.822,107.565 344.31,106.685 344.799,105.843 345.287,105.039 345.776,104.278 346.264,103.56 346.753,102.887 347.241,102.261 347.73,101.683 348.218,101.156 348.707,100.679 349.195,100.255 349.684,99.8837 350.172,99.5664 350.661,99.3036 351.149,99.0959 351.638,98.9436 352.126,98.8468 352.615,98.8057 353.103,98.8201" class="prof"></polyline>
+<text x="96.3448" y="52.6786" text-anchor="start" class="alabel">+A e^(−γt)</text>
+<text x="96.3448" y="195.321" text-anchor="start" class="alabel">−A e^(−γt)</text>
+<text x="398.534" y="135" text-anchor="end" class="alabel">x = 0</text>
+</svg>
+<figcaption><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{-\gamma t}\cos(\omega t)</annotation></semantics></math>
+for five cycles. The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>,
+and the curve swings evenly about it. The dashed curves are the envelope
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>±</mi><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\pm A\,e^{-\gamma t}</annotation></semantics></math>:
+each crest is the same fraction of the one before.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li class="q" id="q4">
+<p class="stem"><strong>4.</strong> <strong>(5 pts)</strong> The differential equation on page 1 was transformed to the quadratic
+equation
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>X</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>γ</mi><mi>X</mi><mo>+</mo><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">X^{2} + 2\gamma X + \omega^{2} = 0</annotation></semantics></math>,
+one of whose two roots is
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mo>=</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">X = -\gamma + \sqrt{\gamma^{2} - \omega^{2}}.</annotation></semantics></math>
+The solution
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>
+to the differential equation is then
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><mo>,</mo><mspace width="2.0em"></mspace><mrow><mtext mathvariant="normal">where </mtext><mspace width="0.333em"></mspace></mrow><mi>A</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> is a constant.</mtext></mrow></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{Xt}, \qquad \text{where } A \text{ is a constant.}</annotation></semantics></math></p>
+<ol class="parts" type="a">
+<li id="q4a">
+<p class="partq"><strong>(1 pt)</strong> If time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+is measured in seconds, what is the physical unit of
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt></mrow><annotation encoding="application/x-tex">-\gamma + \sqrt{\gamma^{2} - \omega^{2}}</annotation></semantics></math>?
+(Fill in one bubble.)</p>
+<ol type="A">
+<li>seconds</li>
+<li>inverse seconds</li>
+<li>seconds squared</li>
+<li>radians</li>
+<li>unitless</li>
+</ol>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 4</span></summary>
+<div class="sol-body">
+<p><strong>Inverse seconds — B.</strong> Divide the equation by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac></mstyle><mo>+</mo><mn>2</mn><mi>γ</mi><mspace width="0.167em"></mspace><mstyle displaystyle="false"><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><mo>+</mo><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\tfrac{d^{2}x}{dt^{2}} + 2\gamma\,\tfrac{dx}{dt} + \omega^{2}x = 0</annotation></semantics></math>.
+Every term has the unit of an acceleration,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">m/s</mtext><mn>2</mn></msup><annotation encoding="application/x-tex">\text{m/s}^{2}</annotation></semantics></math>.
+Since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle displaystyle="false"><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mstyle><annotation encoding="application/x-tex">\tfrac{dx}{dt}</annotation></semantics></math>
+is in m/s,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+is in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-1}</annotation></semantics></math>;
+since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+is in m,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ω</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\omega^{2}</annotation></semantics></math>
+is in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-2}</annotation></semantics></math>.
+So
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\gamma^{2} - \omega^{2}</annotation></semantics></math>
+is in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-2}</annotation></semantics></math>,
+its square root in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-1}</annotation></semantics></math>,
+and so is the sum. Check:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Xt</annotation></semantics></math>
+in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{Xt}</annotation></semantics></math>
+is then a pure number, as an exponent must be.</p>
+<p>Choice E, unitless, is the unit of the whole exponent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Xt</annotation></semantics></math>
+— not of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>,
+which must cancel the seconds of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.
+It is the same distinction as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+versus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math>
+on the midterm (Questions 1–2). Choice A is upside down (seconds is the
+unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">1/\gamma</annotation></semantics></math>,
+the decay <em>time</em>), and choice C is upside down and squared.
+Choice D:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+is in radians <em>per second</em>; a radian is a pure number, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">rad/s</mtext><annotation encoding="application/x-tex">\text{rad/s}</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\text{s}^{-1}</annotation></semantics></math>.</p>
+</div>
+</details>
+</li>
+<li id="q4b">
+<p class="partq"><strong>(4 pts)</strong> Explain clearly how
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{Xt}</annotation></semantics></math>,
+where
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><mi>X</mi><mo>=</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt></mrow><annotation encoding="application/x-tex">X = -\gamma + \sqrt{\gamma^{2} - \omega^{2}}</annotation></semantics></math>,
+is a <strong>damped oscillation</strong> if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+is not zero but much smaller than
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>≪</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma \ll \omega</annotation></semantics></math>).
+Your answer should have
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><mi>i</mi><mo>=</mo><msqrt><mpadded depth="0"><mrow><mi>−</mi><mn>1</mn></mrow></mpadded></msqrt></mrow><annotation encoding="application/x-tex">i = \sqrt{-1}</annotation></semantics></math>
+somewhere.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 4</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><mo>,</mo><mspace width="2.0em" /><mi>X</mi><mo>=</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{Xt}, \qquad X = -\gamma + \sqrt{\gamma^{2} - \omega^{2}}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">substitute
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math></span></p>
+<div class="fstep">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{(-\gamma + \sqrt{\gamma^{2} - \omega^{2}})\,t}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">multiply out the exponent</span></p>
+<div class="fstep">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><mi>−</mi><mi>γ</mi><mi>t</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{-\gamma t + \sqrt{\gamma^{2} - \omega^{2}}\,t}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">split it, using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></msup><mo>=</mo><msup><mi>e</mi><mi>a</mi></msup><mspace width="0.167em"></mspace><msup><mi>e</mi><mi>b</mi></msup></mrow><annotation encoding="application/x-tex">e^{a+b} = e^{a}\,e^{b}</annotation></semantics></math></span></p>
+<div class="fstep">
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo></mrow><annotation encoding="application/x-tex">x(t) =</annotation></semantics></math>
+<span
+class="cdecay"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></span>
+<span
+class="cosc"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" class="rr"><semantics><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup><annotation encoding="application/x-tex">e^{\sqrt{\gamma^{2} - \omega^{2}}\,t}</annotation></semantics></math></span></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">look
+at each factor</span></p>
+<div class="factors">
+<div class="factor decay">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>decay</strong> due to damping: real, and shrinks because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma &gt; 0</annotation></semantics></math></p>
+</div>
+<p><span class="times" aria-hidden="true">×</span><span
+class="visually-hidden">times</span></p>
+<div class="factor osc">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup><annotation encoding="application/x-tex">e^{\sqrt{\gamma^{2} - \omega^{2}}\,t}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>what’s this?</strong> Zoom in below.</p>
+</div>
+</div>
+<div class="zoom osc">
+<p><strong>Zoom in.</strong> Weak damping,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>≪</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma \ll \omega</annotation></semantics></math>,
+makes the number under the root negative:
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>≈</mo><msqrt><mpadded depth="0"><mrow><mi>−</mi><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><msqrt><mpadded depth="0"><mrow><mi>−</mi><mn>1</mn></mrow></mpadded></msqrt><mspace width="0.167em" /><msqrt><mpadded depth="0"><msup><mi>ω</mi><mn>2</mn></msup></mpadded></msqrt><mo>=</mo><mi>i</mi><mi>ω</mi></mrow><annotation encoding="application/x-tex">\sqrt{\gamma^{2} - \omega^{2}} \approx \sqrt{-\omega^{2}} = \sqrt{-1}\,\sqrt{\omega^{2}} = i\omega</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">so
+the second factor is</span></p>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><mrow><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup><mo>≈</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi></mrow></msup><mo>=</mo><mrow><mi mathvariant="normal">cos</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>i</mi><mrow><mi mathvariant="normal">sin</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">e^{\sqrt{\gamma^{2} - \omega^{2}}\,t} \approx e^{i\omega t} = \cos(\omega t) + i\sin(\omega t)</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>oscillatory!</strong> It repeats every
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi><mi>/</mi><mi>ω</mi></mrow><annotation encoding="application/x-tex">2\pi/\omega</annotation></semantics></math>
+and never grows or shrinks.</p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">put
+the two factors back together</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><mo>≈</mo></mrow><annotation encoding="application/x-tex">A\,e^{Xt} \approx</annotation></semantics></math>
+<span
+class="cdecay"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></span>
+<span
+class="cosc"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{i\omega t}</annotation></semantics></math></span>,
+real part: <span
+class="cdecay"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></span>
+<span
+class="cosc"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\cos(\omega t)</annotation></semantics></math></span></span></p>
+<p><span class="tag decay">decay</span> × <span
+class="tag osc">oscillation</span> = a <strong>damped
+oscillation</strong>, the curve of Question 3.</p>
+</div>
+</div>
+<figure class="graph mini">
+<svg viewBox="0 0 740 238" role="img" aria-labelledby="gt4 gd4">
+<title id="gt4">Decay times oscillation equals a damped oscillation</title>
+<desc id="gd4">Three small graphs against time t. First, the decay A e to the minus gamma t: a curve that starts high and falls smoothly toward zero. Times, second, the oscillation cosine omega t: a wave of constant height swinging evenly above and below zero for five cycles. Equals, third, the damped oscillation A e to the minus gamma t cosine omega t: the same wave, but its crests shrink, following the decay curve and its mirror image, drawn dashed.</desc>
+<defs><marker id="arr4" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="16" y1="100" x2="212" y2="100" class="ax" marker-end="url(#arr4)"></line>
+<line x1="20" y1="166" x2="20" y2="32" class="ax"></line>
+<text x="215" y="104" class="lbl">t</text>
+<polyline points="20.0,42.0 20.4,42.2 20.9,42.4 21.4,42.5 21.8,42.7 22.2,42.9 22.7,43.1 23.1,43.3 23.6,43.4 24.1,43.6 24.5,43.8 24.9,44.0 25.4,44.1 25.9,44.3 26.3,44.5 26.8,44.7 27.2,44.8 27.6,45.0 28.1,45.2 28.6,45.3 29.0,45.5 29.4,45.7 29.9,45.9 30.4,46.0 30.8,46.2 31.2,46.4 31.7,46.5 32.1,46.7 32.6,46.9 33.0,47.0 33.5,47.2 34.0,47.4 34.4,47.5 34.9,47.7 35.3,47.8 35.8,48.0 36.2,48.2 36.6,48.3 37.1,48.5 37.5,48.7 38.0,48.8 38.5,49.0 38.9,49.1 39.4,49.3 39.8,49.5 40.2,49.6 40.7,49.8 41.1,49.9 41.6,50.1 42.0,50.2 42.5,50.4 43.0,50.5 43.4,50.7 43.9,50.9 44.3,51.0 44.8,51.2 45.2,51.3 45.6,51.5 46.1,51.6 46.5,51.8 47.0,51.9 47.5,52.1 47.9,52.2 48.4,52.4 48.8,52.5 49.2,52.7 49.7,52.8 50.2,53.0 50.6,53.1 51.0,53.2 51.5,53.4 52.0,53.5 52.4,53.7 52.9,53.8 53.3,54.0 53.8,54.1 54.2,54.3 54.6,54.4 55.1,54.5 55.6,54.7 56.0,54.8 56.5,55.0 56.9,55.1 57.4,55.3 57.8,55.4 58.2,55.5 58.7,55.7 59.1,55.8 59.6,55.9 60.0,56.1 60.5,56.2 61.0,56.4 61.4,56.5 61.9,56.6 62.3,56.8 62.8,56.9 63.2,57.0 63.6,57.2 64.1,57.3 64.5,57.4 65.0,57.6 65.5,57.7 65.9,57.8 66.3,58.0 66.8,58.1 67.2,58.2 67.7,58.4 68.2,58.5 68.6,58.6 69.1,58.7 69.5,58.9 70.0,59.0 70.4,59.1 70.8,59.3 71.3,59.4 71.8,59.5 72.2,59.6 72.7,59.8 73.1,59.9 73.5,60.0 74.0,60.1 74.4,60.3 74.9,60.4 75.3,60.5 75.8,60.6 76.2,60.8 76.7,60.9 77.2,61.0 77.6,61.1 78.1,61.2 78.5,61.4 79.0,61.5 79.4,61.6 79.8,61.7 80.3,61.8 80.8,62.0 81.2,62.1 81.7,62.2 82.1,62.3 82.5,62.4 83.0,62.6 83.4,62.7 83.9,62.8 84.3,62.9 84.8,63.0 85.2,63.1 85.7,63.2 86.2,63.4 86.6,63.5 87.0,63.6 87.5,63.7 88.0,63.8 88.4,63.9 88.8,64.0 89.3,64.2 89.8,64.3 90.2,64.4 90.7,64.5 91.1,64.6 91.5,64.7 92.0,64.8 92.5,64.9 92.9,65.0 93.3,65.1 93.8,65.3 94.2,65.4 94.7,65.5 95.1,65.6 95.6,65.7 96.0,65.8 96.5,65.9 97.0,66.0 97.4,66.1 97.8,66.2 98.3,66.3 98.8,66.4 99.2,66.5 99.7,66.6 100.1,66.7 100.5,66.8 101.0,67.0 101.5,67.1 101.9,67.2 102.4,67.3 102.8,67.4 103.2,67.5 103.7,67.6 104.2,67.7 104.6,67.8 105.0,67.9 105.5,68.0 106.0,68.1 106.4,68.2 106.8,68.3 107.3,68.4 107.8,68.5 108.2,68.6 108.7,68.7 109.1,68.8 109.5,68.9 110.0,69.0 110.4,69.1 110.9,69.1 111.3,69.2 111.8,69.3 112.2,69.4 112.7,69.5 113.1,69.6 113.6,69.7 114.0,69.8 114.5,69.9 114.9,70.0 115.4,70.1 115.8,70.2 116.3,70.3 116.8,70.4 117.2,70.5 117.6,70.6 118.1,70.7 118.5,70.7 119.0,70.8 119.5,70.9 119.9,71.0 120.3,71.1 120.8,71.2 121.2,71.3 121.7,71.4 122.2,71.5 122.6,71.6 123.0,71.6 123.5,71.7 124.0,71.8 124.4,71.9 124.9,72.0 125.3,72.1 125.8,72.2 126.2,72.3 126.7,72.3 127.1,72.4 127.6,72.5 128.0,72.6 128.4,72.7 128.9,72.8 129.4,72.9 129.8,72.9 130.2,73.0 130.7,73.1 131.2,73.2 131.6,73.3 132.1,73.4 132.5,73.4 132.9,73.5 133.4,73.6 133.8,73.7 134.3,73.8 134.8,73.9 135.2,73.9 135.6,74.0 136.1,74.1 136.6,74.2 137.0,74.3 137.4,74.3 137.9,74.4 138.3,74.5 138.8,74.6 139.2,74.7 139.7,74.7 140.1,74.8 140.6,74.9 141.1,75.0 141.5,75.1 141.9,75.1 142.4,75.2 142.8,75.3 143.3,75.4 143.8,75.4 144.2,75.5 144.7,75.6 145.1,75.7 145.6,75.7 146.0,75.8 146.4,75.9 146.9,76.0 147.4,76.0 147.8,76.1 148.2,76.2 148.7,76.3 149.2,76.3 149.6,76.4 150.1,76.5 150.5,76.6 151.0,76.6 151.4,76.7 151.8,76.8 152.3,76.9 152.8,76.9 153.2,77.0 153.7,77.1 154.1,77.1 154.6,77.2 155.0,77.3 155.4,77.4 155.9,77.4 156.3,77.5 156.8,77.6 157.2,77.6 157.7,77.7 158.2,77.8 158.6,77.8 159.0,77.9 159.5,78.0 159.9,78.1 160.4,78.1 160.8,78.2 161.3,78.3 161.8,78.3 162.2,78.4 162.7,78.5 163.1,78.5 163.6,78.6 164.0,78.7 164.4,78.7 164.9,78.8 165.3,78.9 165.8,78.9 166.2,79.0 166.7,79.1 167.2,79.1 167.6,79.2 168.1,79.3 168.5,79.3 168.9,79.4 169.4,79.4 169.8,79.5 170.3,79.6 170.8,79.6 171.2,79.7 171.7,79.8 172.1,79.8 172.6,79.9 173.0,80.0 173.5,80.0 173.9,80.1 174.3,80.1 174.8,80.2 175.2,80.3 175.7,80.3 176.2,80.4 176.6,80.5 177.1,80.5 177.5,80.6 177.9,80.6 178.4,80.7 178.8,80.8 179.3,80.8 179.8,80.9 180.2,80.9 180.7,81.0 181.1,81.1 181.5,81.1 182.0,81.2 182.4,81.2 182.9,81.3 183.3,81.3 183.8,81.4 184.2,81.5 184.7,81.5 185.2,81.6 185.6,81.6 186.1,81.7 186.5,81.7 186.9,81.8 187.4,81.9 187.8,81.9 188.3,82.0 188.8,82.0 189.2,82.1 189.7,82.1 190.1,82.2 190.6,82.3 191.0,82.3 191.4,82.4 191.9,82.4 192.3,82.5 192.8,82.5 193.2,82.6 193.7,82.6 194.2,82.7 194.6,82.7 195.1,82.8 195.5,82.9 196.0,82.9 196.4,83.0 196.8,83.0 197.3,83.1 197.8,83.1 198.2,83.2 198.7,83.2 199.1,83.3 199.6,83.3 200.0,83.4" fill="none" stroke="#8B6508" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<line x1="268" y1="100" x2="464" y2="100" class="ax" marker-end="url(#arr4)"></line>
+<line x1="272" y1="166" x2="272" y2="32" class="ax"></line>
+<text x="467" y="104" class="lbl">t</text>
+<polyline points="272.0,42.0 272.4,42.2 272.9,42.7 273.4,43.6 273.8,44.8 274.2,46.4 274.7,48.3 275.1,50.5 275.6,53.1 276.1,55.9 276.5,59.0 276.9,62.3 277.4,65.9 277.9,69.7 278.3,73.7 278.8,77.8 279.2,82.1 279.6,86.5 280.1,90.9 280.6,95.4 281.0,100.0 281.4,104.6 281.9,109.1 282.4,113.5 282.8,117.9 283.2,122.2 283.7,126.3 284.1,130.3 284.6,134.1 285.1,137.7 285.5,141.0 285.9,144.1 286.4,146.9 286.9,149.5 287.3,151.7 287.8,153.6 288.2,155.2 288.6,156.4 289.1,157.3 289.6,157.8 290.0,158.0 290.4,157.8 290.9,157.3 291.4,156.4 291.8,155.2 292.2,153.6 292.7,151.7 293.1,149.5 293.6,146.9 294.1,144.1 294.5,141.0 294.9,137.7 295.4,134.1 295.9,130.3 296.3,126.3 296.8,122.2 297.2,117.9 297.6,113.5 298.1,109.1 298.6,104.6 299.0,100.0 299.4,95.4 299.9,90.9 300.4,86.5 300.8,82.1 301.2,77.8 301.7,73.7 302.1,69.7 302.6,65.9 303.1,62.3 303.5,59.0 303.9,55.9 304.4,53.1 304.9,50.5 305.3,48.3 305.8,46.4 306.2,44.8 306.6,43.6 307.1,42.7 307.6,42.2 308.0,42.0 308.4,42.2 308.9,42.7 309.4,43.6 309.8,44.8 310.2,46.4 310.7,48.3 311.1,50.5 311.6,53.1 312.1,55.9 312.5,59.0 312.9,62.3 313.4,65.9 313.9,69.7 314.3,73.7 314.8,77.8 315.2,82.1 315.6,86.5 316.1,90.9 316.6,95.4 317.0,100.0 317.4,104.6 317.9,109.1 318.4,113.5 318.8,117.9 319.2,122.2 319.7,126.3 320.1,130.3 320.6,134.1 321.1,137.7 321.5,141.0 321.9,144.1 322.4,146.9 322.9,149.5 323.3,151.7 323.8,153.6 324.2,155.2 324.6,156.4 325.1,157.3 325.6,157.8 326.0,158.0 326.4,157.8 326.9,157.3 327.4,156.4 327.8,155.2 328.2,153.6 328.7,151.7 329.1,149.5 329.6,146.9 330.1,144.1 330.5,141.0 330.9,137.7 331.4,134.1 331.9,130.3 332.3,126.3 332.8,122.2 333.2,117.9 333.6,113.5 334.1,109.1 334.6,104.6 335.0,100.0 335.4,95.4 335.9,90.9 336.4,86.5 336.8,82.1 337.2,77.8 337.7,73.7 338.1,69.7 338.6,65.9 339.1,62.3 339.5,59.0 339.9,55.9 340.4,53.1 340.9,50.5 341.3,48.3 341.8,46.4 342.2,44.8 342.6,43.6 343.1,42.7 343.6,42.2 344.0,42.0 344.4,42.2 344.9,42.7 345.4,43.6 345.8,44.8 346.2,46.4 346.7,48.3 347.1,50.5 347.6,53.1 348.1,55.9 348.5,59.0 348.9,62.3 349.4,65.9 349.9,69.7 350.3,73.7 350.8,77.8 351.2,82.1 351.6,86.5 352.1,90.9 352.6,95.4 353.0,100.0 353.4,104.6 353.9,109.1 354.4,113.5 354.8,117.9 355.2,122.2 355.7,126.3 356.1,130.3 356.6,134.1 357.1,137.7 357.5,141.0 357.9,144.1 358.4,146.9 358.9,149.5 359.3,151.7 359.8,153.6 360.2,155.2 360.6,156.4 361.1,157.3 361.6,157.8 362.0,158.0 362.4,157.8 362.9,157.3 363.4,156.4 363.8,155.2 364.2,153.6 364.7,151.7 365.1,149.5 365.6,146.9 366.1,144.1 366.5,141.0 366.9,137.7 367.4,134.1 367.9,130.3 368.3,126.3 368.8,122.2 369.2,117.9 369.6,113.5 370.1,109.1 370.6,104.6 371.0,100.0 371.4,95.4 371.9,90.9 372.4,86.5 372.8,82.1 373.2,77.8 373.7,73.7 374.1,69.7 374.6,65.9 375.1,62.3 375.5,59.0 375.9,55.9 376.4,53.1 376.9,50.5 377.3,48.3 377.8,46.4 378.2,44.8 378.6,43.6 379.1,42.7 379.6,42.2 380.0,42.0 380.4,42.2 380.9,42.7 381.4,43.6 381.8,44.8 382.2,46.4 382.7,48.3 383.1,50.5 383.6,53.1 384.1,55.9 384.5,59.0 384.9,62.3 385.4,65.9 385.9,69.7 386.3,73.7 386.8,77.8 387.2,82.1 387.6,86.5 388.1,90.9 388.6,95.4 389.0,100.0 389.4,104.6 389.9,109.1 390.4,113.5 390.8,117.9 391.2,122.2 391.7,126.3 392.1,130.3 392.6,134.1 393.1,137.7 393.5,141.0 393.9,144.1 394.4,146.9 394.9,149.5 395.3,151.7 395.8,153.6 396.2,155.2 396.6,156.4 397.1,157.3 397.6,157.8 398.0,158.0 398.4,157.8 398.9,157.3 399.4,156.4 399.8,155.2 400.2,153.6 400.7,151.7 401.1,149.5 401.6,146.9 402.1,144.1 402.5,141.0 403.0,137.7 403.4,134.1 403.9,130.3 404.3,126.3 404.8,122.2 405.2,117.9 405.6,113.5 406.1,109.1 406.6,104.6 407.0,100.0 407.4,95.4 407.9,90.9 408.4,86.5 408.8,82.1 409.2,77.8 409.7,73.7 410.1,69.7 410.6,65.9 411.0,62.3 411.5,59.0 411.9,55.9 412.4,53.1 412.9,50.5 413.3,48.3 413.8,46.4 414.2,44.8 414.6,43.6 415.1,42.7 415.6,42.2 416.0,42.0 416.4,42.2 416.9,42.7 417.4,43.6 417.8,44.8 418.2,46.4 418.7,48.3 419.1,50.5 419.6,53.1 420.1,55.9 420.5,59.0 420.9,62.3 421.4,65.9 421.9,69.7 422.3,73.7 422.8,77.8 423.2,82.1 423.6,86.5 424.1,90.9 424.6,95.4 425.0,100.0 425.5,104.6 425.9,109.1 426.4,113.5 426.8,117.9 427.2,122.2 427.7,126.3 428.1,130.3 428.6,134.1 429.1,137.7 429.5,141.0 429.9,144.1 430.4,146.9 430.9,149.5 431.3,151.7 431.8,153.6 432.2,155.2 432.6,156.4 433.1,157.3 433.5,157.8 434.0,158.0 434.4,157.8 434.9,157.3 435.4,156.4 435.8,155.2 436.2,153.6 436.7,151.7 437.1,149.5 437.6,146.9 438.1,144.1 438.5,141.0 438.9,137.7 439.4,134.1 439.9,130.3 440.3,126.3 440.8,122.2 441.2,117.9 441.6,113.5 442.1,109.1 442.6,104.6 443.0,100.0 443.4,95.4 443.9,90.9 444.4,86.5 444.8,82.1 445.2,77.8 445.7,73.7 446.1,69.7 446.6,65.9 447.1,62.3 447.5,59.0 448.0,55.9 448.4,53.1 448.9,50.5 449.3,48.3 449.8,46.4 450.2,44.8 450.6,43.6 451.1,42.7 451.6,42.2 452.0,42.0" fill="none" stroke="#14672A" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<line x1="520" y1="100" x2="716" y2="100" class="ax" marker-end="url(#arr4)"></line>
+<line x1="524" y1="166" x2="524" y2="32" class="ax"></line>
+<text x="719" y="104" class="lbl">t</text>
+<polyline points="524.0,42.0 527.6,43.4 531.2,44.8 534.8,46.2 538.4,47.5 542.0,48.8 545.6,50.1 549.2,51.3 552.8,52.5 556.4,53.7 560.0,54.8 563.6,55.9 567.2,57.0 570.8,58.1 574.4,59.1 578.0,60.1 581.6,61.1 585.2,62.1 588.8,63.0 592.4,63.9 596.0,64.8 599.6,65.7 603.2,66.5 606.8,67.4 610.4,68.2 614.0,69.0 617.6,69.7 621.2,70.5 624.8,71.2 628.4,71.9 632.0,72.6 635.6,73.3 639.2,73.9 642.8,74.6 646.4,75.2 650.0,75.8 653.6,76.4 657.2,77.0 660.8,77.6 664.4,78.1 668.0,78.7 671.6,79.2 675.2,79.7 678.8,80.2 682.4,80.7 686.0,81.2 689.6,81.6 693.2,82.1 696.8,82.5 700.4,83.0 704.0,83.4" fill="none" stroke="#8B6508" stroke-width="1.6" stroke-dasharray="5 3"></polyline>
+<polyline points="524.0,158.0 527.6,156.6 531.2,155.2 534.8,153.8 538.4,152.5 542.0,151.2 545.6,149.9 549.2,148.7 552.8,147.5 556.4,146.3 560.0,145.2 563.6,144.1 567.2,143.0 570.8,141.9 574.4,140.9 578.0,139.9 581.6,138.9 585.2,137.9 588.8,137.0 592.4,136.1 596.0,135.2 599.6,134.3 603.2,133.5 606.8,132.6 610.4,131.8 614.0,131.0 617.6,130.3 621.2,129.5 624.8,128.8 628.4,128.1 632.0,127.4 635.6,126.7 639.2,126.1 642.8,125.4 646.4,124.8 650.0,124.2 653.6,123.6 657.2,123.0 660.8,122.4 664.4,121.9 668.0,121.3 671.6,120.8 675.2,120.3 678.8,119.8 682.4,119.3 686.0,118.8 689.6,118.4 693.2,117.9 696.8,117.5 700.4,117.0 704.0,116.6" fill="none" stroke="#8B6508" stroke-width="1.6" stroke-dasharray="5 3"></polyline>
+<polyline points="524.0,42.0 524.5,42.4 524.9,43.1 525.4,44.1 525.8,45.5 526.2,47.2 526.7,49.3 527.1,51.6 527.6,54.2 528.0,57.1 528.5,60.2 529.0,63.6 529.4,67.2 529.9,70.9 530.3,74.8 530.8,78.8 531.2,83.0 531.6,87.2 532.1,91.4 532.5,95.7 533.0,100.0 533.5,104.3 533.9,108.5 534.4,112.6 534.8,116.6 535.2,120.5 535.7,124.3 536.1,127.9 536.6,131.2 537.0,134.4 537.5,137.3 538.0,140.0 538.4,142.5 538.9,144.6 539.3,146.5 539.8,148.0 540.2,149.3 540.6,150.2 541.1,150.9 541.5,151.2 542.0,151.2 542.5,150.9 542.9,150.2 543.4,149.3 543.8,148.1 544.2,146.6 544.7,144.8 545.1,142.7 545.6,140.4 546.0,137.8 546.5,135.1 547.0,132.1 547.4,129.0 547.9,125.7 548.3,122.2 548.8,118.7 549.2,115.0 549.6,111.3 550.1,107.6 550.5,103.8 551.0,100.0 551.5,96.2 551.9,92.5 552.4,88.9 552.8,85.3 553.2,81.9 553.7,78.6 554.1,75.4 554.6,72.4 555.0,69.6 555.5,67.0 556.0,64.7 556.4,62.5 556.9,60.6 557.3,59.0 557.8,57.6 558.2,56.5 558.6,55.7 559.1,55.1 559.5,54.8 560.0,54.8 560.5,55.1 560.9,55.7 561.4,56.5 561.8,57.6 562.2,58.9 562.7,60.5 563.1,62.3 563.6,64.4 564.0,66.6 564.5,69.0 565.0,71.7 565.4,74.4 565.9,77.3 566.3,80.4 566.8,83.5 567.2,86.7 567.6,90.0 568.1,93.3 568.5,96.7 569.0,100.0 569.5,103.3 569.9,106.6 570.4,109.8 570.8,112.9 571.2,116.0 571.7,118.9 572.1,121.7 572.6,124.3 573.0,126.8 573.5,129.1 574.0,131.2 574.4,133.1 574.9,134.7 575.3,136.2 575.8,137.4 576.2,138.4 576.6,139.1 577.1,139.6 577.5,139.9 578.0,139.9 578.5,139.6 578.9,139.1 579.4,138.4 579.8,137.4 580.2,136.3 580.7,134.9 581.1,133.3 581.6,131.5 582.0,129.5 582.5,127.3 583.0,125.0 583.4,122.6 583.9,120.0 584.3,117.3 584.8,114.6 585.2,111.7 585.6,108.8 586.1,105.9 586.5,102.9 587.0,100.0 587.5,97.1 587.9,94.2 588.4,91.3 588.8,88.6 589.2,85.9 589.7,83.3 590.1,80.9 590.6,78.5 591.0,76.4 591.5,74.3 592.0,72.5 592.4,70.8 592.9,69.3 593.3,68.1 593.8,67.0 594.2,66.1 594.6,65.5 595.1,65.0 595.5,64.8 596.0,64.8 596.5,65.0 596.9,65.5 597.4,66.1 597.8,67.0 598.2,68.0 598.7,69.2 599.1,70.7 599.6,72.2 600.0,74.0 600.5,75.9 601.0,77.9 601.4,80.1 601.9,82.4 602.3,84.7 602.8,87.2 603.2,89.7 603.6,92.2 604.1,94.8 604.5,97.4 605.0,100.0 605.5,102.6 605.9,105.1 606.4,107.6 606.8,110.1 607.2,112.5 607.7,114.7 608.1,116.9 608.6,118.9 609.0,120.9 609.5,122.6 610.0,124.3 610.4,125.8 610.9,127.1 611.3,128.2 611.8,129.1 612.2,129.9 612.6,130.5 613.1,130.9 613.5,131.0 614.0,131.0 614.5,130.9 614.9,130.5 615.4,129.9 615.8,129.2 616.2,128.2 616.7,127.1 617.1,125.9 617.6,124.5 618.0,123.0 618.5,121.3 619.0,119.5 619.4,117.6 619.9,115.6 620.3,113.5 620.8,111.3 621.2,109.1 621.6,106.9 622.1,104.6 622.5,102.3 623.0,100.0 623.5,97.7 623.9,95.5 624.4,93.3 624.8,91.1 625.2,89.0 625.7,87.0 626.1,85.1 626.6,83.3 627.0,81.6 627.5,80.0 628.0,78.6 628.4,77.3 628.9,76.1 629.3,75.1 629.8,74.3 630.2,73.6 630.6,73.1 631.1,72.8 631.5,72.6 632.0,72.6 632.5,72.8 632.9,73.1 633.4,73.6 633.8,74.3 634.2,75.1 634.7,76.0 635.1,77.1 635.6,78.4 636.0,79.7 636.5,81.2 637.0,82.8 637.4,84.5 637.9,86.3 638.3,88.1 638.8,90.0 639.2,91.9 639.6,93.9 640.1,95.9 640.5,98.0 641.0,100.0 641.5,102.0 641.9,104.0 642.4,106.0 642.8,107.9 643.2,109.7 643.7,111.5 644.1,113.2 644.6,114.8 645.0,116.3 645.5,117.6 646.0,118.9 646.4,120.1 646.9,121.1 647.3,122.0 647.8,122.7 648.2,123.3 648.6,123.7 649.1,124.0 649.5,124.2 650.0,124.2 650.5,124.0 650.9,123.7 651.4,123.3 651.8,122.7 652.2,122.0 652.7,121.1 653.1,120.2 653.6,119.1 654.0,117.9 654.5,116.6 655.0,115.2 655.4,113.7 655.9,112.1 656.3,110.5 656.8,108.8 657.2,107.1 657.6,105.4 658.1,103.6 658.5,101.8 659.0,100.0 659.5,98.2 659.9,96.5 660.4,94.7 660.8,93.1 661.2,91.4 661.7,89.9 662.1,88.4 662.6,87.0 663.0,85.7 663.5,84.4 664.0,83.3 664.4,82.3 664.9,81.4 665.3,80.6 665.8,80.0 666.2,79.5 666.6,79.1 667.1,78.8 667.5,78.7 668.0,78.7 668.5,78.8 668.9,79.1 669.4,79.4 669.8,80.0 670.2,80.6 670.7,81.3 671.1,82.2 671.6,83.2 672.0,84.2 672.5,85.4 673.0,86.6 673.4,87.9 673.9,89.3 674.3,90.7 674.8,92.2 675.2,93.7 675.6,95.3 676.1,96.8 676.5,98.4 677.0,100.0 677.5,101.6 677.9,103.1 678.4,104.6 678.8,106.1 679.2,107.6 679.7,108.9 680.1,110.2 680.6,111.5 681.0,112.7 681.5,113.7 682.0,114.7 682.4,115.6 682.9,116.4 683.3,117.1 683.8,117.7 684.2,118.1 684.6,118.5 685.1,118.7 685.5,118.8 686.0,118.8 686.5,118.7 686.9,118.5 687.4,118.1 687.8,117.7 688.2,117.1 688.7,116.5 689.1,115.7 689.6,114.9 690.0,113.9 690.5,112.9 691.0,111.8 691.4,110.7 691.9,109.4 692.3,108.2 692.8,106.9 693.2,105.5 693.6,104.2 694.1,102.8 694.5,101.4 695.0,100.0 695.5,98.6 695.9,97.3 696.4,95.9 696.8,94.6 697.2,93.3 697.7,92.1 698.1,91.0 698.6,89.9 699.0,88.8 699.5,87.9 700.0,87.0 700.4,86.2 700.9,85.5 701.3,84.9 701.8,84.4 702.2,84.0 702.6,83.7 703.1,83.5 703.5,83.4 704.0,83.4" fill="none" stroke="#1a1a1a" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<text x="110" y="202" text-anchor="middle" font-weight="700" fill="#8B6508" font-size="22">decay</text>
+<text x="110" y="228" text-anchor="middle" fill="#8B6508" font-size="20">A e^(−γt)</text>
+<text x="362" y="202" text-anchor="middle" font-weight="700" fill="#14672A" font-size="22">oscillation</text>
+<text x="362" y="228" text-anchor="middle" fill="#14672A" font-size="20">cos(ωt)</text>
+<text x="614" y="202" text-anchor="middle" font-weight="700" fill="#1a1a1a" font-size="22">damped oscillation</text>
+<text x="614" y="228" text-anchor="middle" fill="#1a1a1a" font-size="20">A e^(−γt) cos(ωt)</text>
+<text x="246" y="110" text-anchor="middle" font-size="26" fill="#3a3a3a">×</text>
+<text x="498" y="110" text-anchor="middle" font-size="26" fill="#3a3a3a">=</text>
+</svg>
+<figcaption>The two factors of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{Xt}</annotation></semantics></math>
+and their product. Exact version:
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><mi>i</mi><mspace width="0.167em" /><msub><mi>ω</mi><mi>d</mi></msub></mrow><annotation encoding="application/x-tex">\sqrt{\gamma^{2} - \omega^{2}} = i\,\omega_{d}</annotation></semantics></math>
+with
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><msub><mi>ω</mi><mi>d</mi></msub><mo>=</mo><msqrt><mpadded depth="0"><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>−</mo><msup><mi>γ</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>≈</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\omega_{d} = \sqrt{\omega^{2} - \gamma^{2}} \approx \omega</annotation></semantics></math>.
+Same picture.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="qec">
+<p class="stem"><strong>EC.</strong> <strong>(1 pt)</strong> <strong>Extra credit.</strong> The oscilloscope trace below shows a
+pure sinusoidal signal. Given that the horizontal axis is <strong>2 ms
+per division</strong>, <strong>sketch the Fourier transform</strong> of
+this signal. Be quantitative with the horizontal-axis position of the
+key feature in the Fourier transform.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 235" role="img" aria-labelledby="gt5 gd5">
+<title id="gt5">Oscilloscope trace of a pure sinusoidal signal</title>
+<desc id="gd5">An oscilloscope screen with a grid of 10 divisions across and 6 divisions up. A smooth sine wave starts at zero at the left edge, marked t = 0, rises first, and completes exactly 4 full cycles across the 10 divisions, ending at zero at the right edge. Each cycle spans two and a half divisions.</desc>
+<line x1="80" y1="22" x2="80" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="120" y1="22" x2="120" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="160" y1="22" x2="160" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="200" y1="22" x2="200" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="240" y1="22" x2="240" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="280" y1="22" x2="280" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="320" y1="22" x2="320" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="360" y1="22" x2="360" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="400" y1="22" x2="400" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="52" x2="440" y2="52" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="82" x2="440" y2="82" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="112" x2="440" y2="112" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="142" x2="440" y2="142" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="172" x2="440" y2="172" stroke="#8c8c8c" stroke-width="1"></line>
+<rect x="40.0" y="22.0" width="400.0" height="180.0" class="ax"></rect>
+<polyline points="40.00,112.00 40.50,109.93 41.00,107.86 41.50,105.79 42.00,103.73 42.50,101.68 43.00,99.63 43.50,97.60 44.00,95.59 44.50,93.59 45.00,91.60 45.50,89.64 46.00,87.70 46.50,85.79 47.00,83.90 47.50,82.04 48.00,80.20 48.50,78.40 49.00,76.64 49.50,74.90 50.00,73.21 50.50,71.55 51.00,69.93 51.50,68.35 52.00,66.82 52.50,65.33 53.00,63.89 53.50,62.49 54.00,61.15 54.50,59.85 55.00,58.60 55.50,57.41 56.00,56.27 56.50,55.19 57.00,54.16 57.50,53.19 58.00,52.28 58.50,51.43 59.00,50.63 59.50,49.90 60.00,49.23 60.50,48.62 61.00,48.07 61.50,47.59 62.00,47.17 62.50,46.81 63.00,46.52 63.50,46.29 64.00,46.13 64.50,46.03 65.00,46.00 65.50,46.03 66.00,46.13 66.50,46.29 67.00,46.52 67.50,46.81 68.00,47.17 68.50,47.59 69.00,48.07 69.50,48.62 70.00,49.23 70.50,49.90 71.00,50.63 71.50,51.43 72.00,52.28 72.50,53.19 73.00,54.16 73.50,55.19 74.00,56.27 74.50,57.41 75.00,58.60 75.50,59.85 76.00,61.15 76.50,62.49 77.00,63.89 77.50,65.33 78.00,66.82 78.50,68.35 79.00,69.93 79.50,71.55 80.00,73.21 80.50,74.90 81.00,76.64 81.50,78.40 82.00,80.20 82.50,82.04 83.00,83.90 83.50,85.79 84.00,87.70 84.50,89.64 85.00,91.60 85.50,93.59 86.00,95.59 86.50,97.60 87.00,99.63 87.50,101.68 88.00,103.73 88.50,105.79 89.00,107.86 89.50,109.93 90.00,112.00 90.50,114.07 91.00,116.14 91.50,118.21 92.00,120.27 92.50,122.32 93.00,124.37 93.50,126.40 94.00,128.41 94.50,130.41 95.00,132.40 95.50,134.36 96.00,136.30 96.50,138.21 97.00,140.10 97.50,141.96 98.00,143.80 98.50,145.60 99.00,147.36 99.50,149.10 100.00,150.79 100.50,152.45 101.00,154.07 101.50,155.65 102.00,157.18 102.50,158.67 103.00,160.11 103.50,161.51 104.00,162.85 104.50,164.15 105.00,165.40 105.50,166.59 106.00,167.73 106.50,168.81 107.00,169.84 107.50,170.81 108.00,171.72 108.50,172.57 109.00,173.37 109.50,174.10 110.00,174.77 110.50,175.38 111.00,175.93 111.50,176.41 112.00,176.83 112.50,177.19 113.00,177.48 113.50,177.71 114.00,177.87 114.50,177.97 115.00,178.00 115.50,177.97 116.00,177.87 116.50,177.71 117.00,177.48 117.50,177.19 118.00,176.83 118.50,176.41 119.00,175.93 119.50,175.38 120.00,174.77 120.50,174.10 121.00,173.37 121.50,172.57 122.00,171.72 122.50,170.81 123.00,169.84 123.50,168.81 124.00,167.73 124.50,166.59 125.00,165.40 125.50,164.15 126.00,162.85 126.50,161.51 127.00,160.11 127.50,158.67 128.00,157.18 128.50,155.65 129.00,154.07 129.50,152.45 130.00,150.79 130.50,149.10 131.00,147.36 131.50,145.60 132.00,143.80 132.50,141.96 133.00,140.10 133.50,138.21 134.00,136.30 134.50,134.36 135.00,132.40 135.50,130.41 136.00,128.41 136.50,126.40 137.00,124.37 137.50,122.32 138.00,120.27 138.50,118.21 139.00,116.14 139.50,114.07 140.00,112.00 140.50,109.93 141.00,107.86 141.50,105.79 142.00,103.73 142.50,101.68 143.00,99.63 143.50,97.60 144.00,95.59 144.50,93.59 145.00,91.60 145.50,89.64 146.00,87.70 146.50,85.79 147.00,83.90 147.50,82.04 148.00,80.20 148.50,78.40 149.00,76.64 149.50,74.90 150.00,73.21 150.50,71.55 151.00,69.93 151.50,68.35 152.00,66.82 152.50,65.33 153.00,63.89 153.50,62.49 154.00,61.15 154.50,59.85 155.00,58.60 155.50,57.41 156.00,56.27 156.50,55.19 157.00,54.16 157.50,53.19 158.00,52.28 158.50,51.43 159.00,50.63 159.50,49.90 160.00,49.23 160.50,48.62 161.00,48.07 161.50,47.59 162.00,47.17 162.50,46.81 163.00,46.52 163.50,46.29 164.00,46.13 164.50,46.03 165.00,46.00 165.50,46.03 166.00,46.13 166.50,46.29 167.00,46.52 167.50,46.81 168.00,47.17 168.50,47.59 169.00,48.07 169.50,48.62 170.00,49.23 170.50,49.90 171.00,50.63 171.50,51.43 172.00,52.28 172.50,53.19 173.00,54.16 173.50,55.19 174.00,56.27 174.50,57.41 175.00,58.60 175.50,59.85 176.00,61.15 176.50,62.49 177.00,63.89 177.50,65.33 178.00,66.82 178.50,68.35 179.00,69.93 179.50,71.55 180.00,73.21 180.50,74.90 181.00,76.64 181.50,78.40 182.00,80.20 182.50,82.04 183.00,83.90 183.50,85.79 184.00,87.70 184.50,89.64 185.00,91.60 185.50,93.59 186.00,95.59 186.50,97.60 187.00,99.63 187.50,101.68 188.00,103.73 188.50,105.79 189.00,107.86 189.50,109.93 190.00,112.00 190.50,114.07 191.00,116.14 191.50,118.21 192.00,120.27 192.50,122.32 193.00,124.37 193.50,126.40 194.00,128.41 194.50,130.41 195.00,132.40 195.50,134.36 196.00,136.30 196.50,138.21 197.00,140.10 197.50,141.96 198.00,143.80 198.50,145.60 199.00,147.36 199.50,149.10 200.00,150.79 200.50,152.45 201.00,154.07 201.50,155.65 202.00,157.18 202.50,158.67 203.00,160.11 203.50,161.51 204.00,162.85 204.50,164.15 205.00,165.40 205.50,166.59 206.00,167.73 206.50,168.81 207.00,169.84 207.50,170.81 208.00,171.72 208.50,172.57 209.00,173.37 209.50,174.10 210.00,174.77 210.50,175.38 211.00,175.93 211.50,176.41 212.00,176.83 212.50,177.19 213.00,177.48 213.50,177.71 214.00,177.87 214.50,177.97 215.00,178.00 215.50,177.97 216.00,177.87 216.50,177.71 217.00,177.48 217.50,177.19 218.00,176.83 218.50,176.41 219.00,175.93 219.50,175.38 220.00,174.77 220.50,174.10 221.00,173.37 221.50,172.57 222.00,171.72 222.50,170.81 223.00,169.84 223.50,168.81 224.00,167.73 224.50,166.59 225.00,165.40 225.50,164.15 226.00,162.85 226.50,161.51 227.00,160.11 227.50,158.67 228.00,157.18 228.50,155.65 229.00,154.07 229.50,152.45 230.00,150.79 230.50,149.10 231.00,147.36 231.50,145.60 232.00,143.80 232.50,141.96 233.00,140.10 233.50,138.21 234.00,136.30 234.50,134.36 235.00,132.40 235.50,130.41 236.00,128.41 236.50,126.40 237.00,124.37 237.50,122.32 238.00,120.27 238.50,118.21 239.00,116.14 239.50,114.07 240.00,112.00 240.50,109.93 241.00,107.86 241.50,105.79 242.00,103.73 242.50,101.68 243.00,99.63 243.50,97.60 244.00,95.59 244.50,93.59 245.00,91.60 245.50,89.64 246.00,87.70 246.50,85.79 247.00,83.90 247.50,82.04 248.00,80.20 248.50,78.40 249.00,76.64 249.50,74.90 250.00,73.21 250.50,71.55 251.00,69.93 251.50,68.35 252.00,66.82 252.50,65.33 253.00,63.89 253.50,62.49 254.00,61.15 254.50,59.85 255.00,58.60 255.50,57.41 256.00,56.27 256.50,55.19 257.00,54.16 257.50,53.19 258.00,52.28 258.50,51.43 259.00,50.63 259.50,49.90 260.00,49.23 260.50,48.62 261.00,48.07 261.50,47.59 262.00,47.17 262.50,46.81 263.00,46.52 263.50,46.29 264.00,46.13 264.50,46.03 265.00,46.00 265.50,46.03 266.00,46.13 266.50,46.29 267.00,46.52 267.50,46.81 268.00,47.17 268.50,47.59 269.00,48.07 269.50,48.62 270.00,49.23 270.50,49.90 271.00,50.63 271.50,51.43 272.00,52.28 272.50,53.19 273.00,54.16 273.50,55.19 274.00,56.27 274.50,57.41 275.00,58.60 275.50,59.85 276.00,61.15 276.50,62.49 277.00,63.89 277.50,65.33 278.00,66.82 278.50,68.35 279.00,69.93 279.50,71.55 280.00,73.21 280.50,74.90 281.00,76.64 281.50,78.40 282.00,80.20 282.50,82.04 283.00,83.90 283.50,85.79 284.00,87.70 284.50,89.64 285.00,91.60 285.50,93.59 286.00,95.59 286.50,97.60 287.00,99.63 287.50,101.68 288.00,103.73 288.50,105.79 289.00,107.86 289.50,109.93 290.00,112.00 290.50,114.07 291.00,116.14 291.50,118.21 292.00,120.27 292.50,122.32 293.00,124.37 293.50,126.40 294.00,128.41 294.50,130.41 295.00,132.40 295.50,134.36 296.00,136.30 296.50,138.21 297.00,140.10 297.50,141.96 298.00,143.80 298.50,145.60 299.00,147.36 299.50,149.10 300.00,150.79 300.50,152.45 301.00,154.07 301.50,155.65 302.00,157.18 302.50,158.67 303.00,160.11 303.50,161.51 304.00,162.85 304.50,164.15 305.00,165.40 305.50,166.59 306.00,167.73 306.50,168.81 307.00,169.84 307.50,170.81 308.00,171.72 308.50,172.57 309.00,173.37 309.50,174.10 310.00,174.77 310.50,175.38 311.00,175.93 311.50,176.41 312.00,176.83 312.50,177.19 313.00,177.48 313.50,177.71 314.00,177.87 314.50,177.97 315.00,178.00 315.50,177.97 316.00,177.87 316.50,177.71 317.00,177.48 317.50,177.19 318.00,176.83 318.50,176.41 319.00,175.93 319.50,175.38 320.00,174.77 320.50,174.10 321.00,173.37 321.50,172.57 322.00,171.72 322.50,170.81 323.00,169.84 323.50,168.81 324.00,167.73 324.50,166.59 325.00,165.40 325.50,164.15 326.00,162.85 326.50,161.51 327.00,160.11 327.50,158.67 328.00,157.18 328.50,155.65 329.00,154.07 329.50,152.45 330.00,150.79 330.50,149.10 331.00,147.36 331.50,145.60 332.00,143.80 332.50,141.96 333.00,140.10 333.50,138.21 334.00,136.30 334.50,134.36 335.00,132.40 335.50,130.41 336.00,128.41 336.50,126.40 337.00,124.37 337.50,122.32 338.00,120.27 338.50,118.21 339.00,116.14 339.50,114.07 340.00,112.00 340.50,109.93 341.00,107.86 341.50,105.79 342.00,103.73 342.50,101.68 343.00,99.63 343.50,97.60 344.00,95.59 344.50,93.59 345.00,91.60 345.50,89.64 346.00,87.70 346.50,85.79 347.00,83.90 347.50,82.04 348.00,80.20 348.50,78.40 349.00,76.64 349.50,74.90 350.00,73.21 350.50,71.55 351.00,69.93 351.50,68.35 352.00,66.82 352.50,65.33 353.00,63.89 353.50,62.49 354.00,61.15 354.50,59.85 355.00,58.60 355.50,57.41 356.00,56.27 356.50,55.19 357.00,54.16 357.50,53.19 358.00,52.28 358.50,51.43 359.00,50.63 359.50,49.90 360.00,49.23 360.50,48.62 361.00,48.07 361.50,47.59 362.00,47.17 362.50,46.81 363.00,46.52 363.50,46.29 364.00,46.13 364.50,46.03 365.00,46.00 365.50,46.03 366.00,46.13 366.50,46.29 367.00,46.52 367.50,46.81 368.00,47.17 368.50,47.59 369.00,48.07 369.50,48.62 370.00,49.23 370.50,49.90 371.00,50.63 371.50,51.43 372.00,52.28 372.50,53.19 373.00,54.16 373.50,55.19 374.00,56.27 374.50,57.41 375.00,58.60 375.50,59.85 376.00,61.15 376.50,62.49 377.00,63.89 377.50,65.33 378.00,66.82 378.50,68.35 379.00,69.93 379.50,71.55 380.00,73.21 380.50,74.90 381.00,76.64 381.50,78.40 382.00,80.20 382.50,82.04 383.00,83.90 383.50,85.79 384.00,87.70 384.50,89.64 385.00,91.60 385.50,93.59 386.00,95.59 386.50,97.60 387.00,99.63 387.50,101.68 388.00,103.73 388.50,105.79 389.00,107.86 389.50,109.93 390.00,112.00 390.50,114.07 391.00,116.14 391.50,118.21 392.00,120.27 392.50,122.32 393.00,124.37 393.50,126.40 394.00,128.41 394.50,130.41 395.00,132.40 395.50,134.36 396.00,136.30 396.50,138.21 397.00,140.10 397.50,141.96 398.00,143.80 398.50,145.60 399.00,147.36 399.50,149.10 400.00,150.79 400.50,152.45 401.00,154.07 401.50,155.65 402.00,157.18 402.50,158.67 403.00,160.11 403.50,161.51 404.00,162.85 404.50,164.15 405.00,165.40 405.50,166.59 406.00,167.73 406.50,168.81 407.00,169.84 407.50,170.81 408.00,171.72 408.50,172.57 409.00,173.37 409.50,174.10 410.00,174.77 410.50,175.38 411.00,175.93 411.50,176.41 412.00,176.83 412.50,177.19 413.00,177.48 413.50,177.71 414.00,177.87 414.50,177.97 415.00,178.00 415.50,177.97 416.00,177.87 416.50,177.71 417.00,177.48 417.50,177.19 418.00,176.83 418.50,176.41 419.00,175.93 419.50,175.38 420.00,174.77 420.50,174.10 421.00,173.37 421.50,172.57 422.00,171.72 422.50,170.81 423.00,169.84 423.50,168.81 424.00,167.73 424.50,166.59 425.00,165.40 425.50,164.15 426.00,162.85 426.50,161.51 427.00,160.11 427.50,158.67 428.00,157.18 428.50,155.65 429.00,154.07 429.50,152.45 430.00,150.79 430.50,149.10 431.00,147.36 431.50,145.60 432.00,143.80 432.50,141.96 433.00,140.10 433.50,138.21 434.00,136.30 434.50,134.36 435.00,132.40 435.50,130.41 436.00,128.41 436.50,126.40 437.00,124.37 437.50,122.32 438.00,120.27 438.50,118.21 439.00,116.14 439.50,114.07 440.00,112.00" class="prof"></polyline>
+<text x="40.0" y="220" text-anchor="middle" class="lbl">t = 0</text>
+<text x="440.0" y="220" text-anchor="end" class="lbl">time →</text>
+</svg>
+<figcaption>The trace as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question EC</span></summary>
+<div class="sol-body">
+<div class="flow">
+<figure class="graph mini" id="fig-ec_scope_marked">
+<svg viewBox="0 0 470 290" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">The oscilloscope trace, marked up: one division and one period</title>
+<desc id="gd2">The same oscilloscope screen as on the quiz: a grid of 10 divisions across and 6 up, with a sine wave that starts at zero at the left edge, rises, and completes 4 full cycles. A bracket above the screen marks one division: 2 ms. The first cycle is highlighted, from the left edge to the point two and a half divisions in where the wave next crosses zero going up; dashed lines mark both ends, and a bracket below the screen labels it: 1 period, T = 2.5 divisions times 2 ms = 5 ms.</desc>
+<g transform="translate(0,34.0)">
+<line x1="80" y1="22" x2="80" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="120" y1="22" x2="120" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="160" y1="22" x2="160" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="200" y1="22" x2="200" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="240" y1="22" x2="240" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="280" y1="22" x2="280" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="320" y1="22" x2="320" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="360" y1="22" x2="360" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="400" y1="22" x2="400" y2="202" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="52" x2="440" y2="52" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="82" x2="440" y2="82" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="112" x2="440" y2="112" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="142" x2="440" y2="142" stroke="#8c8c8c" stroke-width="1"></line>
+<line x1="40" y1="172" x2="440" y2="172" stroke="#8c8c8c" stroke-width="1"></line>
+<rect x="40.0" y="22.0" width="400.0" height="180.0" class="ax"></rect>
+<polyline points="40.00,112.00 40.50,109.93 41.00,107.86 41.50,105.79 42.00,103.73 42.50,101.68 43.00,99.63 43.50,97.60 44.00,95.59 44.50,93.59 45.00,91.60 45.50,89.64 46.00,87.70 46.50,85.79 47.00,83.90 47.50,82.04 48.00,80.20 48.50,78.40 49.00,76.64 49.50,74.90 50.00,73.21 50.50,71.55 51.00,69.93 51.50,68.35 52.00,66.82 52.50,65.33 53.00,63.89 53.50,62.49 54.00,61.15 54.50,59.85 55.00,58.60 55.50,57.41 56.00,56.27 56.50,55.19 57.00,54.16 57.50,53.19 58.00,52.28 58.50,51.43 59.00,50.63 59.50,49.90 60.00,49.23 60.50,48.62 61.00,48.07 61.50,47.59 62.00,47.17 62.50,46.81 63.00,46.52 63.50,46.29 64.00,46.13 64.50,46.03 65.00,46.00 65.50,46.03 66.00,46.13 66.50,46.29 67.00,46.52 67.50,46.81 68.00,47.17 68.50,47.59 69.00,48.07 69.50,48.62 70.00,49.23 70.50,49.90 71.00,50.63 71.50,51.43 72.00,52.28 72.50,53.19 73.00,54.16 73.50,55.19 74.00,56.27 74.50,57.41 75.00,58.60 75.50,59.85 76.00,61.15 76.50,62.49 77.00,63.89 77.50,65.33 78.00,66.82 78.50,68.35 79.00,69.93 79.50,71.55 80.00,73.21 80.50,74.90 81.00,76.64 81.50,78.40 82.00,80.20 82.50,82.04 83.00,83.90 83.50,85.79 84.00,87.70 84.50,89.64 85.00,91.60 85.50,93.59 86.00,95.59 86.50,97.60 87.00,99.63 87.50,101.68 88.00,103.73 88.50,105.79 89.00,107.86 89.50,109.93 90.00,112.00 90.50,114.07 91.00,116.14 91.50,118.21 92.00,120.27 92.50,122.32 93.00,124.37 93.50,126.40 94.00,128.41 94.50,130.41 95.00,132.40 95.50,134.36 96.00,136.30 96.50,138.21 97.00,140.10 97.50,141.96 98.00,143.80 98.50,145.60 99.00,147.36 99.50,149.10 100.00,150.79 100.50,152.45 101.00,154.07 101.50,155.65 102.00,157.18 102.50,158.67 103.00,160.11 103.50,161.51 104.00,162.85 104.50,164.15 105.00,165.40 105.50,166.59 106.00,167.73 106.50,168.81 107.00,169.84 107.50,170.81 108.00,171.72 108.50,172.57 109.00,173.37 109.50,174.10 110.00,174.77 110.50,175.38 111.00,175.93 111.50,176.41 112.00,176.83 112.50,177.19 113.00,177.48 113.50,177.71 114.00,177.87 114.50,177.97 115.00,178.00 115.50,177.97 116.00,177.87 116.50,177.71 117.00,177.48 117.50,177.19 118.00,176.83 118.50,176.41 119.00,175.93 119.50,175.38 120.00,174.77 120.50,174.10 121.00,173.37 121.50,172.57 122.00,171.72 122.50,170.81 123.00,169.84 123.50,168.81 124.00,167.73 124.50,166.59 125.00,165.40 125.50,164.15 126.00,162.85 126.50,161.51 127.00,160.11 127.50,158.67 128.00,157.18 128.50,155.65 129.00,154.07 129.50,152.45 130.00,150.79 130.50,149.10 131.00,147.36 131.50,145.60 132.00,143.80 132.50,141.96 133.00,140.10 133.50,138.21 134.00,136.30 134.50,134.36 135.00,132.40 135.50,130.41 136.00,128.41 136.50,126.40 137.00,124.37 137.50,122.32 138.00,120.27 138.50,118.21 139.00,116.14 139.50,114.07 140.00,112.00 140.50,109.93 141.00,107.86 141.50,105.79 142.00,103.73 142.50,101.68 143.00,99.63 143.50,97.60 144.00,95.59 144.50,93.59 145.00,91.60 145.50,89.64 146.00,87.70 146.50,85.79 147.00,83.90 147.50,82.04 148.00,80.20 148.50,78.40 149.00,76.64 149.50,74.90 150.00,73.21 150.50,71.55 151.00,69.93 151.50,68.35 152.00,66.82 152.50,65.33 153.00,63.89 153.50,62.49 154.00,61.15 154.50,59.85 155.00,58.60 155.50,57.41 156.00,56.27 156.50,55.19 157.00,54.16 157.50,53.19 158.00,52.28 158.50,51.43 159.00,50.63 159.50,49.90 160.00,49.23 160.50,48.62 161.00,48.07 161.50,47.59 162.00,47.17 162.50,46.81 163.00,46.52 163.50,46.29 164.00,46.13 164.50,46.03 165.00,46.00 165.50,46.03 166.00,46.13 166.50,46.29 167.00,46.52 167.50,46.81 168.00,47.17 168.50,47.59 169.00,48.07 169.50,48.62 170.00,49.23 170.50,49.90 171.00,50.63 171.50,51.43 172.00,52.28 172.50,53.19 173.00,54.16 173.50,55.19 174.00,56.27 174.50,57.41 175.00,58.60 175.50,59.85 176.00,61.15 176.50,62.49 177.00,63.89 177.50,65.33 178.00,66.82 178.50,68.35 179.00,69.93 179.50,71.55 180.00,73.21 180.50,74.90 181.00,76.64 181.50,78.40 182.00,80.20 182.50,82.04 183.00,83.90 183.50,85.79 184.00,87.70 184.50,89.64 185.00,91.60 185.50,93.59 186.00,95.59 186.50,97.60 187.00,99.63 187.50,101.68 188.00,103.73 188.50,105.79 189.00,107.86 189.50,109.93 190.00,112.00 190.50,114.07 191.00,116.14 191.50,118.21 192.00,120.27 192.50,122.32 193.00,124.37 193.50,126.40 194.00,128.41 194.50,130.41 195.00,132.40 195.50,134.36 196.00,136.30 196.50,138.21 197.00,140.10 197.50,141.96 198.00,143.80 198.50,145.60 199.00,147.36 199.50,149.10 200.00,150.79 200.50,152.45 201.00,154.07 201.50,155.65 202.00,157.18 202.50,158.67 203.00,160.11 203.50,161.51 204.00,162.85 204.50,164.15 205.00,165.40 205.50,166.59 206.00,167.73 206.50,168.81 207.00,169.84 207.50,170.81 208.00,171.72 208.50,172.57 209.00,173.37 209.50,174.10 210.00,174.77 210.50,175.38 211.00,175.93 211.50,176.41 212.00,176.83 212.50,177.19 213.00,177.48 213.50,177.71 214.00,177.87 214.50,177.97 215.00,178.00 215.50,177.97 216.00,177.87 216.50,177.71 217.00,177.48 217.50,177.19 218.00,176.83 218.50,176.41 219.00,175.93 219.50,175.38 220.00,174.77 220.50,174.10 221.00,173.37 221.50,172.57 222.00,171.72 222.50,170.81 223.00,169.84 223.50,168.81 224.00,167.73 224.50,166.59 225.00,165.40 225.50,164.15 226.00,162.85 226.50,161.51 227.00,160.11 227.50,158.67 228.00,157.18 228.50,155.65 229.00,154.07 229.50,152.45 230.00,150.79 230.50,149.10 231.00,147.36 231.50,145.60 232.00,143.80 232.50,141.96 233.00,140.10 233.50,138.21 234.00,136.30 234.50,134.36 235.00,132.40 235.50,130.41 236.00,128.41 236.50,126.40 237.00,124.37 237.50,122.32 238.00,120.27 238.50,118.21 239.00,116.14 239.50,114.07 240.00,112.00 240.50,109.93 241.00,107.86 241.50,105.79 242.00,103.73 242.50,101.68 243.00,99.63 243.50,97.60 244.00,95.59 244.50,93.59 245.00,91.60 245.50,89.64 246.00,87.70 246.50,85.79 247.00,83.90 247.50,82.04 248.00,80.20 248.50,78.40 249.00,76.64 249.50,74.90 250.00,73.21 250.50,71.55 251.00,69.93 251.50,68.35 252.00,66.82 252.50,65.33 253.00,63.89 253.50,62.49 254.00,61.15 254.50,59.85 255.00,58.60 255.50,57.41 256.00,56.27 256.50,55.19 257.00,54.16 257.50,53.19 258.00,52.28 258.50,51.43 259.00,50.63 259.50,49.90 260.00,49.23 260.50,48.62 261.00,48.07 261.50,47.59 262.00,47.17 262.50,46.81 263.00,46.52 263.50,46.29 264.00,46.13 264.50,46.03 265.00,46.00 265.50,46.03 266.00,46.13 266.50,46.29 267.00,46.52 267.50,46.81 268.00,47.17 268.50,47.59 269.00,48.07 269.50,48.62 270.00,49.23 270.50,49.90 271.00,50.63 271.50,51.43 272.00,52.28 272.50,53.19 273.00,54.16 273.50,55.19 274.00,56.27 274.50,57.41 275.00,58.60 275.50,59.85 276.00,61.15 276.50,62.49 277.00,63.89 277.50,65.33 278.00,66.82 278.50,68.35 279.00,69.93 279.50,71.55 280.00,73.21 280.50,74.90 281.00,76.64 281.50,78.40 282.00,80.20 282.50,82.04 283.00,83.90 283.50,85.79 284.00,87.70 284.50,89.64 285.00,91.60 285.50,93.59 286.00,95.59 286.50,97.60 287.00,99.63 287.50,101.68 288.00,103.73 288.50,105.79 289.00,107.86 289.50,109.93 290.00,112.00 290.50,114.07 291.00,116.14 291.50,118.21 292.00,120.27 292.50,122.32 293.00,124.37 293.50,126.40 294.00,128.41 294.50,130.41 295.00,132.40 295.50,134.36 296.00,136.30 296.50,138.21 297.00,140.10 297.50,141.96 298.00,143.80 298.50,145.60 299.00,147.36 299.50,149.10 300.00,150.79 300.50,152.45 301.00,154.07 301.50,155.65 302.00,157.18 302.50,158.67 303.00,160.11 303.50,161.51 304.00,162.85 304.50,164.15 305.00,165.40 305.50,166.59 306.00,167.73 306.50,168.81 307.00,169.84 307.50,170.81 308.00,171.72 308.50,172.57 309.00,173.37 309.50,174.10 310.00,174.77 310.50,175.38 311.00,175.93 311.50,176.41 312.00,176.83 312.50,177.19 313.00,177.48 313.50,177.71 314.00,177.87 314.50,177.97 315.00,178.00 315.50,177.97 316.00,177.87 316.50,177.71 317.00,177.48 317.50,177.19 318.00,176.83 318.50,176.41 319.00,175.93 319.50,175.38 320.00,174.77 320.50,174.10 321.00,173.37 321.50,172.57 322.00,171.72 322.50,170.81 323.00,169.84 323.50,168.81 324.00,167.73 324.50,166.59 325.00,165.40 325.50,164.15 326.00,162.85 326.50,161.51 327.00,160.11 327.50,158.67 328.00,157.18 328.50,155.65 329.00,154.07 329.50,152.45 330.00,150.79 330.50,149.10 331.00,147.36 331.50,145.60 332.00,143.80 332.50,141.96 333.00,140.10 333.50,138.21 334.00,136.30 334.50,134.36 335.00,132.40 335.50,130.41 336.00,128.41 336.50,126.40 337.00,124.37 337.50,122.32 338.00,120.27 338.50,118.21 339.00,116.14 339.50,114.07 340.00,112.00 340.50,109.93 341.00,107.86 341.50,105.79 342.00,103.73 342.50,101.68 343.00,99.63 343.50,97.60 344.00,95.59 344.50,93.59 345.00,91.60 345.50,89.64 346.00,87.70 346.50,85.79 347.00,83.90 347.50,82.04 348.00,80.20 348.50,78.40 349.00,76.64 349.50,74.90 350.00,73.21 350.50,71.55 351.00,69.93 351.50,68.35 352.00,66.82 352.50,65.33 353.00,63.89 353.50,62.49 354.00,61.15 354.50,59.85 355.00,58.60 355.50,57.41 356.00,56.27 356.50,55.19 357.00,54.16 357.50,53.19 358.00,52.28 358.50,51.43 359.00,50.63 359.50,49.90 360.00,49.23 360.50,48.62 361.00,48.07 361.50,47.59 362.00,47.17 362.50,46.81 363.00,46.52 363.50,46.29 364.00,46.13 364.50,46.03 365.00,46.00 365.50,46.03 366.00,46.13 366.50,46.29 367.00,46.52 367.50,46.81 368.00,47.17 368.50,47.59 369.00,48.07 369.50,48.62 370.00,49.23 370.50,49.90 371.00,50.63 371.50,51.43 372.00,52.28 372.50,53.19 373.00,54.16 373.50,55.19 374.00,56.27 374.50,57.41 375.00,58.60 375.50,59.85 376.00,61.15 376.50,62.49 377.00,63.89 377.50,65.33 378.00,66.82 378.50,68.35 379.00,69.93 379.50,71.55 380.00,73.21 380.50,74.90 381.00,76.64 381.50,78.40 382.00,80.20 382.50,82.04 383.00,83.90 383.50,85.79 384.00,87.70 384.50,89.64 385.00,91.60 385.50,93.59 386.00,95.59 386.50,97.60 387.00,99.63 387.50,101.68 388.00,103.73 388.50,105.79 389.00,107.86 389.50,109.93 390.00,112.00 390.50,114.07 391.00,116.14 391.50,118.21 392.00,120.27 392.50,122.32 393.00,124.37 393.50,126.40 394.00,128.41 394.50,130.41 395.00,132.40 395.50,134.36 396.00,136.30 396.50,138.21 397.00,140.10 397.50,141.96 398.00,143.80 398.50,145.60 399.00,147.36 399.50,149.10 400.00,150.79 400.50,152.45 401.00,154.07 401.50,155.65 402.00,157.18 402.50,158.67 403.00,160.11 403.50,161.51 404.00,162.85 404.50,164.15 405.00,165.40 405.50,166.59 406.00,167.73 406.50,168.81 407.00,169.84 407.50,170.81 408.00,171.72 408.50,172.57 409.00,173.37 409.50,174.10 410.00,174.77 410.50,175.38 411.00,175.93 411.50,176.41 412.00,176.83 412.50,177.19 413.00,177.48 413.50,177.71 414.00,177.87 414.50,177.97 415.00,178.00 415.50,177.97 416.00,177.87 416.50,177.71 417.00,177.48 417.50,177.19 418.00,176.83 418.50,176.41 419.00,175.93 419.50,175.38 420.00,174.77 420.50,174.10 421.00,173.37 421.50,172.57 422.00,171.72 422.50,170.81 423.00,169.84 423.50,168.81 424.00,167.73 424.50,166.59 425.00,165.40 425.50,164.15 426.00,162.85 426.50,161.51 427.00,160.11 427.50,158.67 428.00,157.18 428.50,155.65 429.00,154.07 429.50,152.45 430.00,150.79 430.50,149.10 431.00,147.36 431.50,145.60 432.00,143.80 432.50,141.96 433.00,140.10 433.50,138.21 434.00,136.30 434.50,134.36 435.00,132.40 435.50,130.41 436.00,128.41 436.50,126.40 437.00,124.37 437.50,122.32 438.00,120.27 438.50,118.21 439.00,116.14 439.50,114.07 440.00,112.00" class="prof"></polyline>
+<text x="440.0" y="220" text-anchor="end" class="lbl" style="font-size:15px">time →</text>
+</g>
+<line x1="40" y1="42" x2="80" y2="42" class="hl"></line><line x1="40" y1="36" x2="40" y2="48" class="hl"></line><line x1="80" y1="36" x2="80" y2="48" class="hl"></line>
+<text x="88" y="46" class="alabel" style="font-size:16px">1 division = 2 ms</text>
+<line x1="40" y1="56" x2="40" y2="256" class="aguide"></line>
+<line x1="140" y1="56" x2="140" y2="256" class="aguide"></line>
+<polyline points="40.00,112.00 40.50,109.93 41.00,107.86 41.50,105.79 42.00,103.73 42.50,101.68 43.00,99.63 43.50,97.60 44.00,95.59 44.50,93.59 45.00,91.60 45.50,89.64 46.00,87.70 46.50,85.79 47.00,83.90 47.50,82.04 48.00,80.20 48.50,78.40 49.00,76.64 49.50,74.90 50.00,73.21 50.50,71.55 51.00,69.93 51.50,68.35 52.00,66.82 52.50,65.33 53.00,63.89 53.50,62.49 54.00,61.15 54.50,59.85 55.00,58.60 55.50,57.41 56.00,56.27 56.50,55.19 57.00,54.16 57.50,53.19 58.00,52.28 58.50,51.43 59.00,50.63 59.50,49.90 60.00,49.23 60.50,48.62 61.00,48.07 61.50,47.59 62.00,47.17 62.50,46.81 63.00,46.52 63.50,46.29 64.00,46.13 64.50,46.03 65.00,46.00 65.50,46.03 66.00,46.13 66.50,46.29 67.00,46.52 67.50,46.81 68.00,47.17 68.50,47.59 69.00,48.07 69.50,48.62 70.00,49.23 70.50,49.90 71.00,50.63 71.50,51.43 72.00,52.28 72.50,53.19 73.00,54.16 73.50,55.19 74.00,56.27 74.50,57.41 75.00,58.60 75.50,59.85 76.00,61.15 76.50,62.49 77.00,63.89 77.50,65.33 78.00,66.82 78.50,68.35 79.00,69.93 79.50,71.55 80.00,73.21 80.50,74.90 81.00,76.64 81.50,78.40 82.00,80.20 82.50,82.04 83.00,83.90 83.50,85.79 84.00,87.70 84.50,89.64 85.00,91.60 85.50,93.59 86.00,95.59 86.50,97.60 87.00,99.63 87.50,101.68 88.00,103.73 88.50,105.79 89.00,107.86 89.50,109.93 90.00,112.00 90.50,114.07 91.00,116.14 91.50,118.21 92.00,120.27 92.50,122.32 93.00,124.37 93.50,126.40 94.00,128.41 94.50,130.41 95.00,132.40 95.50,134.36 96.00,136.30 96.50,138.21 97.00,140.10 97.50,141.96 98.00,143.80 98.50,145.60 99.00,147.36 99.50,149.10 100.00,150.79 100.50,152.45 101.00,154.07 101.50,155.65 102.00,157.18 102.50,158.67 103.00,160.11 103.50,161.51 104.00,162.85 104.50,164.15 105.00,165.40 105.50,166.59 106.00,167.73 106.50,168.81 107.00,169.84 107.50,170.81 108.00,171.72 108.50,172.57 109.00,173.37 109.50,174.10 110.00,174.77 110.50,175.38 111.00,175.93 111.50,176.41 112.00,176.83 112.50,177.19 113.00,177.48 113.50,177.71 114.00,177.87 114.50,177.97 115.00,178.00 115.50,177.97 116.00,177.87 116.50,177.71 117.00,177.48 117.50,177.19 118.00,176.83 118.50,176.41 119.00,175.93 119.50,175.38 120.00,174.77 120.50,174.10 121.00,173.37 121.50,172.57 122.00,171.72 122.50,170.81 123.00,169.84 123.50,168.81 124.00,167.73 124.50,166.59 125.00,165.40 125.50,164.15 126.00,162.85 126.50,161.51 127.00,160.11 127.50,158.67 128.00,157.18 128.50,155.65 129.00,154.07 129.50,152.45 130.00,150.79 130.50,149.10 131.00,147.36 131.50,145.60 132.00,143.80 132.50,141.96 133.00,140.10 133.50,138.21 134.00,136.30 134.50,134.36 135.00,132.40 135.50,130.41 136.00,128.41 136.50,126.40 137.00,124.37 137.50,122.32 138.00,120.27 138.50,118.21 139.00,116.14 139.50,114.07 140.00,112.00" transform="translate(0,34)" class="hl"></polyline>
+<circle cx="40" cy="146" r="4.5" class="dot"></circle>
+<circle cx="140" cy="146" r="4.5" class="dot"></circle>
+<line x1="40" y1="262" x2="140" y2="262" class="hl"></line><line x1="40" y1="256" x2="40" y2="268" class="hl"></line><line x1="140" y1="256" x2="140" y2="268" class="hl"></line>
+<text x="40" y="284" class="alabel" style="font-size:16px">1 period: T = 2.5 divisions × 2 ms = 5 ms</text>
+</svg>
+<figcaption>The same trace, marked up: one division, and one full period (2.5
+divisions).</figcaption>
+</figure>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">one
+division</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">division</mtext><mo>=</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">1\ \text{division} = 2\ \text{ms} = 2 \times 10^{-3}\ \text{s}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">one
+period spans 2.5 divisions</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>2.5</mn><mo>×</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo>=</mo><mn>5</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo>=</mo><mn>5</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">T = 2.5 \times 2\ \text{ms} = 5\ \text{ms} = 5 \times 10^{-3}\ \text{s}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">frequency is one over the period; keep the unit</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mo>=</mo><mfrac><mn>1</mn><mrow><mn>5</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>5</mn></mfrac><mo>×</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mn>0.2</mn><mo>×</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext><mo>=</mo><mn>0.2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">kHz</mtext><mo>=</mo><mn>200</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext></mrow><annotation encoding="application/x-tex">f = \frac{1}{T} = \frac{1}{5 \times 10^{-3}\ \text{s}} = \frac{1}{5} \times 10^{3}\ \text{s}^{-1} = 0.2 \times 10^{3}\ \text{Hz} = 0.2\ \text{kHz} = 200\ \text{Hz}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">a
+pure sine contains only one frequency</span></p>
+<figure class="graph mini" id="fig-ec_transform">
+<svg viewBox="0 0 740 232" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The trace in time, and its Fourier transform: one peak at 200 Hz</title>
+<desc id="gd3">Left: the signal against time t, a single pure sine wave with period T = 5 ms. An arrow labeled Fourier transform points right. Right: amplitude against frequency f in hertz, from 0 to 500 Hz: one perfectly sharp peak, a single vertical line, at f = 200 Hz, and nothing else, no harmonics.</desc>
+<defs><marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="18" y1="100" x2="322" y2="100" class="ax" marker-end="url(#arr3)"></line>
+<text x="330" y="105" class="lbl" font-size="18">t</text>
+<polyline points="24.0,100.0 24.7,96.5 25.4,93.1 26.1,89.7 26.8,86.3 27.5,83.0 28.2,79.8 28.9,76.6 29.6,73.5 30.3,70.5 31.0,67.7 31.7,64.9 32.4,62.3 33.1,59.9 33.8,57.6 34.5,55.5 35.2,53.6 35.9,51.8 36.6,50.2 37.3,48.9 38.0,47.7 38.7,46.7 39.4,46.0 40.1,45.4 40.8,45.1 41.5,45.0 42.2,45.1 42.9,45.4 43.6,46.0 44.3,46.7 45.0,47.7 45.7,48.9 46.4,50.2 47.1,51.8 47.8,53.6 48.5,55.5 49.2,57.6 49.9,59.9 50.6,62.3 51.3,64.9 52.0,67.7 52.7,70.5 53.4,73.5 54.1,76.6 54.8,79.8 55.5,83.0 56.2,86.3 56.9,89.7 57.6,93.1 58.3,96.5 59.0,100.0 59.7,103.5 60.4,106.9 61.1,110.3 61.8,113.7 62.5,117.0 63.2,120.2 63.9,123.4 64.6,126.5 65.3,129.5 66.0,132.3 66.7,135.1 67.4,137.7 68.1,140.1 68.8,142.4 69.5,144.5 70.2,146.4 70.9,148.2 71.6,149.8 72.3,151.1 73.0,152.3 73.7,153.3 74.4,154.0 75.1,154.6 75.8,154.9 76.5,155.0 77.2,154.9 77.9,154.6 78.6,154.0 79.3,153.3 80.0,152.3 80.7,151.1 81.4,149.8 82.1,148.2 82.8,146.4 83.5,144.5 84.2,142.4 84.9,140.1 85.6,137.7 86.3,135.1 87.0,132.3 87.7,129.5 88.4,126.5 89.1,123.4 89.8,120.2 90.5,117.0 91.2,113.7 91.9,110.3 92.6,106.9 93.3,103.5 94.0,100.0 94.7,96.5 95.4,93.1 96.1,89.7 96.8,86.3 97.5,83.0 98.2,79.8 98.9,76.6 99.6,73.5 100.3,70.5 101.0,67.7 101.7,64.9 102.4,62.3 103.1,59.9 103.8,57.6 104.5,55.5 105.2,53.6 105.9,51.8 106.6,50.2 107.3,48.9 108.0,47.7 108.7,46.7 109.4,46.0 110.1,45.4 110.8,45.1 111.5,45.0 112.2,45.1 112.9,45.4 113.6,46.0 114.3,46.7 115.0,47.7 115.7,48.9 116.4,50.2 117.1,51.8 117.8,53.6 118.5,55.5 119.2,57.6 119.9,59.9 120.6,62.3 121.3,64.9 122.0,67.7 122.7,70.5 123.4,73.5 124.1,76.6 124.8,79.8 125.5,83.0 126.2,86.3 126.9,89.7 127.6,93.1 128.3,96.5 129.0,100.0 129.7,103.5 130.4,106.9 131.1,110.3 131.8,113.7 132.5,117.0 133.2,120.2 133.9,123.4 134.6,126.5 135.3,129.5 136.0,132.3 136.7,135.1 137.4,137.7 138.1,140.1 138.8,142.4 139.5,144.5 140.2,146.4 140.9,148.2 141.6,149.8 142.3,151.1 143.0,152.3 143.7,153.3 144.4,154.0 145.1,154.6 145.8,154.9 146.5,155.0 147.2,154.9 147.9,154.6 148.6,154.0 149.3,153.3 150.0,152.3 150.7,151.1 151.4,149.8 152.1,148.2 152.8,146.4 153.5,144.5 154.2,142.4 154.9,140.1 155.6,137.7 156.3,135.1 157.0,132.3 157.7,129.5 158.4,126.5 159.1,123.4 159.8,120.2 160.5,117.0 161.2,113.7 161.9,110.3 162.6,106.9 163.3,103.5 164.0,100.0 164.7,96.5 165.4,93.1 166.1,89.7 166.8,86.3 167.5,83.0 168.2,79.8 168.9,76.6 169.6,73.5 170.3,70.5 171.0,67.7 171.7,64.9 172.4,62.3 173.1,59.9 173.8,57.6 174.5,55.5 175.2,53.6 175.9,51.8 176.6,50.2 177.3,48.9 178.0,47.7 178.7,46.7 179.4,46.0 180.1,45.4 180.8,45.1 181.5,45.0 182.2,45.1 182.9,45.4 183.6,46.0 184.3,46.7 185.0,47.7 185.7,48.9 186.4,50.2 187.1,51.8 187.8,53.6 188.5,55.5 189.2,57.6 189.9,59.9 190.6,62.3 191.3,64.9 192.0,67.7 192.7,70.5 193.4,73.5 194.1,76.6 194.8,79.8 195.5,83.0 196.2,86.3 196.9,89.7 197.6,93.1 198.3,96.5 199.0,100.0 199.7,103.5 200.4,106.9 201.1,110.3 201.8,113.7 202.5,117.0 203.2,120.2 203.9,123.4 204.6,126.5 205.3,129.5 206.0,132.3 206.7,135.1 207.4,137.7 208.1,140.1 208.8,142.4 209.5,144.5 210.2,146.4 210.9,148.2 211.6,149.8 212.3,151.1 213.0,152.3 213.7,153.3 214.4,154.0 215.1,154.6 215.8,154.9 216.5,155.0 217.2,154.9 217.9,154.6 218.6,154.0 219.3,153.3 220.0,152.3 220.7,151.1 221.4,149.8 222.1,148.2 222.8,146.4 223.5,144.5 224.2,142.4 224.9,140.1 225.6,137.7 226.3,135.1 227.0,132.3 227.7,129.5 228.4,126.5 229.1,123.4 229.8,120.2 230.5,117.0 231.2,113.7 231.9,110.3 232.6,106.9 233.3,103.5 234.0,100.0 234.7,96.5 235.4,93.1 236.1,89.7 236.8,86.3 237.5,83.0 238.2,79.8 238.9,76.6 239.6,73.5 240.3,70.5 241.0,67.7 241.7,64.9 242.4,62.3 243.1,59.9 243.8,57.6 244.5,55.5 245.2,53.6 245.9,51.8 246.6,50.2 247.3,48.9 248.0,47.7 248.7,46.7 249.4,46.0 250.1,45.4 250.8,45.1 251.5,45.0 252.2,45.1 252.9,45.4 253.6,46.0 254.3,46.7 255.0,47.7 255.7,48.9 256.4,50.2 257.1,51.8 257.8,53.6 258.5,55.5 259.2,57.6 259.9,59.9 260.6,62.3 261.3,64.9 262.0,67.7 262.7,70.5 263.4,73.5 264.1,76.6 264.8,79.8 265.5,83.0 266.2,86.3 266.9,89.7 267.6,93.1 268.3,96.5 269.0,100.0 269.7,103.5 270.4,106.9 271.1,110.3 271.8,113.7 272.5,117.0 273.2,120.2 273.9,123.4 274.6,126.5 275.3,129.5 276.0,132.3 276.7,135.1 277.4,137.7 278.1,140.1 278.8,142.4 279.5,144.5 280.2,146.4 280.9,148.2 281.6,149.8 282.3,151.1 283.0,152.3 283.7,153.3 284.4,154.0 285.1,154.6 285.8,154.9 286.5,155.0 287.2,154.9 287.9,154.6 288.6,154.0 289.3,153.3 290.0,152.3 290.7,151.1 291.4,149.8 292.1,148.2 292.8,146.4 293.5,144.5 294.2,142.4 294.9,140.1 295.6,137.7 296.3,135.1 297.0,132.3 297.7,129.5 298.4,126.5 299.1,123.4 299.8,120.2 300.5,117.0 301.2,113.7 301.9,110.3 302.6,106.9 303.3,103.5 304.0,100.0" fill="none" stroke="#1a1a1a" stroke-width="2.6"></polyline>
+<text x="170" y="196" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">the trace: one pure sine</text>
+<text x="170" y="220" text-anchor="middle" font-size="19" fill="#1a1a1a">T = 5 ms</text>
+<text x="376" y="112" text-anchor="middle" font-size="44" fill="#861F41">⇒</text>
+<text x="376" y="140" text-anchor="middle" font-size="15" fill="#861F41">Fourier</text>
+<text x="376" y="157" text-anchor="middle" font-size="15" fill="#861F41">transform</text>
+<line x1="436" y1="160" x2="712" y2="160" class="ax" marker-end="url(#arr3)"></line>
+<line x1="440" y1="164" x2="440" y2="22" class="ax"></line>
+<text x="430" y="16" class="lbl" font-size="15">amplitude</text>
+<line x1="440" y1="160" x2="440" y2="166" class="ax"></line>
+<text x="440" y="182" text-anchor="middle" font-size="14" fill="#3a3a3a">0</text>
+<line x1="490" y1="160" x2="490" y2="166" class="ax"></line>
+<text x="490" y="182" text-anchor="middle" font-size="14" fill="#3a3a3a">100</text>
+<line x1="540" y1="160" x2="540" y2="166" class="ax"></line>
+<text x="540" y="182" text-anchor="middle" font-size="17" font-weight="700" fill="#861F41">200</text>
+<line x1="590" y1="160" x2="590" y2="166" class="ax"></line>
+<text x="590" y="182" text-anchor="middle" font-size="14" fill="#3a3a3a">300</text>
+<line x1="640" y1="160" x2="640" y2="166" class="ax"></line>
+<text x="640" y="182" text-anchor="middle" font-size="14" fill="#3a3a3a">400</text>
+<line x1="690" y1="160" x2="690" y2="166" class="ax"></line>
+<text x="690" y="182" text-anchor="middle" font-size="14" fill="#3a3a3a">500</text>
+<text x="712" y="204" text-anchor="end" font-size="16" fill="#1a1a1a">f (Hz)</text>
+<line x1="540" y1="160" x2="540" y2="34" stroke="#1a1a1a" stroke-width="3" stroke-linecap="butt"></line>
+<text x="552" y="40" font-size="18" font-weight="700" fill="#861F41">one peak at 200 Hz</text>
+<text x="565" y="220" text-anchor="middle" font-size="19" fill="#1a1a1a">nothing else: no harmonics</text>
+</svg>
+<figcaption>Only one frequency is present: a perfectly sharp peak, a vertical
+line at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>200</mn></mrow><annotation encoding="application/x-tex">f = 200</annotation></semantics></math>
+Hz.</figcaption>
+</figure>
+</div>
+<div class="fnote">
+<p>Keep the unit:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.2</mn><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">ms</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">0.2\ \text{ms}^{-1}</annotation></semantics></math>
+is 200 Hz, not 0.2 Hz. A mirror peak at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>200</mn></mrow><annotation encoding="application/x-tex">-200</annotation></semantics></math>
+Hz is also correct.</p>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="afterquiz">
+<h2 id="class-results">Class results</h2>
+<p>12 booklets were graded.</p>
+<ul>
+<li><strong>Quiz score (out of 10):</strong> average 7.75, median 7.5;
+average 8.08 with the extra credit</li>
+<li><strong>Multiple choice, Questions 1, 2 and 4(a) (out of
+3):</strong> average 2.83 — everyone got Questions 1 and 2</li>
+<li><strong>Question 3, the sketch (out of 3):</strong> average
+2.85</li>
+<li><strong>Question 4(b), the explanation (out of 4):</strong> average
+2.06</li>
+<li><strong>Extra credit (out of 1):</strong> average 0.33</li>
+</ul>
+<h2 id="where-the-class-had-the-most-trouble">Where the class had the
+most trouble</h2>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Question 4(b) — explaining the two factors.</strong> Most of
+the class got the algebra going: 8 of 12 brought
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+out of the square root. But only 4 said that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{i\omega t}</annotation></semantics></math>
+<em>oscillates</em>, and only 2 said that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-\gamma t}</annotation></semantics></math>
+<em>shrinks the amplitude</em> — and those two sentences are the
+explanation the question asks for. Several answers stopped at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>i</mi><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}\,e^{i\omega_{d}t}</annotation></semantics></math>
+with no interpretation, dropped
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+(an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{i\omega t}</annotation></semantics></math>
+that never decays is not damped), or substituted back into the
+differential equation, which checks a solution but does not explain it.
+Only 5 of 12 split
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{Xt}</annotation></semantics></math>
+into the two factors.</li>
+<li><strong>Extra credit — reading the period off the screen.</strong>
+Only one booklet placed the peak at 200 Hz. Count divisions per period
+(2.5), multiply by 2 ms, then invert:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>200</mn></mrow><annotation encoding="application/x-tex">f = 1/(5\ \text{ms}) = 200</annotation></semantics></math>
+Hz. A peak at 0.2 on an axis labeled Hz is at 0.2 Hz — keep the unit,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.2</mn><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">ms</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mn>200</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext></mrow><annotation encoding="application/x-tex">0.2\ \text{ms}^{-1} = 200\ \text{Hz}</annotation></semantics></math>.
+Other slips: a period misread as 1 ms (a peak at 1000 Hz), plotting the
+period itself, drawing harmonics for a pure sine, or sketching the
+signal in time instead of its transform.</li>
+<li><strong>Question 4(a) —
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+versus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Xt</annotation></semantics></math>.</strong>
+Both wrong answers were “unitless”, the unit of the whole exponent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Xt</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+itself is in inverse seconds.</li>
+<li><strong>Question 3 — axes and centering.</strong> Every sketch
+showed a decaying oscillation over three or more cycles. The points lost
+were axis labels (missing, or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+swapped) and oscillations about a level above the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-axis
+instead of about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>.</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth"
+id="homework-and-earlier-quizzes-to-revisit-question-by-question">Homework
+and earlier quizzes to revisit, question by question</h3>
+<ul>
+<li><strong>Q1–Q2 (which term is which force):</strong> <em>Damped
+Oscillations — Wrap-Up</em> homework, Problem 1 — Newton’s second law
+with the restoring force
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>k</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">-kx</annotation></semantics></math>
+and the drag
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>b</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi><mi>/</mi><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">-b\,dx/dt</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mi>k</mi><mi>/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">\omega^{2} = k/m</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>γ</mi><mo>=</mo><mi>b</mi><mi>/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">2\gamma = b/m</annotation></semantics></math>.</li>
+<li><strong>Q3 (the sketch):</strong> the same homework, Problem 2,
+Figure 1 (the decaying envelope
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>±</mi><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\pm A\,e^{-\gamma t}</annotation></semantics></math>),
+and Quiz 5, Question 6 — an oscillation swings about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>.</li>
+<li><strong>Q4(a) (the unit of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>):</strong>
+the same homework, Problem 1 (units of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>),
+and the midterm, Questions 1–2
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+versus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\gamma t</annotation></semantics></math>).</li>
+<li><strong>Q4(b) (why it is a damped oscillation):</strong> the same
+homework, Problem 2 — the very same question, step by step.</li>
+<li><strong>Extra credit (Fourier transform):</strong> <em>Fourier
+Experiment</em> homework — the sung note’s spectrum, its fundamental and
+harmonics, and how the peaks move when the frequency changes.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
