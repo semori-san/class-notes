@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NANO 2314 Homework: Two Frequencies in One Cantilever</title>
+<style>
+@page { size: letter; margin: 0.55in 0.75in 0.65in;
+  @bottom-center { content: "NANO 2314 Homework: Two Frequencies in One Cantilever \2014  page " counter(page) " of " counter(pages);
+                   font: 9pt "Segoe UI", Arial, sans-serif; color: #595959; } }
+body { font: 10.5pt/1.42 "Segoe UI", Calibri, Arial, sans-serif; color: #1a1a1a; margin: 0; }
+h1 { font-size: 18pt; color: #861F41; margin: 0 0 .4rem; line-height: 1.25; }
+h2 { font-size: 13.5pt; color: #861F41; margin: 1.1rem 0 .3rem; border-bottom: 1px solid #ccc; }
+h3 { font-size: 12pt; margin: .9rem 0 .2rem; }
+ol { margin: .2rem 0 .4rem; padding-left: 1.8rem; }
+li { margin: .15rem 0; }
+code { font: 9.5pt Consolas, "Courier New", monospace; background: #f2f2f2; padding: 0 .2rem; }
+a { color: #861F41; }
+h2, h3 { break-after: avoid; }
+ol, li { break-inside: avoid; }
+/* on screen (the page is also posted as a web page): a readable column, roomy on phones */
+@media screen {
+  body { font-size: 1.05rem; line-height: 1.55; background: #fff; }
+  main { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  a { overflow-wrap: anywhere; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Homework: Two Frequencies in One Cantilever</h1>
+<p><strong>10 points, plus up to 5 points of extra credit.</strong> Assigned with the Fourier Transform (Day 3) lecture, October 19, 2026.</p>
+<h2 id="background">Background</h2>
+<p>An atomic force microscope (AFM) images a surface with a sharp tip on a tiny vibrating cantilever. A cantilever has several vibration modes; for a rectangular beam the second mode is at f₂ ≈ 6.27 f₁. In <strong>bimodal AFM</strong>, both modes are driven at once: mode 1 tracks topography, while mode 2 senses stiffness and stickiness. The data are 500 µs of such a cantilever’s steady, noisy oscillation.</p>
+<p><strong>Data:</strong> <code>261021-bimodal_AFM-data.csv</code>, download at <a href="https://tinyurl.com/N2314-bimodal-AFM-data" class="uri">https://tinyurl.com/N2314-bimodal-AFM-data</a> (<code>time_us</code> in µs, <code>deflection_nm</code> in nm; 5000 points, every 0.1 µs).</p>
+<h2 id="problems">Problems</h2>
+<h3 id="by-eye-5-points">1. By eye (5 points)</h3>
+<ol type="a">
+<li>Plot deflection versus time for the first 50 µs, using Excel, Google Colab, or another plotting tool. <strong>Attach or upload your graph.</strong></li>
+<li>Estimate the periods T₁ (large, slow oscillation) and T₂ (small, fast ripple). Tip: time several cycles and divide by the number of cycles.</li>
+<li>Calculate f₁ = 1/T₁ and f₂ = 1/T₂ in kHz. Is f₂/f₁ close to 6.27, the value for a rectangular cantilever?</li>
+</ol>
+<h3 id="by-fourier-transform-5-points">2. By Fourier transform (5 points)</h3>
+<ol type="a">
+<li>Use Google Colab or another AI-assisted tool to Fourier-transform all 500 µs of data (using all of it gives the best resolution). Plot the spectrum from 0 to 1000 kHz, and read f₁ and f₂ from the two peaks. <strong>Attach or upload your graph.</strong></li>
+<li>Zoom in on one peak. What is the spacing between neighboring frequency points (the frequency resolution)?</li>
+<li>Compare your f₁ and f₂ from Problems 1 and 2. Which method is more precise?</li>
+</ol>
+<h3 id="extra-credit-up-to-5-points-by-curve-fitting">3. Extra credit, up to 5 points: By curve fitting</h3>
+<ol type="a">
+<li>Using Google Colab or another AI-assisted tool, curve-fit the first 50 µs of data. <strong>What is the fit function that fits the data well?</strong> <strong>Attach or upload your graph.</strong> (Hint 1: include a phase for each frequency. Hint 2: use your by-eye f₁ and f₂ as initial guesses. Hint 3: also give initial guesses for the amplitudes A₁ and A₂.)</li>
+<li>How do your fitted f₁ and f₂ compare with Problems 1 and 2? How precise are they (give the uncertainties)?</li>
+<li>What information can you get from curve fitting that you cannot get from the Fourier transform?</li>
+</ol>
+<h2 id="references">References</h2>
+<ul>
+<li>T. R. Rodríguez &amp; R. García, <em>Appl. Phys. Lett.</em> <strong>84</strong>, 449 (2004). <a href="https://doi.org/10.1063/1.1642273" class="uri">https://doi.org/10.1063/1.1642273</a></li>
+<li>R. García &amp; R. Proksch, <em>Eur. Polym. J.</em> <strong>49</strong>, 1897 (2013). <a href="https://doi.org/10.1016/j.eurpolymj.2013.03.037" class="uri">https://doi.org/10.1016/j.eurpolymj.2013.03.037</a></li>
+</ul>
+
+</main>
+</body>
+</html>
