@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 7 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+/* No scroll bars on equations (added 2026-10-17). overflow-x: auto also makes the vertical
+   direction scrollable, so a glyph a few pixels above or below the box (superscripts,
+   fractions, underbraces) showed a vertical scroll bar. Padding gives that ink room; a wide
+   equation still scrolls sideways on a phone. Screen only: print sets overflow: visible. */
+@media screen {
+  math[display="block"] { overflow-y: hidden; padding: .4em 0; margin: .45rem 0; }
+}
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* --- per-quiz styles --- */
+/* Solution flows (review-kit/flow.py, flow.js; author guide FLOWS.md). Added 2026-10-17,
+   generalized from Quiz 06's graphical 4(b) and extra-credit solutions. build.py adds this
+   file only to pages that use a flow, so older pages build unchanged. Role colors meet
+   WCAG 2.1 AA against their box backgrounds: a 4.9:1, b 6.4:1, c 7.2:1. */
+.flow { display: flex; flex-direction: column; align-items: center; margin: .4rem 0 .2rem; }
+.flow > p { margin: .1rem 0; text-align: center; }
+/* center display equations (the template's display:block would left-align them) */
+.flow math[display="block"] { display: block math; }
+.fstep { border: 1.5px solid #c9c9c9; border-radius: 8px; background: #fff; padding: 0 1rem;
+  text-align: center; max-width: 100%; }
+.fstep math[display="block"] { margin: .45rem 0; }
+.arw { color: #861F41; font-size: 1.45rem; font-weight: 700; line-height: 1; }
+.alab { color: #3a3a3a; font-size: .92rem; margin-left: .35rem; }
+.factors { display: flex; align-items: stretch; justify-content: center; gap: .5rem;
+  flex-wrap: wrap; width: 100%; margin: .15rem 0; }
+.factor { flex: 1 1 12rem; max-width: 17rem; border: 2px solid #c9c9c9; border-radius: 8px;
+  padding: .1rem .7rem .45rem; text-align: center; font-size: .95rem; background: #fff; }
+.factor p { margin: .15rem 0; }
+.factor math[display="block"] { font-size: 1.3em; }
+.times { align-self: center; font-size: 1.7rem; font-weight: 700; color: #3a3a3a; }
+.zoom { width: 100%; border: 2px solid #c9c9c9; border-radius: 8px; padding: .35rem .9rem .5rem;
+  margin: .5rem 0 .2rem; text-align: center; background: #fff; }
+.zoom p { margin: .2rem 0; }
+.conclusion { border: 2px solid #861F41; width: 100%; padding: .4rem 1rem .55rem; }
+.conclusion > p:first-child strong { color: #861F41; }
+.cline { display: inline-block; font-size: 1.15em; margin: .35rem 0; }
+/* roles: boxes (.ra .rb .rc), inline colored math (.ca .cb .cc), tags (.tag .ra ...) */
+.ra { border-color: #8B6508 !important; background: #FBF6EA !important; }
+.rb { border-color: #14672A !important; background: #F1F7F1 !important; }
+.rc { border-color: #1F4E99 !important; background: #EEF3FB !important; }
+.ra strong { color: #8B6508; } .rb strong { color: #14672A; } .rc strong { color: #1F4E99; }
+.ca { color: #8B6508; font-weight: 700; } .cb { color: #14672A; font-weight: 700; }
+.cc { color: #1F4E99; font-weight: 700; }
+.tag { border: 1.5px solid; border-radius: 999px; padding: 0 .55rem; font-weight: 700; }
+.tag.ra { color: #8B6508; } .tag.rb { color: #14672A; } .tag.rc { color: #1F4E99; }
+/* the short "why" line, and the required "In words" summary */
+.fwhy { width: 100%; font-size: .92rem; color: #3a3a3a; text-align: left; margin: .1rem 0 .2rem;
+  padding-left: .6rem; border-left: 3px solid #B8860B; }
+.fwhy p { margin: .15rem 0; }
+.inwords { width: 100%; margin: .6rem 0 .1rem; padding: .45rem .8rem; border-radius: 6px;
+  background: #F7F2F4; border-left: 4px solid #861F41; text-align: left; }
+.inwords p { margin: .1rem 0; }
+.inwords strong:first-child { color: #861F41; }
+/* faded practice: a dashed step for the student to fill in */
+.fblank { border-style: dashed; border-color: #861F41; background: #fff; padding: .35rem 1rem; }
+.fblank p { margin: .2rem 0; }
+details.fshow summary { cursor: pointer; color: #861F41; font-weight: 600; }
+/* a figure asked for but not drawn yet (figure: request | ...); the build warns until it is */
+.figrequest { width: 100%; border: 2px dashed #8B4A00; border-radius: 8px; padding: .4rem .8rem;
+  color: #8B4A00; background: #FFF8EE; text-align: left; margin: .3rem 0; }
+.figrequest p { margin: .1rem 0; }
+/* figure slots inside a flow: a definite width (a flex item would otherwise shrink to an
+   arbitrary size), wider than a usual part figure */
+.flow figure.graph.mini { width: 100%; max-width: 32rem; }
+
+/* No scroll bars (instructor, 2026-10-17): in a flow the equation sizes its box, and the box
+   scrolls sideways only when the equation is wider than the screen (phones). */
+@media screen {
+  .flow math[display="block"] { overflow: visible; }
+  .fstep, .factor, .zoom, .conclusion { overflow-x: auto; overflow-y: hidden; }
+  .fstep math[display="block"], .zoom math[display="block"] { margin: .1rem 0; }
+}
+
+/* On paper a question or part and its solution must fit one page (make_review_pdf.py keeps
+   them together): tighter spacing for print only. Show the hidden step answers in print. */
+@media print {
+  .flow { font-size: .9em; }
+  /* a question whose solution is a flow: its own figure prints smaller, so the question and
+     its solution fit one page */
+  li.q:has(.flow) > figure.graph.mini { max-width: 14rem; margin: .3rem auto .2rem; }
+  li.q:has(.flow) > figure.graph.mini figcaption { margin-top: .1rem; }
+  .flow > p { margin: 0; line-height: 1.3; }
+  .fstep { padding: 0 .8rem; }
+  .fstep math[display="block"] { margin: .2rem 0; }
+  .arw { font-size: 1.1rem; }
+  .alab { font-size: .88rem; }
+  .factors { margin: .1rem 0; }
+  .factor { padding: 0 .6rem .2rem; }
+  .factor p { margin: 0; line-height: 1.3; }
+  .factor math[display="block"] { margin: .15rem 0; }
+  .zoom { padding: .15rem .8rem .25rem; margin: .25rem 0 .05rem; }
+  .zoom p { margin: .1rem 0; line-height: 1.35; }
+  .zoom math[display="block"] { margin: .25rem 0; }
+  .conclusion { padding: .15rem .8rem .25rem; }
+  .conclusion p { margin: .05rem 0; }
+  .cline { margin: .1rem 0; }
+  .inwords { margin: .25rem 0 0; padding: .2rem .7rem; line-height: 1.35; }
+  .fwhy { margin: 0 0 .1rem; line-height: 1.35; }
+  .flow figure.graph.mini { max-width: 20rem; margin: .2rem auto .05rem; }
+  .flow figure.graph.mini figcaption { margin-top: .1rem; }
+  details.fshow > summary { display: none; }
+}
+/* Quiz 07 review page. The solution flows come from review-kit/flow.css; these rules only size
+   this quiz's figures and style the short notes under a flow. */
+.fnote { font-size: .88rem; color: #3a3a3a; margin-top: .5rem; }
+/* each stem already starts with its bold number, so the list's own "1." would show twice
+   (the print copy already turns it off) */
+ol.quiz { list-style: none; padding-left: 0; }
+/* the question figures (the printed plot and the two-harmonic graph) are wider than a usual
+   part figure */
+li#q1 > figure.graph.mini, li#q4 > figure.graph.mini { max-width: 40rem; }
+#q4 figure#fig-q4_marked { max-width: 40rem; }
+#q5 figure#fig-q5_spectrum { max-width: 36rem; }
+#q1 figure#fig-factors { max-width: 36rem; }
+/* Q3's choices are a plain list in the stem */
+#q3 ul { margin: .3rem 0 .3rem 1.2rem; padding: 0; }
+li#q3 > ul { list-style: none; margin-left: .4rem; }      /* the choices carry their own letters */
+@media print {
+  /* each question with its solution fits one printed page */
+  li#q1 > figure.graph.mini { max-width: 20rem; margin: .1rem auto .1rem; }
+  li#q4 > figure.graph.mini { max-width: 21rem; margin: .1rem auto .1rem; }
+  #q4 figure#fig-q4_marked { max-width: 24rem; margin: .15rem auto .05rem; }
+  #q5 figure#fig-q5_spectrum { max-width: 24rem; margin: .15rem auto .05rem; }
+  #q1 figure#fig-factors { max-width: 17rem; margin: .1rem auto 0; }
+  .fnote { margin-top: .2rem; }
+  figure figcaption { margin-top: .1rem; line-height: 1.3; }
+}
+math.rr { padding-top: .15em; }   /* room for exponents raised by rootfix */
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 7 — after-quiz review</h1>
+<p>Quiz 7 was given on Friday, October 23, 2026. Everyone got the same
+booklet — there were no scrambled versions — so the answers below are
+the same for the whole class.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#qec">EC</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 7 — October 23, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(3 pts)</strong> The damped-oscillator equation
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mspace width="0.167em"></mspace><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mn>2</mn><mi>m</mi><mi>γ</mi><mspace width="0.167em"></mspace><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mi>m</mi><mspace width="0.167em"></mspace><msup><mi>ω</mi><mn>2</mn></msup><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">m\,\frac{d^{2}x}{dt^{2}} + 2m\gamma\,\frac{dx}{dt} + m\,\omega^{2}x = 0</annotation></semantics></math>,
+with positive constants
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>,
+has the solution
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><mo>,</mo><mspace width="2.0em" /><mi>X</mi><mo>=</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>,</mo><mspace width="2.0em" /><mrow><mtext mathvariant="normal">where </mtext><mspace width="0.333em" /></mrow><mi>A</mi><mrow><mspace width="0.333em" /><mtext mathvariant="normal"> is a constant.</mtext></mrow></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{Xt}, \qquad X = -\gamma + \sqrt{\gamma^{2} - \omega^{2}}, \qquad \text{where } A \text{ is a constant.}</annotation></semantics></math>
+Explain clearly how this
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>
+is <strong>consistent with the plot</strong> below. Perform the
+appropriate substitution and show the math step by step.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 760 175" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">The plot printed in Question 1: a decaying oscillation</title>
+<desc id="gd2">Displacement x against time t, with no numbers. The curve starts at a crest and oscillates evenly about the time axis for about five and a half cycles at a steady period, and every crest is lower than the one before: the oscillation slowly dies away.</desc>
+<defs><marker id="arr2" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="40" y1="95" x2="701.2" y2="95" class="ax" marker-end="url(#arr2)"></line>
+<line x1="40" y1="169.4" x2="40" y2="12" class="ax" marker-end="url(#arr2)"></line>
+<text x="709.2" y="100" class="lbl" font-size="15">time t</text>
+<text x="48" y="10" class="lbl" font-size="15">displacement x</text>
+<polyline points="40.0,23.7 40.6,23.9 41.2,24.1 41.7,24.4 42.3,24.8 42.9,25.3 43.5,25.8 44.1,26.3 44.6,27.0 45.2,27.7 45.8,28.5 46.4,29.3 47.0,30.2 47.5,31.2 48.1,32.2 48.7,33.3 49.3,34.4 49.9,35.6 50.4,36.9 51.0,38.2 51.6,39.5 52.2,40.9 52.8,42.3 53.3,43.8 53.9,45.4 54.5,47.0 55.1,48.6 55.7,50.2 56.2,51.9 56.8,53.7 57.4,55.4 58.0,57.2 58.6,59.1 59.1,60.9 59.7,62.8 60.3,64.7 60.9,66.7 61.5,68.6 62.0,70.6 62.6,72.6 63.2,74.6 63.8,76.6 64.4,78.6 64.9,80.7 65.5,82.7 66.1,84.8 66.7,86.8 67.3,88.9 67.8,90.9 68.4,93.0 69.0,95.0 69.6,97.0 70.2,99.0 70.7,101.1 71.3,103.1 71.9,105.0 72.5,107.0 73.1,108.9 73.6,110.9 74.2,112.8 74.8,114.6 75.4,116.5 76.0,118.3 76.5,120.1 77.1,121.8 77.7,123.6 78.3,125.2 78.9,126.9 79.4,128.5 80.0,130.1 80.6,131.6 81.2,133.1 81.8,134.6 82.3,136.0 82.9,137.3 83.5,138.6 84.1,139.9 84.7,141.1 85.2,142.3 85.8,143.4 86.4,144.4 87.0,145.4 87.6,146.4 88.1,147.3 88.7,148.1 89.3,148.9 89.9,149.7 90.5,150.3 91.0,150.9 91.6,151.5 92.2,152.0 92.8,152.5 93.4,152.8 93.9,153.2 94.5,153.4 95.1,153.6 95.7,153.8 96.3,153.9 96.8,153.9 97.4,153.9 98.0,153.8 98.6,153.7 99.2,153.5 99.7,153.2 100.3,152.9 100.9,152.5 101.5,152.1 102.1,151.6 102.6,151.1 103.2,150.5 103.8,149.9 104.4,149.2 105.0,148.4 105.5,147.6 106.1,146.8 106.7,145.9 107.3,145.0 107.9,144.0 108.4,143.0 109.0,141.9 109.6,140.8 110.2,139.6 110.8,138.4 111.3,137.2 111.9,135.9 112.5,134.6 113.1,133.3 113.7,131.9 114.2,130.5 114.8,129.1 115.4,127.6 116.0,126.1 116.6,124.6 117.1,123.1 117.7,121.5 118.3,120.0 118.9,118.4 119.5,116.7 120.0,115.1 120.6,113.5 121.2,111.8 121.8,110.2 122.4,108.5 122.9,106.8 123.5,105.1 124.1,103.4 124.7,101.7 125.3,100.1 125.8,98.4 126.4,96.7 127.0,95.0 127.6,93.3 128.2,91.7 128.7,90.0 129.3,88.4 129.9,86.7 130.5,85.1 131.1,83.5 131.6,81.9 132.2,80.4 132.8,78.8 133.4,77.3 134.0,75.8 134.5,74.3 135.1,72.9 135.7,71.5 136.3,70.1 136.9,68.7 137.4,67.4 138.0,66.1 138.6,64.8 139.2,63.6 139.8,62.4 140.3,61.2 140.9,60.1 141.5,59.0 142.1,58.0 142.7,57.0 143.2,56.0 143.8,55.1 144.4,54.2 145.0,53.4 145.6,52.6 146.1,51.9 146.7,51.2 147.3,50.5 147.9,49.9 148.5,49.4 149.0,48.9 149.6,48.4 150.2,48.0 150.8,47.6 151.4,47.3 151.9,47.0 152.5,46.8 153.1,46.6 153.7,46.5 154.3,46.4 154.8,46.4 155.4,46.4 156.0,46.5 156.6,46.6 157.2,46.8 157.7,47.0 158.3,47.3 158.9,47.6 159.5,47.9 160.1,48.3 160.6,48.8 161.2,49.2 161.8,49.8 162.4,50.3 163.0,50.9 163.5,51.6 164.1,52.3 164.7,53.0 165.3,53.8 165.9,54.6 166.4,55.5 167.0,56.3 167.6,57.3 168.2,58.2 168.8,59.2 169.3,60.2 169.9,61.3 170.5,62.3 171.1,63.4 171.7,64.6 172.2,65.7 172.8,66.9 173.4,68.1 174.0,69.3 174.6,70.6 175.1,71.8 175.7,73.1 176.3,74.4 176.9,75.7 177.5,77.1 178.0,78.4 178.6,79.8 179.2,81.1 179.8,82.5 180.4,83.9 180.9,85.3 181.5,86.7 182.1,88.0 182.7,89.4 183.3,90.8 183.8,92.2 184.4,93.6 185.0,95.0 185.6,96.4 186.2,97.8 186.7,99.1 187.3,100.5 187.9,101.8 188.5,103.2 189.1,104.5 189.6,105.8 190.2,107.1 190.8,108.3 191.4,109.6 192.0,110.8 192.5,112.1 193.1,113.2 193.7,114.4 194.3,115.6 194.9,116.7 195.4,117.8 196.0,118.9 196.6,119.9 197.2,120.9 197.8,121.9 198.3,122.9 198.9,123.8 199.5,124.7 200.1,125.5 200.7,126.4 201.2,127.1 201.8,127.9 202.4,128.6 203.0,129.3 203.6,130.0 204.1,130.6 204.7,131.1 205.3,131.7 205.9,132.2 206.5,132.6 207.0,133.0 207.6,133.4 208.2,133.8 208.8,134.1 209.4,134.3 209.9,134.6 210.5,134.7 211.1,134.9 211.7,135.0 212.3,135.0 212.8,135.1 213.4,135.0 214.0,135.0 214.6,134.9 215.2,134.8 215.7,134.6 216.3,134.4 216.9,134.1 217.5,133.8 218.1,133.5 218.6,133.1 219.2,132.7 219.8,132.3 220.4,131.8 221.0,131.3 221.5,130.8 222.1,130.2 222.7,129.6 223.3,129.0 223.9,128.3 224.4,127.6 225.0,126.9 225.6,126.1 226.2,125.3 226.8,124.5 227.3,123.7 227.9,122.8 228.5,121.9 229.1,121.0 229.7,120.1 230.2,119.1 230.8,118.2 231.4,117.2 232.0,116.2 232.6,115.1 233.1,114.1 233.7,113.0 234.3,112.0 234.9,110.9 235.5,109.8 236.0,108.7 236.6,107.6 237.2,106.4 237.8,105.3 238.4,104.2 238.9,103.0 239.5,101.9 240.1,100.7 240.7,99.6 241.3,98.4 241.8,97.3 242.4,96.1 243.0,95.0 243.6,93.9 244.2,92.7 244.7,91.6 245.3,90.5 245.9,89.4 246.5,88.3 247.1,87.2 247.6,86.1 248.2,85.0 248.8,84.0 249.4,83.0 250.0,81.9 250.5,80.9 251.1,80.0 251.7,79.0 252.3,78.0 252.9,77.1 253.4,76.2 254.0,75.3 254.6,74.5 255.2,73.6 255.8,72.8 256.3,72.0 256.9,71.3 257.5,70.5 258.1,69.8 258.7,69.1 259.2,68.5 259.8,67.9 260.4,67.3 261.0,66.7 261.6,66.2 262.1,65.7 262.7,65.2 263.3,64.8 263.9,64.3 264.5,64.0 265.0,63.6 265.6,63.3 266.2,63.0 266.8,62.8 267.4,62.6 267.9,62.4 268.5,62.2 269.1,62.1 269.7,62.0 270.3,62.0 270.8,62.0 271.4,62.0 272.0,62.0 272.6,62.1 273.2,62.2 273.7,62.4 274.3,62.5 274.9,62.7 275.5,63.0 276.1,63.3 276.6,63.6 277.2,63.9 277.8,64.2 278.4,64.6 279.0,65.0 279.5,65.5 280.1,66.0 280.7,66.5 281.3,67.0 281.9,67.5 282.4,68.1 283.0,68.7 283.6,69.3 284.2,70.0 284.8,70.6 285.3,71.3 285.9,72.1 286.5,72.8 287.1,73.5 287.7,74.3 288.2,75.1 288.8,75.9 289.4,76.7 290.0,77.5 290.6,78.4 291.1,79.2 291.7,80.1 292.3,81.0 292.9,81.9 293.5,82.8 294.0,83.7 294.6,84.6 295.2,85.6 295.8,86.5 296.4,87.4 296.9,88.4 297.5,89.3 298.1,90.3 298.7,91.2 299.3,92.2 299.8,93.1 300.4,94.1 301.0,95.0 301.6,95.9 302.2,96.9 302.7,97.8 303.3,98.7 303.9,99.6 304.5,100.5 305.1,101.4 305.6,102.3 306.2,103.2 306.8,104.1 307.4,104.9 308.0,105.8 308.5,106.6 309.1,107.4 309.7,108.2 310.3,109.0 310.9,109.8 311.4,110.5 312.0,111.2 312.6,111.9 313.2,112.6 313.8,113.3 314.3,113.9 314.9,114.6 315.5,115.2 316.1,115.8 316.7,116.3 317.2,116.9 317.8,117.4 318.4,117.9 319.0,118.3 319.6,118.8 320.1,119.2 320.7,119.6 321.3,119.9 321.9,120.3 322.5,120.6 323.0,120.9 323.6,121.1 324.2,121.4 324.8,121.6 325.4,121.7 325.9,121.9 326.5,122.0 327.1,122.1 327.7,122.2 328.3,122.2 328.8,122.2 329.4,122.2 330.0,122.2 330.6,122.1 331.2,122.0 331.7,121.9 332.3,121.8 332.9,121.6 333.5,121.4 334.1,121.2 334.6,120.9 335.2,120.7 335.8,120.4 336.4,120.0 337.0,119.7 337.5,119.3 338.1,118.9 338.7,118.5 339.3,118.1 339.9,117.7 340.4,117.2 341.0,116.7 341.6,116.2 342.2,115.6 342.8,115.1 343.3,114.5 343.9,113.9 344.5,113.3 345.1,112.7 345.7,112.1 346.2,111.4 346.8,110.8 347.4,110.1 348.0,109.4 348.6,108.7 349.1,108.0 349.7,107.3 350.3,106.5 350.9,105.8 351.5,105.1 352.0,104.3 352.6,103.5 353.2,102.8 353.8,102.0 354.4,101.2 354.9,100.5 355.5,99.7 356.1,98.9 356.7,98.1 357.3,97.3 357.8,96.6 358.4,95.8 359.0,95.0 359.6,94.2 360.2,93.5 360.7,92.7 361.3,91.9 361.9,91.2 362.5,90.4 363.1,89.7 363.6,89.0 364.2,88.2 364.8,87.5 365.4,86.8 366.0,86.1 366.5,85.4 367.1,84.8 367.7,84.1 368.3,83.5 368.9,82.8 369.4,82.2 370.0,81.6 370.6,81.0 371.2,80.5 371.8,79.9 372.3,79.4 372.9,78.9 373.5,78.4 374.1,77.9 374.7,77.4 375.2,77.0 375.8,76.6 376.4,76.1 377.0,75.8 377.6,75.4 378.1,75.1 378.7,74.7 379.3,74.4 379.9,74.2 380.5,73.9 381.0,73.7 381.6,73.5 382.2,73.3 382.8,73.1 383.4,72.9 383.9,72.8 384.5,72.7 385.1,72.6 385.7,72.6 386.3,72.5 386.8,72.5 387.4,72.5 388.0,72.6 388.6,72.6 389.2,72.7 389.7,72.8 390.3,72.9 390.9,73.1 391.5,73.2 392.1,73.4 392.6,73.6 393.2,73.8 393.8,74.1 394.4,74.3 395.0,74.6 395.5,74.9 396.1,75.3 396.7,75.6 397.3,75.9 397.9,76.3 398.4,76.7 399.0,77.1 399.6,77.5 400.2,78.0 400.8,78.4 401.3,78.9 401.9,79.4 402.5,79.9 403.1,80.4 403.7,80.9 404.2,81.5 404.8,82.0 405.4,82.6 406.0,83.1 406.6,83.7 407.1,84.3 407.7,84.9 408.3,85.5 408.9,86.1 409.5,86.7 410.0,87.3 410.6,88.0 411.2,88.6 411.8,89.2 412.4,89.9 412.9,90.5 413.5,91.1 414.1,91.8 414.7,92.4 415.3,93.1 415.8,93.7 416.4,94.4 417.0,95.0 417.6,95.6 418.2,96.3 418.7,96.9 419.3,97.5 419.9,98.2 420.5,98.8 421.1,99.4 421.6,100.0 422.2,100.6 422.8,101.2 423.4,101.8 424.0,102.3 424.5,102.9 425.1,103.4 425.7,104.0 426.3,104.5 426.9,105.0 427.4,105.5 428.0,106.0 428.6,106.5 429.2,107.0 429.8,107.4 430.3,107.9 430.9,108.3 431.5,108.7 432.1,109.1 432.7,109.5 433.2,109.9 433.8,110.2 434.4,110.5 435.0,110.9 435.6,111.2 436.1,111.4 436.7,111.7 437.3,112.0 437.9,112.2 438.5,112.4 439.0,112.6 439.6,112.8 440.2,112.9 440.8,113.1 441.4,113.2 441.9,113.3 442.5,113.4 443.1,113.4 443.7,113.5 444.3,113.5 444.8,113.5 445.4,113.5 446.0,113.5 446.6,113.4 447.2,113.4 447.7,113.3 448.3,113.2 448.9,113.1 449.5,113.0 450.1,112.8 450.6,112.6 451.2,112.5 451.8,112.3 452.4,112.0 453.0,111.8 453.5,111.6 454.1,111.3 454.7,111.0 455.3,110.7 455.9,110.4 456.4,110.1 457.0,109.7 457.6,109.4 458.2,109.0 458.8,108.7 459.3,108.3 459.9,107.9 460.5,107.5 461.1,107.0 461.7,106.6 462.2,106.2 462.8,105.7 463.4,105.3 464.0,104.8 464.6,104.3 465.1,103.8 465.7,103.3 466.3,102.8 466.9,102.3 467.5,101.8 468.0,101.3 468.6,100.8 469.2,100.3 469.8,99.8 470.4,99.2 470.9,98.7 471.5,98.2 472.1,97.7 472.7,97.1 473.3,96.6 473.8,96.1 474.4,95.5 475.0,95.0 475.6,94.5 476.2,93.9 476.7,93.4 477.3,92.9 477.9,92.4 478.5,91.9 479.1,91.4 479.6,90.9 480.2,90.4 480.8,89.9 481.4,89.4 482.0,89.0 482.5,88.5 483.1,88.0 483.7,87.6 484.3,87.2 484.9,86.7 485.4,86.3 486.0,85.9 486.6,85.5 487.2,85.1 487.8,84.7 488.3,84.4 488.9,84.0 489.5,83.7 490.1,83.4 490.7,83.0 491.2,82.7 491.8,82.5 492.4,82.2 493.0,81.9 493.6,81.7 494.1,81.4 494.7,81.2 495.3,81.0 495.9,80.8 496.5,80.7 497.0,80.5 497.6,80.3 498.2,80.2 498.8,80.1 499.4,80.0 499.9,79.9 500.5,79.8 501.1,79.8 501.7,79.8 502.3,79.7 502.8,79.7 503.4,79.7 504.0,79.8 504.6,79.8 505.2,79.8 505.7,79.9 506.3,80.0 506.9,80.1 507.5,80.2 508.1,80.3 508.6,80.5 509.2,80.6 509.8,80.8 510.4,81.0 511.0,81.1 511.5,81.4 512.1,81.6 512.7,81.8 513.3,82.0 513.9,82.3 514.4,82.6 515.0,82.8 515.6,83.1 516.2,83.4 516.8,83.7 517.3,84.1 517.9,84.4 518.5,84.7 519.1,85.1 519.7,85.4 520.2,85.8 520.8,86.2 521.4,86.5 522.0,86.9 522.6,87.3 523.1,87.7 523.7,88.1 524.3,88.5 524.9,88.9 525.5,89.4 526.0,89.8 526.6,90.2 527.2,90.6 527.8,91.1 528.4,91.5 528.9,91.9 529.5,92.4 530.1,92.8 530.7,93.3 531.3,93.7 531.8,94.1 532.4,94.6 533.0,95.0 533.6,95.4 534.2,95.9 534.7,96.3 535.3,96.7 535.9,97.1 536.5,97.6 537.1,98.0 537.6,98.4 538.2,98.8 538.8,99.2 539.4,99.6 540.0,100.0 540.5,100.4 541.1,100.7 541.7,101.1 542.3,101.5 542.9,101.8 543.4,102.2 544.0,102.5 544.6,102.8 545.2,103.2 545.8,103.5 546.3,103.8 546.9,104.1 547.5,104.3 548.1,104.6 548.7,104.9 549.2,105.1 549.8,105.3 550.4,105.6 551.0,105.8 551.6,106.0 552.1,106.2 552.7,106.4 553.3,106.5 553.9,106.7 554.5,106.8 555.0,107.0 555.6,107.1 556.2,107.2 556.8,107.3 557.4,107.4 557.9,107.4 558.5,107.5 559.1,107.5 559.7,107.6 560.3,107.6 560.8,107.6 561.4,107.6 562.0,107.6 562.6,107.5 563.2,107.5 563.7,107.4 564.3,107.4 564.9,107.3 565.5,107.2 566.1,107.1 566.6,107.0 567.2,106.9 567.8,106.7 568.4,106.6 569.0,106.4 569.5,106.3 570.1,106.1 570.7,105.9 571.3,105.7 571.9,105.5 572.4,105.3 573.0,105.0 573.6,104.8 574.2,104.5 574.8,104.3 575.3,104.0 575.9,103.8 576.5,103.5 577.1,103.2 577.7,102.9 578.2,102.6 578.8,102.3 579.4,102.0 580.0,101.7 580.6,101.3 581.1,101.0 581.7,100.7 582.3,100.3 582.9,100.0 583.5,99.7 584.0,99.3 584.6,99.0 585.2,98.6 585.8,98.2 586.4,97.9 586.9,97.5 587.5,97.2 588.1,96.8 588.7,96.4 589.3,96.1 589.8,95.7 590.4,95.4 591.0,95.0 591.6,94.6 592.2,94.3 592.7,93.9 593.3,93.6 593.9,93.2 594.5,92.9 595.1,92.5 595.6,92.2 596.2,91.9 596.8,91.5 597.4,91.2 598.0,90.9 598.5,90.6 599.1,90.3 599.7,90.0 600.3,89.7 600.9,89.4 601.4,89.1 602.0,88.8 602.6,88.5 603.2,88.3 603.8,88.0 604.3,87.8 604.9,87.5 605.5,87.3 606.1,87.1 606.7,86.9 607.2,86.7 607.8,86.5 608.4,86.3 609.0,86.1 609.6,85.9 610.1,85.8 610.7,85.6 611.3,85.5 611.9,85.4 612.5,85.2 613.0,85.1 613.6,85.0 614.2,84.9 614.8,84.9 615.4,84.8 615.9,84.7 616.5,84.7 617.1,84.7 617.7,84.6 618.3,84.6 618.8,84.6 619.4,84.6 620.0,84.6 620.6,84.7 621.2,84.7 621.7,84.7 622.3,84.8 622.9,84.9 623.5,84.9 624.1,85.0 624.6,85.1 625.2,85.2 625.8,85.3 626.4,85.4 627.0,85.6 627.5,85.7 628.1,85.9 628.7,86.0 629.3,86.2 629.9,86.4 630.4,86.5 631.0,86.7 631.6,86.9 632.2,87.1 632.8,87.3 633.3,87.6 633.9,87.8 634.5,88.0 635.1,88.2 635.7,88.5 636.2,88.7 636.8,89.0 637.4,89.2 638.0,89.5 638.6,89.8 639.1,90.0 639.7,90.3 640.3,90.6 640.9,90.9 641.5,91.2 642.0,91.5 642.6,91.7 643.2,92.0 643.8,92.3 644.4,92.6 644.9,92.9 645.5,93.2 646.1,93.5 646.7,93.8 647.3,94.1 647.8,94.4 648.4,94.7 649.0,95.0 649.6,95.3 650.2,95.6 650.7,95.9 651.3,96.2 651.9,96.5 652.5,96.7 653.1,97.0 653.6,97.3 654.2,97.6 654.8,97.9 655.4,98.1 656.0,98.4 656.5,98.6 657.1,98.9 657.7,99.2 658.3,99.4 658.9,99.6 659.4,99.9 660.0,100.1 660.6,100.3 661.2,100.5 661.8,100.8 662.3,101.0 662.9,101.2 663.5,101.3 664.1,101.5 664.7,101.7 665.2,101.9 665.8,102.0 666.4,102.2 667.0,102.3 667.6,102.5 668.1,102.6 668.7,102.7 669.3,102.8 669.9,102.9 670.5,103.0 671.0,103.1 671.6,103.2 672.2,103.3 672.8,103.4 673.4,103.4 673.9,103.5 674.5,103.5 675.1,103.5 675.7,103.5 676.3,103.6 676.8,103.6 677.4,103.6 678.0,103.6" fill="none" stroke="#1a1a1a" stroke-width="2.4"></polyline>
+</svg>
+<figcaption>The plot as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><mo>=</mo><mi>A</mi><mspace width="0.167em" /><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mi>γ</mi><mo>+</mo><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup></mrow><annotation encoding="application/x-tex">x(t) = A\,e^{Xt} = A\,e^{(-\gamma + \sqrt{\gamma^{2} - \omega^{2}})\,t}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">split it into a product:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></msup><mo>=</mo><msup><mi>e</mi><mi>a</mi></msup><mspace width="0.167em"></mspace><msup><mi>e</mi><mi>b</mi></msup></mrow><annotation encoding="application/x-tex">e^{a+b} = e^{a}\,e^{b}</annotation></semantics></math></span></p>
+<div class="factors">
+<div class="factor ra">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>decay</strong>: real, and shrinks because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma &gt; 0</annotation></semantics></math></p>
+</div>
+<p><span class="times" aria-hidden="true">×</span><span
+class="visually-hidden">times</span></p>
+<div class="factor rb">
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" class="rr"><semantics><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup><annotation encoding="application/x-tex">e^{\sqrt{\gamma^{2} - \omega^{2}}\,t}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>what’s this?</strong> Zoom in below.</p>
+</div>
+</div>
+<div class="zoom rb">
+<p><strong>Zoom in.</strong> The plot oscillates, so the damping is
+weak,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>&lt;</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma &lt; \omega</annotation></semantics></math>
+(with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>&gt;</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma &gt; \omega</annotation></semantics></math>
+the root is real and nothing oscillates). The number under the root is
+negative:</p>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><msqrt><mpadded depth="0"><mrow><mi>−</mi><mn>1</mn></mrow></mpadded></msqrt><mspace width="0.167em" /><msqrt><mpadded depth="0"><mrow><msup><mi>ω</mi><mn>2</mn></msup><mo>−</mo><msup><mi>γ</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><mi>i</mi><mspace width="0.167em" /><msub><mi>ω</mi><mi>d</mi></msub><mo>≈</mo><mi>i</mi><mi>ω</mi><mo>,</mo><mspace width="2.0em" /><mtext mathvariant="normal">so</mtext><mspace width="2.0em" /><msup><mi>e</mi><mrow><mi>i</mi><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi></mrow></msup><mo>=</mo><mrow><mi mathvariant="normal">cos</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>i</mi><mrow><mi mathvariant="normal">sin</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\sqrt{\gamma^{2} - \omega^{2}} = \sqrt{-1}\,\sqrt{\omega^{2} - \gamma^{2}} = i\,\omega_{d} \approx i\omega, \qquad \text{so} \qquad e^{i\omega_{d} t} = \cos(\omega_{d} t) + i\sin(\omega_{d} t)</annotation></semantics></math></p>
+<p><strong>oscillatory!</strong> It repeats every
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi><mi>/</mi><msub><mi>ω</mi><mi>d</mi></msub></mrow><annotation encoding="application/x-tex">2\pi/\omega_{d}</annotation></semantics></math>
+and never grows or shrinks.</p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">put
+the factors back together and compare with the plot</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>≈</mo></mrow><annotation encoding="application/x-tex">x(t) \approx</annotation></semantics></math>
+<span
+class="ca"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math></span>
+<span
+class="cb"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\cos(\omega_{d} t)</annotation></semantics></math></span></span></p>
+<p><span class="tag ra">decay</span>: the crests shrink from cycle to
+cycle. <span class="tag rb">oscillation</span>: the curve crosses
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>
+again and again at a steady period. Together: the plotted curve.</p>
+</div>
+<figure class="graph mini" id="fig-factors">
+<svg viewBox="0 0 740 238" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">Decay times oscillation equals a damped oscillation, the plotted curve</title>
+<desc id="gd1">Three small graphs against time t. First, the decay A e to the minus gamma t: a curve that starts high and falls smoothly toward zero. Times, second, the oscillation cosine omega t: a wave of constant height swinging evenly above and below zero for five cycles. Equals, third, the damped oscillation A e to the minus gamma t cosine omega t: the same wave, but its crests shrink, following the decay curve and its mirror image, drawn dashed. That is the curve plotted in Question 1.</desc>
+<defs><marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="16" y1="100" x2="212" y2="100" class="ax" marker-end="url(#arr1)"></line>
+<line x1="20" y1="166" x2="20" y2="32" class="ax"></line>
+<text x="215" y="104" class="lbl">t</text>
+<polyline points="20.0,42.0 20.4,42.2 20.9,42.4 21.4,42.5 21.8,42.7 22.2,42.9 22.7,43.1 23.1,43.3 23.6,43.4 24.1,43.6 24.5,43.8 24.9,44.0 25.4,44.1 25.9,44.3 26.3,44.5 26.8,44.7 27.2,44.8 27.6,45.0 28.1,45.2 28.6,45.3 29.0,45.5 29.4,45.7 29.9,45.9 30.4,46.0 30.8,46.2 31.2,46.4 31.7,46.5 32.1,46.7 32.6,46.9 33.0,47.0 33.5,47.2 34.0,47.4 34.4,47.5 34.9,47.7 35.3,47.8 35.8,48.0 36.2,48.2 36.6,48.3 37.1,48.5 37.5,48.7 38.0,48.8 38.5,49.0 38.9,49.1 39.4,49.3 39.8,49.5 40.2,49.6 40.7,49.8 41.1,49.9 41.6,50.1 42.0,50.2 42.5,50.4 43.0,50.5 43.4,50.7 43.9,50.9 44.3,51.0 44.8,51.2 45.2,51.3 45.6,51.5 46.1,51.6 46.5,51.8 47.0,51.9 47.5,52.1 47.9,52.2 48.4,52.4 48.8,52.5 49.2,52.7 49.7,52.8 50.2,53.0 50.6,53.1 51.0,53.2 51.5,53.4 52.0,53.5 52.4,53.7 52.9,53.8 53.3,54.0 53.8,54.1 54.2,54.3 54.6,54.4 55.1,54.5 55.6,54.7 56.0,54.8 56.5,55.0 56.9,55.1 57.4,55.3 57.8,55.4 58.2,55.5 58.7,55.7 59.1,55.8 59.6,55.9 60.0,56.1 60.5,56.2 61.0,56.4 61.4,56.5 61.9,56.6 62.3,56.8 62.8,56.9 63.2,57.0 63.6,57.2 64.1,57.3 64.5,57.4 65.0,57.6 65.5,57.7 65.9,57.8 66.3,58.0 66.8,58.1 67.2,58.2 67.7,58.4 68.2,58.5 68.6,58.6 69.1,58.7 69.5,58.9 70.0,59.0 70.4,59.1 70.8,59.3 71.3,59.4 71.8,59.5 72.2,59.6 72.7,59.8 73.1,59.9 73.5,60.0 74.0,60.1 74.4,60.3 74.9,60.4 75.3,60.5 75.8,60.6 76.2,60.8 76.7,60.9 77.2,61.0 77.6,61.1 78.1,61.2 78.5,61.4 79.0,61.5 79.4,61.6 79.8,61.7 80.3,61.8 80.8,62.0 81.2,62.1 81.7,62.2 82.1,62.3 82.5,62.4 83.0,62.6 83.4,62.7 83.9,62.8 84.3,62.9 84.8,63.0 85.2,63.1 85.7,63.2 86.2,63.4 86.6,63.5 87.0,63.6 87.5,63.7 88.0,63.8 88.4,63.9 88.8,64.0 89.3,64.2 89.8,64.3 90.2,64.4 90.7,64.5 91.1,64.6 91.5,64.7 92.0,64.8 92.5,64.9 92.9,65.0 93.3,65.1 93.8,65.3 94.2,65.4 94.7,65.5 95.1,65.6 95.6,65.7 96.0,65.8 96.5,65.9 97.0,66.0 97.4,66.1 97.8,66.2 98.3,66.3 98.8,66.4 99.2,66.5 99.7,66.6 100.1,66.7 100.5,66.8 101.0,67.0 101.5,67.1 101.9,67.2 102.4,67.3 102.8,67.4 103.2,67.5 103.7,67.6 104.2,67.7 104.6,67.8 105.0,67.9 105.5,68.0 106.0,68.1 106.4,68.2 106.8,68.3 107.3,68.4 107.8,68.5 108.2,68.6 108.7,68.7 109.1,68.8 109.5,68.9 110.0,69.0 110.4,69.1 110.9,69.1 111.3,69.2 111.8,69.3 112.2,69.4 112.7,69.5 113.1,69.6 113.6,69.7 114.0,69.8 114.5,69.9 114.9,70.0 115.4,70.1 115.8,70.2 116.3,70.3 116.8,70.4 117.2,70.5 117.6,70.6 118.1,70.7 118.5,70.7 119.0,70.8 119.5,70.9 119.9,71.0 120.3,71.1 120.8,71.2 121.2,71.3 121.7,71.4 122.2,71.5 122.6,71.6 123.0,71.6 123.5,71.7 124.0,71.8 124.4,71.9 124.9,72.0 125.3,72.1 125.8,72.2 126.2,72.3 126.7,72.3 127.1,72.4 127.6,72.5 128.0,72.6 128.4,72.7 128.9,72.8 129.4,72.9 129.8,72.9 130.2,73.0 130.7,73.1 131.2,73.2 131.6,73.3 132.1,73.4 132.5,73.4 132.9,73.5 133.4,73.6 133.8,73.7 134.3,73.8 134.8,73.9 135.2,73.9 135.6,74.0 136.1,74.1 136.6,74.2 137.0,74.3 137.4,74.3 137.9,74.4 138.3,74.5 138.8,74.6 139.2,74.7 139.7,74.7 140.1,74.8 140.6,74.9 141.1,75.0 141.5,75.1 141.9,75.1 142.4,75.2 142.8,75.3 143.3,75.4 143.8,75.4 144.2,75.5 144.7,75.6 145.1,75.7 145.6,75.7 146.0,75.8 146.4,75.9 146.9,76.0 147.4,76.0 147.8,76.1 148.2,76.2 148.7,76.3 149.2,76.3 149.6,76.4 150.1,76.5 150.5,76.6 151.0,76.6 151.4,76.7 151.8,76.8 152.3,76.9 152.8,76.9 153.2,77.0 153.7,77.1 154.1,77.1 154.6,77.2 155.0,77.3 155.4,77.4 155.9,77.4 156.3,77.5 156.8,77.6 157.2,77.6 157.7,77.7 158.2,77.8 158.6,77.8 159.0,77.9 159.5,78.0 159.9,78.1 160.4,78.1 160.8,78.2 161.3,78.3 161.8,78.3 162.2,78.4 162.7,78.5 163.1,78.5 163.6,78.6 164.0,78.7 164.4,78.7 164.9,78.8 165.3,78.9 165.8,78.9 166.2,79.0 166.7,79.1 167.2,79.1 167.6,79.2 168.1,79.3 168.5,79.3 168.9,79.4 169.4,79.4 169.8,79.5 170.3,79.6 170.8,79.6 171.2,79.7 171.7,79.8 172.1,79.8 172.6,79.9 173.0,80.0 173.5,80.0 173.9,80.1 174.3,80.1 174.8,80.2 175.2,80.3 175.7,80.3 176.2,80.4 176.6,80.5 177.1,80.5 177.5,80.6 177.9,80.6 178.4,80.7 178.8,80.8 179.3,80.8 179.8,80.9 180.2,80.9 180.7,81.0 181.1,81.1 181.5,81.1 182.0,81.2 182.4,81.2 182.9,81.3 183.3,81.3 183.8,81.4 184.2,81.5 184.7,81.5 185.2,81.6 185.6,81.6 186.1,81.7 186.5,81.7 186.9,81.8 187.4,81.9 187.8,81.9 188.3,82.0 188.8,82.0 189.2,82.1 189.7,82.1 190.1,82.2 190.6,82.3 191.0,82.3 191.4,82.4 191.9,82.4 192.3,82.5 192.8,82.5 193.2,82.6 193.7,82.6 194.2,82.7 194.6,82.7 195.1,82.8 195.5,82.9 196.0,82.9 196.4,83.0 196.8,83.0 197.3,83.1 197.8,83.1 198.2,83.2 198.7,83.2 199.1,83.3 199.6,83.3 200.0,83.4" fill="none" stroke="#8B6508" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<line x1="268" y1="100" x2="464" y2="100" class="ax" marker-end="url(#arr1)"></line>
+<line x1="272" y1="166" x2="272" y2="32" class="ax"></line>
+<text x="467" y="104" class="lbl">t</text>
+<polyline points="272.0,42.0 272.4,42.2 272.9,42.7 273.4,43.6 273.8,44.8 274.2,46.4 274.7,48.3 275.1,50.5 275.6,53.1 276.1,55.9 276.5,59.0 276.9,62.3 277.4,65.9 277.9,69.7 278.3,73.7 278.8,77.8 279.2,82.1 279.6,86.5 280.1,90.9 280.6,95.4 281.0,100.0 281.4,104.6 281.9,109.1 282.4,113.5 282.8,117.9 283.2,122.2 283.7,126.3 284.1,130.3 284.6,134.1 285.1,137.7 285.5,141.0 285.9,144.1 286.4,146.9 286.9,149.5 287.3,151.7 287.8,153.6 288.2,155.2 288.6,156.4 289.1,157.3 289.6,157.8 290.0,158.0 290.4,157.8 290.9,157.3 291.4,156.4 291.8,155.2 292.2,153.6 292.7,151.7 293.1,149.5 293.6,146.9 294.1,144.1 294.5,141.0 294.9,137.7 295.4,134.1 295.9,130.3 296.3,126.3 296.8,122.2 297.2,117.9 297.6,113.5 298.1,109.1 298.6,104.6 299.0,100.0 299.4,95.4 299.9,90.9 300.4,86.5 300.8,82.1 301.2,77.8 301.7,73.7 302.1,69.7 302.6,65.9 303.1,62.3 303.5,59.0 303.9,55.9 304.4,53.1 304.9,50.5 305.3,48.3 305.8,46.4 306.2,44.8 306.6,43.6 307.1,42.7 307.6,42.2 308.0,42.0 308.4,42.2 308.9,42.7 309.4,43.6 309.8,44.8 310.2,46.4 310.7,48.3 311.1,50.5 311.6,53.1 312.1,55.9 312.5,59.0 312.9,62.3 313.4,65.9 313.9,69.7 314.3,73.7 314.8,77.8 315.2,82.1 315.6,86.5 316.1,90.9 316.6,95.4 317.0,100.0 317.4,104.6 317.9,109.1 318.4,113.5 318.8,117.9 319.2,122.2 319.7,126.3 320.1,130.3 320.6,134.1 321.1,137.7 321.5,141.0 321.9,144.1 322.4,146.9 322.9,149.5 323.3,151.7 323.8,153.6 324.2,155.2 324.6,156.4 325.1,157.3 325.6,157.8 326.0,158.0 326.4,157.8 326.9,157.3 327.4,156.4 327.8,155.2 328.2,153.6 328.7,151.7 329.1,149.5 329.6,146.9 330.1,144.1 330.5,141.0 330.9,137.7 331.4,134.1 331.9,130.3 332.3,126.3 332.8,122.2 333.2,117.9 333.6,113.5 334.1,109.1 334.6,104.6 335.0,100.0 335.4,95.4 335.9,90.9 336.4,86.5 336.8,82.1 337.2,77.8 337.7,73.7 338.1,69.7 338.6,65.9 339.1,62.3 339.5,59.0 339.9,55.9 340.4,53.1 340.9,50.5 341.3,48.3 341.8,46.4 342.2,44.8 342.6,43.6 343.1,42.7 343.6,42.2 344.0,42.0 344.4,42.2 344.9,42.7 345.4,43.6 345.8,44.8 346.2,46.4 346.7,48.3 347.1,50.5 347.6,53.1 348.1,55.9 348.5,59.0 348.9,62.3 349.4,65.9 349.9,69.7 350.3,73.7 350.8,77.8 351.2,82.1 351.6,86.5 352.1,90.9 352.6,95.4 353.0,100.0 353.4,104.6 353.9,109.1 354.4,113.5 354.8,117.9 355.2,122.2 355.7,126.3 356.1,130.3 356.6,134.1 357.1,137.7 357.5,141.0 357.9,144.1 358.4,146.9 358.9,149.5 359.3,151.7 359.8,153.6 360.2,155.2 360.6,156.4 361.1,157.3 361.6,157.8 362.0,158.0 362.4,157.8 362.9,157.3 363.4,156.4 363.8,155.2 364.2,153.6 364.7,151.7 365.1,149.5 365.6,146.9 366.1,144.1 366.5,141.0 366.9,137.7 367.4,134.1 367.9,130.3 368.3,126.3 368.8,122.2 369.2,117.9 369.6,113.5 370.1,109.1 370.6,104.6 371.0,100.0 371.4,95.4 371.9,90.9 372.4,86.5 372.8,82.1 373.2,77.8 373.7,73.7 374.1,69.7 374.6,65.9 375.1,62.3 375.5,59.0 375.9,55.9 376.4,53.1 376.9,50.5 377.3,48.3 377.8,46.4 378.2,44.8 378.6,43.6 379.1,42.7 379.6,42.2 380.0,42.0 380.4,42.2 380.9,42.7 381.4,43.6 381.8,44.8 382.2,46.4 382.7,48.3 383.1,50.5 383.6,53.1 384.1,55.9 384.5,59.0 384.9,62.3 385.4,65.9 385.9,69.7 386.3,73.7 386.8,77.8 387.2,82.1 387.6,86.5 388.1,90.9 388.6,95.4 389.0,100.0 389.4,104.6 389.9,109.1 390.4,113.5 390.8,117.9 391.2,122.2 391.7,126.3 392.1,130.3 392.6,134.1 393.1,137.7 393.5,141.0 393.9,144.1 394.4,146.9 394.9,149.5 395.3,151.7 395.8,153.6 396.2,155.2 396.6,156.4 397.1,157.3 397.6,157.8 398.0,158.0 398.4,157.8 398.9,157.3 399.4,156.4 399.8,155.2 400.2,153.6 400.7,151.7 401.1,149.5 401.6,146.9 402.1,144.1 402.5,141.0 403.0,137.7 403.4,134.1 403.9,130.3 404.3,126.3 404.8,122.2 405.2,117.9 405.6,113.5 406.1,109.1 406.6,104.6 407.0,100.0 407.4,95.4 407.9,90.9 408.4,86.5 408.8,82.1 409.2,77.8 409.7,73.7 410.1,69.7 410.6,65.9 411.0,62.3 411.5,59.0 411.9,55.9 412.4,53.1 412.9,50.5 413.3,48.3 413.8,46.4 414.2,44.8 414.6,43.6 415.1,42.7 415.6,42.2 416.0,42.0 416.4,42.2 416.9,42.7 417.4,43.6 417.8,44.8 418.2,46.4 418.7,48.3 419.1,50.5 419.6,53.1 420.1,55.9 420.5,59.0 420.9,62.3 421.4,65.9 421.9,69.7 422.3,73.7 422.8,77.8 423.2,82.1 423.6,86.5 424.1,90.9 424.6,95.4 425.0,100.0 425.5,104.6 425.9,109.1 426.4,113.5 426.8,117.9 427.2,122.2 427.7,126.3 428.1,130.3 428.6,134.1 429.1,137.7 429.5,141.0 429.9,144.1 430.4,146.9 430.9,149.5 431.3,151.7 431.8,153.6 432.2,155.2 432.6,156.4 433.1,157.3 433.5,157.8 434.0,158.0 434.4,157.8 434.9,157.3 435.4,156.4 435.8,155.2 436.2,153.6 436.7,151.7 437.1,149.5 437.6,146.9 438.1,144.1 438.5,141.0 438.9,137.7 439.4,134.1 439.9,130.3 440.3,126.3 440.8,122.2 441.2,117.9 441.6,113.5 442.1,109.1 442.6,104.6 443.0,100.0 443.4,95.4 443.9,90.9 444.4,86.5 444.8,82.1 445.2,77.8 445.7,73.7 446.1,69.7 446.6,65.9 447.1,62.3 447.5,59.0 448.0,55.9 448.4,53.1 448.9,50.5 449.3,48.3 449.8,46.4 450.2,44.8 450.6,43.6 451.1,42.7 451.6,42.2 452.0,42.0" fill="none" stroke="#14672A" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<line x1="520" y1="100" x2="716" y2="100" class="ax" marker-end="url(#arr1)"></line>
+<line x1="524" y1="166" x2="524" y2="32" class="ax"></line>
+<text x="719" y="104" class="lbl">t</text>
+<polyline points="524.0,42.0 527.6,43.4 531.2,44.8 534.8,46.2 538.4,47.5 542.0,48.8 545.6,50.1 549.2,51.3 552.8,52.5 556.4,53.7 560.0,54.8 563.6,55.9 567.2,57.0 570.8,58.1 574.4,59.1 578.0,60.1 581.6,61.1 585.2,62.1 588.8,63.0 592.4,63.9 596.0,64.8 599.6,65.7 603.2,66.5 606.8,67.4 610.4,68.2 614.0,69.0 617.6,69.7 621.2,70.5 624.8,71.2 628.4,71.9 632.0,72.6 635.6,73.3 639.2,73.9 642.8,74.6 646.4,75.2 650.0,75.8 653.6,76.4 657.2,77.0 660.8,77.6 664.4,78.1 668.0,78.7 671.6,79.2 675.2,79.7 678.8,80.2 682.4,80.7 686.0,81.2 689.6,81.6 693.2,82.1 696.8,82.5 700.4,83.0 704.0,83.4" fill="none" stroke="#8B6508" stroke-width="1.6" stroke-dasharray="5 3"></polyline>
+<polyline points="524.0,158.0 527.6,156.6 531.2,155.2 534.8,153.8 538.4,152.5 542.0,151.2 545.6,149.9 549.2,148.7 552.8,147.5 556.4,146.3 560.0,145.2 563.6,144.1 567.2,143.0 570.8,141.9 574.4,140.9 578.0,139.9 581.6,138.9 585.2,137.9 588.8,137.0 592.4,136.1 596.0,135.2 599.6,134.3 603.2,133.5 606.8,132.6 610.4,131.8 614.0,131.0 617.6,130.3 621.2,129.5 624.8,128.8 628.4,128.1 632.0,127.4 635.6,126.7 639.2,126.1 642.8,125.4 646.4,124.8 650.0,124.2 653.6,123.6 657.2,123.0 660.8,122.4 664.4,121.9 668.0,121.3 671.6,120.8 675.2,120.3 678.8,119.8 682.4,119.3 686.0,118.8 689.6,118.4 693.2,117.9 696.8,117.5 700.4,117.0 704.0,116.6" fill="none" stroke="#8B6508" stroke-width="1.6" stroke-dasharray="5 3"></polyline>
+<polyline points="524.0,42.0 524.5,42.4 524.9,43.1 525.4,44.1 525.8,45.5 526.2,47.2 526.7,49.3 527.1,51.6 527.6,54.2 528.0,57.1 528.5,60.2 529.0,63.6 529.4,67.2 529.9,70.9 530.3,74.8 530.8,78.8 531.2,83.0 531.6,87.2 532.1,91.4 532.5,95.7 533.0,100.0 533.5,104.3 533.9,108.5 534.4,112.6 534.8,116.6 535.2,120.5 535.7,124.3 536.1,127.9 536.6,131.2 537.0,134.4 537.5,137.3 538.0,140.0 538.4,142.5 538.9,144.6 539.3,146.5 539.8,148.0 540.2,149.3 540.6,150.2 541.1,150.9 541.5,151.2 542.0,151.2 542.5,150.9 542.9,150.2 543.4,149.3 543.8,148.1 544.2,146.6 544.7,144.8 545.1,142.7 545.6,140.4 546.0,137.8 546.5,135.1 547.0,132.1 547.4,129.0 547.9,125.7 548.3,122.2 548.8,118.7 549.2,115.0 549.6,111.3 550.1,107.6 550.5,103.8 551.0,100.0 551.5,96.2 551.9,92.5 552.4,88.9 552.8,85.3 553.2,81.9 553.7,78.6 554.1,75.4 554.6,72.4 555.0,69.6 555.5,67.0 556.0,64.7 556.4,62.5 556.9,60.6 557.3,59.0 557.8,57.6 558.2,56.5 558.6,55.7 559.1,55.1 559.5,54.8 560.0,54.8 560.5,55.1 560.9,55.7 561.4,56.5 561.8,57.6 562.2,58.9 562.7,60.5 563.1,62.3 563.6,64.4 564.0,66.6 564.5,69.0 565.0,71.7 565.4,74.4 565.9,77.3 566.3,80.4 566.8,83.5 567.2,86.7 567.6,90.0 568.1,93.3 568.5,96.7 569.0,100.0 569.5,103.3 569.9,106.6 570.4,109.8 570.8,112.9 571.2,116.0 571.7,118.9 572.1,121.7 572.6,124.3 573.0,126.8 573.5,129.1 574.0,131.2 574.4,133.1 574.9,134.7 575.3,136.2 575.8,137.4 576.2,138.4 576.6,139.1 577.1,139.6 577.5,139.9 578.0,139.9 578.5,139.6 578.9,139.1 579.4,138.4 579.8,137.4 580.2,136.3 580.7,134.9 581.1,133.3 581.6,131.5 582.0,129.5 582.5,127.3 583.0,125.0 583.4,122.6 583.9,120.0 584.3,117.3 584.8,114.6 585.2,111.7 585.6,108.8 586.1,105.9 586.5,102.9 587.0,100.0 587.5,97.1 587.9,94.2 588.4,91.3 588.8,88.6 589.2,85.9 589.7,83.3 590.1,80.9 590.6,78.5 591.0,76.4 591.5,74.3 592.0,72.5 592.4,70.8 592.9,69.3 593.3,68.1 593.8,67.0 594.2,66.1 594.6,65.5 595.1,65.0 595.5,64.8 596.0,64.8 596.5,65.0 596.9,65.5 597.4,66.1 597.8,67.0 598.2,68.0 598.7,69.2 599.1,70.7 599.6,72.2 600.0,74.0 600.5,75.9 601.0,77.9 601.4,80.1 601.9,82.4 602.3,84.7 602.8,87.2 603.2,89.7 603.6,92.2 604.1,94.8 604.5,97.4 605.0,100.0 605.5,102.6 605.9,105.1 606.4,107.6 606.8,110.1 607.2,112.5 607.7,114.7 608.1,116.9 608.6,118.9 609.0,120.9 609.5,122.6 610.0,124.3 610.4,125.8 610.9,127.1 611.3,128.2 611.8,129.1 612.2,129.9 612.6,130.5 613.1,130.9 613.5,131.0 614.0,131.0 614.5,130.9 614.9,130.5 615.4,129.9 615.8,129.2 616.2,128.2 616.7,127.1 617.1,125.9 617.6,124.5 618.0,123.0 618.5,121.3 619.0,119.5 619.4,117.6 619.9,115.6 620.3,113.5 620.8,111.3 621.2,109.1 621.6,106.9 622.1,104.6 622.5,102.3 623.0,100.0 623.5,97.7 623.9,95.5 624.4,93.3 624.8,91.1 625.2,89.0 625.7,87.0 626.1,85.1 626.6,83.3 627.0,81.6 627.5,80.0 628.0,78.6 628.4,77.3 628.9,76.1 629.3,75.1 629.8,74.3 630.2,73.6 630.6,73.1 631.1,72.8 631.5,72.6 632.0,72.6 632.5,72.8 632.9,73.1 633.4,73.6 633.8,74.3 634.2,75.1 634.7,76.0 635.1,77.1 635.6,78.4 636.0,79.7 636.5,81.2 637.0,82.8 637.4,84.5 637.9,86.3 638.3,88.1 638.8,90.0 639.2,91.9 639.6,93.9 640.1,95.9 640.5,98.0 641.0,100.0 641.5,102.0 641.9,104.0 642.4,106.0 642.8,107.9 643.2,109.7 643.7,111.5 644.1,113.2 644.6,114.8 645.0,116.3 645.5,117.6 646.0,118.9 646.4,120.1 646.9,121.1 647.3,122.0 647.8,122.7 648.2,123.3 648.6,123.7 649.1,124.0 649.5,124.2 650.0,124.2 650.5,124.0 650.9,123.7 651.4,123.3 651.8,122.7 652.2,122.0 652.7,121.1 653.1,120.2 653.6,119.1 654.0,117.9 654.5,116.6 655.0,115.2 655.4,113.7 655.9,112.1 656.3,110.5 656.8,108.8 657.2,107.1 657.6,105.4 658.1,103.6 658.5,101.8 659.0,100.0 659.5,98.2 659.9,96.5 660.4,94.7 660.8,93.1 661.2,91.4 661.7,89.9 662.1,88.4 662.6,87.0 663.0,85.7 663.5,84.4 664.0,83.3 664.4,82.3 664.9,81.4 665.3,80.6 665.8,80.0 666.2,79.5 666.6,79.1 667.1,78.8 667.5,78.7 668.0,78.7 668.5,78.8 668.9,79.1 669.4,79.4 669.8,80.0 670.2,80.6 670.7,81.3 671.1,82.2 671.6,83.2 672.0,84.2 672.5,85.4 673.0,86.6 673.4,87.9 673.9,89.3 674.3,90.7 674.8,92.2 675.2,93.7 675.6,95.3 676.1,96.8 676.5,98.4 677.0,100.0 677.5,101.6 677.9,103.1 678.4,104.6 678.8,106.1 679.2,107.6 679.7,108.9 680.1,110.2 680.6,111.5 681.0,112.7 681.5,113.7 682.0,114.7 682.4,115.6 682.9,116.4 683.3,117.1 683.8,117.7 684.2,118.1 684.6,118.5 685.1,118.7 685.5,118.8 686.0,118.8 686.5,118.7 686.9,118.5 687.4,118.1 687.8,117.7 688.2,117.1 688.7,116.5 689.1,115.7 689.6,114.9 690.0,113.9 690.5,112.9 691.0,111.8 691.4,110.7 691.9,109.4 692.3,108.2 692.8,106.9 693.2,105.5 693.6,104.2 694.1,102.8 694.5,101.4 695.0,100.0 695.5,98.6 695.9,97.3 696.4,95.9 696.8,94.6 697.2,93.3 697.7,92.1 698.1,91.0 698.6,89.9 699.0,88.8 699.5,87.9 700.0,87.0 700.4,86.2 700.9,85.5 701.3,84.9 701.8,84.4 702.2,84.0 702.6,83.7 703.1,83.5 703.5,83.4 704.0,83.4" fill="none" stroke="#1a1a1a" stroke-width="2.6" stroke-linejoin="round"></polyline>
+<text x="110" y="202" text-anchor="middle" font-weight="700" fill="#8B6508" font-size="22">decay</text>
+<text x="110" y="228" text-anchor="middle" fill="#8B6508" font-size="20">A e^(−γt)</text>
+<text x="362" y="202" text-anchor="middle" font-weight="700" fill="#14672A" font-size="22">oscillation</text>
+<text x="362" y="228" text-anchor="middle" fill="#14672A" font-size="20">cos(ωt)</text>
+<text x="614" y="202" text-anchor="middle" font-weight="700" fill="#1a1a1a" font-size="22">damped oscillation</text>
+<text x="614" y="228" text-anchor="middle" fill="#1a1a1a" font-size="20">A e^(−γt) cos(ωt)</text>
+<text x="246" y="110" text-anchor="middle" font-size="26" fill="#3a3a3a">×</text>
+<text x="498" y="110" text-anchor="middle" font-size="26" fill="#3a3a3a">=</text>
+</svg>
+<figcaption>The two factors and their product: the plotted curve.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> Splitting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{Xt}</annotation></semantics></math>
+gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{-\gamma t}</annotation></semantics></math>
+times
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" class="rr"><semantics><msup><mi>e</mi><mpadded voffset="0.12em"><mrow><msqrt><mpadded depth="0"><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>−</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow></mpadded></msqrt><mspace width="0.167em" /><mi>t</mi></mrow></mpadded></msup><annotation encoding="application/x-tex">e^{\sqrt{\gamma^{2} - \omega^{2}}\,t}</annotation></semantics></math>.
+The plot oscillates, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>&lt;</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">\gamma &lt; \omega</annotation></semantics></math>
+and that factor is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>i</mi><msub><mi>ω</mi><mi>d</mi></msub><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{i\omega_{d} t}</annotation></semantics></math>,
+a steady oscillation;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-\gamma t}</annotation></semantics></math>
+shrinks the amplitude each cycle. Their product is the plotted
+curve.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(1 pt)</strong> In class and in the homework, we took the Fourier transform of
+_______ domain data (a waveform) to produce a _______ domain
+spectrum.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p><strong>time</strong>, then <strong>frequency</strong>. We took the
+Fourier transform of <em>time</em>-domain data (a waveform,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+versus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>)
+to produce a <em>frequency</em>-domain spectrum
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|X(f)|</annotation></semantics></math>
+versus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>).
+Swapped, the sentence describes the inverse transform.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(1.5 pts)</strong> Which of these can a Fourier transform spectrum
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|X(f)|</annotation></semantics></math>,
+like the ones we plotted in class and in the homework, tell you?
+<strong>Choose all that apply.</strong> (0.3 points for each choice
+marked correctly: filled if it is correct, left empty if it is not.)</p>
+<ul>
+<li><strong>A.</strong> The frequencies (harmonics) present in the
+waveform</li>
+<li><strong>B.</strong> The relative amplitudes of these harmonics</li>
+<li><strong>C.</strong> The relative phase differences among the
+harmonics</li>
+<li><strong>D.</strong> The strength of damping or decay in each
+harmonic (from the spectrum’s peak width)</li>
+<li><strong>E.</strong> Your instructor’s annual salary</li>
+</ul>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p><strong>A, B and D.</strong></p>
+<ul>
+<li><strong>A — yes.</strong> Each harmonic shows up as a peak at its
+own frequency: the sung note’s fundamental and overtones, the
+cantilever’s 72 kHz and 448 kHz modes, the 500 Hz and 3000 Hz of
+Question 4.</li>
+<li><strong>B — yes.</strong> The height of each peak follows that
+harmonic’s amplitude (Day 3 lecture: a harmonic with 0.35 of the
+amplitude gives a peak 35% as tall).</li>
+<li><strong>C — no.</strong> Shifting one harmonic’s phase changes the
+shape of the waveform but leaves the magnitude spectrum
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|X(f)|</annotation></semantics></math>
+exactly the same (Day 3 lecture, section 5). The phases came from curve
+fitting in the bimodal-AFM homework, 3(c).</li>
+<li><strong>D — yes.</strong> A harmonic that decays at rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+lasts only about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">1/\gamma</annotation></semantics></math>,
+and its peak is correspondingly broad, of width about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+(the NMR linewidth). Faster decay, broader peak.</li>
+<li><strong>E — no.</strong> Sadly, no peak at that frequency.</li>
+</ul>
+</div>
+</details>
+</li>
+<li class="q" id="q4">
+<p class="stem"><strong>4.</strong> <strong>(3 pts)</strong> The graph below shows data that consist of <strong>two
+harmonics</strong>: two oscillatory modes with different frequencies,
+added together. Estimate the (i) <strong>period</strong> and (ii)
+<strong>frequency</strong> of <em>each</em> harmonic. Show your work
+(calculations, and marks drawn on the graph) or a justification to
+receive full credit.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 730 300" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The graph printed in Questions 4 and 5: two harmonics added together</title>
+<desc id="gd3">A graph of signal x in nanometers, from minus 5 to 5, against time t in milliseconds, from 0 to 6, with grid lines every half millisecond and every nanometer. The curve is a large, slow wave that starts at 0 going up, reaches about 4.4 near 0.4 milliseconds, crosses 0 going down near 1, reaches about minus 4.4 near 1.6, and is back at 0 going up at 2 milliseconds: three slow cycles in 6 milliseconds. Small ripples ride on it: two bumps on each crest and on each trough, and a shoulder on each steep slope.</desc>
+<defs><marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="70.0" y1="40" x2="70.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="70.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">0</text>
+<line x1="123.3" y1="40" x2="123.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="176.7" y1="40" x2="176.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="176.7" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">1</text>
+<line x1="230.0" y1="40" x2="230.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="283.3" y1="40" x2="283.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="283.3" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">2</text>
+<line x1="336.7" y1="40" x2="336.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="390.0" y1="40" x2="390.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="390.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">3</text>
+<line x1="443.3" y1="40" x2="443.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="496.7" y1="40" x2="496.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="496.7" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">4</text>
+<line x1="550.0" y1="40" x2="550.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="603.3" y1="40" x2="603.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="603.3" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">5</text>
+<line x1="656.7" y1="40" x2="656.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="710.0" y1="40" x2="710.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="710.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">6</text>
+<line x1="70" y1="250.0" x2="710" y2="250.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="229.0" x2="710" y2="229.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="234.0" text-anchor="end" font-size="14" fill="#3a3a3a">-4</text>
+<line x1="70" y1="208.0" x2="710" y2="208.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="187.0" x2="710" y2="187.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="192.0" text-anchor="end" font-size="14" fill="#3a3a3a">-2</text>
+<line x1="70" y1="166.0" x2="710" y2="166.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="145.0" x2="710" y2="145.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="150.0" text-anchor="end" font-size="14" fill="#3a3a3a">0</text>
+<line x1="70" y1="124.0" x2="710" y2="124.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="103.0" x2="710" y2="103.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="108.0" text-anchor="end" font-size="14" fill="#3a3a3a">2</text>
+<line x1="70" y1="82.0" x2="710" y2="82.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="61.0" x2="710" y2="61.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="66.0" text-anchor="end" font-size="14" fill="#3a3a3a">4</text>
+<line x1="70" y1="40.0" x2="710" y2="40.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<rect x="70" y="40" width="640" height="210" fill="none" stroke="#1a1a1a" stroke-width="1.2"></rect>
+<line x1="70" y1="145.0" x2="710" y2="145.0" stroke="#1a1a1a" stroke-width="1.2"></line>
+<text x="390" y="290" text-anchor="middle" font-size="15" fill="#1a1a1a">time t (ms)</text>
+<text x="18" y="145" text-anchor="middle" font-size="15" fill="#1a1a1a" transform="rotate(-90 18 145)">signal x (nm)</text>
+<polyline points="70.0,145.0 70.5,142.7 71.1,140.4 71.6,138.1 72.1,135.9 72.7,133.6 73.2,131.5 73.7,129.3 74.3,127.3 74.8,125.3 75.3,123.4 75.9,121.5 76.4,119.8 76.9,118.1 77.5,116.5 78.0,115.0 78.5,113.6 79.1,112.3 79.6,111.1 80.1,110.1 80.7,109.1 81.2,108.2 81.7,107.3 82.3,106.6 82.8,106.0 83.3,105.4 83.9,104.9 84.4,104.5 84.9,104.2 85.5,103.9 86.0,103.6 86.5,103.4 87.1,103.2 87.6,103.1 88.1,102.9 88.7,102.8 89.2,102.6 89.7,102.4 90.3,102.3 90.8,102.0 91.3,101.8 91.9,101.5 92.4,101.2 92.9,100.8 93.5,100.3 94.0,99.8 94.5,99.2 95.1,98.6 95.6,97.8 96.1,97.0 96.7,96.1 97.2,95.1 97.7,94.1 98.3,93.0 98.8,91.8 99.3,90.5 99.9,89.1 100.4,87.7 100.9,86.3 101.5,84.8 102.0,83.2 102.5,81.6 103.1,80.0 103.6,78.3 104.1,76.7 104.7,75.0 105.2,73.4 105.7,71.7 106.3,70.1 106.8,68.5 107.3,66.9 107.9,65.4 108.4,63.9 108.9,62.5 109.5,61.2 110.0,60.0 110.5,58.8 111.1,57.7 111.6,56.8 112.1,55.9 112.7,55.1 113.2,54.5 113.7,53.9 114.3,53.5 114.8,53.2 115.3,53.0 115.9,52.9 116.4,52.9 116.9,53.0 117.5,53.2 118.0,53.5 118.5,54.0 119.1,54.5 119.6,55.1 120.1,55.7 120.7,56.5 121.2,57.3 121.7,58.2 122.3,59.1 122.8,60.0 123.3,61.0 123.9,62.0 124.4,63.0 124.9,64.0 125.5,65.0 126.0,66.0 126.5,67.0 127.1,67.9 127.6,68.9 128.1,69.7 128.7,70.5 129.2,71.3 129.7,72.0 130.3,72.6 130.8,73.2 131.3,73.7 131.9,74.1 132.4,74.5 132.9,74.8 133.5,75.0 134.0,75.1 134.5,75.2 135.1,75.2 135.6,75.1 136.1,75.0 136.7,74.8 137.2,74.6 137.7,74.3 138.3,74.1 138.8,73.7 139.3,73.4 139.9,73.1 140.4,72.7 140.9,72.4 141.5,72.0 142.0,71.7 142.5,71.5 143.1,71.2 143.6,71.1 144.1,70.9 144.7,70.9 145.2,70.9 145.7,71.0 146.3,71.1 146.8,71.4 147.3,71.8 147.9,72.2 148.4,72.8 148.9,73.5 149.5,74.2 150.0,75.1 150.5,76.1 151.1,77.2 151.6,78.4 152.1,79.7 152.7,81.1 153.2,82.6 153.7,84.2 154.3,85.9 154.8,87.6 155.3,89.5 155.9,91.4 156.4,93.3 156.9,95.3 157.5,97.4 158.0,99.5 158.5,101.6 159.1,103.7 159.6,105.8 160.1,108.0 160.7,110.1 161.2,112.2 161.7,114.3 162.3,116.3 162.8,118.3 163.3,120.3 163.9,122.2 164.4,124.0 164.9,125.7 165.5,127.4 166.0,129.0 166.5,130.5 167.1,132.0 167.6,133.3 168.1,134.6 168.7,135.8 169.2,136.8 169.7,137.8 170.3,138.8 170.8,139.6 171.3,140.4 171.9,141.0 172.4,141.7 172.9,142.2 173.5,142.7 174.0,143.2 174.5,143.6 175.1,144.0 175.6,144.3 176.1,144.7 176.7,145.0 177.2,145.3 177.7,145.7 178.3,146.0 178.8,146.4 179.3,146.8 179.9,147.3 180.4,147.8 180.9,148.3 181.5,149.0 182.0,149.6 182.5,150.4 183.1,151.2 183.6,152.2 184.1,153.2 184.7,154.2 185.2,155.4 185.7,156.7 186.3,158.0 186.8,159.5 187.3,161.0 187.9,162.6 188.4,164.3 188.9,166.0 189.5,167.8 190.0,169.7 190.5,171.7 191.1,173.7 191.6,175.7 192.1,177.8 192.7,179.9 193.2,182.0 193.7,184.2 194.3,186.3 194.8,188.4 195.3,190.5 195.9,192.6 196.4,194.7 196.9,196.7 197.5,198.6 198.0,200.5 198.5,202.4 199.1,204.1 199.6,205.8 200.1,207.4 200.7,208.9 201.2,210.3 201.7,211.6 202.3,212.8 202.8,213.9 203.3,214.9 203.9,215.8 204.4,216.5 204.9,217.2 205.5,217.8 206.0,218.2 206.5,218.6 207.1,218.9 207.6,219.0 208.1,219.1 208.7,219.1 209.2,219.1 209.7,218.9 210.3,218.8 210.8,218.5 211.3,218.3 211.9,218.0 212.4,217.6 212.9,217.3 213.5,216.9 214.0,216.6 214.5,216.3 215.1,215.9 215.6,215.7 216.1,215.4 216.7,215.2 217.2,215.0 217.7,214.9 218.3,214.8 218.8,214.8 219.3,214.9 219.9,215.0 220.4,215.2 220.9,215.5 221.5,215.9 222.0,216.3 222.5,216.8 223.1,217.4 223.6,218.0 224.1,218.7 224.7,219.5 225.2,220.3 225.7,221.1 226.3,222.1 226.8,223.0 227.3,224.0 227.9,225.0 228.4,226.0 228.9,227.0 229.5,228.0 230.0,229.0 230.5,230.0 231.1,230.9 231.6,231.8 232.1,232.7 232.7,233.5 233.2,234.3 233.7,234.9 234.3,235.5 234.8,236.0 235.3,236.5 235.9,236.8 236.4,237.0 236.9,237.1 237.5,237.1 238.0,237.0 238.5,236.8 239.1,236.5 239.6,236.1 240.1,235.5 240.7,234.9 241.2,234.1 241.7,233.2 242.3,232.3 242.8,231.2 243.3,230.0 243.9,228.8 244.4,227.5 244.9,226.1 245.5,224.6 246.0,223.1 246.5,221.5 247.1,219.9 247.6,218.3 248.1,216.6 248.7,215.0 249.2,213.3 249.7,211.7 250.3,210.0 250.8,208.4 251.3,206.8 251.9,205.2 252.4,203.7 252.9,202.3 253.5,200.9 254.0,199.5 254.5,198.2 255.1,197.0 255.6,195.9 256.1,194.9 256.7,193.9 257.2,193.0 257.7,192.2 258.3,191.4 258.8,190.8 259.3,190.2 259.9,189.7 260.4,189.2 260.9,188.8 261.5,188.5 262.0,188.2 262.5,188.0 263.1,187.7 263.6,187.6 264.1,187.4 264.7,187.2 265.2,187.1 265.7,186.9 266.3,186.8 266.8,186.6 267.3,186.4 267.9,186.1 268.4,185.8 268.9,185.5 269.5,185.1 270.0,184.6 270.5,184.0 271.1,183.4 271.6,182.7 272.1,181.8 272.7,180.9 273.2,179.9 273.7,178.9 274.3,177.7 274.8,176.4 275.3,175.0 275.9,173.5 276.4,171.9 276.9,170.2 277.5,168.5 278.0,166.6 278.5,164.7 279.1,162.7 279.6,160.7 280.1,158.5 280.7,156.4 281.2,154.1 281.7,151.9 282.3,149.6 282.8,147.3 283.3,145.0 283.9,142.7 284.4,140.4 284.9,138.1 285.5,135.9 286.0,133.6 286.5,131.5 287.1,129.3 287.6,127.3 288.1,125.3 288.7,123.4 289.2,121.5 289.7,119.8 290.3,118.1 290.8,116.5 291.3,115.0 291.9,113.6 292.4,112.3 292.9,111.1 293.5,110.1 294.0,109.1 294.5,108.2 295.1,107.3 295.6,106.6 296.1,106.0 296.7,105.4 297.2,104.9 297.7,104.5 298.3,104.2 298.8,103.9 299.3,103.6 299.9,103.4 300.4,103.2 300.9,103.1 301.5,102.9 302.0,102.8 302.5,102.6 303.1,102.4 303.6,102.3 304.1,102.0 304.7,101.8 305.2,101.5 305.7,101.2 306.3,100.8 306.8,100.3 307.3,99.8 307.9,99.2 308.4,98.6 308.9,97.8 309.5,97.0 310.0,96.1 310.5,95.1 311.1,94.1 311.6,93.0 312.1,91.8 312.7,90.5 313.2,89.1 313.7,87.7 314.3,86.3 314.8,84.8 315.3,83.2 315.9,81.6 316.4,80.0 316.9,78.3 317.5,76.7 318.0,75.0 318.5,73.4 319.1,71.7 319.6,70.1 320.1,68.5 320.7,66.9 321.2,65.4 321.7,63.9 322.3,62.5 322.8,61.2 323.3,60.0 323.9,58.8 324.4,57.7 324.9,56.8 325.5,55.9 326.0,55.1 326.5,54.5 327.1,53.9 327.6,53.5 328.1,53.2 328.7,53.0 329.2,52.9 329.7,52.9 330.3,53.0 330.8,53.2 331.3,53.5 331.9,54.0 332.4,54.5 332.9,55.1 333.5,55.7 334.0,56.5 334.5,57.3 335.1,58.2 335.6,59.1 336.1,60.0 336.7,61.0 337.2,62.0 337.7,63.0 338.3,64.0 338.8,65.0 339.3,66.0 339.9,67.0 340.4,67.9 340.9,68.9 341.5,69.7 342.0,70.5 342.5,71.3 343.1,72.0 343.6,72.6 344.1,73.2 344.7,73.7 345.2,74.1 345.7,74.5 346.3,74.8 346.8,75.0 347.3,75.1 347.9,75.2 348.4,75.2 348.9,75.1 349.5,75.0 350.0,74.8 350.5,74.6 351.1,74.3 351.6,74.1 352.1,73.7 352.7,73.4 353.2,73.1 353.7,72.7 354.3,72.4 354.8,72.0 355.3,71.7 355.9,71.5 356.4,71.2 356.9,71.1 357.5,70.9 358.0,70.9 358.5,70.9 359.1,71.0 359.6,71.1 360.1,71.4 360.7,71.8 361.2,72.2 361.7,72.8 362.3,73.5 362.8,74.2 363.3,75.1 363.9,76.1 364.4,77.2 364.9,78.4 365.5,79.7 366.0,81.1 366.5,82.6 367.1,84.2 367.6,85.9 368.1,87.6 368.7,89.5 369.2,91.4 369.7,93.3 370.3,95.3 370.8,97.4 371.3,99.5 371.9,101.6 372.4,103.7 372.9,105.8 373.5,108.0 374.0,110.1 374.5,112.2 375.1,114.3 375.6,116.3 376.1,118.3 376.7,120.3 377.2,122.2 377.7,124.0 378.3,125.7 378.8,127.4 379.3,129.0 379.9,130.5 380.4,132.0 380.9,133.3 381.5,134.6 382.0,135.8 382.5,136.8 383.1,137.8 383.6,138.8 384.1,139.6 384.7,140.4 385.2,141.0 385.7,141.7 386.3,142.2 386.8,142.7 387.3,143.2 387.9,143.6 388.4,144.0 388.9,144.3 389.5,144.7 390.0,145.0 390.5,145.3 391.1,145.7 391.6,146.0 392.1,146.4 392.7,146.8 393.2,147.3 393.7,147.8 394.3,148.3 394.8,149.0 395.3,149.6 395.9,150.4 396.4,151.2 396.9,152.2 397.5,153.2 398.0,154.2 398.5,155.4 399.1,156.7 399.6,158.0 400.1,159.5 400.7,161.0 401.2,162.6 401.7,164.3 402.3,166.0 402.8,167.8 403.3,169.7 403.9,171.7 404.4,173.7 404.9,175.7 405.5,177.8 406.0,179.9 406.5,182.0 407.1,184.2 407.6,186.3 408.1,188.4 408.7,190.5 409.2,192.6 409.7,194.7 410.3,196.7 410.8,198.6 411.3,200.5 411.9,202.4 412.4,204.1 412.9,205.8 413.5,207.4 414.0,208.9 414.5,210.3 415.1,211.6 415.6,212.8 416.1,213.9 416.7,214.9 417.2,215.8 417.7,216.5 418.3,217.2 418.8,217.8 419.3,218.2 419.9,218.6 420.4,218.9 420.9,219.0 421.5,219.1 422.0,219.1 422.5,219.1 423.1,218.9 423.6,218.8 424.1,218.5 424.7,218.3 425.2,218.0 425.7,217.6 426.3,217.3 426.8,216.9 427.3,216.6 427.9,216.3 428.4,215.9 428.9,215.7 429.5,215.4 430.0,215.2 430.5,215.0 431.1,214.9 431.6,214.8 432.1,214.8 432.7,214.9 433.2,215.0 433.7,215.2 434.3,215.5 434.8,215.9 435.3,216.3 435.9,216.8 436.4,217.4 436.9,218.0 437.5,218.7 438.0,219.5 438.5,220.3 439.1,221.1 439.6,222.1 440.1,223.0 440.7,224.0 441.2,225.0 441.7,226.0 442.3,227.0 442.8,228.0 443.3,229.0 443.9,230.0 444.4,230.9 444.9,231.8 445.5,232.7 446.0,233.5 446.5,234.3 447.1,234.9 447.6,235.5 448.1,236.0 448.7,236.5 449.2,236.8 449.7,237.0 450.3,237.1 450.8,237.1 451.3,237.0 451.9,236.8 452.4,236.5 452.9,236.1 453.5,235.5 454.0,234.9 454.5,234.1 455.1,233.2 455.6,232.3 456.1,231.2 456.7,230.0 457.2,228.8 457.7,227.5 458.3,226.1 458.8,224.6 459.3,223.1 459.9,221.5 460.4,219.9 460.9,218.3 461.5,216.6 462.0,215.0 462.5,213.3 463.1,211.7 463.6,210.0 464.1,208.4 464.7,206.8 465.2,205.2 465.7,203.7 466.3,202.3 466.8,200.9 467.3,199.5 467.9,198.2 468.4,197.0 468.9,195.9 469.5,194.9 470.0,193.9 470.5,193.0 471.1,192.2 471.6,191.4 472.1,190.8 472.7,190.2 473.2,189.7 473.7,189.2 474.3,188.8 474.8,188.5 475.3,188.2 475.9,188.0 476.4,187.7 476.9,187.6 477.5,187.4 478.0,187.2 478.5,187.1 479.1,186.9 479.6,186.8 480.1,186.6 480.7,186.4 481.2,186.1 481.7,185.8 482.3,185.5 482.8,185.1 483.3,184.6 483.9,184.0 484.4,183.4 484.9,182.7 485.5,181.8 486.0,180.9 486.5,179.9 487.1,178.9 487.6,177.7 488.1,176.4 488.7,175.0 489.2,173.5 489.7,171.9 490.3,170.2 490.8,168.5 491.3,166.6 491.9,164.7 492.4,162.7 492.9,160.7 493.5,158.5 494.0,156.4 494.5,154.1 495.1,151.9 495.6,149.6 496.1,147.3 496.7,145.0 497.2,142.7 497.7,140.4 498.3,138.1 498.8,135.9 499.3,133.6 499.9,131.5 500.4,129.3 500.9,127.3 501.5,125.3 502.0,123.4 502.5,121.5 503.1,119.8 503.6,118.1 504.1,116.5 504.7,115.0 505.2,113.6 505.7,112.3 506.3,111.1 506.8,110.1 507.3,109.1 507.9,108.2 508.4,107.3 508.9,106.6 509.5,106.0 510.0,105.4 510.5,104.9 511.1,104.5 511.6,104.2 512.1,103.9 512.7,103.6 513.2,103.4 513.7,103.2 514.3,103.1 514.8,102.9 515.3,102.8 515.9,102.6 516.4,102.4 516.9,102.3 517.5,102.0 518.0,101.8 518.5,101.5 519.1,101.2 519.6,100.8 520.1,100.3 520.7,99.8 521.2,99.2 521.7,98.6 522.3,97.8 522.8,97.0 523.3,96.1 523.9,95.1 524.4,94.1 524.9,93.0 525.5,91.8 526.0,90.5 526.5,89.1 527.1,87.7 527.6,86.3 528.1,84.8 528.7,83.2 529.2,81.6 529.7,80.0 530.3,78.3 530.8,76.7 531.3,75.0 531.9,73.4 532.4,71.7 532.9,70.1 533.5,68.5 534.0,66.9 534.5,65.4 535.1,63.9 535.6,62.5 536.1,61.2 536.7,60.0 537.2,58.8 537.7,57.7 538.3,56.8 538.8,55.9 539.3,55.1 539.9,54.5 540.4,53.9 540.9,53.5 541.5,53.2 542.0,53.0 542.5,52.9 543.1,52.9 543.6,53.0 544.1,53.2 544.7,53.5 545.2,54.0 545.7,54.5 546.3,55.1 546.8,55.7 547.3,56.5 547.9,57.3 548.4,58.2 548.9,59.1 549.5,60.0 550.0,61.0 550.5,62.0 551.1,63.0 551.6,64.0 552.1,65.0 552.7,66.0 553.2,67.0 553.7,67.9 554.3,68.9 554.8,69.7 555.3,70.5 555.9,71.3 556.4,72.0 556.9,72.6 557.5,73.2 558.0,73.7 558.5,74.1 559.1,74.5 559.6,74.8 560.1,75.0 560.7,75.1 561.2,75.2 561.7,75.2 562.3,75.1 562.8,75.0 563.3,74.8 563.9,74.6 564.4,74.3 564.9,74.1 565.5,73.7 566.0,73.4 566.5,73.1 567.1,72.7 567.6,72.4 568.1,72.0 568.7,71.7 569.2,71.5 569.7,71.2 570.3,71.1 570.8,70.9 571.3,70.9 571.9,70.9 572.4,71.0 572.9,71.1 573.5,71.4 574.0,71.8 574.5,72.2 575.1,72.8 575.6,73.5 576.1,74.2 576.7,75.1 577.2,76.1 577.7,77.2 578.3,78.4 578.8,79.7 579.3,81.1 579.9,82.6 580.4,84.2 580.9,85.9 581.5,87.6 582.0,89.5 582.5,91.4 583.1,93.3 583.6,95.3 584.1,97.4 584.7,99.5 585.2,101.6 585.7,103.7 586.3,105.8 586.8,108.0 587.3,110.1 587.9,112.2 588.4,114.3 588.9,116.3 589.5,118.3 590.0,120.3 590.5,122.2 591.1,124.0 591.6,125.7 592.1,127.4 592.7,129.0 593.2,130.5 593.7,132.0 594.3,133.3 594.8,134.6 595.3,135.8 595.9,136.8 596.4,137.8 596.9,138.8 597.5,139.6 598.0,140.4 598.5,141.0 599.1,141.7 599.6,142.2 600.1,142.7 600.7,143.2 601.2,143.6 601.7,144.0 602.3,144.3 602.8,144.7 603.3,145.0 603.9,145.3 604.4,145.7 604.9,146.0 605.5,146.4 606.0,146.8 606.5,147.3 607.1,147.8 607.6,148.3 608.1,149.0 608.7,149.6 609.2,150.4 609.7,151.2 610.3,152.2 610.8,153.2 611.3,154.2 611.9,155.4 612.4,156.7 612.9,158.0 613.5,159.5 614.0,161.0 614.5,162.6 615.1,164.3 615.6,166.0 616.1,167.8 616.7,169.7 617.2,171.7 617.7,173.7 618.3,175.7 618.8,177.8 619.3,179.9 619.9,182.0 620.4,184.2 620.9,186.3 621.5,188.4 622.0,190.5 622.5,192.6 623.1,194.7 623.6,196.7 624.1,198.6 624.7,200.5 625.2,202.4 625.7,204.1 626.3,205.8 626.8,207.4 627.3,208.9 627.9,210.3 628.4,211.6 628.9,212.8 629.5,213.9 630.0,214.9 630.5,215.8 631.1,216.5 631.6,217.2 632.1,217.8 632.7,218.2 633.2,218.6 633.7,218.9 634.3,219.0 634.8,219.1 635.3,219.1 635.9,219.1 636.4,218.9 636.9,218.8 637.5,218.5 638.0,218.3 638.5,218.0 639.1,217.6 639.6,217.3 640.1,216.9 640.7,216.6 641.2,216.3 641.7,215.9 642.3,215.7 642.8,215.4 643.3,215.2 643.9,215.0 644.4,214.9 644.9,214.8 645.5,214.8 646.0,214.9 646.5,215.0 647.1,215.2 647.6,215.5 648.1,215.9 648.7,216.3 649.2,216.8 649.7,217.4 650.3,218.0 650.8,218.7 651.3,219.5 651.9,220.3 652.4,221.1 652.9,222.1 653.5,223.0 654.0,224.0 654.5,225.0 655.1,226.0 655.6,227.0 656.1,228.0 656.7,229.0 657.2,230.0 657.7,230.9 658.3,231.8 658.8,232.7 659.3,233.5 659.9,234.3 660.4,234.9 660.9,235.5 661.5,236.0 662.0,236.5 662.5,236.8 663.1,237.0 663.6,237.1 664.1,237.1 664.7,237.0 665.2,236.8 665.7,236.5 666.3,236.1 666.8,235.5 667.3,234.9 667.9,234.1 668.4,233.2 668.9,232.3 669.5,231.2 670.0,230.0 670.5,228.8 671.1,227.5 671.6,226.1 672.1,224.6 672.7,223.1 673.2,221.5 673.7,219.9 674.3,218.3 674.8,216.6 675.3,215.0 675.9,213.3 676.4,211.7 676.9,210.0 677.5,208.4 678.0,206.8 678.5,205.2 679.1,203.7 679.6,202.3 680.1,200.9 680.7,199.5 681.2,198.2 681.7,197.0 682.3,195.9 682.8,194.9 683.3,193.9 683.9,193.0 684.4,192.2 684.9,191.4 685.5,190.8 686.0,190.2 686.5,189.7 687.1,189.2 687.6,188.8 688.1,188.5 688.7,188.2 689.2,188.0 689.7,187.7 690.3,187.6 690.8,187.4 691.3,187.2 691.9,187.1 692.4,186.9 692.9,186.8 693.5,186.6 694.0,186.4 694.5,186.1 695.1,185.8 695.6,185.5 696.1,185.1 696.7,184.6 697.2,184.0 697.7,183.4 698.3,182.7 698.8,181.8 699.3,180.9 699.9,179.9 700.4,178.9 700.9,177.7 701.5,176.4 702.0,175.0 702.5,173.5 703.1,171.9 703.6,170.2 704.1,168.5 704.7,166.6 705.2,164.7 705.7,162.7 706.3,160.7 706.8,158.5 707.3,156.4 707.9,154.1 708.4,151.9 708.9,149.6 709.5,147.3 710.0,145.0" fill="none" stroke="#1a1a1a" stroke-width="2.4" stroke-linejoin="round"></polyline>
+</svg>
+<figcaption>The graph as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+<div class="sol-body">
+<div class="flow">
+<figure class="graph mini" id="fig-q4_marked">
+<svg viewBox="0 0 730 300" role="img" aria-labelledby="gt4 gd4">
+<title id="gt4">The same graph, marked: three slow cycles, and six ripples in each</title>
+<desc id="gd4">A graph of signal x in nanometers, from minus 5 to 5, against time t in milliseconds, from 0 to 6, with grid lines every half millisecond and every nanometer. The curve is a large, slow wave that starts at 0 going up, reaches about 4.4 near 0.4 milliseconds, crosses 0 going down near 1, reaches about minus 4.4 near 1.6, and is back at 0 going up at 2 milliseconds: three slow cycles in 6 milliseconds. Small ripples ride on it: two bumps on each crest and on each trough, and a shoulder on each steep slope. Marked up: brackets above the graph span 0 to 2, 2 to 4 and 4 to 6 milliseconds, labeled slow cycles 1, 2 and 3. In the first slow cycle six ripples are marked with green dots numbered 1 to 6, at about 0.08, 0.42, 0.75, 1.08, 1.42 and 1.75 milliseconds: the bumps on the crest and the trough and the shoulders on the steep slopes, one every third of a millisecond.</desc>
+<defs><marker id="arr4" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="70.0" y1="40" x2="70.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="70.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">0</text>
+<line x1="123.3" y1="40" x2="123.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="176.7" y1="40" x2="176.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="176.7" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">1</text>
+<line x1="230.0" y1="40" x2="230.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="283.3" y1="40" x2="283.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="283.3" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">2</text>
+<line x1="336.7" y1="40" x2="336.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="390.0" y1="40" x2="390.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="390.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">3</text>
+<line x1="443.3" y1="40" x2="443.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="496.7" y1="40" x2="496.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="496.7" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">4</text>
+<line x1="550.0" y1="40" x2="550.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="603.3" y1="40" x2="603.3" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="603.3" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">5</text>
+<line x1="656.7" y1="40" x2="656.7" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="710.0" y1="40" x2="710.0" y2="250" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="710.0" y="268" text-anchor="middle" font-size="14" fill="#3a3a3a">6</text>
+<line x1="70" y1="250.0" x2="710" y2="250.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="229.0" x2="710" y2="229.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="234.0" text-anchor="end" font-size="14" fill="#3a3a3a">-4</text>
+<line x1="70" y1="208.0" x2="710" y2="208.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="187.0" x2="710" y2="187.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="192.0" text-anchor="end" font-size="14" fill="#3a3a3a">-2</text>
+<line x1="70" y1="166.0" x2="710" y2="166.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="145.0" x2="710" y2="145.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="150.0" text-anchor="end" font-size="14" fill="#3a3a3a">0</text>
+<line x1="70" y1="124.0" x2="710" y2="124.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="103.0" x2="710" y2="103.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="108.0" text-anchor="end" font-size="14" fill="#3a3a3a">2</text>
+<line x1="70" y1="82.0" x2="710" y2="82.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<line x1="70" y1="61.0" x2="710" y2="61.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<text x="63" y="66.0" text-anchor="end" font-size="14" fill="#3a3a3a">4</text>
+<line x1="70" y1="40.0" x2="710" y2="40.0" stroke="#c9ccd1" stroke-width="0.8"></line>
+<rect x="70" y="40" width="640" height="210" fill="none" stroke="#1a1a1a" stroke-width="1.2"></rect>
+<line x1="70" y1="145.0" x2="710" y2="145.0" stroke="#1a1a1a" stroke-width="1.2"></line>
+<text x="390" y="290" text-anchor="middle" font-size="15" fill="#1a1a1a">time t (ms)</text>
+<text x="18" y="145" text-anchor="middle" font-size="15" fill="#1a1a1a" transform="rotate(-90 18 145)">signal x (nm)</text>
+<polyline points="70.0,145.0 70.5,142.7 71.1,140.4 71.6,138.1 72.1,135.9 72.7,133.6 73.2,131.5 73.7,129.3 74.3,127.3 74.8,125.3 75.3,123.4 75.9,121.5 76.4,119.8 76.9,118.1 77.5,116.5 78.0,115.0 78.5,113.6 79.1,112.3 79.6,111.1 80.1,110.1 80.7,109.1 81.2,108.2 81.7,107.3 82.3,106.6 82.8,106.0 83.3,105.4 83.9,104.9 84.4,104.5 84.9,104.2 85.5,103.9 86.0,103.6 86.5,103.4 87.1,103.2 87.6,103.1 88.1,102.9 88.7,102.8 89.2,102.6 89.7,102.4 90.3,102.3 90.8,102.0 91.3,101.8 91.9,101.5 92.4,101.2 92.9,100.8 93.5,100.3 94.0,99.8 94.5,99.2 95.1,98.6 95.6,97.8 96.1,97.0 96.7,96.1 97.2,95.1 97.7,94.1 98.3,93.0 98.8,91.8 99.3,90.5 99.9,89.1 100.4,87.7 100.9,86.3 101.5,84.8 102.0,83.2 102.5,81.6 103.1,80.0 103.6,78.3 104.1,76.7 104.7,75.0 105.2,73.4 105.7,71.7 106.3,70.1 106.8,68.5 107.3,66.9 107.9,65.4 108.4,63.9 108.9,62.5 109.5,61.2 110.0,60.0 110.5,58.8 111.1,57.7 111.6,56.8 112.1,55.9 112.7,55.1 113.2,54.5 113.7,53.9 114.3,53.5 114.8,53.2 115.3,53.0 115.9,52.9 116.4,52.9 116.9,53.0 117.5,53.2 118.0,53.5 118.5,54.0 119.1,54.5 119.6,55.1 120.1,55.7 120.7,56.5 121.2,57.3 121.7,58.2 122.3,59.1 122.8,60.0 123.3,61.0 123.9,62.0 124.4,63.0 124.9,64.0 125.5,65.0 126.0,66.0 126.5,67.0 127.1,67.9 127.6,68.9 128.1,69.7 128.7,70.5 129.2,71.3 129.7,72.0 130.3,72.6 130.8,73.2 131.3,73.7 131.9,74.1 132.4,74.5 132.9,74.8 133.5,75.0 134.0,75.1 134.5,75.2 135.1,75.2 135.6,75.1 136.1,75.0 136.7,74.8 137.2,74.6 137.7,74.3 138.3,74.1 138.8,73.7 139.3,73.4 139.9,73.1 140.4,72.7 140.9,72.4 141.5,72.0 142.0,71.7 142.5,71.5 143.1,71.2 143.6,71.1 144.1,70.9 144.7,70.9 145.2,70.9 145.7,71.0 146.3,71.1 146.8,71.4 147.3,71.8 147.9,72.2 148.4,72.8 148.9,73.5 149.5,74.2 150.0,75.1 150.5,76.1 151.1,77.2 151.6,78.4 152.1,79.7 152.7,81.1 153.2,82.6 153.7,84.2 154.3,85.9 154.8,87.6 155.3,89.5 155.9,91.4 156.4,93.3 156.9,95.3 157.5,97.4 158.0,99.5 158.5,101.6 159.1,103.7 159.6,105.8 160.1,108.0 160.7,110.1 161.2,112.2 161.7,114.3 162.3,116.3 162.8,118.3 163.3,120.3 163.9,122.2 164.4,124.0 164.9,125.7 165.5,127.4 166.0,129.0 166.5,130.5 167.1,132.0 167.6,133.3 168.1,134.6 168.7,135.8 169.2,136.8 169.7,137.8 170.3,138.8 170.8,139.6 171.3,140.4 171.9,141.0 172.4,141.7 172.9,142.2 173.5,142.7 174.0,143.2 174.5,143.6 175.1,144.0 175.6,144.3 176.1,144.7 176.7,145.0 177.2,145.3 177.7,145.7 178.3,146.0 178.8,146.4 179.3,146.8 179.9,147.3 180.4,147.8 180.9,148.3 181.5,149.0 182.0,149.6 182.5,150.4 183.1,151.2 183.6,152.2 184.1,153.2 184.7,154.2 185.2,155.4 185.7,156.7 186.3,158.0 186.8,159.5 187.3,161.0 187.9,162.6 188.4,164.3 188.9,166.0 189.5,167.8 190.0,169.7 190.5,171.7 191.1,173.7 191.6,175.7 192.1,177.8 192.7,179.9 193.2,182.0 193.7,184.2 194.3,186.3 194.8,188.4 195.3,190.5 195.9,192.6 196.4,194.7 196.9,196.7 197.5,198.6 198.0,200.5 198.5,202.4 199.1,204.1 199.6,205.8 200.1,207.4 200.7,208.9 201.2,210.3 201.7,211.6 202.3,212.8 202.8,213.9 203.3,214.9 203.9,215.8 204.4,216.5 204.9,217.2 205.5,217.8 206.0,218.2 206.5,218.6 207.1,218.9 207.6,219.0 208.1,219.1 208.7,219.1 209.2,219.1 209.7,218.9 210.3,218.8 210.8,218.5 211.3,218.3 211.9,218.0 212.4,217.6 212.9,217.3 213.5,216.9 214.0,216.6 214.5,216.3 215.1,215.9 215.6,215.7 216.1,215.4 216.7,215.2 217.2,215.0 217.7,214.9 218.3,214.8 218.8,214.8 219.3,214.9 219.9,215.0 220.4,215.2 220.9,215.5 221.5,215.9 222.0,216.3 222.5,216.8 223.1,217.4 223.6,218.0 224.1,218.7 224.7,219.5 225.2,220.3 225.7,221.1 226.3,222.1 226.8,223.0 227.3,224.0 227.9,225.0 228.4,226.0 228.9,227.0 229.5,228.0 230.0,229.0 230.5,230.0 231.1,230.9 231.6,231.8 232.1,232.7 232.7,233.5 233.2,234.3 233.7,234.9 234.3,235.5 234.8,236.0 235.3,236.5 235.9,236.8 236.4,237.0 236.9,237.1 237.5,237.1 238.0,237.0 238.5,236.8 239.1,236.5 239.6,236.1 240.1,235.5 240.7,234.9 241.2,234.1 241.7,233.2 242.3,232.3 242.8,231.2 243.3,230.0 243.9,228.8 244.4,227.5 244.9,226.1 245.5,224.6 246.0,223.1 246.5,221.5 247.1,219.9 247.6,218.3 248.1,216.6 248.7,215.0 249.2,213.3 249.7,211.7 250.3,210.0 250.8,208.4 251.3,206.8 251.9,205.2 252.4,203.7 252.9,202.3 253.5,200.9 254.0,199.5 254.5,198.2 255.1,197.0 255.6,195.9 256.1,194.9 256.7,193.9 257.2,193.0 257.7,192.2 258.3,191.4 258.8,190.8 259.3,190.2 259.9,189.7 260.4,189.2 260.9,188.8 261.5,188.5 262.0,188.2 262.5,188.0 263.1,187.7 263.6,187.6 264.1,187.4 264.7,187.2 265.2,187.1 265.7,186.9 266.3,186.8 266.8,186.6 267.3,186.4 267.9,186.1 268.4,185.8 268.9,185.5 269.5,185.1 270.0,184.6 270.5,184.0 271.1,183.4 271.6,182.7 272.1,181.8 272.7,180.9 273.2,179.9 273.7,178.9 274.3,177.7 274.8,176.4 275.3,175.0 275.9,173.5 276.4,171.9 276.9,170.2 277.5,168.5 278.0,166.6 278.5,164.7 279.1,162.7 279.6,160.7 280.1,158.5 280.7,156.4 281.2,154.1 281.7,151.9 282.3,149.6 282.8,147.3 283.3,145.0 283.9,142.7 284.4,140.4 284.9,138.1 285.5,135.9 286.0,133.6 286.5,131.5 287.1,129.3 287.6,127.3 288.1,125.3 288.7,123.4 289.2,121.5 289.7,119.8 290.3,118.1 290.8,116.5 291.3,115.0 291.9,113.6 292.4,112.3 292.9,111.1 293.5,110.1 294.0,109.1 294.5,108.2 295.1,107.3 295.6,106.6 296.1,106.0 296.7,105.4 297.2,104.9 297.7,104.5 298.3,104.2 298.8,103.9 299.3,103.6 299.9,103.4 300.4,103.2 300.9,103.1 301.5,102.9 302.0,102.8 302.5,102.6 303.1,102.4 303.6,102.3 304.1,102.0 304.7,101.8 305.2,101.5 305.7,101.2 306.3,100.8 306.8,100.3 307.3,99.8 307.9,99.2 308.4,98.6 308.9,97.8 309.5,97.0 310.0,96.1 310.5,95.1 311.1,94.1 311.6,93.0 312.1,91.8 312.7,90.5 313.2,89.1 313.7,87.7 314.3,86.3 314.8,84.8 315.3,83.2 315.9,81.6 316.4,80.0 316.9,78.3 317.5,76.7 318.0,75.0 318.5,73.4 319.1,71.7 319.6,70.1 320.1,68.5 320.7,66.9 321.2,65.4 321.7,63.9 322.3,62.5 322.8,61.2 323.3,60.0 323.9,58.8 324.4,57.7 324.9,56.8 325.5,55.9 326.0,55.1 326.5,54.5 327.1,53.9 327.6,53.5 328.1,53.2 328.7,53.0 329.2,52.9 329.7,52.9 330.3,53.0 330.8,53.2 331.3,53.5 331.9,54.0 332.4,54.5 332.9,55.1 333.5,55.7 334.0,56.5 334.5,57.3 335.1,58.2 335.6,59.1 336.1,60.0 336.7,61.0 337.2,62.0 337.7,63.0 338.3,64.0 338.8,65.0 339.3,66.0 339.9,67.0 340.4,67.9 340.9,68.9 341.5,69.7 342.0,70.5 342.5,71.3 343.1,72.0 343.6,72.6 344.1,73.2 344.7,73.7 345.2,74.1 345.7,74.5 346.3,74.8 346.8,75.0 347.3,75.1 347.9,75.2 348.4,75.2 348.9,75.1 349.5,75.0 350.0,74.8 350.5,74.6 351.1,74.3 351.6,74.1 352.1,73.7 352.7,73.4 353.2,73.1 353.7,72.7 354.3,72.4 354.8,72.0 355.3,71.7 355.9,71.5 356.4,71.2 356.9,71.1 357.5,70.9 358.0,70.9 358.5,70.9 359.1,71.0 359.6,71.1 360.1,71.4 360.7,71.8 361.2,72.2 361.7,72.8 362.3,73.5 362.8,74.2 363.3,75.1 363.9,76.1 364.4,77.2 364.9,78.4 365.5,79.7 366.0,81.1 366.5,82.6 367.1,84.2 367.6,85.9 368.1,87.6 368.7,89.5 369.2,91.4 369.7,93.3 370.3,95.3 370.8,97.4 371.3,99.5 371.9,101.6 372.4,103.7 372.9,105.8 373.5,108.0 374.0,110.1 374.5,112.2 375.1,114.3 375.6,116.3 376.1,118.3 376.7,120.3 377.2,122.2 377.7,124.0 378.3,125.7 378.8,127.4 379.3,129.0 379.9,130.5 380.4,132.0 380.9,133.3 381.5,134.6 382.0,135.8 382.5,136.8 383.1,137.8 383.6,138.8 384.1,139.6 384.7,140.4 385.2,141.0 385.7,141.7 386.3,142.2 386.8,142.7 387.3,143.2 387.9,143.6 388.4,144.0 388.9,144.3 389.5,144.7 390.0,145.0 390.5,145.3 391.1,145.7 391.6,146.0 392.1,146.4 392.7,146.8 393.2,147.3 393.7,147.8 394.3,148.3 394.8,149.0 395.3,149.6 395.9,150.4 396.4,151.2 396.9,152.2 397.5,153.2 398.0,154.2 398.5,155.4 399.1,156.7 399.6,158.0 400.1,159.5 400.7,161.0 401.2,162.6 401.7,164.3 402.3,166.0 402.8,167.8 403.3,169.7 403.9,171.7 404.4,173.7 404.9,175.7 405.5,177.8 406.0,179.9 406.5,182.0 407.1,184.2 407.6,186.3 408.1,188.4 408.7,190.5 409.2,192.6 409.7,194.7 410.3,196.7 410.8,198.6 411.3,200.5 411.9,202.4 412.4,204.1 412.9,205.8 413.5,207.4 414.0,208.9 414.5,210.3 415.1,211.6 415.6,212.8 416.1,213.9 416.7,214.9 417.2,215.8 417.7,216.5 418.3,217.2 418.8,217.8 419.3,218.2 419.9,218.6 420.4,218.9 420.9,219.0 421.5,219.1 422.0,219.1 422.5,219.1 423.1,218.9 423.6,218.8 424.1,218.5 424.7,218.3 425.2,218.0 425.7,217.6 426.3,217.3 426.8,216.9 427.3,216.6 427.9,216.3 428.4,215.9 428.9,215.7 429.5,215.4 430.0,215.2 430.5,215.0 431.1,214.9 431.6,214.8 432.1,214.8 432.7,214.9 433.2,215.0 433.7,215.2 434.3,215.5 434.8,215.9 435.3,216.3 435.9,216.8 436.4,217.4 436.9,218.0 437.5,218.7 438.0,219.5 438.5,220.3 439.1,221.1 439.6,222.1 440.1,223.0 440.7,224.0 441.2,225.0 441.7,226.0 442.3,227.0 442.8,228.0 443.3,229.0 443.9,230.0 444.4,230.9 444.9,231.8 445.5,232.7 446.0,233.5 446.5,234.3 447.1,234.9 447.6,235.5 448.1,236.0 448.7,236.5 449.2,236.8 449.7,237.0 450.3,237.1 450.8,237.1 451.3,237.0 451.9,236.8 452.4,236.5 452.9,236.1 453.5,235.5 454.0,234.9 454.5,234.1 455.1,233.2 455.6,232.3 456.1,231.2 456.7,230.0 457.2,228.8 457.7,227.5 458.3,226.1 458.8,224.6 459.3,223.1 459.9,221.5 460.4,219.9 460.9,218.3 461.5,216.6 462.0,215.0 462.5,213.3 463.1,211.7 463.6,210.0 464.1,208.4 464.7,206.8 465.2,205.2 465.7,203.7 466.3,202.3 466.8,200.9 467.3,199.5 467.9,198.2 468.4,197.0 468.9,195.9 469.5,194.9 470.0,193.9 470.5,193.0 471.1,192.2 471.6,191.4 472.1,190.8 472.7,190.2 473.2,189.7 473.7,189.2 474.3,188.8 474.8,188.5 475.3,188.2 475.9,188.0 476.4,187.7 476.9,187.6 477.5,187.4 478.0,187.2 478.5,187.1 479.1,186.9 479.6,186.8 480.1,186.6 480.7,186.4 481.2,186.1 481.7,185.8 482.3,185.5 482.8,185.1 483.3,184.6 483.9,184.0 484.4,183.4 484.9,182.7 485.5,181.8 486.0,180.9 486.5,179.9 487.1,178.9 487.6,177.7 488.1,176.4 488.7,175.0 489.2,173.5 489.7,171.9 490.3,170.2 490.8,168.5 491.3,166.6 491.9,164.7 492.4,162.7 492.9,160.7 493.5,158.5 494.0,156.4 494.5,154.1 495.1,151.9 495.6,149.6 496.1,147.3 496.7,145.0 497.2,142.7 497.7,140.4 498.3,138.1 498.8,135.9 499.3,133.6 499.9,131.5 500.4,129.3 500.9,127.3 501.5,125.3 502.0,123.4 502.5,121.5 503.1,119.8 503.6,118.1 504.1,116.5 504.7,115.0 505.2,113.6 505.7,112.3 506.3,111.1 506.8,110.1 507.3,109.1 507.9,108.2 508.4,107.3 508.9,106.6 509.5,106.0 510.0,105.4 510.5,104.9 511.1,104.5 511.6,104.2 512.1,103.9 512.7,103.6 513.2,103.4 513.7,103.2 514.3,103.1 514.8,102.9 515.3,102.8 515.9,102.6 516.4,102.4 516.9,102.3 517.5,102.0 518.0,101.8 518.5,101.5 519.1,101.2 519.6,100.8 520.1,100.3 520.7,99.8 521.2,99.2 521.7,98.6 522.3,97.8 522.8,97.0 523.3,96.1 523.9,95.1 524.4,94.1 524.9,93.0 525.5,91.8 526.0,90.5 526.5,89.1 527.1,87.7 527.6,86.3 528.1,84.8 528.7,83.2 529.2,81.6 529.7,80.0 530.3,78.3 530.8,76.7 531.3,75.0 531.9,73.4 532.4,71.7 532.9,70.1 533.5,68.5 534.0,66.9 534.5,65.4 535.1,63.9 535.6,62.5 536.1,61.2 536.7,60.0 537.2,58.8 537.7,57.7 538.3,56.8 538.8,55.9 539.3,55.1 539.9,54.5 540.4,53.9 540.9,53.5 541.5,53.2 542.0,53.0 542.5,52.9 543.1,52.9 543.6,53.0 544.1,53.2 544.7,53.5 545.2,54.0 545.7,54.5 546.3,55.1 546.8,55.7 547.3,56.5 547.9,57.3 548.4,58.2 548.9,59.1 549.5,60.0 550.0,61.0 550.5,62.0 551.1,63.0 551.6,64.0 552.1,65.0 552.7,66.0 553.2,67.0 553.7,67.9 554.3,68.9 554.8,69.7 555.3,70.5 555.9,71.3 556.4,72.0 556.9,72.6 557.5,73.2 558.0,73.7 558.5,74.1 559.1,74.5 559.6,74.8 560.1,75.0 560.7,75.1 561.2,75.2 561.7,75.2 562.3,75.1 562.8,75.0 563.3,74.8 563.9,74.6 564.4,74.3 564.9,74.1 565.5,73.7 566.0,73.4 566.5,73.1 567.1,72.7 567.6,72.4 568.1,72.0 568.7,71.7 569.2,71.5 569.7,71.2 570.3,71.1 570.8,70.9 571.3,70.9 571.9,70.9 572.4,71.0 572.9,71.1 573.5,71.4 574.0,71.8 574.5,72.2 575.1,72.8 575.6,73.5 576.1,74.2 576.7,75.1 577.2,76.1 577.7,77.2 578.3,78.4 578.8,79.7 579.3,81.1 579.9,82.6 580.4,84.2 580.9,85.9 581.5,87.6 582.0,89.5 582.5,91.4 583.1,93.3 583.6,95.3 584.1,97.4 584.7,99.5 585.2,101.6 585.7,103.7 586.3,105.8 586.8,108.0 587.3,110.1 587.9,112.2 588.4,114.3 588.9,116.3 589.5,118.3 590.0,120.3 590.5,122.2 591.1,124.0 591.6,125.7 592.1,127.4 592.7,129.0 593.2,130.5 593.7,132.0 594.3,133.3 594.8,134.6 595.3,135.8 595.9,136.8 596.4,137.8 596.9,138.8 597.5,139.6 598.0,140.4 598.5,141.0 599.1,141.7 599.6,142.2 600.1,142.7 600.7,143.2 601.2,143.6 601.7,144.0 602.3,144.3 602.8,144.7 603.3,145.0 603.9,145.3 604.4,145.7 604.9,146.0 605.5,146.4 606.0,146.8 606.5,147.3 607.1,147.8 607.6,148.3 608.1,149.0 608.7,149.6 609.2,150.4 609.7,151.2 610.3,152.2 610.8,153.2 611.3,154.2 611.9,155.4 612.4,156.7 612.9,158.0 613.5,159.5 614.0,161.0 614.5,162.6 615.1,164.3 615.6,166.0 616.1,167.8 616.7,169.7 617.2,171.7 617.7,173.7 618.3,175.7 618.8,177.8 619.3,179.9 619.9,182.0 620.4,184.2 620.9,186.3 621.5,188.4 622.0,190.5 622.5,192.6 623.1,194.7 623.6,196.7 624.1,198.6 624.7,200.5 625.2,202.4 625.7,204.1 626.3,205.8 626.8,207.4 627.3,208.9 627.9,210.3 628.4,211.6 628.9,212.8 629.5,213.9 630.0,214.9 630.5,215.8 631.1,216.5 631.6,217.2 632.1,217.8 632.7,218.2 633.2,218.6 633.7,218.9 634.3,219.0 634.8,219.1 635.3,219.1 635.9,219.1 636.4,218.9 636.9,218.8 637.5,218.5 638.0,218.3 638.5,218.0 639.1,217.6 639.6,217.3 640.1,216.9 640.7,216.6 641.2,216.3 641.7,215.9 642.3,215.7 642.8,215.4 643.3,215.2 643.9,215.0 644.4,214.9 644.9,214.8 645.5,214.8 646.0,214.9 646.5,215.0 647.1,215.2 647.6,215.5 648.1,215.9 648.7,216.3 649.2,216.8 649.7,217.4 650.3,218.0 650.8,218.7 651.3,219.5 651.9,220.3 652.4,221.1 652.9,222.1 653.5,223.0 654.0,224.0 654.5,225.0 655.1,226.0 655.6,227.0 656.1,228.0 656.7,229.0 657.2,230.0 657.7,230.9 658.3,231.8 658.8,232.7 659.3,233.5 659.9,234.3 660.4,234.9 660.9,235.5 661.5,236.0 662.0,236.5 662.5,236.8 663.1,237.0 663.6,237.1 664.1,237.1 664.7,237.0 665.2,236.8 665.7,236.5 666.3,236.1 666.8,235.5 667.3,234.9 667.9,234.1 668.4,233.2 668.9,232.3 669.5,231.2 670.0,230.0 670.5,228.8 671.1,227.5 671.6,226.1 672.1,224.6 672.7,223.1 673.2,221.5 673.7,219.9 674.3,218.3 674.8,216.6 675.3,215.0 675.9,213.3 676.4,211.7 676.9,210.0 677.5,208.4 678.0,206.8 678.5,205.2 679.1,203.7 679.6,202.3 680.1,200.9 680.7,199.5 681.2,198.2 681.7,197.0 682.3,195.9 682.8,194.9 683.3,193.9 683.9,193.0 684.4,192.2 684.9,191.4 685.5,190.8 686.0,190.2 686.5,189.7 687.1,189.2 687.6,188.8 688.1,188.5 688.7,188.2 689.2,188.0 689.7,187.7 690.3,187.6 690.8,187.4 691.3,187.2 691.9,187.1 692.4,186.9 692.9,186.8 693.5,186.6 694.0,186.4 694.5,186.1 695.1,185.8 695.6,185.5 696.1,185.1 696.7,184.6 697.2,184.0 697.7,183.4 698.3,182.7 698.8,181.8 699.3,180.9 699.9,179.9 700.4,178.9 700.9,177.7 701.5,176.4 702.0,175.0 702.5,173.5 703.1,171.9 703.6,170.2 704.1,168.5 704.7,166.6 705.2,164.7 705.7,162.7 706.3,160.7 706.8,158.5 707.3,156.4 707.9,154.1 708.4,151.9 708.9,149.6 709.5,147.3 710.0,145.0" fill="none" stroke="#1a1a1a" stroke-width="2.4" stroke-linejoin="round"></polyline>
+<path d="M73.0,34 L73.0,24 L280.3,24 L280.3,34" fill="none" stroke="#861F41" stroke-width="2"></path>
+<text x="176.7" y="18" text-anchor="middle" font-size="15" font-weight="700" fill="#861F41">slow cycle 1</text>
+<path d="M286.3,34 L286.3,24 L493.7,24 L493.7,34" fill="none" stroke="#861F41" stroke-width="2"></path>
+<text x="390.0" y="18" text-anchor="middle" font-size="15" font-weight="700" fill="#861F41">slow cycle 2</text>
+<path d="M499.7,34 L499.7,24 L707.0,24 L707.0,34" fill="none" stroke="#861F41" stroke-width="2"></path>
+<text x="603.3" y="18" text-anchor="middle" font-size="15" font-weight="700" fill="#861F41">slow cycle 3</text>
+<circle cx="78.9" cy="112.8" r="5" fill="#14672A"></circle>
+<text x="66.9" y="134.8" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">1</text>
+<circle cx="114.4" cy="53.4" r="5" fill="#14672A"></circle>
+<text x="114.4" y="75.4" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">2</text>
+<circle cx="150.0" cy="75.1" r="5" fill="#14672A"></circle>
+<text x="162.0" y="97.1" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">3</text>
+<circle cx="185.6" cy="156.2" r="5" fill="#14672A"></circle>
+<text x="173.6" y="140.2" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">4</text>
+<circle cx="221.1" cy="215.6" r="5" fill="#14672A"></circle>
+<text x="221.1" y="199.6" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">5</text>
+<circle cx="256.7" cy="193.9" r="5" fill="#14672A"></circle>
+<text x="268.7" y="177.9" text-anchor="middle" font-size="15" font-weight="700" fill="#14672A">6</text>
+</svg>
+<figcaption>Count cycles on the graph: three slow cycles in 6 ms, and six ripples
+in each slow cycle.</figcaption>
+</figure>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">count, then divide the time by the count</span></p>
+<div class="factors">
+<div class="factor ra">
+<p><span class="cline"><strong>slow:</strong> 3 cycles in 6 ms
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><mn>6</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext></mrow><mn>3</mn></mfrac><mo>=</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext></mrow><annotation encoding="application/x-tex">T_{1} = \frac{6\ \text{ms}}{3} = 2\ \text{ms}</annotation></semantics></math></span></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p>the big swing</p>
+</div>
+<p><span class="times" aria-hidden="true">and</span><span
+class="visually-hidden">and</span></p>
+<div class="factor rb">
+<p><span class="cline"><strong>fast:</strong> 6 ripples per 2 ms
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub><mo>=</mo><mfrac><mrow><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext></mrow><mn>6</mn></mfrac><mo>≈</mo><mn>0.33</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext></mrow><annotation encoding="application/x-tex">T_{2} = \frac{2\ \text{ms}}{6} \approx 0.33\ \text{ms}</annotation></semantics></math></span></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p>the small ripple</p>
+</div>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> timing several cycles spreads the reading
+error. Count every ripple, shoulders included: six per slow cycle.</p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">frequency is one over the period; keep the unit</span></p>
+<div class="factors">
+<div class="factor ra">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow></mfrac><mo>=</mo><mn>500</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext></mrow><annotation encoding="application/x-tex">f_{1} = \frac{1}{2 \times 10^{-3}\ \text{s}} = 500\ \text{Hz}</annotation></semantics></math></p>
+</div>
+<p><span class="times" aria-hidden="true">and</span><span
+class="visually-hidden">and</span></p>
+<div class="factor rb">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>0.33</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext></mrow></mfrac><mo>≈</mo><mn>3000</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext></mrow><annotation encoding="application/x-tex">f_{2} = \frac{1}{0.33 \times 10^{-3}\ \text{s}} \approx 3000\ \text{Hz}</annotation></semantics></math></p>
+</div>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mtext mathvariant="normal">ms</mtext></mrow><annotation encoding="application/x-tex">1/\text{ms}</annotation></semantics></math>
+is kHz:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">kHz</mtext><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">1/(2\ \text{ms}) = 0.5\ \text{kHz} = 500</annotation></semantics></math>
+Hz, not 0.5 Hz.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">T_{1} = 2</annotation></semantics></math>
+ms,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">f_{1} = 500</annotation></semantics></math>
+Hz;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="1.0em"></mspace><msub><mi>T</mi><mn>2</mn></msub><mo>≈</mo><mn>0.33</mn></mrow><annotation encoding="application/x-tex">\quad T_{2} \approx 0.33</annotation></semantics></math>
+ms,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>2</mn></msub><mo>≈</mo><mn>3000</mn></mrow><annotation encoding="application/x-tex">f_{2} \approx 3000</annotation></semantics></math>
+Hz.</p>
+<p>Any
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mn>2</mn></msub><annotation encoding="application/x-tex">T_{2}</annotation></semantics></math>
+from 0.2 to 0.5 ms (2000 to 5000 Hz) earned full credit when the
+counting was shown.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> The big swing repeats 3 times in 6 ms, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">T_{1} = 2</annotation></semantics></math>
+ms and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mi>/</mi><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">f_{1} = 1/T_{1} = 500</annotation></semantics></math>
+Hz. The small ripple repeats 6 times in each slow cycle, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mi>/</mi><mn>6</mn><mo>≈</mo><mn>0.33</mn></mrow><annotation encoding="application/x-tex">T_{2} = 2\ \text{ms}/6 \approx 0.33</annotation></semantics></math>
+ms and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>2</mn></msub><mo>=</mo><mn>3000</mn></mrow><annotation encoding="application/x-tex">f_{2} = 3000</annotation></semantics></math>
+Hz. Each answer carries a unit: periods in ms, frequencies in Hz.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q5">
+<p class="stem"><strong>5.</strong> <strong>(1.5 pts)</strong> <strong>Sketch the Fourier transform</strong> of the waveform of
+Question 4. Label the horizontal axis; the vertical axis can be labeled
+“Fourier amplitude.” Be as quantitative as possible on the horizontal
+axis and as qualitatively accurate as possible on the vertical axis.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">two harmonics, at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">f_{1} = 500</annotation></semantics></math>
+Hz and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>2</mn></msub><mo>=</mo><mn>3000</mn></mrow><annotation encoding="application/x-tex">f_{2} = 3000</annotation></semantics></math>
+Hz (Question 4)</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">one
+peak per harmonic, at its frequency</span></p>
+<div class="fstep">
+<p><span class="cline">two sharp peaks, at <strong>500 Hz</strong> and
+<strong>3000 Hz</strong>, and nothing in between</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">peak
+height follows the harmonic’s amplitude</span></p>
+<div class="fstep">
+<p><span class="cline">big swing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>
+tall peak; small ripple
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>
+shorter peak</span></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> the graph shows the ripple is much smaller than
+the big swing; its exact size is hard to read and not needed, only which
+peak is taller.</p>
+</div>
+<figure class="graph mini" id="fig-q5_spectrum">
+<svg viewBox="0 0 730 262" role="img" aria-labelledby="gt5 gd5">
+<title id="gt5">The Fourier transform: two sharp peaks, at 500 Hz and 3000 Hz</title>
+<desc id="gd5">Fourier amplitude against frequency f in hertz, from 0 to 3500 with ticks every 500. Two perfectly sharp peaks, drawn as vertical lines, and nothing else: a tall one at 500 hertz, for the big slow wave, and a much shorter one at 3000 hertz, for the small ripple.</desc>
+<defs><marker id="arr5" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="66" y1="200" x2="712" y2="200" class="ax" marker-end="url(#arr5)"></line>
+<line x1="70" y1="204" x2="70" y2="16" class="ax" marker-end="url(#arr5)"></line>
+<text x="78" y="16" font-size="15" fill="#1a1a1a">Fourier amplitude</text>
+<text x="712" y="244" text-anchor="end" font-size="15" fill="#1a1a1a">frequency f (Hz)</text>
+<line x1="70.0" y1="200" x2="70.0" y2="206" class="ax"></line>
+<text x="70.0" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">0</text>
+<line x1="158.6" y1="200" x2="158.6" y2="206" class="ax"></line>
+<text x="158.6" y="222" text-anchor="middle" font-size="16" font-weight="700" fill="#861F41">500</text>
+<line x1="247.1" y1="200" x2="247.1" y2="206" class="ax"></line>
+<text x="247.1" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">1000</text>
+<line x1="335.7" y1="200" x2="335.7" y2="206" class="ax"></line>
+<text x="335.7" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">1500</text>
+<line x1="424.3" y1="200" x2="424.3" y2="206" class="ax"></line>
+<text x="424.3" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">2000</text>
+<line x1="512.9" y1="200" x2="512.9" y2="206" class="ax"></line>
+<text x="512.9" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">2500</text>
+<line x1="601.4" y1="200" x2="601.4" y2="206" class="ax"></line>
+<text x="601.4" y="222" text-anchor="middle" font-size="16" font-weight="700" fill="#861F41">3000</text>
+<line x1="690.0" y1="200" x2="690.0" y2="206" class="ax"></line>
+<text x="690.0" y="222" text-anchor="middle" font-size="13" fill="#3a3a3a">3500</text>
+<line x1="158.6" y1="200" x2="158.6" y2="45.5" stroke="#1a1a1a" stroke-width="3.5"></line>
+<text x="168.6" y="59.5" text-anchor="start" font-size="15" font-weight="700" fill="#861F41">500 Hz: the big slow wave</text>
+<line x1="601.4" y1="200" x2="601.4" y2="180.7" stroke="#1a1a1a" stroke-width="3.5"></line>
+<text x="591.4" y="170.7" text-anchor="end" font-size="15" font-weight="700" fill="#861F41">3000 Hz: the small ripple</text>
+</svg>
+<figcaption>Two peaks on a frequency axis: tall at 500 Hz, short at 3000 Hz.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> The waveform has two harmonics, so its
+spectrum has two peaks, at their frequencies from Question 4, 500 Hz and
+3000 Hz. The slow harmonic has the larger amplitude, so its peak is the
+taller one. The phase does not show in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|X(f)|</annotation></semantics></math>
+(Question 3, choice C).</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="qec">
+<p class="stem"><strong>EC.</strong> <strong>(1.5 pts)</strong> <strong>Extra credit.</strong> (a) Write the formula (definition,
+with the integral) for the Fourier transform
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">X(f)</annotation></semantics></math>
+of a waveform
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>.
+(b) In the theoretical definition, what are the bounds (limits) of the
+integral? (c) In reality, when we analyze real data, do we ever take the
+integral over those bounds? Explain briefly.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question EC</span></summary>
+<div class="sol-body">
+<p><strong>(a)</strong> Multiply the waveform by a reference sine and
+add up the area, as on Wednesday’s “Fourier by Hand” worksheet:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mi>−</mi><mi>∞</mi></mrow><mrow><mi>+</mi><mi>∞</mi></mrow></msubsup><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>π</mi><mi>f</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mspace width="2.0em"></mspace><mtext mathvariant="normal">or, in full,</mtext><mspace width="2.0em"></mspace><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mi>−</mi><mi>∞</mi></mrow><mrow><mi>+</mi><mi>∞</mi></mrow></msubsup><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>−</mi><mi>i</mi><mn>2</mn><mi>π</mi><mi>f</mi><mi>t</mi></mrow></msup><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">X(f) = \int_{-\infty}^{+\infty} x(t)\,\sin(2\pi f t)\,dt \qquad \text{or, in full,} \qquad X(f) = \int_{-\infty}^{+\infty} x(t)\,e^{-i 2\pi f t}\,dt.</annotation></semantics></math>
+The reference sine (or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>i</mi><mn>2</mn><mi>π</mi><mi>f</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-i2\pi ft}</annotation></semantics></math>)
+is essential:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\int x(t)\,dt</annotation></semantics></math>
+alone is just the area under the waveform, the same number for every
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>.</p>
+<p><strong>(b)</strong> From
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mi>−</mi><mi>∞</mi></mrow><annotation encoding="application/x-tex">t = -\infty</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mi>+</mi><mi>∞</mi></mrow><annotation encoding="application/x-tex">t = +\infty</annotation></semantics></math>:
+all time.</p>
+<p><strong>(c)</strong> <strong>No.</strong> Real data exist only for
+the finite time we record, so the integral (in practice a sum over the
+samples, the FFT) runs only over the record, from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+(20 ms on the worksheet, 500 μs in the bimodal-AFM homework). That is
+why a real peak is never infinitely tall and is about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">1/T</annotation></semantics></math>
+wide: record longer for a taller, narrower peak.</p>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="afterquiz">
+<h2 id="class-results">Class results</h2>
+<p>12 booklets were graded.</p>
+<ul>
+<li><strong>Quiz score (out of 10):</strong> average 8.58, median 8.75;
+average 9.56 with the extra credit</li>
+<li><strong>Question 1,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{Xt}</annotation></semantics></math>
+and the plot (out of 3):</strong> average 2.46</li>
+<li><strong>Question 2, the blanks (out of 1):</strong> average
+0.88</li>
+<li><strong>Question 3, choose all that apply (out of 1.5):</strong>
+average 1.5 — everyone chose exactly A, B and D</li>
+<li><strong>Question 4, periods and frequencies (out of 3):</strong>
+average 2.40</li>
+<li><strong>Question 5, the spectrum sketch (out of 1.5):</strong>
+average 1.35</li>
+<li><strong>Extra credit (out of 1.5):</strong> average 0.98</li>
+</ul>
+<h2 id="where-the-class-had-the-most-trouble">Where the class had the
+most trouble</h2>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Question 4 — the fast ripple.</strong> Half the class (6 of
+12) wrote a fast period between 0.2 and 0.5 ms, and a seventh counted
+the ripples to the right frequency but wrote the wrong period. The
+misses (0.6 to 2 ms) came from counting only some of the ripples, or
+none. There are six ripples per slow cycle: the bumps on the crests and
+troughs, and the shoulders on the steep slopes. Mark them on the graph,
+count them over a whole slow cycle (or over several), and divide.</li>
+<li><strong>Question 4 — units on the answers.</strong> Three booklets
+wrote the periods as bare numbers (“2”, “0.75”) with no time unit, and
+one wrote
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">1/(2\ \text{ms})</annotation></semantics></math>
+as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">0.5 \times 10^{-3}</annotation></semantics></math>
+Hz. One over milliseconds is kilohertz:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">kHz</mtext><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">1/(2\ \text{ms}) = 0.5\ \text{kHz} = 500</annotation></semantics></math>
+Hz. Also check that each period and its frequency agree:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">f = 1/T</annotation></semantics></math>.</li>
+<li><strong>Extra credit (a) — what goes inside the integral.</strong>
+Only 3 of 12 wrote
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>
+times a sine (or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>i</mi><mn>2</mn><mi>π</mi><mi>f</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-i2\pi ft}</annotation></semantics></math>).
+Without the reference sine,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\int x(t)\,dt</annotation></semantics></math>
+is just the area under the waveform and cannot pick out a frequency.
+Most of the class did get the bounds
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>∞</mi></mrow><annotation encoding="application/x-tex">-\infty</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>∞</mi><annotation encoding="application/x-tex">\infty</annotation></semantics></math>)
+and why real data use a finite record.</li>
+<li><strong>Question 1 — bringing out
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>,
+and keeping
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>−</mi><mi>γ</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{-\gamma t}</annotation></semantics></math>.</strong>
+Seven of 12 got the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+step fully right. The slips: a sign flipped under the root
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>γ</mi><mn>2</mn></msup><mo>+</mo><msup><mi>ω</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\gamma^{2} + \omega^{2}</annotation></semantics></math>,
+which never gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>),
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+written outside a root whose inside was left unchanged, and setting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma = 0</annotation></semantics></math>,
+which removes the decay the plot shows. Substituting into the
+differential equation checks a solution but does not explain the
+plot.</li>
+<li><strong>Question 5 — labels and heights.</strong> Most sketches were
+right. The points lost: an axis with numbers but no name or unit, the
+wrong prefix (MHz), the tall peak drawn at the higher frequency or equal
+heights, and a spectrum drawn on a time axis.</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth"
+id="homework-and-earlier-quizzes-to-revisit-question-by-question">Homework
+and earlier quizzes to revisit, question by question</h3>
+<ul>
+<li><strong>Q1
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mi>X</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A\,e^{Xt}</annotation></semantics></math>
+and the plot):</strong> <em>Damped Oscillations — Wrap-Up</em> homework,
+Problem 2, and Quiz 6, Question 4(b) — the same derivation, step by
+step.</li>
+<li><strong>Q2–Q3 (what a spectrum tells you):</strong> the Fourier
+Transform lecture of October 19 (Day 3: peak heights, and why phase does
+not show in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>X</mi><mo stretchy="false" form="prefix">(</mo><mi>f</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|X(f)|</annotation></semantics></math>)
+and the <em>NMR and Fourier Transform</em> homework (peak width and
+decay).</li>
+<li><strong>Q4 (periods and frequencies from a graph):</strong> the
+bimodal-AFM homework, 1(b) — time several cycles, then divide — and the
+Quiz 6 extra credit
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">f = 1/T</annotation></semantics></math>,
+keep the unit).</li>
+<li><strong>Q5 (sketch the spectrum):</strong> the <em>Fourier by
+Hand</em> worksheet of October 21 and the Quiz 7 review packet (two
+harmonics, two peaks).</li>
+<li><strong>Extra credit (the integral):</strong> the <em>Fourier by
+Hand</em> worksheet (multiply by a reference sine, add up the area, over
+the finite record) and the Fourier-algorithm homework.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
