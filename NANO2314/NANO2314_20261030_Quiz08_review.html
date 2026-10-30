@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 8 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+/* No scroll bars on equations (added 2026-10-17). overflow-x: auto also makes the vertical
+   direction scrollable, so a glyph a few pixels above or below the box (superscripts,
+   fractions, underbraces) showed a vertical scroll bar. Padding gives that ink room; a wide
+   equation still scrolls sideways on a phone. Screen only: print sets overflow: visible. */
+@media screen {
+  math[display="block"] { overflow-y: hidden; padding: .4em 0; margin: .45rem 0; }
+}
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* --- per-quiz styles --- */
+/* Solution flows (review-kit/flow.py, flow.js; author guide FLOWS.md). Added 2026-10-17,
+   generalized from Quiz 06's graphical 4(b) and extra-credit solutions. build.py adds this
+   file only to pages that use a flow, so older pages build unchanged. Role colors meet
+   WCAG 2.1 AA against their box backgrounds: a 4.9:1, b 6.4:1, c 7.2:1. */
+.flow { display: flex; flex-direction: column; align-items: center; margin: .4rem 0 .2rem; }
+.flow > p { margin: .1rem 0; text-align: center; }
+/* center display equations (the template's display:block would left-align them) */
+.flow math[display="block"] { display: block math; }
+.fstep { border: 1.5px solid #c9c9c9; border-radius: 8px; background: #fff; padding: 0 1rem;
+  text-align: center; max-width: 100%; }
+.fstep math[display="block"] { margin: .45rem 0; }
+.arw { color: #861F41; font-size: 1.45rem; font-weight: 700; line-height: 1; }
+.alab { color: #3a3a3a; font-size: .92rem; margin-left: .35rem; }
+.factors { display: flex; align-items: stretch; justify-content: center; gap: .5rem;
+  flex-wrap: wrap; width: 100%; margin: .15rem 0; }
+.factor { flex: 1 1 12rem; max-width: 17rem; border: 2px solid #c9c9c9; border-radius: 8px;
+  padding: .1rem .7rem .45rem; text-align: center; font-size: .95rem; background: #fff; }
+.factor p { margin: .15rem 0; }
+.factor math[display="block"] { font-size: 1.3em; }
+.times { align-self: center; font-size: 1.7rem; font-weight: 700; color: #3a3a3a; }
+.zoom { width: 100%; border: 2px solid #c9c9c9; border-radius: 8px; padding: .35rem .9rem .5rem;
+  margin: .5rem 0 .2rem; text-align: center; background: #fff; }
+.zoom p { margin: .2rem 0; }
+.conclusion { border: 2px solid #861F41; width: 100%; padding: .4rem 1rem .55rem; }
+.conclusion > p:first-child strong { color: #861F41; }
+.cline { display: inline-block; font-size: 1.15em; margin: .35rem 0; }
+/* roles: boxes (.ra .rb .rc), inline colored math (.ca .cb .cc), tags (.tag .ra ...) */
+.ra { border-color: #8B6508 !important; background: #FBF6EA !important; }
+.rb { border-color: #14672A !important; background: #F1F7F1 !important; }
+.rc { border-color: #1F4E99 !important; background: #EEF3FB !important; }
+.ra strong { color: #8B6508; } .rb strong { color: #14672A; } .rc strong { color: #1F4E99; }
+.ca { color: #8B6508; font-weight: 700; } .cb { color: #14672A; font-weight: 700; }
+.cc { color: #1F4E99; font-weight: 700; }
+.tag { border: 1.5px solid; border-radius: 999px; padding: 0 .55rem; font-weight: 700; }
+.tag.ra { color: #8B6508; } .tag.rb { color: #14672A; } .tag.rc { color: #1F4E99; }
+/* the short "why" line, and the required "In words" summary */
+.fwhy { width: 100%; font-size: .92rem; color: #3a3a3a; text-align: left; margin: .1rem 0 .2rem;
+  padding-left: .6rem; border-left: 3px solid #B8860B; }
+.fwhy p { margin: .15rem 0; }
+.inwords { width: 100%; margin: .6rem 0 .1rem; padding: .45rem .8rem; border-radius: 6px;
+  background: #F7F2F4; border-left: 4px solid #861F41; text-align: left; }
+.inwords p { margin: .1rem 0; }
+.inwords strong:first-child { color: #861F41; }
+/* faded practice: a dashed step for the student to fill in */
+.fblank { border-style: dashed; border-color: #861F41; background: #fff; padding: .35rem 1rem; }
+.fblank p { margin: .2rem 0; }
+details.fshow summary { cursor: pointer; color: #861F41; font-weight: 600; }
+/* a figure asked for but not drawn yet (figure: request | ...); the build warns until it is */
+.figrequest { width: 100%; border: 2px dashed #8B4A00; border-radius: 8px; padding: .4rem .8rem;
+  color: #8B4A00; background: #FFF8EE; text-align: left; margin: .3rem 0; }
+.figrequest p { margin: .1rem 0; }
+/* figure slots inside a flow: a definite width (a flex item would otherwise shrink to an
+   arbitrary size), wider than a usual part figure */
+.flow figure.graph.mini { width: 100%; max-width: 32rem; }
+
+/* No scroll bars (instructor, 2026-10-17): in a flow the equation sizes its box, and the box
+   scrolls sideways only when the equation is wider than the screen (phones). */
+@media screen {
+  .flow math[display="block"] { overflow: visible; }
+  .fstep, .factor, .zoom, .conclusion { overflow-x: auto; overflow-y: hidden; }
+  .fstep math[display="block"], .zoom math[display="block"] { margin: .1rem 0; }
+}
+
+/* On paper a question or part and its solution must fit one page (make_review_pdf.py keeps
+   them together): tighter spacing for print only. Show the hidden step answers in print. */
+@media print {
+  .flow { font-size: .9em; }
+  /* a question whose solution is a flow: its own figure prints smaller, so the question and
+     its solution fit one page */
+  li.q:has(.flow) > figure.graph.mini { max-width: 14rem; margin: .3rem auto .2rem; }
+  li.q:has(.flow) > figure.graph.mini figcaption { margin-top: .1rem; }
+  .flow > p { margin: 0; line-height: 1.3; }
+  .fstep { padding: 0 .8rem; }
+  .fstep math[display="block"] { margin: .2rem 0; }
+  .arw { font-size: 1.1rem; }
+  .alab { font-size: .88rem; }
+  .factors { margin: .1rem 0; }
+  .factor { padding: 0 .6rem .2rem; }
+  .factor p { margin: 0; line-height: 1.3; }
+  .factor math[display="block"] { margin: .15rem 0; }
+  .zoom { padding: .15rem .8rem .25rem; margin: .25rem 0 .05rem; }
+  .zoom p { margin: .1rem 0; line-height: 1.35; }
+  .zoom math[display="block"] { margin: .25rem 0; }
+  .conclusion { padding: .15rem .8rem .25rem; }
+  .conclusion p { margin: .05rem 0; }
+  .cline { margin: .1rem 0; }
+  .inwords { margin: .25rem 0 0; padding: .2rem .7rem; line-height: 1.35; }
+  .fwhy { margin: 0 0 .1rem; line-height: 1.35; }
+  .flow figure.graph.mini { max-width: 20rem; margin: .2rem auto .05rem; }
+  .flow figure.graph.mini figcaption { margin-top: .1rem; }
+  details.fshow > summary { display: none; }
+}
+/* Quiz 08 review page. The solution flows come from review-kit/flow.css; these rules only size
+   this quiz's figures. */
+.fnote { font-size: .88rem; color: #3a3a3a; margin-top: .5rem; }
+/* each stem already starts with its bold number, so the list's own "1." would show twice */
+ol.quiz { list-style: none; padding-left: 0; }
+#q1 figure#fig-q1b_blank, #q1 figure#fig-q1b_key { max-width: 40rem; }
+li#q2 > figure.graph.mini { max-width: 36rem; }
+li#q3 > figure.graph.mini, #q3 figure#fig-sheet_key { max-width: 26rem; }
+li#qec > figure.graph.mini, #qec figure#fig-ec_vector { max-width: 24rem; }
+@media print {
+  #q1 figure#fig-q1b_blank { max-width: 15rem; margin: .1rem auto .1rem; }
+  #q1 figure#fig-q1b_key { max-width: 19rem; margin: .1rem auto .05rem; }
+  li#q2 > figure.graph.mini { max-width: 22rem; margin: .1rem auto .1rem; }
+  li#q3 > figure.graph.mini { max-width: 16rem; margin: .1rem auto .1rem; }
+  #q3 figure#fig-sheet_key { max-width: 17rem; margin: .1rem auto 0; }
+  li#qec > figure.graph.mini { max-width: 12rem; margin: .1rem auto .1rem; }
+  #qec figure#fig-ec_vector { max-width: 15rem; margin: .1rem auto 0; }
+  figure figcaption { margin-top: .1rem; line-height: 1.3; }
+}
+math.rr { padding-top: .15em; }   /* room for exponents raised by rootfix */
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 8 — after-quiz review</h1>
+<p>Quiz 8 was given on Friday, October 30, 2026. Everyone got the same
+booklet — there were no scrambled versions — so the answers below are
+the same for the whole class.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#qec">EC</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 8 — October 30, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(6 pts)</strong> As in the Fourier transform homework, a <strong>signal</strong> is
+multiplied by a <strong>reference</strong>. The signal is a <strong>20
+kHz</strong> sine wave and the reference is a <strong>5 kHz</strong>
+sine wave; both have the same amplitude.</p>
+<ol class="parts" type="a">
+<li id="q1a">
+<p class="partq"><strong>(2 pts)</strong> Find the <strong>period</strong> of the signal and the period of the
+reference. Don’t forget the units.</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mfrac><mn>1</mn><mi>f</mi></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">kHz</mtext><mo>=</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">Hz</mtext><mo>=</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">T = \frac{1}{f}, \qquad 1\ \text{kHz} = 10^{3}\ \text{Hz} = 10^{3}\ \text{s}^{-1}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+signal: write kilo as a power of ten</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext mathvariant="normal">sig</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>20</mn><mo>×</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>20</mn></mfrac><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>0.05</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>5</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>5</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>50</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">T_{\text{sig}} = \frac{1}{20 \times 10^{3}\ \text{s}^{-1}} = \frac{1}{20} \times 10^{-3}\ \text{s} = 0.05 \times 10^{-3}\ \text{s} = 5 \times 10^{-5}\ \text{s} = 50\ \mu\text{s}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+reference, 5 kHz: the same steps</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext mathvariant="normal">ref</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>5</mn><mo>×</mo><msup><mn>10</mn><mn>3</mn></msup><mspace width="0.222em"></mspace><msup><mtext mathvariant="normal">s</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>5</mn></mfrac><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>0.2</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>4</mn></mrow></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>200</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">T_{\text{ref}} = \frac{1}{5 \times 10^{3}\ \text{s}^{-1}} = \frac{1}{5} \times 10^{-3}\ \text{s} = 0.2 \times 10^{-3}\ \text{s} = 2 \times 10^{-4}\ \text{s} = 200\ \mu\text{s}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mn>3</mn></msup><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math>
+in the denominator becomes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math>
+on top;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math>
+s is a millisecond and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math>
+s a microsecond, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.05</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">0.05 \times 10^{-3}</annotation></semantics></math>
+s
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">= 0.05</annotation></semantics></math>
+ms
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>50</mn><mspace width="0.222em"></mspace><mi>μ</mi></mrow><annotation encoding="application/x-tex">= 50\ \mu</annotation></semantics></math>s.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext mathvariant="normal">sig</mtext></msub><mo>=</mo><mn>50</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">T_{\text{sig}} = 50\ \mu\text{s}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext mathvariant="normal">ref</mtext></msub><mo>=</mo><mn>200</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">T_{\text{ref}} = 200\ \mu\text{s}</annotation></semantics></math>:
+one reference period holds 4 signal periods.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> The period is one over the frequency.
+Write the kilo as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mn>3</mn></msup><annotation encoding="application/x-tex">10^{3}</annotation></semantics></math>;
+one over it is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math>,
+a milli. So the 20 kHz signal repeats every
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>20</mn></mfrac></mstyle><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{20} \times 10^{-3}</annotation></semantics></math>
+s = 0.05 ms = 50 μs, and the 5 kHz reference every
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>5</mn></mfrac></mstyle><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\tfrac{1}{5} \times 10^{-3}</annotation></semantics></math>
+s = 0.2 ms = 200 μs, four times as long.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li id="q1b">
+<p class="partq"><strong>(3 pts)</strong> On the aligned graphs below, sketch the <strong>signal</strong> over
+<strong>4 of its periods</strong> (top), the <strong>reference</strong>
+over the same time span (middle), and their <strong>product</strong>,
+signal × reference (bottom). <strong>Label the horizontal (time)
+axis</strong> properly, with numbers and a unit of your choice.</p>
+<figure class="graph mini" id="fig-q1b_blank">
+<svg viewBox="0 0 720 382" role="img" aria-labelledby="gt4 gd4">
+<title id="gt4">The aligned graphs printed in Problem 1(b)</title>
+<desc id="gd4">Three stacked, empty graphs titled Signal 20 kilohertz, Reference 5 kilohertz, and Product equals signal times reference. Their time axes are lined up, with 4 faint vertical grid lines shared by all three that split the time span into 4 equal parts. No numbers on the axes.</desc>
+<defs><marker id="arr4" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="215.0" y1="22" x2="215.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="370.0" y1="22" x2="370.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="525.0" y1="22" x2="525.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="680.0" y1="22" x2="680.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<text x="66" y="20" font-size="15" font-weight="700" fill="#1a1a1a">Signal (20 kHz)</text>
+<line x1="60" y1="118" x2="60" y2="24" class="ax" marker-end="url(#arr4)"></line>
+<line x1="60" y1="72" x2="702" y2="72" class="ax" marker-end="url(#arr4)"></line>
+<text x="66" y="146" font-size="15" font-weight="700" fill="#1a1a1a">Reference (5 kHz)</text>
+<line x1="60" y1="244" x2="60" y2="150" class="ax" marker-end="url(#arr4)"></line>
+<line x1="60" y1="198" x2="702" y2="198" class="ax" marker-end="url(#arr4)"></line>
+<text x="66" y="272" font-size="15" font-weight="700" fill="#1a1a1a">Product = signal × reference</text>
+<line x1="60" y1="370" x2="60" y2="276" class="ax" marker-end="url(#arr4)"></line>
+<line x1="60" y1="324" x2="702" y2="324" class="ax" marker-end="url(#arr4)"></line>
+</svg>
+<figcaption>The aligned graphs as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">4 signal periods
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>4</mn><mo>×</mo><mn>50</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext><mo>=</mo><mn>200</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">= 4 \times 50\ \mu\text{s} = 200\ \mu\text{s}</annotation></semantics></math>,
+one per grid space: label the axis 50, 100, 150, 200 μs</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">in
+the same 200 μs, the reference makes one cycle</span></p>
+<div class="fstep">
+<p><span class="cline">signal: 4 cycles; reference: 1 cycle (up for 100
+μs, down for 100 μs)</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">multiply sign by sign, every half signal period (25
+μs)</span></p>
+<div class="factors">
+<div class="factor ra">
+<p><span class="cline">first 100 μs:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>−</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>+</mi><mo>,</mo><mspace width="0.222em"></mspace><mo>−</mo></mrow><annotation encoding="application/x-tex">+,\ -,\ +,\ -</annotation></semantics></math></span></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p>the reference is positive</p>
+</div>
+<p><span class="times" aria-hidden="true">and</span><span
+class="visually-hidden">and</span></p>
+<div class="factor rb">
+<p><span class="cline">last 100 μs:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>+</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>−</mi><mo>,</mo><mspace width="0.222em"></mspace><mo>+</mo></mrow><annotation encoding="application/x-tex">-,\ +,\ -,\ +</annotation></semantics></math></span></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p>the reference is negative</p>
+</div>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+reference is the envelope</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p>the product’s humps go small, big, big, small in each half</p>
+</div>
+<figure class="graph mini" id="fig-q1b_key">
+<svg viewBox="0 0 720 382" role="img" aria-labelledby="gt5 gd5">
+<title id="gt5">The solution: four signal cycles, one reference cycle, and their product</title>
+<desc id="gd5">The three aligned graphs, filled in, with the time axis labeled 0, 50, 100, 150 and 200 microseconds at the grid lines. Top: the 20 kilohertz signal makes 4 full cycles, one per grid space. Middle: the 5 kilohertz reference makes 1 full cycle, up over the first 100 microseconds and down over the second. Bottom: their product, with 8 humps, one every 25 microseconds: plus, minus, plus, minus over the first half and minus, plus, minus, plus over the second, small, big, big, small in each half. Humps above the axis are shaded green and humps below red; they are equal in total, so the area is zero.</desc>
+<defs><marker id="arr5" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="215.0" y1="22" x2="215.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="370.0" y1="22" x2="370.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="525.0" y1="22" x2="525.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<line x1="680.0" y1="22" x2="680.0" y2="370" stroke="#c9ccd1" stroke-width="1"></line>
+<text x="66" y="20" font-size="15" font-weight="700" fill="#1a1a1a">Signal (20 kHz)</text>
+<polyline points="60.0,72.0 61.0,70.3 62.1,68.7 63.1,67.0 64.1,65.3 65.2,63.7 66.2,62.1 67.2,60.4 68.3,58.8 69.3,57.3 70.3,55.7 71.4,54.2 72.4,52.7 73.4,51.3 74.5,49.9 75.5,48.5 76.5,47.2 77.6,45.9 78.6,44.6 79.6,43.4 80.7,42.3 81.7,41.2 82.7,40.1 83.8,39.2 84.8,38.2 85.8,37.4 86.9,36.6 87.9,35.8 88.9,35.1 90.0,34.5 91.0,34.0 92.0,33.5 93.1,33.1 94.1,32.7 95.1,32.4 96.2,32.2 97.2,32.1 98.2,32.0 99.3,32.0 100.3,32.1 101.3,32.2 102.4,32.4 103.4,32.7 104.4,33.1 105.5,33.5 106.5,34.0 107.5,34.5 108.6,35.1 109.6,35.8 110.6,36.6 111.7,37.4 112.7,38.2 113.7,39.2 114.8,40.1 115.8,41.2 116.8,42.3 117.9,43.4 118.9,44.6 119.9,45.9 121.0,47.2 122.0,48.5 123.0,49.9 124.1,51.3 125.1,52.7 126.1,54.2 127.2,55.7 128.2,57.3 129.2,58.8 130.3,60.4 131.3,62.1 132.3,63.7 133.4,65.3 134.4,67.0 135.4,68.7 136.5,70.3 137.5,72.0 138.5,73.7 139.6,75.3 140.6,77.0 141.6,78.7 142.7,80.3 143.7,81.9 144.7,83.6 145.8,85.2 146.8,86.7 147.8,88.3 148.9,89.8 149.9,91.3 150.9,92.7 152.0,94.1 153.0,95.5 154.0,96.8 155.1,98.1 156.1,99.4 157.1,100.6 158.2,101.7 159.2,102.8 160.2,103.9 161.3,104.8 162.3,105.8 163.3,106.6 164.4,107.4 165.4,108.2 166.4,108.9 167.5,109.5 168.5,110.0 169.5,110.5 170.6,110.9 171.6,111.3 172.6,111.6 173.7,111.8 174.7,111.9 175.7,112.0 176.8,112.0 177.8,111.9 178.8,111.8 179.9,111.6 180.9,111.3 181.9,110.9 183.0,110.5 184.0,110.0 185.0,109.5 186.1,108.9 187.1,108.2 188.1,107.4 189.2,106.6 190.2,105.8 191.2,104.8 192.3,103.9 193.3,102.8 194.3,101.7 195.4,100.6 196.4,99.4 197.4,98.1 198.5,96.8 199.5,95.5 200.5,94.1 201.6,92.7 202.6,91.3 203.6,89.8 204.7,88.3 205.7,86.7 206.7,85.2 207.8,83.6 208.8,81.9 209.8,80.3 210.9,78.7 211.9,77.0 212.9,75.3 214.0,73.7 215.0,72.0 216.0,70.3 217.1,68.7 218.1,67.0 219.1,65.3 220.2,63.7 221.2,62.1 222.2,60.4 223.3,58.8 224.3,57.3 225.3,55.7 226.4,54.2 227.4,52.7 228.4,51.3 229.5,49.9 230.5,48.5 231.5,47.2 232.6,45.9 233.6,44.6 234.6,43.4 235.7,42.3 236.7,41.2 237.7,40.1 238.8,39.2 239.8,38.2 240.8,37.4 241.9,36.6 242.9,35.8 243.9,35.1 245.0,34.5 246.0,34.0 247.0,33.5 248.1,33.1 249.1,32.7 250.1,32.4 251.2,32.2 252.2,32.1 253.2,32.0 254.3,32.0 255.3,32.1 256.3,32.2 257.4,32.4 258.4,32.7 259.4,33.1 260.5,33.5 261.5,34.0 262.5,34.5 263.6,35.1 264.6,35.8 265.6,36.6 266.7,37.4 267.7,38.2 268.7,39.2 269.8,40.1 270.8,41.2 271.8,42.3 272.9,43.4 273.9,44.6 274.9,45.9 276.0,47.2 277.0,48.5 278.0,49.9 279.1,51.3 280.1,52.7 281.1,54.2 282.2,55.7 283.2,57.3 284.2,58.8 285.3,60.4 286.3,62.1 287.3,63.7 288.4,65.3 289.4,67.0 290.4,68.7 291.5,70.3 292.5,72.0 293.5,73.7 294.6,75.3 295.6,77.0 296.6,78.7 297.7,80.3 298.7,81.9 299.7,83.6 300.8,85.2 301.8,86.7 302.8,88.3 303.9,89.8 304.9,91.3 305.9,92.7 307.0,94.1 308.0,95.5 309.0,96.8 310.1,98.1 311.1,99.4 312.1,100.6 313.2,101.7 314.2,102.8 315.2,103.9 316.3,104.8 317.3,105.8 318.3,106.6 319.4,107.4 320.4,108.2 321.4,108.9 322.5,109.5 323.5,110.0 324.5,110.5 325.6,110.9 326.6,111.3 327.6,111.6 328.7,111.8 329.7,111.9 330.7,112.0 331.8,112.0 332.8,111.9 333.8,111.8 334.9,111.6 335.9,111.3 336.9,110.9 338.0,110.5 339.0,110.0 340.0,109.5 341.1,108.9 342.1,108.2 343.1,107.4 344.2,106.6 345.2,105.8 346.2,104.8 347.3,103.9 348.3,102.8 349.3,101.7 350.4,100.6 351.4,99.4 352.4,98.1 353.5,96.8 354.5,95.5 355.5,94.1 356.6,92.7 357.6,91.3 358.6,89.8 359.7,88.3 360.7,86.7 361.7,85.2 362.8,83.6 363.8,81.9 364.8,80.3 365.9,78.7 366.9,77.0 367.9,75.3 369.0,73.7 370.0,72.0 371.0,70.3 372.1,68.7 373.1,67.0 374.1,65.3 375.2,63.7 376.2,62.1 377.2,60.4 378.3,58.8 379.3,57.3 380.3,55.7 381.4,54.2 382.4,52.7 383.4,51.3 384.5,49.9 385.5,48.5 386.5,47.2 387.6,45.9 388.6,44.6 389.6,43.4 390.7,42.3 391.7,41.2 392.7,40.1 393.8,39.2 394.8,38.2 395.8,37.4 396.9,36.6 397.9,35.8 398.9,35.1 400.0,34.5 401.0,34.0 402.0,33.5 403.1,33.1 404.1,32.7 405.1,32.4 406.2,32.2 407.2,32.1 408.2,32.0 409.3,32.0 410.3,32.1 411.3,32.2 412.4,32.4 413.4,32.7 414.4,33.1 415.5,33.5 416.5,34.0 417.5,34.5 418.6,35.1 419.6,35.8 420.6,36.6 421.7,37.4 422.7,38.2 423.7,39.2 424.8,40.1 425.8,41.2 426.8,42.3 427.9,43.4 428.9,44.6 429.9,45.9 431.0,47.2 432.0,48.5 433.0,49.9 434.1,51.3 435.1,52.7 436.1,54.2 437.2,55.7 438.2,57.3 439.2,58.8 440.3,60.4 441.3,62.1 442.3,63.7 443.4,65.3 444.4,67.0 445.4,68.7 446.5,70.3 447.5,72.0 448.5,73.7 449.6,75.3 450.6,77.0 451.6,78.7 452.7,80.3 453.7,81.9 454.7,83.6 455.8,85.2 456.8,86.7 457.8,88.3 458.9,89.8 459.9,91.3 460.9,92.7 462.0,94.1 463.0,95.5 464.0,96.8 465.1,98.1 466.1,99.4 467.1,100.6 468.2,101.7 469.2,102.8 470.2,103.9 471.3,104.8 472.3,105.8 473.3,106.6 474.4,107.4 475.4,108.2 476.4,108.9 477.5,109.5 478.5,110.0 479.5,110.5 480.6,110.9 481.6,111.3 482.6,111.6 483.7,111.8 484.7,111.9 485.7,112.0 486.8,112.0 487.8,111.9 488.8,111.8 489.9,111.6 490.9,111.3 491.9,110.9 493.0,110.5 494.0,110.0 495.0,109.5 496.1,108.9 497.1,108.2 498.1,107.4 499.2,106.6 500.2,105.8 501.2,104.8 502.3,103.9 503.3,102.8 504.3,101.7 505.4,100.6 506.4,99.4 507.4,98.1 508.5,96.8 509.5,95.5 510.5,94.1 511.6,92.7 512.6,91.3 513.6,89.8 514.7,88.3 515.7,86.7 516.7,85.2 517.8,83.6 518.8,81.9 519.8,80.3 520.9,78.7 521.9,77.0 522.9,75.3 524.0,73.7 525.0,72.0 526.0,70.3 527.1,68.7 528.1,67.0 529.1,65.3 530.2,63.7 531.2,62.1 532.2,60.4 533.3,58.8 534.3,57.3 535.3,55.7 536.4,54.2 537.4,52.7 538.4,51.3 539.5,49.9 540.5,48.5 541.5,47.2 542.6,45.9 543.6,44.6 544.6,43.4 545.7,42.3 546.7,41.2 547.7,40.1 548.8,39.2 549.8,38.2 550.8,37.4 551.9,36.6 552.9,35.8 553.9,35.1 555.0,34.5 556.0,34.0 557.0,33.5 558.1,33.1 559.1,32.7 560.1,32.4 561.2,32.2 562.2,32.1 563.2,32.0 564.3,32.0 565.3,32.1 566.3,32.2 567.4,32.4 568.4,32.7 569.4,33.1 570.5,33.5 571.5,34.0 572.5,34.5 573.6,35.1 574.6,35.8 575.6,36.6 576.7,37.4 577.7,38.2 578.7,39.2 579.8,40.1 580.8,41.2 581.8,42.3 582.9,43.4 583.9,44.6 584.9,45.9 586.0,47.2 587.0,48.5 588.0,49.9 589.1,51.3 590.1,52.7 591.1,54.2 592.2,55.7 593.2,57.3 594.2,58.8 595.3,60.4 596.3,62.1 597.3,63.7 598.4,65.3 599.4,67.0 600.4,68.7 601.5,70.3 602.5,72.0 603.5,73.7 604.6,75.3 605.6,77.0 606.6,78.7 607.7,80.3 608.7,81.9 609.7,83.6 610.8,85.2 611.8,86.7 612.8,88.3 613.9,89.8 614.9,91.3 615.9,92.7 617.0,94.1 618.0,95.5 619.0,96.8 620.1,98.1 621.1,99.4 622.1,100.6 623.2,101.7 624.2,102.8 625.2,103.9 626.3,104.8 627.3,105.8 628.3,106.6 629.4,107.4 630.4,108.2 631.4,108.9 632.5,109.5 633.5,110.0 634.5,110.5 635.6,110.9 636.6,111.3 637.6,111.6 638.7,111.8 639.7,111.9 640.7,112.0 641.8,112.0 642.8,111.9 643.8,111.8 644.9,111.6 645.9,111.3 646.9,110.9 648.0,110.5 649.0,110.0 650.0,109.5 651.1,108.9 652.1,108.2 653.1,107.4 654.2,106.6 655.2,105.8 656.2,104.8 657.3,103.9 658.3,102.8 659.3,101.7 660.4,100.6 661.4,99.4 662.4,98.1 663.5,96.8 664.5,95.5 665.5,94.1 666.6,92.7 667.6,91.3 668.6,89.8 669.7,88.3 670.7,86.7 671.7,85.2 672.8,83.6 673.8,81.9 674.8,80.3 675.9,78.7 676.9,77.0 677.9,75.3 679.0,73.7 680.0,72.0" fill="none" stroke="#861F41" stroke-width="2.4" stroke-linejoin="round"></polyline>
+<line x1="60" y1="118" x2="60" y2="24" class="ax" marker-end="url(#arr5)"></line>
+<line x1="60" y1="72" x2="702" y2="72" class="ax" marker-end="url(#arr5)"></line>
+<text x="68.0" y="89" text-anchor="middle" font-size="13" fill="#3a3a3a">0</text>
+<text x="215.0" y="89" text-anchor="middle" font-size="13" fill="#3a3a3a">50</text>
+<text x="370.0" y="89" text-anchor="middle" font-size="13" fill="#3a3a3a">100</text>
+<text x="525.0" y="89" text-anchor="middle" font-size="13" fill="#3a3a3a">150</text>
+<text x="680.0" y="89" text-anchor="middle" font-size="13" fill="#3a3a3a">200</text>
+<text x="702" y="64" text-anchor="end" font-size="14" fill="#1a1a1a">t (μs)</text>
+<text x="66" y="146" font-size="15" font-weight="700" fill="#1a1a1a">Reference (5 kHz)</text>
+<polyline points="60.0,198.0 61.0,197.6 62.1,197.2 63.1,196.7 64.1,196.3 65.2,195.9 66.2,195.5 67.2,195.1 68.3,194.7 69.3,194.2 70.3,193.8 71.4,193.4 72.4,193.0 73.4,192.6 74.5,192.2 75.5,191.7 76.5,191.3 77.6,190.9 78.6,190.5 79.6,190.1 80.7,189.7 81.7,189.3 82.7,188.9 83.8,188.5 84.8,188.1 85.8,187.6 86.9,187.2 87.9,186.8 88.9,186.4 90.0,186.0 91.0,185.6 92.0,185.2 93.1,184.8 94.1,184.5 95.1,184.1 96.2,183.7 97.2,183.3 98.2,182.9 99.3,182.5 100.3,182.1 101.3,181.7 102.4,181.3 103.4,181.0 104.4,180.6 105.5,180.2 106.5,179.8 107.5,179.5 108.6,179.1 109.6,178.7 110.6,178.4 111.7,178.0 112.7,177.6 113.7,177.3 114.8,176.9 115.8,176.6 116.8,176.2 117.9,175.9 118.9,175.5 119.9,175.2 121.0,174.8 122.0,174.5 123.0,174.2 124.1,173.8 125.1,173.5 126.1,173.2 127.2,172.8 128.2,172.5 129.2,172.2 130.3,171.9 131.3,171.5 132.3,171.2 133.4,170.9 134.4,170.6 135.4,170.3 136.5,170.0 137.5,169.7 138.5,169.4 139.6,169.1 140.6,168.8 141.6,168.6 142.7,168.3 143.7,168.0 144.7,167.7 145.8,167.4 146.8,167.2 147.8,166.9 148.9,166.7 149.9,166.4 150.9,166.1 152.0,165.9 153.0,165.6 154.0,165.4 155.1,165.2 156.1,164.9 157.1,164.7 158.2,164.5 159.2,164.2 160.2,164.0 161.3,163.8 162.3,163.6 163.3,163.4 164.4,163.2 165.4,162.9 166.4,162.7 167.5,162.6 168.5,162.4 169.5,162.2 170.6,162.0 171.6,161.8 172.6,161.6 173.7,161.5 174.7,161.3 175.7,161.1 176.8,161.0 177.8,160.8 178.8,160.7 179.9,160.5 180.9,160.4 181.9,160.2 183.0,160.1 184.0,160.0 185.0,159.8 186.1,159.7 187.1,159.6 188.1,159.5 189.2,159.4 190.2,159.3 191.2,159.2 192.3,159.1 193.3,159.0 194.3,158.9 195.4,158.8 196.4,158.7 197.4,158.6 198.5,158.6 199.5,158.5 200.5,158.4 201.6,158.4 202.6,158.3 203.6,158.3 204.7,158.2 205.7,158.2 206.7,158.1 207.8,158.1 208.8,158.1 209.8,158.1 210.9,158.0 211.9,158.0 212.9,158.0 214.0,158.0 215.0,158.0 216.0,158.0 217.1,158.0 218.1,158.0 219.1,158.0 220.2,158.1 221.2,158.1 222.2,158.1 223.3,158.1 224.3,158.2 225.3,158.2 226.4,158.3 227.4,158.3 228.4,158.4 229.5,158.4 230.5,158.5 231.5,158.6 232.6,158.6 233.6,158.7 234.6,158.8 235.7,158.9 236.7,159.0 237.7,159.1 238.8,159.2 239.8,159.3 240.8,159.4 241.9,159.5 242.9,159.6 243.9,159.7 245.0,159.8 246.0,160.0 247.0,160.1 248.1,160.2 249.1,160.4 250.1,160.5 251.2,160.7 252.2,160.8 253.2,161.0 254.3,161.1 255.3,161.3 256.3,161.5 257.4,161.6 258.4,161.8 259.4,162.0 260.5,162.2 261.5,162.4 262.5,162.6 263.6,162.7 264.6,162.9 265.6,163.2 266.7,163.4 267.7,163.6 268.7,163.8 269.8,164.0 270.8,164.2 271.8,164.5 272.9,164.7 273.9,164.9 274.9,165.2 276.0,165.4 277.0,165.6 278.0,165.9 279.1,166.1 280.1,166.4 281.1,166.7 282.2,166.9 283.2,167.2 284.2,167.4 285.3,167.7 286.3,168.0 287.3,168.3 288.4,168.6 289.4,168.8 290.4,169.1 291.5,169.4 292.5,169.7 293.5,170.0 294.6,170.3 295.6,170.6 296.6,170.9 297.7,171.2 298.7,171.5 299.7,171.9 300.8,172.2 301.8,172.5 302.8,172.8 303.9,173.2 304.9,173.5 305.9,173.8 307.0,174.2 308.0,174.5 309.0,174.8 310.1,175.2 311.1,175.5 312.1,175.9 313.2,176.2 314.2,176.6 315.2,176.9 316.3,177.3 317.3,177.6 318.3,178.0 319.4,178.4 320.4,178.7 321.4,179.1 322.5,179.5 323.5,179.8 324.5,180.2 325.6,180.6 326.6,181.0 327.6,181.3 328.7,181.7 329.7,182.1 330.7,182.5 331.8,182.9 332.8,183.3 333.8,183.7 334.9,184.1 335.9,184.5 336.9,184.8 338.0,185.2 339.0,185.6 340.0,186.0 341.1,186.4 342.1,186.8 343.1,187.2 344.2,187.6 345.2,188.1 346.2,188.5 347.3,188.9 348.3,189.3 349.3,189.7 350.4,190.1 351.4,190.5 352.4,190.9 353.5,191.3 354.5,191.7 355.5,192.2 356.6,192.6 357.6,193.0 358.6,193.4 359.7,193.8 360.7,194.2 361.7,194.7 362.8,195.1 363.8,195.5 364.8,195.9 365.9,196.3 366.9,196.7 367.9,197.2 369.0,197.6 370.0,198.0 371.0,198.4 372.1,198.8 373.1,199.3 374.1,199.7 375.2,200.1 376.2,200.5 377.2,200.9 378.3,201.3 379.3,201.8 380.3,202.2 381.4,202.6 382.4,203.0 383.4,203.4 384.5,203.8 385.5,204.3 386.5,204.7 387.6,205.1 388.6,205.5 389.6,205.9 390.7,206.3 391.7,206.7 392.7,207.1 393.8,207.5 394.8,207.9 395.8,208.4 396.9,208.8 397.9,209.2 398.9,209.6 400.0,210.0 401.0,210.4 402.0,210.8 403.1,211.2 404.1,211.5 405.1,211.9 406.2,212.3 407.2,212.7 408.2,213.1 409.3,213.5 410.3,213.9 411.3,214.3 412.4,214.7 413.4,215.0 414.4,215.4 415.5,215.8 416.5,216.2 417.5,216.5 418.6,216.9 419.6,217.3 420.6,217.6 421.7,218.0 422.7,218.4 423.7,218.7 424.8,219.1 425.8,219.4 426.8,219.8 427.9,220.1 428.9,220.5 429.9,220.8 431.0,221.2 432.0,221.5 433.0,221.8 434.1,222.2 435.1,222.5 436.1,222.8 437.2,223.2 438.2,223.5 439.2,223.8 440.3,224.1 441.3,224.5 442.3,224.8 443.4,225.1 444.4,225.4 445.4,225.7 446.5,226.0 447.5,226.3 448.5,226.6 449.6,226.9 450.6,227.2 451.6,227.4 452.7,227.7 453.7,228.0 454.7,228.3 455.8,228.6 456.8,228.8 457.8,229.1 458.9,229.3 459.9,229.6 460.9,229.9 462.0,230.1 463.0,230.4 464.0,230.6 465.1,230.8 466.1,231.1 467.1,231.3 468.2,231.5 469.2,231.8 470.2,232.0 471.3,232.2 472.3,232.4 473.3,232.6 474.4,232.8 475.4,233.1 476.4,233.3 477.5,233.4 478.5,233.6 479.5,233.8 480.6,234.0 481.6,234.2 482.6,234.4 483.7,234.5 484.7,234.7 485.7,234.9 486.8,235.0 487.8,235.2 488.8,235.3 489.9,235.5 490.9,235.6 491.9,235.8 493.0,235.9 494.0,236.0 495.0,236.2 496.1,236.3 497.1,236.4 498.1,236.5 499.2,236.6 500.2,236.7 501.2,236.8 502.3,236.9 503.3,237.0 504.3,237.1 505.4,237.2 506.4,237.3 507.4,237.4 508.5,237.4 509.5,237.5 510.5,237.6 511.6,237.6 512.6,237.7 513.6,237.7 514.7,237.8 515.7,237.8 516.7,237.9 517.8,237.9 518.8,237.9 519.8,237.9 520.9,238.0 521.9,238.0 522.9,238.0 524.0,238.0 525.0,238.0 526.0,238.0 527.1,238.0 528.1,238.0 529.1,238.0 530.2,237.9 531.2,237.9 532.2,237.9 533.3,237.9 534.3,237.8 535.3,237.8 536.4,237.7 537.4,237.7 538.4,237.6 539.5,237.6 540.5,237.5 541.5,237.4 542.6,237.4 543.6,237.3 544.6,237.2 545.7,237.1 546.7,237.0 547.7,236.9 548.8,236.8 549.8,236.7 550.8,236.6 551.9,236.5 552.9,236.4 553.9,236.3 555.0,236.2 556.0,236.0 557.0,235.9 558.1,235.8 559.1,235.6 560.1,235.5 561.2,235.3 562.2,235.2 563.2,235.0 564.3,234.9 565.3,234.7 566.3,234.5 567.4,234.4 568.4,234.2 569.4,234.0 570.5,233.8 571.5,233.6 572.5,233.4 573.6,233.3 574.6,233.1 575.6,232.8 576.7,232.6 577.7,232.4 578.7,232.2 579.8,232.0 580.8,231.8 581.8,231.5 582.9,231.3 583.9,231.1 584.9,230.8 586.0,230.6 587.0,230.4 588.0,230.1 589.1,229.9 590.1,229.6 591.1,229.3 592.2,229.1 593.2,228.8 594.2,228.6 595.3,228.3 596.3,228.0 597.3,227.7 598.4,227.4 599.4,227.2 600.4,226.9 601.5,226.6 602.5,226.3 603.5,226.0 604.6,225.7 605.6,225.4 606.6,225.1 607.7,224.8 608.7,224.5 609.7,224.1 610.8,223.8 611.8,223.5 612.8,223.2 613.9,222.8 614.9,222.5 615.9,222.2 617.0,221.8 618.0,221.5 619.0,221.2 620.1,220.8 621.1,220.5 622.1,220.1 623.2,219.8 624.2,219.4 625.2,219.1 626.3,218.7 627.3,218.4 628.3,218.0 629.4,217.6 630.4,217.3 631.4,216.9 632.5,216.5 633.5,216.2 634.5,215.8 635.6,215.4 636.6,215.0 637.6,214.7 638.7,214.3 639.7,213.9 640.7,213.5 641.8,213.1 642.8,212.7 643.8,212.3 644.9,211.9 645.9,211.5 646.9,211.2 648.0,210.8 649.0,210.4 650.0,210.0 651.1,209.6 652.1,209.2 653.1,208.8 654.2,208.4 655.2,207.9 656.2,207.5 657.3,207.1 658.3,206.7 659.3,206.3 660.4,205.9 661.4,205.5 662.4,205.1 663.5,204.7 664.5,204.3 665.5,203.8 666.6,203.4 667.6,203.0 668.6,202.6 669.7,202.2 670.7,201.8 671.7,201.3 672.8,200.9 673.8,200.5 674.8,200.1 675.9,199.7 676.9,199.3 677.9,198.8 679.0,198.4 680.0,198.0" fill="none" stroke="#861F41" stroke-width="2.4" stroke-linejoin="round"></polyline>
+<line x1="60" y1="244" x2="60" y2="150" class="ax" marker-end="url(#arr5)"></line>
+<line x1="60" y1="198" x2="702" y2="198" class="ax" marker-end="url(#arr5)"></line>
+<text x="68.0" y="215" text-anchor="middle" font-size="13" fill="#3a3a3a">0</text>
+<text x="215.0" y="215" text-anchor="middle" font-size="13" fill="#3a3a3a">50</text>
+<text x="370.0" y="215" text-anchor="middle" font-size="13" fill="#3a3a3a">100</text>
+<text x="525.0" y="215" text-anchor="middle" font-size="13" fill="#3a3a3a">150</text>
+<text x="680.0" y="215" text-anchor="middle" font-size="13" fill="#3a3a3a">200</text>
+<text x="702" y="190" text-anchor="end" font-size="14" fill="#1a1a1a">t (μs)</text>
+<text x="66" y="272" font-size="15" font-weight="700" fill="#1a1a1a">Product = signal × reference</text>
+<polygon points="60.0,324.0 60.0,324.0 61.0,324.0 62.1,323.9 63.1,323.8 64.1,323.7 65.2,323.6 66.2,323.4 67.2,323.2 68.3,322.9 69.3,322.6 70.3,322.3 71.4,322.0 72.4,321.6 73.4,321.2 74.5,320.8 75.5,320.3 76.5,319.9 77.6,319.4 78.6,318.9 79.6,318.4 80.7,317.8 81.7,317.3 82.7,316.7 83.8,316.2 84.8,315.6 85.8,315.0 86.9,314.5 87.9,313.9 88.9,313.3 90.0,312.8 91.0,312.2 92.0,311.7 93.1,311.2 94.1,310.7 95.1,310.2 96.2,309.7 97.2,309.3 98.2,308.9 99.3,308.5 100.3,308.1 101.3,307.8 102.4,307.5 103.4,307.3 104.4,307.1 105.5,306.9 106.5,306.7 107.5,306.6 108.6,306.6 109.6,306.6 110.6,306.6 111.7,306.7 112.7,306.8 113.7,307.0 114.8,307.2 115.8,307.5 116.8,307.8 117.9,308.2 118.9,308.6 119.9,309.1 121.0,309.6 122.0,310.2 123.0,310.8 124.1,311.5 125.1,312.2 126.1,313.0 127.2,313.8 128.2,314.6 129.2,315.5 130.3,316.4 131.3,317.4 132.3,318.4 133.4,319.5 134.4,320.6 135.4,321.7 136.5,322.8 137.5,324.0 138.5,324.0 139.6,324.0 140.6,324.0 141.6,324.0 142.7,324.0 143.7,324.0 144.7,324.0 145.8,324.0 146.8,324.0 147.8,324.0 148.9,324.0 149.9,324.0 150.9,324.0 152.0,324.0 153.0,324.0 154.0,324.0 155.1,324.0 156.1,324.0 157.1,324.0 158.2,324.0 159.2,324.0 160.2,324.0 161.3,324.0 162.3,324.0 163.3,324.0 164.4,324.0 165.4,324.0 166.4,324.0 167.5,324.0 168.5,324.0 169.5,324.0 170.6,324.0 171.6,324.0 172.6,324.0 173.7,324.0 174.7,324.0 175.7,324.0 176.8,324.0 177.8,324.0 178.8,324.0 179.9,324.0 180.9,324.0 181.9,324.0 183.0,324.0 184.0,324.0 185.0,324.0 186.1,324.0 187.1,324.0 188.1,324.0 189.2,324.0 190.2,324.0 191.2,324.0 192.3,324.0 193.3,324.0 194.3,324.0 195.4,324.0 196.4,324.0 197.4,324.0 198.5,324.0 199.5,324.0 200.5,324.0 201.6,324.0 202.6,324.0 203.6,324.0 204.7,324.0 205.7,324.0 206.7,324.0 207.8,324.0 208.8,324.0 209.8,324.0 210.9,324.0 211.9,324.0 212.9,324.0 214.0,324.0 215.0,324.0 216.0,322.3 217.1,320.7 218.1,319.0 219.1,317.3 220.2,315.7 221.2,314.1 222.2,312.5 223.3,310.9 224.3,309.3 225.3,307.8 226.4,306.3 227.4,304.9 228.4,303.5 229.5,302.1 230.5,300.8 231.5,299.5 232.6,298.3 233.6,297.1 234.6,296.0 235.7,294.9 236.7,293.9 237.7,293.0 238.8,292.1 239.8,291.3 240.8,290.5 241.9,289.9 242.9,289.2 243.9,288.7 245.0,288.2 246.0,287.8 247.0,287.5 248.1,287.2 249.1,287.0 250.1,286.9 251.2,286.9 252.2,286.9 253.2,287.0 254.3,287.1 255.3,287.4 256.3,287.7 257.4,288.0 258.4,288.4 259.4,288.9 260.5,289.5 261.5,290.1 262.5,290.8 263.6,291.5 264.6,292.3 265.6,293.1 266.7,294.0 267.7,294.9 268.7,295.9 269.8,296.9 270.8,298.0 271.8,299.1 272.9,300.2 273.9,301.4 274.9,302.5 276.0,303.7 277.0,305.0 278.0,306.2 279.1,307.5 280.1,308.8 281.1,310.1 282.2,311.4 283.2,312.7 284.2,314.0 285.3,315.2 286.3,316.5 287.3,317.8 288.4,319.1 289.4,320.3 290.4,321.6 291.5,322.8 292.5,324.0 293.5,324.0 294.6,324.0 295.6,324.0 296.6,324.0 297.7,324.0 298.7,324.0 299.7,324.0 300.8,324.0 301.8,324.0 302.8,324.0 303.9,324.0 304.9,324.0 305.9,324.0 307.0,324.0 308.0,324.0 309.0,324.0 310.1,324.0 311.1,324.0 312.1,324.0 313.2,324.0 314.2,324.0 315.2,324.0 316.3,324.0 317.3,324.0 318.3,324.0 319.4,324.0 320.4,324.0 321.4,324.0 322.5,324.0 323.5,324.0 324.5,324.0 325.6,324.0 326.6,324.0 327.6,324.0 328.7,324.0 329.7,324.0 330.7,324.0 331.8,324.0 332.8,324.0 333.8,324.0 334.9,324.0 335.9,324.0 336.9,324.0 338.0,324.0 339.0,324.0 340.0,324.0 341.1,324.0 342.1,324.0 343.1,324.0 344.2,324.0 345.2,324.0 346.2,324.0 347.3,324.0 348.3,324.0 349.3,324.0 350.4,324.0 351.4,324.0 352.4,324.0 353.5,324.0 354.5,324.0 355.5,324.0 356.6,324.0 357.6,324.0 358.6,324.0 359.7,324.0 360.7,324.0 361.7,324.0 362.8,324.0 363.8,324.0 364.8,324.0 365.9,324.0 366.9,324.0 367.9,324.0 369.0,324.0 370.0,324.0 371.0,324.0 372.1,324.0 373.1,324.0 374.1,324.0 375.2,324.0 376.2,324.0 377.2,324.0 378.3,324.0 379.3,324.0 380.3,324.0 381.4,324.0 382.4,324.0 383.4,324.0 384.5,324.0 385.5,324.0 386.5,324.0 387.6,324.0 388.6,324.0 389.6,324.0 390.7,324.0 391.7,324.0 392.7,324.0 393.8,324.0 394.8,324.0 395.8,324.0 396.9,324.0 397.9,324.0 398.9,324.0 400.0,324.0 401.0,324.0 402.0,324.0 403.1,324.0 404.1,324.0 405.1,324.0 406.2,324.0 407.2,324.0 408.2,324.0 409.3,324.0 410.3,324.0 411.3,324.0 412.4,324.0 413.4,324.0 414.4,324.0 415.5,324.0 416.5,324.0 417.5,324.0 418.6,324.0 419.6,324.0 420.6,324.0 421.7,324.0 422.7,324.0 423.7,324.0 424.8,324.0 425.8,324.0 426.8,324.0 427.9,324.0 428.9,324.0 429.9,324.0 431.0,324.0 432.0,324.0 433.0,324.0 434.1,324.0 435.1,324.0 436.1,324.0 437.2,324.0 438.2,324.0 439.2,324.0 440.3,324.0 441.3,324.0 442.3,324.0 443.4,324.0 444.4,324.0 445.4,324.0 446.5,324.0 447.5,324.0 448.5,322.8 449.6,321.6 450.6,320.3 451.6,319.1 452.7,317.8 453.7,316.5 454.7,315.2 455.8,314.0 456.8,312.7 457.8,311.4 458.9,310.1 459.9,308.8 460.9,307.5 462.0,306.2 463.0,305.0 464.0,303.7 465.1,302.5 466.1,301.4 467.1,300.2 468.2,299.1 469.2,298.0 470.2,296.9 471.3,295.9 472.3,294.9 473.3,294.0 474.4,293.1 475.4,292.3 476.4,291.5 477.5,290.8 478.5,290.1 479.5,289.5 480.6,288.9 481.6,288.4 482.6,288.0 483.7,287.7 484.7,287.4 485.7,287.1 486.8,287.0 487.8,286.9 488.8,286.9 489.9,286.9 490.9,287.0 491.9,287.2 493.0,287.5 494.0,287.8 495.0,288.2 496.1,288.7 497.1,289.2 498.1,289.9 499.2,290.5 500.2,291.3 501.2,292.1 502.3,293.0 503.3,293.9 504.3,294.9 505.4,296.0 506.4,297.1 507.4,298.3 508.5,299.5 509.5,300.8 510.5,302.1 511.6,303.5 512.6,304.9 513.6,306.3 514.7,307.8 515.7,309.3 516.7,310.9 517.8,312.5 518.8,314.1 519.8,315.7 520.9,317.3 521.9,319.0 522.9,320.7 524.0,322.3 525.0,324.0 526.0,324.0 527.1,324.0 528.1,324.0 529.1,324.0 530.2,324.0 531.2,324.0 532.2,324.0 533.3,324.0 534.3,324.0 535.3,324.0 536.4,324.0 537.4,324.0 538.4,324.0 539.5,324.0 540.5,324.0 541.5,324.0 542.6,324.0 543.6,324.0 544.6,324.0 545.7,324.0 546.7,324.0 547.7,324.0 548.8,324.0 549.8,324.0 550.8,324.0 551.9,324.0 552.9,324.0 553.9,324.0 555.0,324.0 556.0,324.0 557.0,324.0 558.1,324.0 559.1,324.0 560.1,324.0 561.2,324.0 562.2,324.0 563.2,324.0 564.3,324.0 565.3,324.0 566.3,324.0 567.4,324.0 568.4,324.0 569.4,324.0 570.5,324.0 571.5,324.0 572.5,324.0 573.6,324.0 574.6,324.0 575.6,324.0 576.7,324.0 577.7,324.0 578.7,324.0 579.8,324.0 580.8,324.0 581.8,324.0 582.9,324.0 583.9,324.0 584.9,324.0 586.0,324.0 587.0,324.0 588.0,324.0 589.1,324.0 590.1,324.0 591.1,324.0 592.2,324.0 593.2,324.0 594.2,324.0 595.3,324.0 596.3,324.0 597.3,324.0 598.4,324.0 599.4,324.0 600.4,324.0 601.5,324.0 602.5,324.0 603.5,322.8 604.6,321.7 605.6,320.6 606.6,319.5 607.7,318.4 608.7,317.4 609.7,316.4 610.8,315.5 611.8,314.6 612.8,313.8 613.9,313.0 614.9,312.2 615.9,311.5 617.0,310.8 618.0,310.2 619.0,309.6 620.1,309.1 621.1,308.6 622.1,308.2 623.2,307.8 624.2,307.5 625.2,307.2 626.3,307.0 627.3,306.8 628.3,306.7 629.4,306.6 630.4,306.6 631.4,306.6 632.5,306.6 633.5,306.7 634.5,306.9 635.6,307.1 636.6,307.3 637.6,307.5 638.7,307.8 639.7,308.1 640.7,308.5 641.8,308.9 642.8,309.3 643.8,309.7 644.9,310.2 645.9,310.7 646.9,311.2 648.0,311.7 649.0,312.2 650.0,312.8 651.1,313.3 652.1,313.9 653.1,314.5 654.2,315.0 655.2,315.6 656.2,316.2 657.3,316.7 658.3,317.3 659.3,317.8 660.4,318.4 661.4,318.9 662.4,319.4 663.5,319.9 664.5,320.3 665.5,320.8 666.6,321.2 667.6,321.6 668.6,322.0 669.7,322.3 670.7,322.6 671.7,322.9 672.8,323.2 673.8,323.4 674.8,323.6 675.9,323.7 676.9,323.8 677.9,323.9 679.0,324.0 680.0,324.0 680.0,324.0" fill="#cfe8d4"></polygon>
+<polygon points="60.0,324.0 60.0,324.0 61.0,324.0 62.1,324.0 63.1,324.0 64.1,324.0 65.2,324.0 66.2,324.0 67.2,324.0 68.3,324.0 69.3,324.0 70.3,324.0 71.4,324.0 72.4,324.0 73.4,324.0 74.5,324.0 75.5,324.0 76.5,324.0 77.6,324.0 78.6,324.0 79.6,324.0 80.7,324.0 81.7,324.0 82.7,324.0 83.8,324.0 84.8,324.0 85.8,324.0 86.9,324.0 87.9,324.0 88.9,324.0 90.0,324.0 91.0,324.0 92.0,324.0 93.1,324.0 94.1,324.0 95.1,324.0 96.2,324.0 97.2,324.0 98.2,324.0 99.3,324.0 100.3,324.0 101.3,324.0 102.4,324.0 103.4,324.0 104.4,324.0 105.5,324.0 106.5,324.0 107.5,324.0 108.6,324.0 109.6,324.0 110.6,324.0 111.7,324.0 112.7,324.0 113.7,324.0 114.8,324.0 115.8,324.0 116.8,324.0 117.9,324.0 118.9,324.0 119.9,324.0 121.0,324.0 122.0,324.0 123.0,324.0 124.1,324.0 125.1,324.0 126.1,324.0 127.2,324.0 128.2,324.0 129.2,324.0 130.3,324.0 131.3,324.0 132.3,324.0 133.4,324.0 134.4,324.0 135.4,324.0 136.5,324.0 137.5,324.0 138.5,325.2 139.6,326.4 140.6,327.7 141.6,328.9 142.7,330.2 143.7,331.5 144.7,332.8 145.8,334.0 146.8,335.3 147.8,336.6 148.9,337.9 149.9,339.2 150.9,340.5 152.0,341.8 153.0,343.0 154.0,344.3 155.1,345.5 156.1,346.6 157.1,347.8 158.2,348.9 159.2,350.0 160.2,351.1 161.3,352.1 162.3,353.1 163.3,354.0 164.4,354.9 165.4,355.7 166.4,356.5 167.5,357.2 168.5,357.9 169.5,358.5 170.6,359.1 171.6,359.6 172.6,360.0 173.7,360.3 174.7,360.6 175.7,360.9 176.8,361.0 177.8,361.1 178.8,361.1 179.9,361.1 180.9,361.0 181.9,360.8 183.0,360.5 184.0,360.2 185.0,359.8 186.1,359.3 187.1,358.8 188.1,358.1 189.2,357.5 190.2,356.7 191.2,355.9 192.3,355.0 193.3,354.1 194.3,353.1 195.4,352.0 196.4,350.9 197.4,349.7 198.5,348.5 199.5,347.2 200.5,345.9 201.6,344.5 202.6,343.1 203.6,341.7 204.7,340.2 205.7,338.7 206.7,337.1 207.8,335.5 208.8,333.9 209.8,332.3 210.9,330.7 211.9,329.0 212.9,327.3 214.0,325.7 215.0,324.0 216.0,324.0 217.1,324.0 218.1,324.0 219.1,324.0 220.2,324.0 221.2,324.0 222.2,324.0 223.3,324.0 224.3,324.0 225.3,324.0 226.4,324.0 227.4,324.0 228.4,324.0 229.5,324.0 230.5,324.0 231.5,324.0 232.6,324.0 233.6,324.0 234.6,324.0 235.7,324.0 236.7,324.0 237.7,324.0 238.8,324.0 239.8,324.0 240.8,324.0 241.9,324.0 242.9,324.0 243.9,324.0 245.0,324.0 246.0,324.0 247.0,324.0 248.1,324.0 249.1,324.0 250.1,324.0 251.2,324.0 252.2,324.0 253.2,324.0 254.3,324.0 255.3,324.0 256.3,324.0 257.4,324.0 258.4,324.0 259.4,324.0 260.5,324.0 261.5,324.0 262.5,324.0 263.6,324.0 264.6,324.0 265.6,324.0 266.7,324.0 267.7,324.0 268.7,324.0 269.8,324.0 270.8,324.0 271.8,324.0 272.9,324.0 273.9,324.0 274.9,324.0 276.0,324.0 277.0,324.0 278.0,324.0 279.1,324.0 280.1,324.0 281.1,324.0 282.2,324.0 283.2,324.0 284.2,324.0 285.3,324.0 286.3,324.0 287.3,324.0 288.4,324.0 289.4,324.0 290.4,324.0 291.5,324.0 292.5,324.0 293.5,325.2 294.6,326.3 295.6,327.4 296.6,328.5 297.7,329.6 298.7,330.6 299.7,331.6 300.8,332.5 301.8,333.4 302.8,334.2 303.9,335.0 304.9,335.8 305.9,336.5 307.0,337.2 308.0,337.8 309.0,338.4 310.1,338.9 311.1,339.4 312.1,339.8 313.2,340.2 314.2,340.5 315.2,340.8 316.3,341.0 317.3,341.2 318.3,341.3 319.4,341.4 320.4,341.4 321.4,341.4 322.5,341.4 323.5,341.3 324.5,341.1 325.6,340.9 326.6,340.7 327.6,340.5 328.7,340.2 329.7,339.9 330.7,339.5 331.8,339.1 332.8,338.7 333.8,338.3 334.9,337.8 335.9,337.3 336.9,336.8 338.0,336.3 339.0,335.8 340.0,335.2 341.1,334.7 342.1,334.1 343.1,333.5 344.2,333.0 345.2,332.4 346.2,331.8 347.3,331.3 348.3,330.7 349.3,330.2 350.4,329.6 351.4,329.1 352.4,328.6 353.5,328.1 354.5,327.7 355.5,327.2 356.6,326.8 357.6,326.4 358.6,326.0 359.7,325.7 360.7,325.4 361.7,325.1 362.8,324.8 363.8,324.6 364.8,324.4 365.9,324.3 366.9,324.2 367.9,324.1 369.0,324.0 370.0,324.0 371.0,324.0 372.1,324.1 373.1,324.2 374.1,324.3 375.2,324.4 376.2,324.6 377.2,324.8 378.3,325.1 379.3,325.4 380.3,325.7 381.4,326.0 382.4,326.4 383.4,326.8 384.5,327.2 385.5,327.7 386.5,328.1 387.6,328.6 388.6,329.1 389.6,329.6 390.7,330.2 391.7,330.7 392.7,331.3 393.8,331.8 394.8,332.4 395.8,333.0 396.9,333.5 397.9,334.1 398.9,334.7 400.0,335.2 401.0,335.8 402.0,336.3 403.1,336.8 404.1,337.3 405.1,337.8 406.2,338.3 407.2,338.7 408.2,339.1 409.3,339.5 410.3,339.9 411.3,340.2 412.4,340.5 413.4,340.7 414.4,340.9 415.5,341.1 416.5,341.3 417.5,341.4 418.6,341.4 419.6,341.4 420.6,341.4 421.7,341.3 422.7,341.2 423.7,341.0 424.8,340.8 425.8,340.5 426.8,340.2 427.9,339.8 428.9,339.4 429.9,338.9 431.0,338.4 432.0,337.8 433.0,337.2 434.1,336.5 435.1,335.8 436.1,335.0 437.2,334.2 438.2,333.4 439.2,332.5 440.3,331.6 441.3,330.6 442.3,329.6 443.4,328.5 444.4,327.4 445.4,326.3 446.5,325.2 447.5,324.0 448.5,324.0 449.6,324.0 450.6,324.0 451.6,324.0 452.7,324.0 453.7,324.0 454.7,324.0 455.8,324.0 456.8,324.0 457.8,324.0 458.9,324.0 459.9,324.0 460.9,324.0 462.0,324.0 463.0,324.0 464.0,324.0 465.1,324.0 466.1,324.0 467.1,324.0 468.2,324.0 469.2,324.0 470.2,324.0 471.3,324.0 472.3,324.0 473.3,324.0 474.4,324.0 475.4,324.0 476.4,324.0 477.5,324.0 478.5,324.0 479.5,324.0 480.6,324.0 481.6,324.0 482.6,324.0 483.7,324.0 484.7,324.0 485.7,324.0 486.8,324.0 487.8,324.0 488.8,324.0 489.9,324.0 490.9,324.0 491.9,324.0 493.0,324.0 494.0,324.0 495.0,324.0 496.1,324.0 497.1,324.0 498.1,324.0 499.2,324.0 500.2,324.0 501.2,324.0 502.3,324.0 503.3,324.0 504.3,324.0 505.4,324.0 506.4,324.0 507.4,324.0 508.5,324.0 509.5,324.0 510.5,324.0 511.6,324.0 512.6,324.0 513.6,324.0 514.7,324.0 515.7,324.0 516.7,324.0 517.8,324.0 518.8,324.0 519.8,324.0 520.9,324.0 521.9,324.0 522.9,324.0 524.0,324.0 525.0,324.0 526.0,325.7 527.1,327.3 528.1,329.0 529.1,330.7 530.2,332.3 531.2,333.9 532.2,335.5 533.3,337.1 534.3,338.7 535.3,340.2 536.4,341.7 537.4,343.1 538.4,344.5 539.5,345.9 540.5,347.2 541.5,348.5 542.6,349.7 543.6,350.9 544.6,352.0 545.7,353.1 546.7,354.1 547.7,355.0 548.8,355.9 549.8,356.7 550.8,357.5 551.9,358.1 552.9,358.8 553.9,359.3 555.0,359.8 556.0,360.2 557.0,360.5 558.1,360.8 559.1,361.0 560.1,361.1 561.2,361.1 562.2,361.1 563.2,361.0 564.3,360.9 565.3,360.6 566.3,360.3 567.4,360.0 568.4,359.6 569.4,359.1 570.5,358.5 571.5,357.9 572.5,357.2 573.6,356.5 574.6,355.7 575.6,354.9 576.7,354.0 577.7,353.1 578.7,352.1 579.8,351.1 580.8,350.0 581.8,348.9 582.9,347.8 583.9,346.6 584.9,345.5 586.0,344.3 587.0,343.0 588.0,341.8 589.1,340.5 590.1,339.2 591.1,337.9 592.2,336.6 593.2,335.3 594.2,334.0 595.3,332.8 596.3,331.5 597.3,330.2 598.4,328.9 599.4,327.7 600.4,326.4 601.5,325.2 602.5,324.0 603.5,324.0 604.6,324.0 605.6,324.0 606.6,324.0 607.7,324.0 608.7,324.0 609.7,324.0 610.8,324.0 611.8,324.0 612.8,324.0 613.9,324.0 614.9,324.0 615.9,324.0 617.0,324.0 618.0,324.0 619.0,324.0 620.1,324.0 621.1,324.0 622.1,324.0 623.2,324.0 624.2,324.0 625.2,324.0 626.3,324.0 627.3,324.0 628.3,324.0 629.4,324.0 630.4,324.0 631.4,324.0 632.5,324.0 633.5,324.0 634.5,324.0 635.6,324.0 636.6,324.0 637.6,324.0 638.7,324.0 639.7,324.0 640.7,324.0 641.8,324.0 642.8,324.0 643.8,324.0 644.9,324.0 645.9,324.0 646.9,324.0 648.0,324.0 649.0,324.0 650.0,324.0 651.1,324.0 652.1,324.0 653.1,324.0 654.2,324.0 655.2,324.0 656.2,324.0 657.3,324.0 658.3,324.0 659.3,324.0 660.4,324.0 661.4,324.0 662.4,324.0 663.5,324.0 664.5,324.0 665.5,324.0 666.6,324.0 667.6,324.0 668.6,324.0 669.7,324.0 670.7,324.0 671.7,324.0 672.8,324.0 673.8,324.0 674.8,324.0 675.9,324.0 676.9,324.0 677.9,324.0 679.0,324.0 680.0,324.0 680.0,324.0" fill="#f3d3d3"></polygon>
+<polyline points="60.0,324.0 61.0,324.0 62.1,323.9 63.1,323.8 64.1,323.7 65.2,323.6 66.2,323.4 67.2,323.2 68.3,322.9 69.3,322.6 70.3,322.3 71.4,322.0 72.4,321.6 73.4,321.2 74.5,320.8 75.5,320.3 76.5,319.9 77.6,319.4 78.6,318.9 79.6,318.4 80.7,317.8 81.7,317.3 82.7,316.7 83.8,316.2 84.8,315.6 85.8,315.0 86.9,314.5 87.9,313.9 88.9,313.3 90.0,312.8 91.0,312.2 92.0,311.7 93.1,311.2 94.1,310.7 95.1,310.2 96.2,309.7 97.2,309.3 98.2,308.9 99.3,308.5 100.3,308.1 101.3,307.8 102.4,307.5 103.4,307.3 104.4,307.1 105.5,306.9 106.5,306.7 107.5,306.6 108.6,306.6 109.6,306.6 110.6,306.6 111.7,306.7 112.7,306.8 113.7,307.0 114.8,307.2 115.8,307.5 116.8,307.8 117.9,308.2 118.9,308.6 119.9,309.1 121.0,309.6 122.0,310.2 123.0,310.8 124.1,311.5 125.1,312.2 126.1,313.0 127.2,313.8 128.2,314.6 129.2,315.5 130.3,316.4 131.3,317.4 132.3,318.4 133.4,319.5 134.4,320.6 135.4,321.7 136.5,322.8 137.5,324.0 138.5,325.2 139.6,326.4 140.6,327.7 141.6,328.9 142.7,330.2 143.7,331.5 144.7,332.8 145.8,334.0 146.8,335.3 147.8,336.6 148.9,337.9 149.9,339.2 150.9,340.5 152.0,341.8 153.0,343.0 154.0,344.3 155.1,345.5 156.1,346.6 157.1,347.8 158.2,348.9 159.2,350.0 160.2,351.1 161.3,352.1 162.3,353.1 163.3,354.0 164.4,354.9 165.4,355.7 166.4,356.5 167.5,357.2 168.5,357.9 169.5,358.5 170.6,359.1 171.6,359.6 172.6,360.0 173.7,360.3 174.7,360.6 175.7,360.9 176.8,361.0 177.8,361.1 178.8,361.1 179.9,361.1 180.9,361.0 181.9,360.8 183.0,360.5 184.0,360.2 185.0,359.8 186.1,359.3 187.1,358.8 188.1,358.1 189.2,357.5 190.2,356.7 191.2,355.9 192.3,355.0 193.3,354.1 194.3,353.1 195.4,352.0 196.4,350.9 197.4,349.7 198.5,348.5 199.5,347.2 200.5,345.9 201.6,344.5 202.6,343.1 203.6,341.7 204.7,340.2 205.7,338.7 206.7,337.1 207.8,335.5 208.8,333.9 209.8,332.3 210.9,330.7 211.9,329.0 212.9,327.3 214.0,325.7 215.0,324.0 216.0,322.3 217.1,320.7 218.1,319.0 219.1,317.3 220.2,315.7 221.2,314.1 222.2,312.5 223.3,310.9 224.3,309.3 225.3,307.8 226.4,306.3 227.4,304.9 228.4,303.5 229.5,302.1 230.5,300.8 231.5,299.5 232.6,298.3 233.6,297.1 234.6,296.0 235.7,294.9 236.7,293.9 237.7,293.0 238.8,292.1 239.8,291.3 240.8,290.5 241.9,289.9 242.9,289.2 243.9,288.7 245.0,288.2 246.0,287.8 247.0,287.5 248.1,287.2 249.1,287.0 250.1,286.9 251.2,286.9 252.2,286.9 253.2,287.0 254.3,287.1 255.3,287.4 256.3,287.7 257.4,288.0 258.4,288.4 259.4,288.9 260.5,289.5 261.5,290.1 262.5,290.8 263.6,291.5 264.6,292.3 265.6,293.1 266.7,294.0 267.7,294.9 268.7,295.9 269.8,296.9 270.8,298.0 271.8,299.1 272.9,300.2 273.9,301.4 274.9,302.5 276.0,303.7 277.0,305.0 278.0,306.2 279.1,307.5 280.1,308.8 281.1,310.1 282.2,311.4 283.2,312.7 284.2,314.0 285.3,315.2 286.3,316.5 287.3,317.8 288.4,319.1 289.4,320.3 290.4,321.6 291.5,322.8 292.5,324.0 293.5,325.2 294.6,326.3 295.6,327.4 296.6,328.5 297.7,329.6 298.7,330.6 299.7,331.6 300.8,332.5 301.8,333.4 302.8,334.2 303.9,335.0 304.9,335.8 305.9,336.5 307.0,337.2 308.0,337.8 309.0,338.4 310.1,338.9 311.1,339.4 312.1,339.8 313.2,340.2 314.2,340.5 315.2,340.8 316.3,341.0 317.3,341.2 318.3,341.3 319.4,341.4 320.4,341.4 321.4,341.4 322.5,341.4 323.5,341.3 324.5,341.1 325.6,340.9 326.6,340.7 327.6,340.5 328.7,340.2 329.7,339.9 330.7,339.5 331.8,339.1 332.8,338.7 333.8,338.3 334.9,337.8 335.9,337.3 336.9,336.8 338.0,336.3 339.0,335.8 340.0,335.2 341.1,334.7 342.1,334.1 343.1,333.5 344.2,333.0 345.2,332.4 346.2,331.8 347.3,331.3 348.3,330.7 349.3,330.2 350.4,329.6 351.4,329.1 352.4,328.6 353.5,328.1 354.5,327.7 355.5,327.2 356.6,326.8 357.6,326.4 358.6,326.0 359.7,325.7 360.7,325.4 361.7,325.1 362.8,324.8 363.8,324.6 364.8,324.4 365.9,324.3 366.9,324.2 367.9,324.1 369.0,324.0 370.0,324.0 371.0,324.0 372.1,324.1 373.1,324.2 374.1,324.3 375.2,324.4 376.2,324.6 377.2,324.8 378.3,325.1 379.3,325.4 380.3,325.7 381.4,326.0 382.4,326.4 383.4,326.8 384.5,327.2 385.5,327.7 386.5,328.1 387.6,328.6 388.6,329.1 389.6,329.6 390.7,330.2 391.7,330.7 392.7,331.3 393.8,331.8 394.8,332.4 395.8,333.0 396.9,333.5 397.9,334.1 398.9,334.7 400.0,335.2 401.0,335.8 402.0,336.3 403.1,336.8 404.1,337.3 405.1,337.8 406.2,338.3 407.2,338.7 408.2,339.1 409.3,339.5 410.3,339.9 411.3,340.2 412.4,340.5 413.4,340.7 414.4,340.9 415.5,341.1 416.5,341.3 417.5,341.4 418.6,341.4 419.6,341.4 420.6,341.4 421.7,341.3 422.7,341.2 423.7,341.0 424.8,340.8 425.8,340.5 426.8,340.2 427.9,339.8 428.9,339.4 429.9,338.9 431.0,338.4 432.0,337.8 433.0,337.2 434.1,336.5 435.1,335.8 436.1,335.0 437.2,334.2 438.2,333.4 439.2,332.5 440.3,331.6 441.3,330.6 442.3,329.6 443.4,328.5 444.4,327.4 445.4,326.3 446.5,325.2 447.5,324.0 448.5,322.8 449.6,321.6 450.6,320.3 451.6,319.1 452.7,317.8 453.7,316.5 454.7,315.2 455.8,314.0 456.8,312.7 457.8,311.4 458.9,310.1 459.9,308.8 460.9,307.5 462.0,306.2 463.0,305.0 464.0,303.7 465.1,302.5 466.1,301.4 467.1,300.2 468.2,299.1 469.2,298.0 470.2,296.9 471.3,295.9 472.3,294.9 473.3,294.0 474.4,293.1 475.4,292.3 476.4,291.5 477.5,290.8 478.5,290.1 479.5,289.5 480.6,288.9 481.6,288.4 482.6,288.0 483.7,287.7 484.7,287.4 485.7,287.1 486.8,287.0 487.8,286.9 488.8,286.9 489.9,286.9 490.9,287.0 491.9,287.2 493.0,287.5 494.0,287.8 495.0,288.2 496.1,288.7 497.1,289.2 498.1,289.9 499.2,290.5 500.2,291.3 501.2,292.1 502.3,293.0 503.3,293.9 504.3,294.9 505.4,296.0 506.4,297.1 507.4,298.3 508.5,299.5 509.5,300.8 510.5,302.1 511.6,303.5 512.6,304.9 513.6,306.3 514.7,307.8 515.7,309.3 516.7,310.9 517.8,312.5 518.8,314.1 519.8,315.7 520.9,317.3 521.9,319.0 522.9,320.7 524.0,322.3 525.0,324.0 526.0,325.7 527.1,327.3 528.1,329.0 529.1,330.7 530.2,332.3 531.2,333.9 532.2,335.5 533.3,337.1 534.3,338.7 535.3,340.2 536.4,341.7 537.4,343.1 538.4,344.5 539.5,345.9 540.5,347.2 541.5,348.5 542.6,349.7 543.6,350.9 544.6,352.0 545.7,353.1 546.7,354.1 547.7,355.0 548.8,355.9 549.8,356.7 550.8,357.5 551.9,358.1 552.9,358.8 553.9,359.3 555.0,359.8 556.0,360.2 557.0,360.5 558.1,360.8 559.1,361.0 560.1,361.1 561.2,361.1 562.2,361.1 563.2,361.0 564.3,360.9 565.3,360.6 566.3,360.3 567.4,360.0 568.4,359.6 569.4,359.1 570.5,358.5 571.5,357.9 572.5,357.2 573.6,356.5 574.6,355.7 575.6,354.9 576.7,354.0 577.7,353.1 578.7,352.1 579.8,351.1 580.8,350.0 581.8,348.9 582.9,347.8 583.9,346.6 584.9,345.5 586.0,344.3 587.0,343.0 588.0,341.8 589.1,340.5 590.1,339.2 591.1,337.9 592.2,336.6 593.2,335.3 594.2,334.0 595.3,332.8 596.3,331.5 597.3,330.2 598.4,328.9 599.4,327.7 600.4,326.4 601.5,325.2 602.5,324.0 603.5,322.8 604.6,321.7 605.6,320.6 606.6,319.5 607.7,318.4 608.7,317.4 609.7,316.4 610.8,315.5 611.8,314.6 612.8,313.8 613.9,313.0 614.9,312.2 615.9,311.5 617.0,310.8 618.0,310.2 619.0,309.6 620.1,309.1 621.1,308.6 622.1,308.2 623.2,307.8 624.2,307.5 625.2,307.2 626.3,307.0 627.3,306.8 628.3,306.7 629.4,306.6 630.4,306.6 631.4,306.6 632.5,306.6 633.5,306.7 634.5,306.9 635.6,307.1 636.6,307.3 637.6,307.5 638.7,307.8 639.7,308.1 640.7,308.5 641.8,308.9 642.8,309.3 643.8,309.7 644.9,310.2 645.9,310.7 646.9,311.2 648.0,311.7 649.0,312.2 650.0,312.8 651.1,313.3 652.1,313.9 653.1,314.5 654.2,315.0 655.2,315.6 656.2,316.2 657.3,316.7 658.3,317.3 659.3,317.8 660.4,318.4 661.4,318.9 662.4,319.4 663.5,319.9 664.5,320.3 665.5,320.8 666.6,321.2 667.6,321.6 668.6,322.0 669.7,322.3 670.7,322.6 671.7,322.9 672.8,323.2 673.8,323.4 674.8,323.6 675.9,323.7 676.9,323.8 677.9,323.9 679.0,324.0 680.0,324.0" fill="none" stroke="#861F41" stroke-width="2.4" stroke-linejoin="round"></polyline>
+<line x1="60" y1="370" x2="60" y2="276" class="ax" marker-end="url(#arr5)"></line>
+<line x1="60" y1="324" x2="702" y2="324" class="ax" marker-end="url(#arr5)"></line>
+<text x="68.0" y="341" text-anchor="middle" font-size="13" fill="#3a3a3a">0</text>
+<text x="215.0" y="341" text-anchor="middle" font-size="13" fill="#3a3a3a">50</text>
+<text x="370.0" y="341" text-anchor="middle" font-size="13" fill="#3a3a3a">100</text>
+<text x="525.0" y="341" text-anchor="middle" font-size="13" fill="#3a3a3a">150</text>
+<text x="680.0" y="341" text-anchor="middle" font-size="13" fill="#3a3a3a">200</text>
+<text x="702" y="316" text-anchor="end" font-size="14" fill="#1a1a1a">t (μs)</text>
+</svg>
+<figcaption>Signal, reference and product, lined up in time; product humps above
+the axis green, below red.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> Label the time axis from the period: 50 μs
+per signal cycle, so 4 cycles end at 200 μs. The reference makes one
+slow cycle in that time. Multiply point by point: the product is
+positive where the two have the same sign, negative where they differ,
+and its humps are tallest where the reference is near its peak.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li id="q1c">
+<p class="partq"><strong>(1 pt)</strong> What is the <strong>integral of the product</strong> from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
+to the largest time shown in (b)? How do you know? From this, conclude
+whether the signal and the reference are
+<strong>orthogonal</strong>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">the integral is the area under the product
+curve</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">every positive hump has a matching negative one</span></p>
+<div class="fstep">
+<p><span class="cline">first half:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>+</mi><annotation encoding="application/x-tex">+</annotation></semantics></math>small,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>big,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>+</mi><annotation encoding="application/x-tex">+</annotation></semantics></math>big,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>small;
+second half: the same with the signs flipped</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+areas cancel</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mrow><mn>200</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow></msubsup><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">signal</mtext><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">reference</mtext><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">orthogonal</mtext></mrow><annotation encoding="application/x-tex">\int_{0}^{200\ \mu\text{s}} (\text{signal})(\text{reference})\,dt = 0 \quad\Rightarrow\quad \text{orthogonal}</annotation></semantics></math></p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> The positive and negative humps of the
+product are equal in size, so the area, the integral, is zero. A zero
+integral of the product is what orthogonal means: the 5 kHz reference
+finds no 5 kHz in the 20 kHz signal.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(2 pts)</strong> Every year, people move between the kingdoms of
+<strong>Arendelle</strong> and <strong>Weaselton</strong> at the rates
+shown in the diagram. Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>n</mi></msub><annotation encoding="application/x-tex">a_{n}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mi>n</mi></msub><annotation encoding="application/x-tex">w_{n}</annotation></semantics></math>
+be the populations of Arendelle and Weaselton in year
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>.
+Write a <strong>system of two equations</strong> that gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>n</mi></msub><annotation encoding="application/x-tex">a_{n}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mi>n</mi></msub><annotation encoding="application/x-tex">w_{n}</annotation></semantics></math>
+in terms of the previous year’s populations,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">a_{n-1}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">w_{n-1}</annotation></semantics></math>.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 720 212" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The diagram printed in Problem 2: Arendelle and Weaselton</title>
+<desc id="gd3">Two boxes, Arendelle on the left and Weaselton on the right. An arrow from Arendelle to Weaselton is labeled: 5 percent of Arendelle's people move to Weaselton every year. An arrow from Weaselton back to Arendelle is labeled: 15 percent of Weaselton's people move to Arendelle every year.</desc>
+<defs><marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<rect x="30" y="78" width="160" height="56" rx="10" fill="#fff" stroke="#1a1a1a" stroke-width="2"></rect>
+<text x="110" y="113" text-anchor="middle" font-size="19" font-weight="700" fill="#1a1a1a">Arendelle</text>
+<rect x="530" y="78" width="160" height="56" rx="10" fill="#fff" stroke="#1a1a1a" stroke-width="2"></rect>
+<text x="610" y="113" text-anchor="middle" font-size="19" font-weight="700" fill="#1a1a1a">Weaselton</text>
+<path d="M 190 82 Q 360 8 530 82" fill="none" stroke="#1a1a1a" stroke-width="2.4"></path>
+<polygon points="530.0,82.0 517.7,82.7 522.1,72.6" fill="#1a1a1a"></polygon>
+<path d="M 530 130 Q 360 204 190 130" fill="none" stroke="#1a1a1a" stroke-width="2.4"></path>
+<polygon points="190.0,130.0 202.3,129.3 197.9,139.4" fill="#1a1a1a"></polygon>
+<text x="360" y="30" text-anchor="middle" font-size="16" fill="#1a1a1a">5% of Arendelle’s people move to Weaselton every year</text>
+<text x="360" y="200" text-anchor="middle" font-size="16" fill="#1a1a1a">15% of Weaselton’s people move to Arendelle every year</text>
+</svg>
+<figcaption>The diagram as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="factors">
+<div class="factor ra">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.95</mn><mspace width="0.167em"></mspace><msub><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">0.95\,a_{n-1}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>stay</strong> in Arendelle
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">1 - 0.05</annotation></semantics></math>)</p>
+</div>
+<p><span class="times" aria-hidden="true">+</span><span
+class="visually-hidden">plus</span></p>
+<div class="factor rb">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.15</mn><mspace width="0.167em"></mspace><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">0.15\,w_{n-1}</annotation></semantics></math></p>
+<p><span class="arw" aria-hidden="true">↓</span></p>
+<p><strong>arrive</strong> from Weaselton</p>
+</div>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">add
+them; then the same for Weaselton</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>0.95</mn><mspace width="0.167em"></mspace><msub><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.15</mn><mspace width="0.167em"></mspace><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{n} = 0.95\,a_{n-1} + 0.15\,w_{n-1}</annotation></semantics></math></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>n</mi></msub><mo>=</mo><mn>0.05</mn><mspace width="0.167em"></mspace><msub><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.85</mn><mspace width="0.167em"></mspace><msub><mi>w</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">w_{n} = 0.05\,a_{n-1} + 0.85\,w_{n-1}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> check: the total stays the same, because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.95</mn><mo>+</mo><mn>0.05</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0.95 + 0.05 = 1</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.15</mn><mo>+</mo><mn>0.85</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0.15 + 0.85 = 1</annotation></semantics></math>.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Each new population is the people who stay
+(one minus the rate leaving) plus the people who arrive from the other
+kingdom (that kingdom’s rate times its population last year).</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(2 pts)</strong> The spreadsheet below runs the model of Problem 2 from 500 people in
+each kingdom in Year 0. A1 and A2 hold the two rates, and Arendelle’s
+Year 1 population (B6) is filled in. What formula do you type in the
+formula bar to calculate <strong>Weaselton’s population in Year
+1</strong> (cell C6)? Use <strong>dollar signs</strong> ($) so the same
+formula can be copied down to the later years.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 414 310" role="img" aria-labelledby="gt6 gd6">
+<title id="gt6">The spreadsheet printed in Problem 3</title>
+<desc id="gd6">A spreadsheet with cell C6 selected and an empty formula bar. A1 holds 0.05, labeled rate, Arendelle to Weaselton; A2 holds 0.15, labeled rate, Weaselton to Arendelle. Row 4 has the headers Year, Arendelle, Weaselton. Row 5: year 0, Arendelle 500, Weaselton 500. Row 6: year 1, Arendelle 550, Weaselton empty. Rows 7 and 8: years 2 and 3.</desc>
+<defs><marker id="arr6" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<rect x="0" y="6" width="58" height="32" fill="#fff" stroke="#888"></rect>
+<text x="29" y="28" text-anchor="middle" font-size="16" fill="#1a1a1a">C6</text>
+<text x="74" y="28" font-size="16" font-style="italic" fill="#666">fx</text>
+<rect x="96" y="6" width="318" height="32" fill="#fff" stroke="#888"></rect>
+<rect x="0" y="54" width="414" height="28" fill="#e6ecef"></rect>
+<rect x="0" y="54" width="34" height="252" fill="#e6ecef"></rect>
+<line x1="0" y1="54" x2="414" y2="54" stroke="#b9c7ce"></line>
+<line x1="0" y1="82" x2="414" y2="82" stroke="#b9c7ce"></line>
+<line x1="0" y1="110" x2="414" y2="110" stroke="#b9c7ce"></line>
+<line x1="0" y1="138" x2="414" y2="138" stroke="#b9c7ce"></line>
+<line x1="0" y1="166" x2="414" y2="166" stroke="#b9c7ce"></line>
+<line x1="0" y1="194" x2="414" y2="194" stroke="#b9c7ce"></line>
+<line x1="0" y1="222" x2="414" y2="222" stroke="#b9c7ce"></line>
+<line x1="0" y1="250" x2="414" y2="250" stroke="#b9c7ce"></line>
+<line x1="0" y1="278" x2="414" y2="278" stroke="#b9c7ce"></line>
+<line x1="0" y1="306" x2="414" y2="306" stroke="#b9c7ce"></line>
+<line x1="34" y1="54" x2="34" y2="306" stroke="#b9c7ce"></line>
+<text x="74" y="73" text-anchor="middle" font-size="14" fill="#555">A</text>
+<line x1="114" y1="54" x2="114" y2="306" stroke="#b9c7ce"></line>
+<text x="189" y="73" text-anchor="middle" font-size="14" fill="#555">B</text>
+<line x1="264" y1="54" x2="264" y2="306" stroke="#b9c7ce"></line>
+<text x="339" y="73" text-anchor="middle" font-size="14" fill="#555">C</text>
+<line x1="414" y1="54" x2="414" y2="306" stroke="#b9c7ce"></line>
+<text x="17" y="101" text-anchor="middle" font-size="14" fill="#555">1</text>
+<text x="17" y="129" text-anchor="middle" font-size="14" fill="#555">2</text>
+<text x="17" y="157" text-anchor="middle" font-size="14" fill="#555">3</text>
+<text x="17" y="185" text-anchor="middle" font-size="14" fill="#555">4</text>
+<text x="17" y="213" text-anchor="middle" font-size="14" fill="#555">5</text>
+<text x="17" y="241" text-anchor="middle" font-size="14" fill="#555">6</text>
+<text x="17" y="269" text-anchor="middle" font-size="14" fill="#555">7</text>
+<text x="17" y="297" text-anchor="middle" font-size="14" fill="#555">8</text>
+<text x="108" y="101" font-size="15" fill="#1a1a1a" text-anchor="end">0.05</text>
+<text x="120" y="101" font-size="15" fill="#1a1a1a">rate, Arendelle → Weaselton</text>
+<text x="108" y="129" font-size="15" fill="#1a1a1a" text-anchor="end">0.15</text>
+<text x="120" y="129" font-size="15" fill="#1a1a1a">rate, Weaselton → Arendelle</text>
+<text x="40" y="185" font-size="15" fill="#1a1a1a">Year</text>
+<text x="120" y="185" font-size="15" fill="#1a1a1a">Arendelle</text>
+<text x="270" y="185" font-size="15" fill="#1a1a1a">Weaselton</text>
+<text x="108" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">0</text>
+<text x="258" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">500</text>
+<text x="408" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">500</text>
+<text x="108" y="241" font-size="15" fill="#1a1a1a" text-anchor="end">1</text>
+<text x="258" y="241" font-size="15" fill="#1a1a1a" text-anchor="end">550</text>
+<text x="108" y="269" font-size="15" fill="#1a1a1a" text-anchor="end">2</text>
+<text x="108" y="297" font-size="15" fill="#1a1a1a" text-anchor="end">3</text>
+<rect x="264" y="222" width="150" height="28" fill="none" stroke="#1a1a1a" stroke-width="3"></rect>
+</svg>
+<figcaption>The spreadsheet as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">Weaselton, Year 1 = (who arrive from Arendelle) +
+(who stay in Weaselton), both from Year 0</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">write the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mi>n</mi></msub><annotation encoding="application/x-tex">w_{n}</annotation></semantics></math>
+equation with cell names</span></p>
+<div class="fstep">
+<p><span
+class="cline"><code>=$A$1<em>B5+(1-$A$2)</em>C5</code></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">copied down, unlocked references move one row</span></p>
+<div class="fstep">
+<p><span class="cline">B5, C5 → B6, C6 (last year’s populations); the
+rates stay in A1 and A2</span></p>
+</div>
+<figure class="graph mini" id="fig-sheet_key">
+<svg viewBox="0 0 414 310" role="img" aria-labelledby="gt7 gd7">
+<title id="gt7">The solution: the formula in the formula bar, and 450 in C6</title>
+<desc id="gd7">The same spreadsheet, with the formula equals dollar A dollar 1 times B5, plus open parenthesis 1 minus dollar A dollar 2 close parenthesis times C5, in the formula bar, and cell C6 showing 450.</desc>
+<defs><marker id="arr7" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<rect x="0" y="6" width="58" height="32" fill="#fff" stroke="#888"></rect>
+<text x="29" y="28" text-anchor="middle" font-size="16" fill="#1a1a1a">C6</text>
+<text x="74" y="28" font-size="16" font-style="italic" fill="#666">fx</text>
+<rect x="96" y="6" width="318" height="32" fill="#fff" stroke="#888"></rect>
+<text x="104" y="28" font-size="16" font-family="Consolas, monospace" fill="#861F41">=&#36;A&#36;1*B5+(1-&#36;A&#36;2)*C5</text>
+<rect x="0" y="54" width="414" height="28" fill="#e6ecef"></rect>
+<rect x="0" y="54" width="34" height="252" fill="#e6ecef"></rect>
+<line x1="0" y1="54" x2="414" y2="54" stroke="#b9c7ce"></line>
+<line x1="0" y1="82" x2="414" y2="82" stroke="#b9c7ce"></line>
+<line x1="0" y1="110" x2="414" y2="110" stroke="#b9c7ce"></line>
+<line x1="0" y1="138" x2="414" y2="138" stroke="#b9c7ce"></line>
+<line x1="0" y1="166" x2="414" y2="166" stroke="#b9c7ce"></line>
+<line x1="0" y1="194" x2="414" y2="194" stroke="#b9c7ce"></line>
+<line x1="0" y1="222" x2="414" y2="222" stroke="#b9c7ce"></line>
+<line x1="0" y1="250" x2="414" y2="250" stroke="#b9c7ce"></line>
+<line x1="0" y1="278" x2="414" y2="278" stroke="#b9c7ce"></line>
+<line x1="0" y1="306" x2="414" y2="306" stroke="#b9c7ce"></line>
+<line x1="34" y1="54" x2="34" y2="306" stroke="#b9c7ce"></line>
+<text x="74" y="73" text-anchor="middle" font-size="14" fill="#555">A</text>
+<line x1="114" y1="54" x2="114" y2="306" stroke="#b9c7ce"></line>
+<text x="189" y="73" text-anchor="middle" font-size="14" fill="#555">B</text>
+<line x1="264" y1="54" x2="264" y2="306" stroke="#b9c7ce"></line>
+<text x="339" y="73" text-anchor="middle" font-size="14" fill="#555">C</text>
+<line x1="414" y1="54" x2="414" y2="306" stroke="#b9c7ce"></line>
+<text x="17" y="101" text-anchor="middle" font-size="14" fill="#555">1</text>
+<text x="17" y="129" text-anchor="middle" font-size="14" fill="#555">2</text>
+<text x="17" y="157" text-anchor="middle" font-size="14" fill="#555">3</text>
+<text x="17" y="185" text-anchor="middle" font-size="14" fill="#555">4</text>
+<text x="17" y="213" text-anchor="middle" font-size="14" fill="#555">5</text>
+<text x="17" y="241" text-anchor="middle" font-size="14" fill="#555">6</text>
+<text x="17" y="269" text-anchor="middle" font-size="14" fill="#555">7</text>
+<text x="17" y="297" text-anchor="middle" font-size="14" fill="#555">8</text>
+<text x="108" y="101" font-size="15" fill="#1a1a1a" text-anchor="end">0.05</text>
+<text x="120" y="101" font-size="15" fill="#1a1a1a">rate, Arendelle → Weaselton</text>
+<text x="108" y="129" font-size="15" fill="#1a1a1a" text-anchor="end">0.15</text>
+<text x="120" y="129" font-size="15" fill="#1a1a1a">rate, Weaselton → Arendelle</text>
+<text x="40" y="185" font-size="15" fill="#1a1a1a">Year</text>
+<text x="120" y="185" font-size="15" fill="#1a1a1a">Arendelle</text>
+<text x="270" y="185" font-size="15" fill="#1a1a1a">Weaselton</text>
+<text x="108" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">0</text>
+<text x="258" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">500</text>
+<text x="408" y="213" font-size="15" fill="#1a1a1a" text-anchor="end">500</text>
+<text x="108" y="241" font-size="15" fill="#1a1a1a" text-anchor="end">1</text>
+<text x="258" y="241" font-size="15" fill="#1a1a1a" text-anchor="end">550</text>
+<text x="108" y="269" font-size="15" fill="#1a1a1a" text-anchor="end">2</text>
+<text x="108" y="297" font-size="15" fill="#1a1a1a" text-anchor="end">3</text>
+<rect x="264" y="222" width="150" height="28" fill="none" stroke="#1a1a1a" stroke-width="3"></rect>
+<text x="408" y="241" text-anchor="end" font-size="15" font-weight="700" fill="#861F41">450</text>
+</svg>
+<figcaption>The formula in the formula bar, and C6 showing 0.05 × 500 + 0.85 ×
+500 = 450.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> Write the Weaselton equation with cells:
+A1 times last year’s Arendelle, plus one minus A2 times last year’s
+Weaselton. Put dollar signs on the rate cells only, so every year uses
+the same rates and the populations of the year before. Spreadsheets need
+a <code>*</code> for every product.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="qec">
+<p class="stem"><strong>EC.</strong> <strong>(2 pts)</strong> <strong>Extra credit.</strong> (1) Suppose Arendelle and Weaselton
+have <strong>1 million</strong> people combined. On the axes, sketch the
+<strong>equilibrium population vector</strong> (the populations after a
+long time). Label it with numbers. (2) Name what you think is the
+<strong>biggest unrealistic assumption</strong> in this model, and say
+briefly why.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 470 280" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">The empty axes printed in the extra credit</title>
+<desc id="gd1">Empty axes: Arendelle population along the horizontal axis and Weaselton population up the vertical axis, with no numbers.</desc>
+<defs><marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="60" y1="230" x2="440" y2="230" class="ax" marker-end="url(#arr1)"></line>
+<line x1="60" y1="230" x2="60" y2="40" class="ax" marker-end="url(#arr1)"></line>
+<text x="446" y="270" text-anchor="end" font-size="15" fill="#1a1a1a">Arendelle population</text>
+<text x="40" y="30" font-size="15" fill="#1a1a1a">Weaselton population</text>
+<text x="54" y="248" text-anchor="end" font-size="14" fill="#3a3a3a">0</text>
+</svg>
+<figcaption>The axes as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question EC</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">equilibrium: as many people move each way,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.05</mn><mspace width="0.167em"></mspace><mi>a</mi><mo>=</mo><mn>0.15</mn><mspace width="0.167em"></mspace><mi>w</mi></mrow><annotation encoding="application/x-tex">0.05\,a = 0.15\,w</annotation></semantics></math>,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>3</mn><mi>w</mi></mrow><annotation encoding="application/x-tex">a = 3w</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+total is one million</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>w</mi><mo>=</mo><mn>4</mn><mi>w</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>000</mn><mo>,</mo><mn>000</mn><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>w</mi><mo>=</mo><mn>250</mn><mo>,</mo><mn>000</mn><mo>,</mo><mspace width="0.222em"></mspace><mspace width="0.222em"></mspace><mi>a</mi><mo>=</mo><mn>750</mn><mo>,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">a + w = 4w = 1{,}000{,}000 \quad\Rightarrow\quad w = 250{,}000,\ \ a = 750{,}000</annotation></semantics></math></p>
+</div>
+<figure class="graph mini" id="fig-ec_vector">
+<svg viewBox="0 0 500 280" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">The equilibrium vector: an arrow to (750,000, 250,000)</title>
+<desc id="gd2">The same axes, drawn on one scale. An arrow runs from the origin to the point 750,000 along the Arendelle axis and 250,000 up the Weaselton axis, labeled (750,000, 250,000), with dashed lines down and across to those values on the axes. The arrow is shallow: three times as far across as up.</desc>
+<defs><marker id="arr2" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="70" y1="230" x2="470" y2="230" class="ax" marker-end="url(#arr2)"></line>
+<line x1="70" y1="230" x2="70" y2="90" class="ax" marker-end="url(#arr2)"></line>
+<text x="476" y="270" text-anchor="end" font-size="15" fill="#1a1a1a">Arendelle population</text>
+<text x="50" y="80" font-size="15" fill="#1a1a1a">Weaselton population</text>
+<text x="64" y="248" text-anchor="end" font-size="14" fill="#3a3a3a">0</text>
+<line x1="355" y1="230" x2="355" y2="135" stroke="#999" stroke-dasharray="5 4"></line>
+<line x1="70" y1="135" x2="355" y2="135" stroke="#999" stroke-dasharray="5 4"></line>
+<line x1="70" y1="230" x2="351" y2="136.3" stroke="#861F41" stroke-width="3.4" marker-end="url(#arr2)"></line>
+<text x="355" y="250" text-anchor="middle" font-size="14" fill="#3a3a3a">750,000</text>
+<text x="64" y="140" text-anchor="end" font-size="14" fill="#3a3a3a">250,000</text>
+<text x="285" y="123" font-size="15" font-weight="700" fill="#861F41">(750,000, 250,000)</text>
+</svg>
+<figcaption>The equilibrium vector: from the origin to (750,000, 250,000), three
+times as far across as up.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> At equilibrium, 5% of Arendelle equals 15%
+of Weaselton, so Arendelle has three times as many people: 750,000 and
+250,000. The vector is an arrow from the origin to that point.</p>
+</div>
+</div>
+<p><strong>(2)</strong> Any assumption the model makes, with a reason it
+is unrealistic. For example: nobody is born or dies; nobody moves in
+from or out to anywhere else, so the total never changes; the rates stay
+exactly 5% and 15% forever; there is no limit on how many people a
+kingdom can hold.</p>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="afterquiz">
+<h2 id="class-results">Class results</h2>
+<p>12 booklets were graded.</p>
+<ul>
+<li><strong>Quiz score with the extra credit (out of 10, plus up to 2
+extra credit):</strong> average 8.42, median 9.13</li>
+<li><strong>Problem 1(a), the two periods (out of 2):</strong> average
+1.50</li>
+<li><strong>Problem 1(b), the three sketches (out of 3):</strong>
+average 1.83</li>
+<li><strong>Problem 1(c), the integral and orthogonality (out of
+1):</strong> average 0.56</li>
+<li><strong>Problem 2, the system of equations (out of 2):</strong>
+average 1.73</li>
+<li><strong>Problem 3, the spreadsheet formula (out of 2):</strong>
+average 1.56</li>
+<li><strong>Extra credit (out of 2):</strong> average 1.23</li>
+</ul>
+<h2 id="where-the-class-had-the-most-trouble">Where the class had the
+most trouble</h2>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Problem 1(b) — the product.</strong> Only 6 of 12 products
+had the right signs (+, −, +, − then −, +, −, +), and only 4 had humps
+that grow and shrink with the reference. Some products stayed mostly
+above the axis, followed only the reference’s sign, or were irregular
+wiggles. Multiply the two curves point by point, half a signal period at
+a time: same signs give a positive hump, opposite signs a negative one,
+and the hump is small where the reference is small.</li>
+<li><strong>Problem 1(c) — the integral and the word
+“orthogonal”.</strong> Half the class wrote that the integral is 0 and
+gave the reason: the positive and negative humps cancel. Some wrote only
+the integral sign with its limits, or “not orthogonal”. Orthogonal
+<em>means</em> the integral of the product is zero, so the conclusion
+follows from the canceling areas.</li>
+<li><strong>Problem 1(b) — four signal cycles, one reference cycle, and
+the time axis.</strong> Two booklets drew the signal slower than the
+reference; the 20 kHz signal is the faster one. Label the time axis from
+the period: 50 μs per signal cycle, so 0, 50, 100, 150, 200 μs. Half the
+axes had no numbers, no unit, or numbers that did not match the periods
+from (a).</li>
+<li><strong>Problem 1(a) — the prefix.</strong> Four booklets had the
+reciprocal right but the prefix or the factor of 10 wrong (0.5 ms, 0.2
+ms, 5 μs) or swapped the two periods. One over kilohertz is
+milliseconds:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>20</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">kHz</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.05</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">ms</mtext><mo>=</mo><mn>50</mn><mspace width="0.222em"></mspace><mi>μ</mi><mtext mathvariant="normal">s</mtext></mrow><annotation encoding="application/x-tex">1/(20\ \text{kHz}) = 0.05\ \text{ms} = 50\ \mu\text{s}</annotation></semantics></math>.</li>
+<li><strong>Problem 3 — the staying term and the
+<code>*</code>.</strong> Dollar signs were the strong point (10 of 12).
+The misses: <code>-$A$2<em>C5</code> instead of
+<code>(1-$A$2)</em>C5</code> (the people who stay are one minus the
+rate), the rate multiplying the wrong cell, a number typed in place of a
+rate cell, and products written without <code>*</code>, such as
+<code>($A$1)(B5)</code>, which a spreadsheet does not accept.</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth"
+id="homework-and-earlier-quizzes-to-revisit-problem-by-problem">Homework
+and earlier quizzes to revisit, problem by problem</h3>
+<ul>
+<li><strong>Problem 1(a) (periods and prefixes):</strong> Quiz 7,
+Question 4
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">f = 1/T</annotation></semantics></math>,
+keep the unit), and the Quiz 8 review packet, Problems 1–3.</li>
+<li><strong>Problem 1(b)–(c) (signal × reference,
+orthogonality):</strong> the <em>Fourier Transform, One Frequency at a
+Time</em> homework, Problems 1–2 — the same three aligned sketches for
+500 Hz and 1 kHz — and the <em>Fourier by Hand</em> worksheet of October
+21.</li>
+<li><strong>Problem 2 (the system of equations):</strong> the <em>Humans
+and Zombies</em> homework, Problem 1(b), and the worksheets of October
+26 and 28 (rates, to ← from).</li>
+<li><strong>Problem 3 (the spreadsheet formula):</strong> the <em>Humans
+and Zombies</em> homework, Problem 2(b) — where the dollar signs go and
+why.</li>
+<li><strong>Extra credit (equilibrium):</strong> the <em>Humans and
+Zombies</em> homework, Problems 2–4 (the equilibrium does not depend on
+the start, only on the rates).</li>
+<li><strong>All of it, with fresh numbers:</strong> the Quiz 8 Practice
+Drill and the Quiz 8 review packet.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
