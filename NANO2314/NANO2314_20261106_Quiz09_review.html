@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 9 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+/* No scroll bars on equations (added 2026-10-17). overflow-x: auto also makes the vertical
+   direction scrollable, so a glyph a few pixels above or below the box (superscripts,
+   fractions, underbraces) showed a vertical scroll bar. Padding gives that ink room; a wide
+   equation still scrolls sideways on a phone. Screen only: print sets overflow: visible. */
+@media screen {
+  math[display="block"] { overflow-y: hidden; padding: .4em 0; margin: .45rem 0; }
+}
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* --- per-quiz styles --- */
+/* Solution flows (review-kit/flow.py, flow.js; author guide FLOWS.md). Added 2026-10-17,
+   generalized from Quiz 06's graphical 4(b) and extra-credit solutions. build.py adds this
+   file only to pages that use a flow, so older pages build unchanged. Role colors meet
+   WCAG 2.1 AA against their box backgrounds: a 4.9:1, b 6.4:1, c 7.2:1. */
+.flow { display: flex; flex-direction: column; align-items: center; margin: .4rem 0 .2rem; }
+.flow > p { margin: .1rem 0; text-align: center; }
+/* center display equations (the template's display:block would left-align them) */
+.flow math[display="block"] { display: block math; }
+.fstep { border: 1.5px solid #c9c9c9; border-radius: 8px; background: #fff; padding: 0 1rem;
+  text-align: center; max-width: 100%; }
+.fstep math[display="block"] { margin: .45rem 0; }
+.arw { color: #861F41; font-size: 1.45rem; font-weight: 700; line-height: 1; }
+.alab { color: #3a3a3a; font-size: .92rem; margin-left: .35rem; }
+.factors { display: flex; align-items: stretch; justify-content: center; gap: .5rem;
+  flex-wrap: wrap; width: 100%; margin: .15rem 0; }
+.factor { flex: 1 1 12rem; max-width: 17rem; border: 2px solid #c9c9c9; border-radius: 8px;
+  padding: .1rem .7rem .45rem; text-align: center; font-size: .95rem; background: #fff; }
+.factor p { margin: .15rem 0; }
+.factor math[display="block"] { font-size: 1.3em; }
+.times { align-self: center; font-size: 1.7rem; font-weight: 700; color: #3a3a3a; }
+.zoom { width: 100%; border: 2px solid #c9c9c9; border-radius: 8px; padding: .35rem .9rem .5rem;
+  margin: .5rem 0 .2rem; text-align: center; background: #fff; }
+.zoom p { margin: .2rem 0; }
+.conclusion { border: 2px solid #861F41; width: 100%; padding: .4rem 1rem .55rem; }
+.conclusion > p:first-child strong { color: #861F41; }
+.cline { display: inline-block; font-size: 1.15em; margin: .35rem 0; }
+/* roles: boxes (.ra .rb .rc), inline colored math (.ca .cb .cc), tags (.tag .ra ...) */
+.ra { border-color: #8B6508 !important; background: #FBF6EA !important; }
+.rb { border-color: #14672A !important; background: #F1F7F1 !important; }
+.rc { border-color: #1F4E99 !important; background: #EEF3FB !important; }
+.ra strong { color: #8B6508; } .rb strong { color: #14672A; } .rc strong { color: #1F4E99; }
+.ca { color: #8B6508; font-weight: 700; } .cb { color: #14672A; font-weight: 700; }
+.cc { color: #1F4E99; font-weight: 700; }
+.tag { border: 1.5px solid; border-radius: 999px; padding: 0 .55rem; font-weight: 700; }
+.tag.ra { color: #8B6508; } .tag.rb { color: #14672A; } .tag.rc { color: #1F4E99; }
+/* the short "why" line, and the required "In words" summary */
+.fwhy { width: 100%; font-size: .92rem; color: #3a3a3a; text-align: left; margin: .1rem 0 .2rem;
+  padding-left: .6rem; border-left: 3px solid #B8860B; }
+.fwhy p { margin: .15rem 0; }
+.inwords { width: 100%; margin: .6rem 0 .1rem; padding: .45rem .8rem; border-radius: 6px;
+  background: #F7F2F4; border-left: 4px solid #861F41; text-align: left; }
+.inwords p { margin: .1rem 0; }
+.inwords strong:first-child { color: #861F41; }
+/* faded practice: a dashed step for the student to fill in */
+.fblank { border-style: dashed; border-color: #861F41; background: #fff; padding: .35rem 1rem; }
+.fblank p { margin: .2rem 0; }
+details.fshow summary { cursor: pointer; color: #861F41; font-weight: 600; }
+/* a figure asked for but not drawn yet (figure: request | ...); the build warns until it is */
+.figrequest { width: 100%; border: 2px dashed #8B4A00; border-radius: 8px; padding: .4rem .8rem;
+  color: #8B4A00; background: #FFF8EE; text-align: left; margin: .3rem 0; }
+.figrequest p { margin: .1rem 0; }
+/* figure slots inside a flow: a definite width (a flex item would otherwise shrink to an
+   arbitrary size), wider than a usual part figure */
+.flow figure.graph.mini { width: 100%; max-width: 32rem; }
+
+/* No scroll bars (instructor, 2026-10-17): in a flow the equation sizes its box, and the box
+   scrolls sideways only when the equation is wider than the screen (phones). */
+@media screen {
+  .flow math[display="block"] { overflow: visible; }
+  .fstep, .factor, .zoom, .conclusion { overflow-x: auto; overflow-y: hidden; }
+  .fstep math[display="block"], .zoom math[display="block"] { margin: .1rem 0; }
+}
+
+/* On paper a question or part and its solution must fit one page (make_review_pdf.py keeps
+   them together): tighter spacing for print only. Show the hidden step answers in print. */
+@media print {
+  .flow { font-size: .9em; }
+  /* a question whose solution is a flow: its own figure prints smaller, so the question and
+     its solution fit one page */
+  li.q:has(.flow) > figure.graph.mini { max-width: 14rem; margin: .3rem auto .2rem; }
+  li.q:has(.flow) > figure.graph.mini figcaption { margin-top: .1rem; }
+  .flow > p { margin: 0; line-height: 1.3; }
+  .fstep { padding: 0 .8rem; }
+  .fstep math[display="block"] { margin: .2rem 0; }
+  .arw { font-size: 1.1rem; }
+  .alab { font-size: .88rem; }
+  .factors { margin: .1rem 0; }
+  .factor { padding: 0 .6rem .2rem; }
+  .factor p { margin: 0; line-height: 1.3; }
+  .factor math[display="block"] { margin: .15rem 0; }
+  .zoom { padding: .15rem .8rem .25rem; margin: .25rem 0 .05rem; }
+  .zoom p { margin: .1rem 0; line-height: 1.35; }
+  .zoom math[display="block"] { margin: .25rem 0; }
+  .conclusion { padding: .15rem .8rem .25rem; }
+  .conclusion p { margin: .05rem 0; }
+  .cline { margin: .1rem 0; }
+  .inwords { margin: .25rem 0 0; padding: .2rem .7rem; line-height: 1.35; }
+  .fwhy { margin: 0 0 .1rem; line-height: 1.35; }
+  .flow figure.graph.mini { max-width: 20rem; margin: .2rem auto .05rem; }
+  .flow figure.graph.mini figcaption { margin-top: .1rem; }
+  details.fshow > summary { display: none; }
+}
+/* Quiz 09 review page. The solution flows come from review-kit/flow.css; these rules only size
+   this quiz's figures. */
+.fnote { font-size: .88rem; color: #3a3a3a; margin-top: .5rem; }
+/* each stem already starts with its bold number, so the list's own "1." would show twice */
+ol.quiz { list-style: none; padding-left: 0; }
+li#q1 > figure.graph.mini { max-width: 34rem; }
+#q5 figure#fig-town_flows { max-width: 34rem; }
+#qec figure#fig-ec_key { max-width: 22rem; }
+@media print {
+  li#q1 > figure.graph.mini { max-width: 20rem; margin: .1rem auto .1rem; }
+  #q5 figure#fig-town_flows { max-width: 22rem; margin: .1rem auto 0; }
+  #qec figure#fig-ec_key { max-width: 14rem; margin: .1rem auto 0; }
+  figure figcaption { margin-top: .1rem; line-height: 1.3; }
+}
+math.rr { padding-top: .15em; }   /* room for exponents raised by rootfix */
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 9 — after-quiz review</h1>
+<p>Quiz 9 was given on Friday, November 6, 2026. Everyone got the same
+booklet — there were no scrambled versions — so the answers below are
+the same for the whole class.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#qec">EC</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 9 — November 6, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(2 pts)</strong> A town of <strong>1000 people</strong> is split into three groups:
+<strong>Healthy</strong>, <strong>Sick</strong>, and
+<strong>Recovering</strong>. Every week, people move between the groups
+at the rates shown in the diagram. For example, the arrow from Healthy
+to Sick labeled 10% means that every week 10% of the healthy people
+become sick. The total population stays the same.</p>
+<p class="stem">Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>n</mi></msub><annotation encoding="application/x-tex">h_{n}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>n</mi></msub><annotation encoding="application/x-tex">s_{n}</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>n</mi></msub><annotation encoding="application/x-tex">r_{n}</annotation></semantics></math>
+be the numbers of healthy, sick, and recovering people in week
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>.
+Write a <strong>system of three equations</strong> that gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>n</mi></msub><annotation encoding="application/x-tex">h_{n}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>n</mi></msub><annotation encoding="application/x-tex">s_{n}</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>n</mi></msub><annotation encoding="application/x-tex">r_{n}</annotation></semantics></math>
+in terms of the numbers in the week prior,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">h_{n-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">s_{n-1}</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">r_{n-1}</annotation></semantics></math>.</p>
+<figure class="graph mini">
+<svg viewBox="0 0 881 357" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">The diagram printed on the quiz: Healthy, Sick and Recovering</title>
+<desc id="gd2">Three ovals: Healthy at the top left, Sick at the top right, Recovering at the bottom. Arrows show the weekly rates: Healthy to Sick 10 percent; Sick to Healthy 15 percent; Sick to Recovering 30 percent; Recovering to Sick 20 percent; Recovering to Healthy 40 percent. There is no arrow from Healthy to Recovering.</desc>
+<defs><marker id="arr2" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<ellipse cx="152.8" cy="73.3" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="152.8" y="81.3" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Healthy</text>
+<ellipse cx="728.8" cy="73.3" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="728.8" y="81.3" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Sick</text>
+<ellipse cx="440.8" cy="284.5" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="440.8" y="292.5" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Recovering</text>
+<line x1="245.6" y1="86.1" x2="626.0" y2="86.1" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="636.0,86.1 623.0,92.1 623.0,80.1" fill="#1a1a1a"></polygon>
+<rect x="415.8" y="104.6" width="50.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="440.8" y="127.6" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">10%</text>
+<line x1="636.0" y1="60.5" x2="255.6" y2="60.5" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="245.6,60.5 258.6,54.5 258.6,66.5" fill="#1a1a1a"></polygon>
+<rect x="415.8" y="9.9" width="50.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="440.8" y="32.9" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">15%</text>
+<line x1="680.5" y1="92.9" x2="482.1" y2="238.3" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="474.0,244.3 480.9,231.7 488.0,241.4" fill="#1a1a1a"></polygon>
+<rect x="531.8" y="124.7" width="50.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="556.8" y="147.7" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">30%</text>
+<line x1="489.1" y1="264.9" x2="687.5" y2="119.4" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="695.6,113.5 688.7,126.0 681.6,116.3" fill="#1a1a1a"></polygon>
+<rect x="587.8" y="201.1" width="50.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="612.8" y="224.1" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">20%</text>
+<line x1="400.0" y1="254.6" x2="201.6" y2="109.1" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="193.6,103.2 207.6,106.0 200.5,115.7" fill="#1a1a1a"></polygon>
+<rect x="256.4" y="183.8" width="50.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="281.4" y="206.8" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">40%</text>
+</svg>
+<figcaption>The diagram as printed on the quiz.</figcaption>
+</figure>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">each group this week = the people who
+<strong>stay</strong> + the people who <strong>arrive</strong>, both
+from last week</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">Healthy: 90% stay; arrivals from Sick and
+Recovering</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>n</mi></msub><mo>=</mo><mn>0.90</mn><mspace width="0.167em"></mspace><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.15</mn><mspace width="0.167em"></mspace><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.40</mn><mspace width="0.167em"></mspace><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">h_{n} = 0.90\,h_{n-1} + 0.15\,s_{n-1} + 0.40\,r_{n-1}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+same for Sick and Recovering</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>n</mi></msub><mo>=</mo><mn>0.10</mn><mspace width="0.167em"></mspace><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.55</mn><mspace width="0.167em"></mspace><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.20</mn><mspace width="0.167em"></mspace><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{n} = 0.10\,h_{n-1} + 0.55\,s_{n-1} + 0.20\,r_{n-1}</annotation></semantics></math></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>n</mi></msub><mo>=</mo><mn>0</mn><mspace width="0.167em"></mspace><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.30</mn><mspace width="0.167em"></mspace><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mn>0.40</mn><mspace width="0.167em"></mspace><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">r_{n} = 0\,h_{n-1} + 0.30\,s_{n-1} + 0.40\,r_{n-1}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> Sick loses 15% + 30% = 45%, so 55% stay;
+Recovering loses 20% + 40% = 60%, so 40% stay. No arrow goes from
+Healthy to Recovering, so that term is 0.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Each new number is the people who stay in
+the group (100% minus everyone who leaves it) plus the people who arrive
+from the other groups (each arrow’s rate times last week’s number in the
+group the arrow starts from).</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(2 pts)</strong> Rewrite your equations as one <strong>eigenvalue equation</strong>.
+It should have a 3×3 matrix, the eigenvalue
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>,
+and the eigenvector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>s</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>r</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} h \\ s \\ r \end{pmatrix}</annotation></semantics></math>
+appearing on both sides of the equation.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">the numbers on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">h_{n-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">s_{n-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">r_{n-1}</annotation></semantics></math>
+in each equation become one row of the matrix</span></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>h</mi><mi>n</mi></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>s</mi><mi>n</mi></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>r</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.90</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.15</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.10</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.55</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.20</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.30</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>h</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>s</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>r</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} h_{n} \\ s_{n} \\ r_{n} \end{pmatrix} = \begin{pmatrix} 0.90 &amp; 0.15 &amp; 0.40 \\ 0.10 &amp; 0.55 &amp; 0.20 \\ 0 &amp; 0.30 &amp; 0.40 \end{pmatrix} \begin{pmatrix} h_{n-1} \\ s_{n-1} \\ r_{n-1} \end{pmatrix}</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">drop
+subscripts; left side becomes λ times the vector</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.90</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.15</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.10</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.55</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.20</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.30</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>s</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>r</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>s</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>r</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 0.90 &amp; 0.15 &amp; 0.40 \\ 0.10 &amp; 0.55 &amp; 0.20 \\ 0 &amp; 0.30 &amp; 0.40 \end{pmatrix} \begin{pmatrix} h \\ s \\ r \end{pmatrix} = \lambda \begin{pmatrix} h \\ s \\ r \end{pmatrix}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> an eigenvector comes out of the matrix as a
+multiple of itself, so the same vector, with no subscripts, appears on
+both sides; λ is that multiple.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Put each equation’s three rates in a row
+of the matrix, in the order h, s, r. For an eigenvector, multiplying by
+the matrix gives back the same vector times a number λ.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(2 pts)</strong> How many <strong>eigenvalues</strong> does the matrix in Problem 2
+have? Out of those, why is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda = 1</annotation></semantics></math>
+the physically reasonable one for this town?</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 3</span></summary>
+<div class="sol-body">
+<p><strong>How many: 3.</strong> A 3×3 matrix has three eigenvalues
+(here 1, 0.6 and 0.25; you were not asked to find them).</p>
+<p><strong>Why λ = 1:</strong> the total population is conserved, so a
+population that has settled must stay the same from week to week:
+multiplying by the matrix gives back
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo></mrow><annotation encoding="application/x-tex">1 \times</annotation></semantics></math>
+the same vector. Any other λ would scale the whole population every week
+— λ &lt; 1 would shrink it and λ &gt; 1 would grow it. (The eigenvectors
+for 0.6 and 0.25 also have negative entries, which cannot be numbers of
+people.)</p>
+</div>
+</details>
+</li>
+<li class="q" id="q4">
+<p class="stem"><strong>4.</strong> <strong>(2 pts)</strong> Verify that the vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>,</mo><mi>s</mi><mo>,</mo><mi>r</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>200</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(h, s, r) = (700,\ 200,\ 100)</annotation></semantics></math>
+is an <strong>eigenvector</strong> with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda = 1</annotation></semantics></math>,
+by multiplying your matrix from Problem 2 by this vector. Show the
+multiplication, and state what you conclude.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 4</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">each <strong>row</strong> of the matrix times
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo>,</mo><mn>200</mn><mo>,</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(700, 200, 100)</annotation></semantics></math>,
+entry by entry, then add across the row</span></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.90</mn><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.15</mn><mo stretchy="false" form="prefix">(</mo><mn>200</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.40</mn><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>630</mn><mo>+</mo><mn>30</mn><mo>+</mo><mn>40</mn><mo>=</mo><mn>700</mn></mrow><annotation encoding="application/x-tex">0.90(700) + 0.15(200) + 0.40(100) = 630 + 30 + 40 = 700</annotation></semantics></math></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.10</mn><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.55</mn><mo stretchy="false" form="prefix">(</mo><mn>200</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.20</mn><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>70</mn><mo>+</mo><mn>110</mn><mo>+</mo><mn>20</mn><mo>=</mo><mn>200</mn></mrow><annotation encoding="application/x-tex">0.10(700) + 0.55(200) + 0.20(100) = 70 + 110 + 20 = 200</annotation></semantics></math></p>
+</div>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.30</mn><mo stretchy="false" form="prefix">(</mo><mn>200</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.40</mn><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn><mo>+</mo><mn>60</mn><mo>+</mo><mn>40</mn><mo>=</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">0(700) + 0.30(200) + 0.40(100) = 0 + 60 + 40 = 100</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> add across each row, not down each column.
+Adding down the columns also gives 700, 200, 100 here, but only because
+each column adds up to 1; it is not matrix-times-vector
+multiplication.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.90</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.15</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.10</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.55</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.20</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.30</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.40</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>700</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>200</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>100</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>700</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>200</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>100</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>⋅</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>700</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>200</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>100</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 0.90 &amp; 0.15 &amp; 0.40 \\ 0.10 &amp; 0.55 &amp; 0.20 \\ 0 &amp; 0.30 &amp; 0.40 \end{pmatrix} \begin{pmatrix} 700 \\ 200 \\ 100 \end{pmatrix} = \begin{pmatrix} 700 \\ 200 \\ 100 \end{pmatrix} = 1 \cdot \begin{pmatrix} 700 \\ 200 \\ 100 \end{pmatrix}</annotation></semantics></math>
+an eigenvector with λ = 1</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Row by row, the matrix turns (700, 200,
+100) back into (700, 200, 100). The result is 1 times the vector, so it
+is an eigenvector with eigenvalue 1.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="q5">
+<p class="stem"><strong>5.</strong> <strong>(2 pts)</strong> What does the eigenvector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>200</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(700,\ 200,\ 100)</annotation></semantics></math>
+<strong>physically</strong> tell you about the town as time goes on?</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question 5</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">λ = 1: one week of moving leaves
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>700</mn><mo>,</mo><mn>200</mn><mo>,</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(700, 200, 100)</annotation></semantics></math>
+unchanged</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">people keep moving, but the weekly flows balance</span></p>
+<figure class="graph mini" id="fig-town_flows">
+<svg viewBox="0 0 881 467" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The solution: at 700, 200, 100 the weekly flows balance</title>
+<desc id="gd3">The same diagram, with 700 people in Healthy, 200 in Sick and 100 in Recovering. The arrows show how many people move each week: Healthy to Sick 70 people; Sick to Healthy 30 people; Sick to Recovering 60 people; Recovering to Sick 20 people; Recovering to Healthy 40 people. Healthy: 70 leave and 30 plus 40 equals 70 arrive. Sick: 30 plus 60 equals 90 leave and 70 plus 20 equals 90 arrive. Recovering: 20 plus 40 equals 60 leave and 60 arrive.</desc>
+<defs><marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<ellipse cx="152.8" cy="73.3" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="152.8" y="81.3" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Healthy</text>
+<ellipse cx="728.8" cy="73.3" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="728.8" y="81.3" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Sick</text>
+<ellipse cx="440.8" cy="284.5" rx="92.8" ry="33.3" fill="#fff" stroke="#1a1a1a" stroke-width="2"></ellipse>
+<text x="440.8" y="292.5" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Recovering</text>
+<line x1="245.6" y1="86.1" x2="626.0" y2="86.1" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="636.0,86.1 623.0,92.1 623.0,80.1" fill="#1a1a1a"></polygon>
+<rect x="379.8" y="104.6" width="122.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="440.8" y="127.6" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">70 people</text>
+<line x1="636.0" y1="60.5" x2="255.6" y2="60.5" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="245.6,60.5 258.6,54.5 258.6,66.5" fill="#1a1a1a"></polygon>
+<rect x="379.8" y="9.9" width="122.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="440.8" y="32.9" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">30 people</text>
+<line x1="680.5" y1="92.9" x2="482.1" y2="238.3" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="474.0,244.3 480.9,231.7 488.0,241.4" fill="#1a1a1a"></polygon>
+<rect x="495.8" y="124.7" width="122.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="556.8" y="147.7" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">60 people</text>
+<line x1="489.1" y1="264.9" x2="687.5" y2="119.4" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="695.6,113.5 688.7,126.0 681.6,116.3" fill="#1a1a1a"></polygon>
+<rect x="551.8" y="201.1" width="122.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="612.8" y="224.1" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">20 people</text>
+<line x1="400.0" y1="254.6" x2="201.6" y2="109.1" stroke="#1a1a1a" stroke-width="2.6"></line>
+<polygon points="193.6,103.2 207.6,106.0 200.5,115.7" fill="#1a1a1a"></polygon>
+<rect x="220.4" y="183.8" width="122.0" height="32" rx="4" fill="#fff" stroke="#9a9a9a"></rect>
+<text x="281.4" y="206.8" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">40 people</text>
+<text x="440.5" y="383.0" text-anchor="middle" font-size="20" fill="#14672A">Healthy, 700 people: 70 leave, 30 + 40 = 70 arrive</text>
+<text x="440.5" y="411.0" text-anchor="middle" font-size="20" fill="#14672A">Sick, 200 people: 30 + 60 = 90 leave, 70 + 20 = 90 arrive</text>
+<text x="440.5" y="439.0" text-anchor="middle" font-size="20" fill="#14672A">Recovering, 100 people: 20 + 40 = 60 leave, 60 arrive</text>
+</svg>
+<figcaption>People moving each week at 700, 200, 100: into each group come
+exactly as many as leave it.</figcaption>
+</figure>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p>The town settles at 700 healthy, 200 sick and 100 recovering (70%,
+20% and 10%), and those numbers stay the same week after week.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> After a long time, the town reaches an
+equilibrium of 700 healthy, 200 sick and 100 recovering people. People
+still move between the groups every week, but as many enter each group
+as leave it, so the three numbers no longer change.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li class="q" id="qec">
+<p class="stem"><strong>EC.</strong> <strong>(1 pt)</strong> <strong>Extra credit.</strong> Show that the vectors
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0.6</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>0.8</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0.6,\ 0.8)</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.8</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-0.8,\ 0.6)</annotation></semantics></math>
+are <strong>normalized</strong> and <strong>orthogonal</strong>.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question EC</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">length of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0.6</mn><mo>,</mo><mn>0.8</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0.6, 0.8)</annotation></semantics></math>:
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msqrt><mpadded depth="0"><mrow><msup><mn>0.6</mn><mn>2</mn></msup><mo>+</mo><msup><mn>0.8</mn><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><msqrt><mpadded depth="0"><mrow><mn>0.36</mn><mo>+</mo><mn>0.64</mn></mrow></mpadded></msqrt><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sqrt{0.6^{2} + 0.8^{2}} = \sqrt{0.36 + 0.64} = 1</annotation></semantics></math></span></p>
+</div>
+<div class="fstep">
+<p><span class="cline">length of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.8</mn><mo>,</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-0.8, 0.6)</annotation></semantics></math>:
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msqrt><mpadded depth="0"><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.8</mn><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><msup><mn>0.6</mn><mn>2</mn></msup></mrow></mpadded></msqrt><mo>=</mo><msqrt><mpadded depth="0"><mrow><mn>0.64</mn><mo>+</mo><mn>0.36</mn></mrow></mpadded></msqrt><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sqrt{(-0.8)^{2} + 0.6^{2}} = \sqrt{0.64 + 0.36} = 1</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">both
+lengths are 1: normalized</span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.8</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>0.8</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mn>0.48</mn><mo>+</mo><mn>0.48</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">(0.6)(-0.8) + (0.8)(0.6) = -0.48 + 0.48 = 0</annotation></semantics></math></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">the
+dot product is 0: orthogonal</span></p>
+<figure class="graph mini" id="fig-ec_key">
+<svg viewBox="0 0 500 262" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">The solution: two vectors of length 1 at a right angle</title>
+<desc id="gd1">Axes with tick marks at minus 1 and 1. An arrow from the origin to (0.6, 0.8), up and to the right, and an arrow from the origin to (minus 0.8, 0.6), up and to the left, both drawn on one scale. Both tips lie on a dashed circle of radius 1, so each has length 1, and a right-angle mark at the origin shows that the two arrows are perpendicular.</desc>
+<defs><marker id="arr1" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" class="axfill"></path></marker></defs>
+<line x1="40" y1="230" x2="460" y2="230" class="ax" marker-end="url(#arr1)"></line>
+<line x1="250" y1="250" x2="250" y2="20" class="ax" marker-end="url(#arr1)"></line>
+<line x1="70" y1="225" x2="70" y2="235" class="ax"></line>
+<text x="70" y="252" text-anchor="middle" font-size="14" fill="#3a3a3a">−1</text>
+<line x1="430" y1="225" x2="430" y2="235" class="ax"></line>
+<text x="430" y="252" text-anchor="middle" font-size="14" fill="#3a3a3a">1</text>
+<line x1="245" y1="50" x2="255" y2="50" class="ax"></line>
+<text x="241" y="55" text-anchor="end" font-size="14" fill="#3a3a3a">1</text>
+<path d="M 70 230 A 180 180 0 0 1 430 230" fill="none" stroke="#9a9a9a" stroke-dasharray="5 4"></path>
+<line x1="250" y1="230" x2="351.4" y2="94.8" stroke="#861F41" stroke-width="3.4"></line>
+<polygon points="358.0,86.0 355.0,100.0 345.4,92.8" fill="#861F41"></polygon>
+<text x="368.0" y="80.0" text-anchor="start" font-size="16" font-weight="700" fill="#861F41">(0.6, 0.8)</text>
+<line x1="250" y1="230" x2="114.8" y2="128.6" stroke="#14672A" stroke-width="3.4"></line>
+<polygon points="106.0,122.0 120.0,125.0 112.8,134.6" fill="#14672A"></polygon>
+<text x="96.0" y="116.0" text-anchor="end" font-size="16" font-weight="700" fill="#14672A">(−0.8, 0.6)</text>
+<polyline points="262.0,214.0 246.0,202.0 234.0,218.0" fill="none" stroke="#1a1a1a" stroke-width="1.6"></polyline>
+</svg>
+<figcaption>Both arrows end on the circle of radius 1 and meet at a right
+angle.</figcaption>
+</figure>
+<div class="inwords">
+<p><strong>In words.</strong> Normalized means length 1: the square root
+of the sum of the squares is 1 for both vectors. Orthogonal means the
+dot product is 0: multiply matching entries and add, and you get 0.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="afterquiz">
+<h2 id="class-results">Class results</h2>
+<p>13 booklets were graded.</p>
+<ul>
+<li><strong>Quiz score with the extra credit (out of 10, plus up to 1
+extra credit):</strong> average 9.29, median 10</li>
+<li><strong>Problem 1, the system of equations (out of 2):</strong>
+average 1.90</li>
+<li><strong>Problem 2, the eigenvalue equation (out of 2):</strong>
+average 1.85</li>
+<li><strong>Problem 3, how many eigenvalues, and why λ = 1 (out of
+2):</strong> average 1.77</li>
+<li><strong>Problem 4, checking the eigenvector by multiplying (out of
+2):</strong> average 1.69</li>
+<li><strong>Problem 5, what the eigenvector means (out of 2):</strong>
+average 1.75</li>
+<li><strong>Extra credit (out of 1):</strong> average 0.33</li>
+</ul>
+<h2 id="where-the-class-had-the-most-trouble">Where the class had the
+most trouble</h2>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Extra credit — what “normalized” and “orthogonal”
+mean.</strong> Only 2 of 13 booklets earned the full point. Reasons such
+as “they point in opposite directions”, “they have the same magnitude”
+or “the signs are reversed” do not show either property. Normalized
+means <strong>length 1</strong>: take the square root of the sum of the
+squares. Orthogonal means <strong>dot product 0</strong>: multiply
+matching entries and add.</li>
+<li><strong>Problem 4 — multiply across the rows.</strong> Three
+booklets added the products down each column of the matrix instead of
+across each row. That happens to give 700, 200 and 100 back, but only
+because every column adds up to 1; it is not how a matrix multiplies a
+vector. Two more booklets set the rows up correctly and slipped in the
+arithmetic. Each row times the vector, then add.</li>
+<li><strong>Problem 5 — say what settles, with the numbers.</strong>
+Three booklets said only that the total stays at 1000 (given in the
+problem), or named just one group, or only compared the groups. The
+eigenvector says the town settles at 700 healthy, 200 sick and 100
+recovering, and stays there week after week.</li>
+<li><strong>Problem 2 — the same vector on both sides.</strong> Two
+booklets kept subscripts on one side
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>n</mi></msub><annotation encoding="application/x-tex">h_n</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>n</mi></msub><annotation encoding="application/x-tex">s_n</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>n</mi></msub><annotation encoding="application/x-tex">r_n</annotation></semantics></math>)
+and one put λ in twice (in the matrix and in front of the vector). In an
+eigenvalue equation the same vector, with no subscripts, appears on both
+sides, and λ appears once.</li>
+<li><strong>Problem 3 — the count.</strong> Two booklets wrote 1 or 2
+eigenvalues. A 3×3 matrix has three.</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth"
+id="homework-and-earlier-quizzes-to-revisit-problem-by-problem">Homework
+and earlier quizzes to revisit, problem by problem</h3>
+<ul>
+<li><strong>Problem 1 (the system of equations):</strong> the <em>Eigen
+Solver</em> homework, Problem 2(a)–(b) (three teams), and Quiz 8,
+Problem 2.</li>
+<li><strong>Problem 2 (the eigenvalue equation):</strong> the <em>Eigen
+Solver</em> homework, Problem 2(c)–(d), and the <em>Eigenvectors</em>
+homework, Problem 2(b).</li>
+<li><strong>Problem 3 (how many eigenvalues; λ = 1):</strong> the
+<em>Eigenvectors</em> homework, Problem 2(c) (the eigenvalue from
+conservation), and the <em>Eigen Solver</em> homework, Problem 3 (the
+solver prints three eigenvalues for a 3×3 matrix).</li>
+<li><strong>Problem 4 (matrix times vector):</strong> the matrix–vector
+worksheet of October 28, and the <em>Eigen Solver</em> homework, Problem
+2(c).</li>
+<li><strong>Problem 5 (what the eigenvector means):</strong> the
+<em>Eigenvectors</em> homework, Problem 2(d), and the <em>Eigen
+Solver</em> homework, Problem 3(c).</li>
+<li><strong>Extra credit (normalized and orthogonal):</strong> the
+November 4 notes, and the <em>Linear Algebra in Perspective</em>
+homework, Problems 7–8.</li>
+<li><strong>All of it, with fresh numbers:</strong> the Quiz 9 Practice
+Drill and the Quiz 9 review packet.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
