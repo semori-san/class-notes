@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NANO 2314 Quiz 10 — Review</title>
+<style>
+:root { --ink:#1a1a1a; --maroon:#861F41; --rule:#c9c9c9; --ok:#14672A;
+        --okbg:#F1F7F1; }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0 auto; max-width: 44rem; padding: 1.25rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif; font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+  background: #fff; }
+h1 { font-size: 1.7rem; line-height: 1.25; color: var(--maroon); margin: 0 0 .25rem; }
+h2 { font-size: 1.3rem; color: var(--maroon); margin: 2.5rem 0 .5rem;
+  border-bottom: 2px solid var(--rule); padding-bottom: .25rem; }
+p { margin: .6rem 0; }
+math { font-size: 1em; }
+
+a:focus-visible, summary:focus-visible { outline: 3px solid #5F1526;
+  outline-offset: 2px; }
+
+.vnote { font-size: .95rem; color: #3a3a3a; margin: .3rem 0 .9rem; }
+
+figure.graph { margin: 1.1rem auto 1.5rem; max-width: 30rem; }
+figure.graph svg { width: 100%; height: auto; display: block; }
+figure.graph text { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+figcaption { font-size: .9rem; color: #3a3a3a; margin-top: .35rem; text-align: center; }
+.ax { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+.axfill { fill: #1a1a1a; }
+.prof { fill: none; stroke: #1a1a1a; stroke-width: 3;
+  stroke-linejoin: round; stroke-linecap: round; }
+.guide { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.tick { font-size: 11px; fill: #3a3a3a; }
+.lbl { font-size: 13.5px; fill: #1a1a1a; }
+
+ol.quiz { margin: .8rem 0; padding-left: 1.9rem; }
+li.q { margin: 1.2rem 0; }
+p.stem { margin: .1rem 0 .4rem; }
+ol.choices { list-style-type: upper-alpha; margin: .15rem 0 .5rem;
+  padding-left: 1.9rem; }
+ol.choices > li { padding: .08rem .45rem; border-radius: 4px; }
+ol.choices > li.is-correct { background: var(--okbg);
+  box-shadow: inset 4px 0 0 var(--ok); font-weight: 600; }
+ol.choices > li.is-correct::after { content: " \2014 correct"; color: var(--ok);
+  font-weight: 700; }
+ol.parts { list-style-type: lower-alpha; margin: .2rem 0 .6rem; padding-left: 2rem; }
+ol.parts > li { margin: .45rem 0; }
+
+details.sol { margin-top: .6rem; }
+details.sol > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; gap: .5rem; width: 100%; background: var(--maroon);
+  color: #fff; font-weight: 600; font-size: .95rem; padding: .34rem .95rem;
+  border-radius: 6px; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "\25B8"; font-size: .85em; }
+details.sol[open] > summary::before { content: "\25BE"; }
+.sol-body { border: 1px solid var(--rule); border-top: 0;
+  border-radius: 0 0 6px 6px; padding: .55rem .95rem; background: #FAFAFB; }
+.sol-body p { margin: .35rem 0; }
+p.verdict strong { color: var(--ok); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  border: 0; }
+
+.foot { margin-top: 3rem; padding-top: .75rem; border-top: 2px solid var(--rule);
+  font-size: .95rem; color: #3a3a3a; }
+
+@media print {
+  body { max-width: none; }
+}
+
+/* --- added for Quiz 02: annotated figures, code, per-part headings --- */
+figure.graph.mini { max-width: 22rem; margin: .9rem auto 1rem; }
+figure.graph.mini figcaption { font-size: .85rem; }
+.hl { fill: none; stroke: var(--maroon); stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round; }
+.hl.dash { stroke-width: 2.6; stroke-dasharray: 7 4; }
+.dot { fill: var(--maroon); }
+.aguide { stroke: var(--maroon); stroke-width: 1.3; stroke-dasharray: 5 3;
+  fill: none; }
+.alabel { font-size: 12.5px; fill: var(--maroon); font-weight: 700; }
+.alabel.ticklbl { font-size: 11px; paint-order: stroke; stroke: #fff;
+  stroke-width: 3px; stroke-linejoin: round; }
+.arealbl { font-size: 15px; fill: #5F1526; font-weight: 700; }
+.shadeA { fill: var(--maroon); fill-opacity: .13; }
+.shadeB { fill: var(--maroon); fill-opacity: .07; }
+
+h3.parth { font-size: 1.02rem; color: var(--maroon); margin: 1.15rem 0 .2rem; }
+.sol-body > h3.parth:first-child { margin-top: .2rem; }
+p.trap { border-left: 3px solid #B8860B; background: #FCF8EE;
+  padding: .4rem .75rem; border-radius: 0 4px 4px 0; margin: .7rem 0 .15rem; }
+
+code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+  monospace; font-size: .93em; background: #F0F0F3; padding: .05em .3em;
+  border-radius: 3px; }
+pre.code { background: #F6F6F8; border: 1px solid var(--rule);
+  border-radius: 6px; padding: .6rem .85rem; overflow-x: auto;
+  font-size: .92rem; line-height: 1.5; margin: .65rem 0; }
+pre.code code { background: none; padding: 0; font-size: 1em; }
+
+math[display="block"] { display: block; margin: .8rem 0; overflow-x: auto; }
+/* No scroll bars on equations (added 2026-10-17). overflow-x: auto also makes the vertical
+   direction scrollable, so a glyph a few pixels above or below the box (superscripts,
+   fractions, underbraces) showed a vertical scroll bar. Padding gives that ink room; a wide
+   equation still scrolls sideways on a phone. Screen only: print sets overflow: visible. */
+@media screen {
+  math[display="block"] { overflow-y: hidden; padding: .4em 0; margin: .45rem 0; }
+}
+
+.qnav { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem;
+  align-items: center; flex-wrap: wrap; background: #fff;
+  border-bottom: 2px solid var(--rule); padding: .5rem 0; margin-top: 1rem; }
+.qnav a { color: var(--maroon); font-weight: 700; text-decoration: none;
+  min-width: 2rem; text-align: center; padding: .16rem .55rem;
+  border: 2px solid var(--maroon); border-radius: 999px; }
+.qnav a:hover, .qnav a:focus { background: var(--maroon); color: #fff; }
+.qnav button { margin-left: auto; font: inherit; font-size: .9rem;
+  font-weight: 700; color: var(--maroon); background: #fff; cursor: pointer;
+  border: 2px solid var(--maroon); border-radius: 999px; padding: .16rem .8rem; }
+.qnav button:hover, .qnav button:focus { background: var(--maroon); color: #fff; }
+
+ol.parts > li { margin: 1rem 0 1.15rem; }
+/* a linked question or part (#q6, #q7b) lands below the sticky question bar */
+li.q, ol.parts > li { scroll-margin-top: 4rem; }
+p.partq { margin: .1rem 0 .4rem; }
+ol.parts details.sol { margin-top: .45rem; }
+
+ul.align { padding-left: 1.4rem; }
+ul.align > li { margin: .5rem 0; }
+
+@media print { .qnav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* --- per-quiz styles --- */
+/* Solution flows (review-kit/flow.py, flow.js; author guide FLOWS.md). Added 2026-10-17,
+   generalized from Quiz 06's graphical 4(b) and extra-credit solutions. build.py adds this
+   file only to pages that use a flow, so older pages build unchanged. Role colors meet
+   WCAG 2.1 AA against their box backgrounds: a 4.9:1, b 6.4:1, c 7.2:1. */
+.flow { display: flex; flex-direction: column; align-items: center; margin: .4rem 0 .2rem; }
+.flow > p { margin: .1rem 0; text-align: center; }
+/* center display equations (the template's display:block would left-align them) */
+.flow math[display="block"] { display: block math; }
+.fstep { border: 1.5px solid #c9c9c9; border-radius: 8px; background: #fff; padding: 0 1rem;
+  text-align: center; max-width: 100%; }
+.fstep math[display="block"] { margin: .45rem 0; }
+.arw { color: #861F41; font-size: 1.45rem; font-weight: 700; line-height: 1; }
+.alab { color: #3a3a3a; font-size: .92rem; margin-left: .35rem; }
+.factors { display: flex; align-items: stretch; justify-content: center; gap: .5rem;
+  flex-wrap: wrap; width: 100%; margin: .15rem 0; }
+.factor { flex: 1 1 12rem; max-width: 17rem; border: 2px solid #c9c9c9; border-radius: 8px;
+  padding: .1rem .7rem .45rem; text-align: center; font-size: .95rem; background: #fff; }
+.factor p { margin: .15rem 0; }
+.factor math[display="block"] { font-size: 1.3em; }
+.times { align-self: center; font-size: 1.7rem; font-weight: 700; color: #3a3a3a; }
+.zoom { width: 100%; border: 2px solid #c9c9c9; border-radius: 8px; padding: .35rem .9rem .5rem;
+  margin: .5rem 0 .2rem; text-align: center; background: #fff; }
+.zoom p { margin: .2rem 0; }
+.conclusion { border: 2px solid #861F41; width: 100%; padding: .4rem 1rem .55rem; }
+.conclusion > p:first-child strong { color: #861F41; }
+.cline { display: inline-block; font-size: 1.15em; margin: .35rem 0; }
+/* roles: boxes (.ra .rb .rc), inline colored math (.ca .cb .cc), tags (.tag .ra ...) */
+.ra { border-color: #8B6508 !important; background: #FBF6EA !important; }
+.rb { border-color: #14672A !important; background: #F1F7F1 !important; }
+.rc { border-color: #1F4E99 !important; background: #EEF3FB !important; }
+.ra strong { color: #8B6508; } .rb strong { color: #14672A; } .rc strong { color: #1F4E99; }
+.ca { color: #8B6508; font-weight: 700; } .cb { color: #14672A; font-weight: 700; }
+.cc { color: #1F4E99; font-weight: 700; }
+.tag { border: 1.5px solid; border-radius: 999px; padding: 0 .55rem; font-weight: 700; }
+.tag.ra { color: #8B6508; } .tag.rb { color: #14672A; } .tag.rc { color: #1F4E99; }
+/* the short "why" line, and the required "In words" summary */
+.fwhy { width: 100%; font-size: .92rem; color: #3a3a3a; text-align: left; margin: .1rem 0 .2rem;
+  padding-left: .6rem; border-left: 3px solid #B8860B; }
+.fwhy p { margin: .15rem 0; }
+.inwords { width: 100%; margin: .6rem 0 .1rem; padding: .45rem .8rem; border-radius: 6px;
+  background: #F7F2F4; border-left: 4px solid #861F41; text-align: left; }
+.inwords p { margin: .1rem 0; }
+.inwords strong:first-child { color: #861F41; }
+/* faded practice: a dashed step for the student to fill in */
+.fblank { border-style: dashed; border-color: #861F41; background: #fff; padding: .35rem 1rem; }
+.fblank p { margin: .2rem 0; }
+details.fshow summary { cursor: pointer; color: #861F41; font-weight: 600; }
+/* a figure asked for but not drawn yet (figure: request | ...); the build warns until it is */
+.figrequest { width: 100%; border: 2px dashed #8B4A00; border-radius: 8px; padding: .4rem .8rem;
+  color: #8B4A00; background: #FFF8EE; text-align: left; margin: .3rem 0; }
+.figrequest p { margin: .1rem 0; }
+/* figure slots inside a flow: a definite width (a flex item would otherwise shrink to an
+   arbitrary size), wider than a usual part figure */
+.flow figure.graph.mini { width: 100%; max-width: 32rem; }
+
+/* No scroll bars (instructor, 2026-10-17): in a flow the equation sizes its box, and the box
+   scrolls sideways only when the equation is wider than the screen (phones). */
+@media screen {
+  .flow math[display="block"] { overflow: visible; }
+  .fstep, .factor, .zoom, .conclusion { overflow-x: auto; overflow-y: hidden; }
+  .fstep math[display="block"], .zoom math[display="block"] { margin: .1rem 0; }
+}
+
+/* On paper a question or part and its solution must fit one page (make_review_pdf.py keeps
+   them together): tighter spacing for print only. Show the hidden step answers in print. */
+@media print {
+  .flow { font-size: .9em; }
+  /* a question whose solution is a flow: its own figure prints smaller, so the question and
+     its solution fit one page */
+  li.q:has(.flow) > figure.graph.mini { max-width: 14rem; margin: .3rem auto .2rem; }
+  li.q:has(.flow) > figure.graph.mini figcaption { margin-top: .1rem; }
+  .flow > p { margin: 0; line-height: 1.3; }
+  .fstep { padding: 0 .8rem; }
+  .fstep math[display="block"] { margin: .2rem 0; }
+  .arw { font-size: 1.1rem; }
+  .alab { font-size: .88rem; }
+  .factors { margin: .1rem 0; }
+  .factor { padding: 0 .6rem .2rem; }
+  .factor p { margin: 0; line-height: 1.3; }
+  .factor math[display="block"] { margin: .15rem 0; }
+  .zoom { padding: .15rem .8rem .25rem; margin: .25rem 0 .05rem; }
+  .zoom p { margin: .1rem 0; line-height: 1.35; }
+  .zoom math[display="block"] { margin: .25rem 0; }
+  .conclusion { padding: .15rem .8rem .25rem; }
+  .conclusion p { margin: .05rem 0; }
+  .cline { margin: .1rem 0; }
+  .inwords { margin: .25rem 0 0; padding: .2rem .7rem; line-height: 1.35; }
+  .fwhy { margin: 0 0 .1rem; line-height: 1.35; }
+  .flow figure.graph.mini { max-width: 20rem; margin: .2rem auto .05rem; }
+  .flow figure.graph.mini figcaption { margin-top: .1rem; }
+  details.fshow > summary { display: none; }
+}
+/* Quiz 10 review page. The solution flows come from review-kit/flow.css; these rules only size
+   this quiz's figures and the solver printout. */
+ol.quiz { list-style: none; padding-left: 0; }
+pre { white-space: pre; overflow-x: auto; font: 13px/1.45 ui-monospace, Consolas, monospace;
+      background: #f4f4f2; border: 1px solid #ddd; border-radius: 6px; padding: .5rem .7rem; }
+pre code { padding: 0; margin: 0; background: none; border: 0; }
+#q3a figure.graph.mini { max-width: 14rem; }
+#q3b figure.graph.mini { max-width: 28rem; }
+#q3c figure.graph.mini { max-width: 46rem; }
+#qec figure#fig-h2plus { max-width: 24rem; }
+@media print {
+  pre { font-size: 8.5pt; padding: .3rem .5rem; }
+  #q3a figure.graph.mini { max-width: 11rem; margin: .1rem auto 0; }
+  #q3b figure.graph.mini { max-width: 25rem; margin: .1rem auto 0; }
+  #q3c figure.graph.mini { max-width: 100%; margin: .1rem auto 0; }
+  #qec figure#fig-h2plus { max-width: 21rem; margin: .1rem auto 0; }
+  figure figcaption { margin-top: .1rem; line-height: 1.3; }
+}
+math.rr { padding-top: .15em; }   /* room for exponents raised by rootfix */
+</style>
+</head>
+<body>
+<main>
+<h1>NANO 2314 Quiz 10 — after-quiz review</h1>
+<p>Quiz 10 was given on Wednesday, November 18, 2026. Everyone got the
+same booklet — there were no scrambled versions — so the answers below
+are the same for the whole class.</p>
+<nav class="qnav" aria-label="Jump to a question">
+<a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#qec">EC</a>
+<button type="button" id="toggle-all" aria-expanded="false">Show all solutions</button>
+</nav>
+<section id="quiz">
+<h2>Quiz 10 — November 18, 2026</h2>
+<ol class="quiz">
+<li class="q" id="q1">
+<p class="stem"><strong>1.</strong> <strong>(2 pts)</strong> The eigenvalue equation below has a <strong>diagonal</strong> 4×4
+matrix.
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>4</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>λ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>c</mi><mn>4</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 6 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 7 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 2 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 4 \end{pmatrix} \begin{pmatrix} c_{1} \\ c_{2} \\ c_{3} \\ c_{4} \end{pmatrix} = \lambda \begin{pmatrix} c_{1} \\ c_{2} \\ c_{3} \\ c_{4} \end{pmatrix}</annotation></semantics></math></p>
+<ol class="parts" type="a">
+<li id="q1a">
+<p class="partq"><strong>(1 pt)</strong> What are the <strong>eigenvalues</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+of the 4×4 matrix? Briefly justify.</p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">multiply out row 1:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><msub><mi>c</mi><mn>1</mn></msub><mo>+</mo><mn>0</mn><msub><mi>c</mi><mn>2</mn></msub><mo>+</mo><mn>0</mn><msub><mi>c</mi><mn>3</mn></msub><mo>+</mo><mn>0</mn><msub><mi>c</mi><mn>4</mn></msub><mo>=</mo><mi>λ</mi><msub><mi>c</mi><mn>1</mn></msub><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mn>6</mn><msub><mi>c</mi><mn>1</mn></msub><mo>=</mo><mi>λ</mi><msub><mi>c</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">6c_{1} + 0c_{2} + 0c_{3} + 0c_{4} = \lambda c_{1} \quad\Rightarrow\quad 6c_{1} = \lambda c_{1}</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">off-diagonal zeros: each row has one
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span></p>
+<div class="fstep">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><msub><mi>c</mi><mn>2</mn></msub><mo>=</mo><mi>λ</mi><msub><mi>c</mi><mn>2</mn></msub><mo>,</mo><mspace width="2.0em"></mspace><mn>2</mn><msub><mi>c</mi><mn>3</mn></msub><mo>=</mo><mi>λ</mi><msub><mi>c</mi><mn>3</mn></msub><mo>,</mo><mspace width="2.0em"></mspace><mn>4</mn><msub><mi>c</mi><mn>4</mn></msub><mo>=</mo><mi>λ</mi><msub><mi>c</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">7c_{2} = \lambda c_{2}, \qquad 2c_{3} = \lambda c_{3}, \qquad 4c_{4} = \lambda c_{4}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> a nonzero
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>1</mn></msub><annotation encoding="application/x-tex">c_{1}</annotation></semantics></math>
+forces
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\lambda = 6</annotation></semantics></math>;
+a nonzero
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>2</mn></msub><annotation encoding="application/x-tex">c_{2}</annotation></semantics></math>
+forces
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\lambda = 7</annotation></semantics></math>,
+and so on. The rows don’t mix.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>6</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>7</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>2</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>4</mn></mrow><annotation encoding="application/x-tex">\lambda = 6,\ 7,\ 2,\ 4</annotation></semantics></math>:
+the diagonal entries</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> In a diagonal matrix the off-diagonal
+entries are 0, so each row of the equation reads (diagonal entry) × c =
+λ × c. The eigenvalues are just the numbers on the diagonal.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+<li id="q1b">
+<p class="partq"><strong>(1 pt)</strong> Fill in each
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+and write its <strong>eigenvector</strong> below it. Full credit for
+<strong>normalized</strong> eigenvectors.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 1</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\lambda = 6</annotation></semantics></math>:
+rows 2–4 read
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><msub><mi>c</mi><mn>2</mn></msub><mo>=</mo><mn>6</mn><msub><mi>c</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">7c_{2} = 6c_{2}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>c</mi><mn>3</mn></msub><mo>=</mo><mn>6</mn><msub><mi>c</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">2c_{3} = 6c_{3}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><msub><mi>c</mi><mn>4</mn></msub><mo>=</mo><mn>6</mn><msub><mi>c</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">4c_{4} = 6c_{4}</annotation></semantics></math>,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo>=</mo><msub><mi>c</mi><mn>3</mn></msub><mo>=</mo><msub><mi>c</mi><mn>4</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c_{2} = c_{3} = c_{4} = 0</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">only
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>1</mn></msub><annotation encoding="application/x-tex">c_{1}</annotation></semantics></math>
+survives; pick
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">c_{1} = 1</annotation></semantics></math></span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\lambda = 6</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\lambda = 7</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda = 2</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\lambda = 4</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix}</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> each has length
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><msqrt><mpadded depth="0"><msup><mn>1</mn><mn>2</mn></msup></mpadded></msqrt><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sqrt{1^{2}} = 1</annotation></semantics></math>,
+so they are already normalized.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(5, 0, 0, 0)</annotation></semantics></math>
+is also an eigenvector for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\lambda = 6</annotation></semantics></math>,
+but not a normalized one. The eigenvalue itself (6) is not the
+eigenvector.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Each eigenvector has a single 1, in the
+row of its eigenvalue, and 0 everywhere else. A vector with a single 1
+already has length 1.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="q2">
+<p class="stem"><strong>2.</strong> <strong>(1 pt)</strong> For an electron in a molecule, what <strong>two things</strong> do we
+want to find by solving the Schrödinger equation?</p>
+<ol class="choices" type="A">
+<li>The population of electron spins, and the nuclear resonance
+frequency</li>
+<li>The probability of finding the atoms, and the distances between
+them</li>
+<li>The allowed energies, and the wavefunctions (orbitals) of the
+electron</li>
+<li>The exact position of the electron, and its energy levels</li>
+</ol>
+<details class="sol" data-answer="C">
+<summary>Solution<span class="visually-hidden"> for question 2</span></summary>
+<div class="sol-body">
+<p class="verdict"><strong>Correct answer: C.</strong> The allowed energies, and the
+wavefunctions (orbitals) of the electron</p>
+<p class="why"><strong>Why:</strong> Solving
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>H</mi><mo accent="true">̂</mo></mover><mi>ψ</mi><mo>=</mo><mi>E</mi><mi>ψ</mi></mrow><annotation encoding="application/x-tex">\hat{H}\psi = E\psi</annotation></semantics></math>
+is an eigenvalue problem: its <strong>eigenvalues</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+are the allowed energies, and its <strong>eigenvectors</strong>
+(eigenfunctions)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ψ</mi><annotation encoding="application/x-tex">\psi</annotation></semantics></math>
+are the wavefunctions — the orbitals. In the Hückel model these are the
+energy levels and the vectors of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>’s.</p>
+<p class="trap"><strong>Watch out:</strong> Choice D is half right: the energy levels, yes, but the electron has
+no exact position. The wavefunction gives only the <em>probability</em>
+of finding it,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>ψ</mi><msup><mo stretchy="false" form="prefix">|</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">|\psi|^{2}</annotation></semantics></math>.
+Choice B is about the atoms: in a molecular-orbital calculation they are
+held fixed, and we solve for the electron. Choice A (spins, nuclear
+resonance) is not what the Schrödinger equation for the electron
+gives.</p>
+</div>
+</details>
+</li>
+<li class="q" id="q3">
+<p class="stem"><strong>3.</strong> <strong>(7 pts)</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+below is the Hückel Hamiltonian of a conjugated hydrocarbon
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>,</mo><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\alpha, \beta &gt; 0</annotation></semantics></math>).
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">H = \begin{pmatrix} -\alpha &amp; -\beta &amp; 0 &amp; -\beta \\ -\beta &amp; -\alpha &amp; -\beta &amp; 0 \\ 0 &amp; -\beta &amp; -\alpha &amp; -\beta \\ -\beta &amp; 0 &amp; -\beta &amp; -\alpha \end{pmatrix}</annotation></semantics></math></p>
+<ol class="parts" type="a">
+<li id="q3a">
+<p class="partq"><strong>(1.5 pts)</strong> How many <strong>unsaturated carbon atoms</strong> does the molecule
+have? <strong>Sketch the molecule.</strong></p>
+<details class="sol">
+<summary>Solution &#8212; part (a)<span class="visually-hidden"> of question 3</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+is 4×4: one row per carbon
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>p</mi><mi>z</mi></msub></mrow><annotation encoding="application/x-tex">2p_{z}</annotation></semantics></math>
+orbital, so <strong>4 unsaturated carbons</strong></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">next-door carbons share a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">-\beta</annotation></semantics></math></span></p>
+<div class="fstep">
+<p><span
+class="cline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">-\beta</annotation></semantics></math>
+next to the diagonal bonds C1–C2, C2–C3, C3–C4, and the corners
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>14</mn></msub><mo>=</mo><msub><mi>H</mi><mn>41</mn></msub><mo>=</mo><mi>−</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">H_{14} = H_{41} = -\beta</annotation></semantics></math>
+bond <strong>C4 back to C1</strong></span></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> a chain (butadiene) would have 0 in those two
+corners. The corner entries close the ring.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p>a ring of four carbons: cyclobutadiene, C₄H₄, alternating double
+bonds, one H on each C</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Four rows means four carbons. The −β in
+the top-right and bottom-left corners connects carbon 4 to carbon 1, so
+the four carbons form a ring, not a chain.</p>
+</div>
+</div>
+<figure class="graph mini">
+<svg viewBox="0 0 132 132" role="img" aria-labelledby="gt3 gd3">
+<title id="gt3">The solution: cyclobutadiene</title>
+<desc id="gd3">A ring of 4 carbon atoms, cyclobutadiene, numbered C1 to C4. Double bonds: C1=C2, C3=C4. Single bonds: C2–C3, C1–C4. Hydrogens: C1 has 1, C2 has 1, C3 has 1, C4 has 1. Each carbon has three bonds in the plane.</desc>
+<line x1="71.4" y1="41.7" x2="89.7" y2="60.0" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="89.7" y1="71.4" x2="71.4" y2="89.7" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="60.0" y1="89.7" x2="41.7" y2="71.4" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="60.0" y1="41.7" x2="41.7" y2="60.0" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="68.1" y1="45.5" x2="85.9" y2="63.3" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="63.3" y1="85.9" x2="45.5" y2="68.1" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><line x1="65.7" y1="28.0" x2="65.7" y2="17.5" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><text x="65.7" y="15.0" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">H</text><line x1="103.4" y1="65.7" x2="113.9" y2="65.7" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><text x="120.4" y="69.7" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">H</text><line x1="65.7" y1="103.4" x2="65.7" y2="113.9" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><text x="65.7" y="124.4" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">H</text><line x1="28.0" y1="65.7" x2="17.5" y2="65.7" stroke="#16222a" stroke-width="1.7" stroke-linecap="round"/><text x="11.0" y="69.7" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">H</text><text x="65.7" y="40.5" font-size="14" font-weight="600" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text><text x="65.7" y="54.5" font-size="10" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><text x="95.4" y="70.2" font-size="14" font-weight="600" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text><text x="80.4" y="69.2" font-size="10" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><text x="65.7" y="99.9" font-size="14" font-weight="600" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text><text x="65.7" y="83.9" font-size="10" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><text x="36.0" y="70.2" font-size="14" font-weight="600" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text><text x="51.0" y="69.2" font-size="10" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text>
+</svg>
+<figcaption>Cyclobutadiene, C₄H₄.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li id="q3b">
+<p class="partq"><strong>(2.5 pts)</strong> The Hückel solver’s output for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+is below
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">a = \alpha</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">b = \beta</annotation></semantics></math>).</p>
+<pre><code>Eigenvalues and Eigenvectors:
+Eigenvalue: -a (multiplicity 2)
+  Eigenvector: [-1.000, 0, 1.000, 0]
+  Eigenvector: [0, -1.000, 0, 1.000]
+Eigenvalue: -a - 2.0*b (multiplicity 1)
+  Eigenvector: [1.000, 1.000, 1.000, 1.000]
+Eigenvalue: -a + 2.0*b (multiplicity 1)
+  Eigenvector: [-1.000, 1.000, -1.000, 1.000]</code></pre>
+<p>With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>α</mi><mo>=</mo><mi>−</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">-\alpha = -1</annotation></semantics></math>
+eV and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>β</mi><mo>=</mo><mi>−</mi><mn>0.5</mn></mrow><annotation encoding="application/x-tex">-\beta = -0.5</annotation></semantics></math>
+eV, <strong>sketch the energy levels</strong> and fill them with the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math>
+electrons.</p>
+<details class="sol">
+<summary>Solution &#8212; part (b)<span class="visually-hidden"> of question 3</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">put in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a = 1</annotation></semantics></math>
+eV,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">b = 0.5</annotation></semantics></math>
+eV:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>a</mi><mo>−</mo><mn>2</mn><mi>b</mi><mo>=</mo><mi>−</mi><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">eV</mtext><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><mi>a</mi><mo>=</mo><mi>−</mi><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">eV</mtext><mspace width="0.222em"></mspace><mo stretchy="false" form="prefix">(</mo><mrow><mtext mathvariant="normal">multiplicity </mtext><mspace width="0.333em"></mspace></mrow><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mo>−</mo><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi><mo>=</mo><mn>0</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">eV</mtext></mrow><annotation encoding="application/x-tex">-a - 2b = -2\ \text{eV}, \qquad -a = -1\ \text{eV}\ (\text{multiplicity } 2), \qquad -a + 2b = 0\ \text{eV}</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">multiplicity 2: <strong>two separate
+levels</strong></span></p>
+<div class="fstep">
+<p><span class="cline">sort by energy:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math>
+at the bottom, the pair at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+at the top</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab"><strong>4 π electrons</strong>, filled from the
+bottom</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p>a pair at −2 eV, one electron in each −1 eV level, 0 eV empty</p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> the solver lists the levels in its own order,
+not by energy. A pair in one −1 eV level also earned full credit.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Plug in the numbers, draw each level at
+its height on the axis (two lines at −1 eV), and fill the four π
+electrons from the bottom up, at most two per level.</p>
+</div>
+</div>
+<figure class="graph mini">
+<svg viewBox="0 0 420 300" role="img" aria-labelledby="gt2 gd2">
+<title id="gt2">The solution: the energy levels filled with 4 π electrons</title>
+<desc id="gd2">An energy axis in eV with ticks from minus 2.5 to 0.5. One level at minus 2 eV holds an up and a down electron. Two separate levels side by side at minus 1 eV each hold one up electron. One level at 0 eV is empty. Four electrons in total, one from each carbon.</desc>
+<line x1="70" y1="278" x2="70" y2="14" stroke="#16222a" stroke-width="1.4"></line>
+<polygon points="70,8 65,18 75,18" fill="#16222a"></polygon>
+<text x="16" y="148" font-size="13" fill="#16222a" text-anchor="middle" transform="rotate(-90 16 148)" font-family="Segoe UI, Arial, sans-serif">Energy (eV)</text>
+<line x1="65" y1="272.0" x2="75" y2="272.0" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="276.0" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2.5</text>
+<line x1="65" y1="230.7" x2="75" y2="230.7" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="234.7" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text>
+<line x1="65" y1="189.3" x2="75" y2="189.3" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="193.3" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−1.5</text>
+<line x1="65" y1="148.0" x2="75" y2="148.0" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="152.0" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−1</text>
+<line x1="65" y1="106.7" x2="75" y2="106.7" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="110.7" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−0.5</text>
+<line x1="65" y1="65.3" x2="75" y2="65.3" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="69.3" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">0</text>
+<line x1="65" y1="24.0" x2="75" y2="24.0" stroke="#16222a" stroke-width="1.2"></line>
+<text x="61" y="28.0" font-size="12" fill="#4d5f6a" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">0.5</text>
+<line x1="150" y1="230.7" x2="214" y2="230.7" stroke="#16222a" stroke-width="2.4"></line>
+<line x1="174" y1="238.7" x2="174" y2="219.7" stroke="#861F41" stroke-width="2"></line>
+<polygon points="174,214.7 169,222.7 178,222.7" fill="#861F41"></polygon>
+<line x1="190" y1="219.7" x2="190" y2="238.7" stroke="#861F41" stroke-width="2"></line>
+<polygon points="190,243.7 185,235.7 194,235.7" fill="#861F41"></polygon>
+<line x1="110" y1="148.0" x2="174" y2="148.0" stroke="#16222a" stroke-width="2.4"></line>
+<line x1="134" y1="156.0" x2="134" y2="137.0" stroke="#861F41" stroke-width="2"></line>
+<polygon points="134,132.0 129,140.0 138,140.0" fill="#861F41"></polygon>
+<line x1="194" y1="148.0" x2="258" y2="148.0" stroke="#16222a" stroke-width="2.4"></line>
+<line x1="218" y1="156.0" x2="218" y2="137.0" stroke="#861F41" stroke-width="2"></line>
+<polygon points="218,132.0 213,140.0 222,140.0" fill="#861F41"></polygon>
+<line x1="150" y1="65.3" x2="214" y2="65.3" stroke="#16222a" stroke-width="2.4"></line>
+<text x="272" y="235.2" font-size="13" fill="#16222a" font-family="Segoe UI, Arial, sans-serif">−α − 2β = −2 eV</text>
+<text x="272" y="152.5" font-size="13" fill="#16222a" font-family="Segoe UI, Arial, sans-serif">−α = −1 eV (two levels)</text>
+<text x="272" y="69.8" font-size="13" fill="#16222a" font-family="Segoe UI, Arial, sans-serif">−α + 2β = 0 eV (empty)</text>
+</svg>
+<figcaption>The four levels on the quiz’s axis: a pair at −2 eV, one electron in
+each of the two −1 eV levels, and the 0 eV level empty.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li id="q3c">
+<p class="partq"><strong>(2 pts)</strong> <strong>Sketch</strong> each molecular orbital below its eigenvector
+and write its number of <strong>nodes</strong>.</p>
+<details class="sol">
+<summary>Solution &#8212; part (c)<span class="visually-hidden"> of question 3</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">put each coefficient on its carbon,
+<strong>around the ring</strong>: C1 is next to C2 <em>and</em> C4; C1
+and C3 sit across the ring</span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">filled top lobe +, open −, a dot for 0</span></p>
+<div class="fstep">
+<p><span class="cline">count the sign changes going all the way around,
+<strong>including C4 back to C1</strong></span></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[-1, 1, -1, 1]</annotation></semantics></math>
+changes sign four times around the ring (2 nodal lines). On a chain it
+would be three — but this molecule is a ring.</p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p>nodes: 0, 1, 1, 2 nodal lines (or 0, 2, 2, 4 nodal points on the
+ring); more nodes, higher energy</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Draw the orbitals on the ring, not on a
+chain, leave a carbon blank when its coefficient is 0, and count the
+nodes all the way around the ring.</p>
+</div>
+</div>
+<figure class="graph mini">
+<svg viewBox="0 0 800 290" role="img" aria-labelledby="gt4 gd4">
+<title id="gt4">The solution: the four molecular orbitals on the ring</title>
+<desc id="gd4">Four copies of the square ring, C1 at the top, then C2 right, C3 bottom, C4 left. Each carbon's 2p_z orbital is two lobes, the top lobe filled for a positive coefficient and open for a negative one; a zero coefficient is a dot. Dashed lines are the nodal lines. [1, 1, 1, 1], energy -2 eV: C1 positive, C2 positive, C3 positive, C4 positive; 0 nodes. [minus 1, 0, 1, 0], energy -1 eV: C1 negative, C2 blank (zero), C3 positive, C4 blank (zero); 1 nodal line or 2 points. [0, minus 1, 0, 1], energy -1 eV: C1 blank (zero), C2 negative, C3 blank (zero), C4 positive; 1 nodal line or 2 points. [minus 1, 1, minus 1, 1], energy 0 eV: C1 negative, C2 positive, C3 negative, C4 positive; 2 nodal lines or 4 points.</desc>
+<polygon points="100,52 156,108 100,164 44,108" fill="none" stroke="#4d5f6a" stroke-width="1.6"></polygon>
+<ellipse cx="100" cy="36" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="100" cy="68" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="80" y="48" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C1</text>
+<ellipse cx="156" cy="92" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="156" cy="124" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="178" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C2</text>
+<ellipse cx="100" cy="148" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="100" cy="180" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="80" y="178" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C3</text>
+<ellipse cx="44" cy="92" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="44" cy="124" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="22" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C4</text>
+<text x="100" y="226" font-size="14" font-weight="700" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">[1, 1, 1, 1]</text>
+<text x="100" y="245" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">E = −2 eV</text>
+<text x="100" y="264" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0 nodes</text>
+<polygon points="300,52 356,108 300,164 244,108" fill="none" stroke="#4d5f6a" stroke-width="1.6"></polygon>
+<line x1="236.0" y1="108.0" x2="364.0" y2="108.0" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<ellipse cx="300" cy="36" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="300" cy="68" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="280" y="48" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C1</text>
+<circle cx="356" cy="108" r="4" fill="#16222a"></circle>
+<text x="378" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C2</text>
+<ellipse cx="300" cy="148" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="300" cy="180" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="280" y="178" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C3</text>
+<circle cx="244" cy="108" r="4" fill="#16222a"></circle>
+<text x="222" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C4</text>
+<text x="300" y="226" font-size="14" font-weight="700" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">[−1, 0, 1, 0]</text>
+<text x="300" y="245" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">E = −1 eV</text>
+<text x="300" y="264" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1 nodal line (2 points)</text>
+<polygon points="500,52 556,108 500,164 444,108" fill="none" stroke="#4d5f6a" stroke-width="1.6"></polygon>
+<line x1="500.0" y1="44.0" x2="500.0" y2="172.0" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<circle cx="500" cy="52" r="4" fill="#16222a"></circle>
+<text x="480" y="48" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C1</text>
+<ellipse cx="556" cy="92" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="556" cy="124" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="578" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C2</text>
+<circle cx="500" cy="164" r="4" fill="#16222a"></circle>
+<text x="480" y="178" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C3</text>
+<ellipse cx="444" cy="92" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="444" cy="124" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="422" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C4</text>
+<text x="500" y="226" font-size="14" font-weight="700" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">[0, −1, 0, 1]</text>
+<text x="500" y="245" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">E = −1 eV</text>
+<text x="500" y="264" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1 nodal line (2 points)</text>
+<polygon points="700,52 756,108 700,164 644,108" fill="none" stroke="#4d5f6a" stroke-width="1.6"></polygon>
+<line x1="644.8" y1="52.8" x2="755.2" y2="163.2" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<line x1="644.8" y1="163.2" x2="755.2" y2="52.8" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<ellipse cx="700" cy="36" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="700" cy="68" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="680" y="48" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C1</text>
+<ellipse cx="756" cy="92" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="756" cy="124" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="778" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C2</text>
+<ellipse cx="700" cy="148" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="700" cy="180" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="680" y="178" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C3</text>
+<ellipse cx="644" cy="92" rx="9" ry="16" fill="#16222a" stroke="#16222a" stroke-width="1.4"></ellipse>
+<ellipse cx="644" cy="124" rx="9" ry="16" fill="#ffffff" stroke="#16222a" stroke-width="1.4"></ellipse>
+<text x="622" y="113" font-size="12" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C4</text>
+<text x="700" y="226" font-size="14" font-weight="700" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">[−1, 1, −1, 1]</text>
+<text x="700" y="245" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">E = 0 eV</text>
+<text x="700" y="264" font-size="14" font-weight="400" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2 nodal lines (4 points)</text>
+</svg>
+<figcaption>The four orbitals on the ring, lowest energy first: filled lobe on
+top = positive, a dot = zero, dashed lines = nodal lines.</figcaption>
+</figure>
+</div>
+</details>
+</li>
+<li id="q3d">
+<p class="partq"><strong>(1 pt)</strong> Are the eigenvectors in the output <strong>normalized</strong>? If
+not, pick one eigenvector and normalize it.</p>
+<details class="sol">
+<summary>Solution &#8212; part (d)<span class="visually-hidden"> of question 3</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">add the squares of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[1, 1, 1, 1]</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>1</mn><mn>2</mn></msup><mo>+</mo><msup><mn>1</mn><mn>2</mn></msup><mo>+</mo><msup><mn>1</mn><mn>2</mn></msup><mo>+</mo><msup><mn>1</mn><mn>2</mn></msup><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">1^{2} + 1^{2} + 1^{2} + 1^{2} = 4</annotation></semantics></math>
+then take the square root: length
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><mo>=</mo><msqrt><mpadded depth="0"><mn>4</mn></mpadded></msqrt><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">= \sqrt{4} = 2</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span
+class="alab">length 2: <strong>not normalized</strong>; divide by
+2</span></p>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\tfrac{1}{2}\,[1, 1, 1, 1] = \left[\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2}\right]</annotation></semantics></math></p>
+</div>
+<div class="fwhy">
+<p><strong>Why:</strong> or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[-1, 0, 1, 0]</annotation></semantics></math>,
+length
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><msqrt><mpadded depth="0"><mn>2</mn></mpadded></msqrt><annotation encoding="application/x-tex">\sqrt{2}</annotation></semantics></math>,
+becomes
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mstyle displaystyle="false"><mfrac><mn>1</mn><msqrt><mpadded depth="0"><mn>2</mn></mpadded></msqrt></mfrac></mstyle><mo>,</mo><mn>0</mn><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><msqrt><mpadded depth="0"><mn>2</mn></mpadded></msqrt></mfrac></mstyle><mo>,</mo><mn>0</mn><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\left[-\tfrac{1}{\sqrt{2}}, 0, \tfrac{1}{\sqrt{2}}, 0\right]</annotation></semantics></math>:
+keep the zeros. Dividing by the sum of the squares (4) gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>4</mn></mfrac></mstyle><annotation encoding="application/x-tex">\tfrac{1}{4}</annotation></semantics></math>’s,
+which have length
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><annotation encoding="application/x-tex">\tfrac{1}{2}</annotation></semantics></math>,
+not 1.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> Find the vector’s length (the square root
+of the sum of the squares) and divide every entry by it. The result has
+length 1.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</li>
+<li class="q" id="qec">
+<p class="stem"><strong>EC.</strong> <strong>(2 pts)</strong> <strong>Extra credit.</strong> Write the <strong>Hamiltonian</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>H</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{H}</annotation></semantics></math>
+of the hydrogen molecular ion H₂⁺ (two protons, one electron), with
+derivatives, as in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>H</mi><mo accent="true">̂</mo></mover><mi>ψ</mi><mo>=</mo><mi>E</mi><mi>ψ</mi></mrow><annotation encoding="application/x-tex">\hat{H}\psi = E\psi</annotation></semantics></math>.
+Define your symbols for the distances between the particles.</p>
+<details class="sol">
+<summary>Solution<span class="visually-hidden"> for question EC</span></summary>
+<div class="sol-body">
+<div class="flow">
+<div class="fstep">
+<p><span class="cline">the electron’s kinetic energy:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><msup><mi>∇</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-\frac{\hbar^{2}}{2m}\nabla^{2}</annotation></semantics></math></span></p>
+</div>
+<p><span class="arw" aria-hidden="true">↓</span> <span class="alab">plus
+a Coulomb energy for each pair of charges</span></p>
+<div class="fstep">
+<p><span class="cline">electron–proton attractions (negative):
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msub><mi>r</mi><mi>A</mi></msub></mfrac><mo>−</mo><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msub><mi>r</mi><mi>B</mi></msub></mfrac></mrow><annotation encoding="application/x-tex">-\frac{ke^{2}}{r_{A}} - \frac{ke^{2}}{r_{B}}</annotation></semantics></math></span></p>
+</div>
+<div class="fstep">
+<p><span class="cline">proton–proton repulsion (positive):
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>+</mi><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><mi>R</mi></mfrac></mrow><annotation encoding="application/x-tex">+\frac{ke^{2}}{R}</annotation></semantics></math></span></p>
+</div>
+<div class="fstep conclusion">
+<p><strong>Conclusion</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>H</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>−</mi><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><msup><mi>∇</mi><mn>2</mn></msup><mo>−</mo><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msub><mi>r</mi><mi>A</mi></msub></mfrac><mo>−</mo><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msub><mi>r</mi><mi>B</mi></msub></mfrac><mo>+</mo><mfrac><mrow><mi>k</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><mi>R</mi></mfrac></mrow><annotation encoding="application/x-tex">\hat{H} = -\frac{\hbar^{2}}{2m}\nabla^{2} - \frac{ke^{2}}{r_{A}} - \frac{ke^{2}}{r_{B}} + \frac{ke^{2}}{R}</annotation></semantics></math></p>
+</div>
+<figure class="graph mini" id="fig-h2plus">
+<svg viewBox="0 0 420 200" role="img" aria-labelledby="gt1 gd1">
+<title id="gt1">The solution: the distances in the hydrogen molecular ion</title>
+<desc id="gd1">Two protons, A and B, on a horizontal line a distance R apart, and one electron above them. Dashed lines from the electron to proton A and to proton B are labeled r_A and r_B.</desc>
+<line x1="106" y1="150" x2="314" y2="150" stroke="#16222a" stroke-width="2"></line>
+<text x="210" y="176" font-size="16" font-style="italic" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">R</text>
+<line x1="90" y1="136" x2="250" y2="60" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<line x1="330" y1="136" x2="250" y2="60" stroke="#10607a" stroke-width="1.8" stroke-dasharray="6 4"></line>
+<text x="142" y="92" font-size="16" font-style="italic" fill="#10607a" font-family="Segoe UI, Arial, sans-serif">r<tspan font-size="11" dy="4">A</tspan></text>
+<text x="300" y="92" font-size="16" font-style="italic" fill="#10607a" font-family="Segoe UI, Arial, sans-serif">r<tspan font-size="11" dy="4">B</tspan></text>
+<circle cx="90" cy="150" r="15" fill="#fff" stroke="#861F41" stroke-width="2"></circle>
+<text x="90" y="156" font-size="18" font-weight="700" fill="#861F41" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+</text>
+<text x="90" y="186" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">proton A</text>
+<circle cx="330" cy="150" r="15" fill="#fff" stroke="#861F41" stroke-width="2"></circle>
+<text x="330" y="156" font-size="18" font-weight="700" fill="#861F41" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+</text>
+<text x="330" y="186" font-size="13" fill="#16222a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">proton B</text>
+<circle cx="250" cy="48" r="11" fill="#fff" stroke="#10607a" stroke-width="2"></circle>
+<text x="250" y="53" font-size="15" font-weight="700" fill="#10607a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−</text>
+<text x="268" y="52" font-size="13" fill="#16222a" font-family="Segoe UI, Arial, sans-serif">electron</text>
+</svg>
+<figcaption><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>A</mi></msub><annotation encoding="application/x-tex">r_A</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>B</mi></msub><annotation encoding="application/x-tex">r_B</annotation></semantics></math>:
+electron to proton A, B;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>:
+proton to proton (the protons are held fixed).</figcaption>
+</figure>
+<div class="fwhy">
+<p><strong>Why:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+is the electron’s mass and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn><mi>/</mi><mn>4</mn><mi>π</mi><msub><mi>ε</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">k = 1/4\pi\varepsilon_{0}</annotation></semantics></math>.
+A Hückel matrix such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>β</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mi>α</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} -\alpha &amp; -\beta \\ -\beta &amp; -\alpha \end{pmatrix}</annotation></semantics></math>
+is what
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>H</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{H}</annotation></semantics></math>
+becomes after choosing atomic orbitals; it has no derivatives.</p>
+</div>
+<div class="inwords">
+<p><strong>In words.</strong> The Hamiltonian is the electron’s kinetic
+energy (the second-derivative term) plus a Coulomb potential energy for
+each pair of charges: two attractions and one repulsion.</p>
+</div>
+</div>
+</div>
+</details>
+</li>
+</ol>
+</section>
+<section id="afterquiz">
+<h2 id="class-results">Class results</h2>
+<p>13 booklets were graded.</p>
+<ul>
+<li><strong>Quiz score (out of 10):</strong> average 7.79, median 8</li>
+<li><strong>Problem 1(a), the eigenvalues (out of 1):</strong> average
+0.98</li>
+<li><strong>Problem 1(b), the normalized eigenvectors (out of
+1):</strong> average 0.60</li>
+<li><strong>Problem 2, the Schrödinger equation (out of 1):</strong>
+average 0.85</li>
+<li><strong>Problem 3(a), the molecule (out of 1.5):</strong> average
+1.23</li>
+<li><strong>Problem 3(b), the energy levels (out of 2.5):</strong>
+average 2.13</li>
+<li><strong>Problem 3(c), the orbital sketches and nodes (out of
+2):</strong> average 1.35</li>
+<li><strong>Problem 3(d), normalizing (out of 1):</strong> average
+0.65</li>
+<li><strong>Extra credit (out of 2):</strong> average 0</li>
+</ul>
+<h2 id="where-the-class-had-the-most-trouble">Where the class had the
+most trouble</h2>
+<p>These cost the most points. If you lost points here, start your
+review with them.</p>
+<ol type="1">
+<li><strong>Problem 3(c) — the orbitals go on the ring.</strong> Only 1
+of 13 booklets earned both points. Eight booklets sketched the orbitals
+on a chain, and nine wrote 3 nodes for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[-1, 1, -1, 1]</annotation></semantics></math>.
+On the ring C4 is bonded back to C1, so that orbital changes sign four
+times: 2 nodal lines (4 nodal points). Five booklets drew an orbital at
+a carbon whose coefficient is 0; a zero means nothing is drawn
+there.</li>
+<li><strong>Problem 1(b) — the eigenvectors of a diagonal
+matrix.</strong> Six booklets did not write the vectors with a single 1:
+two wrote the eigenvalues themselves (6, 7, 2, 4) as the eigenvectors,
+two wrote vectors that are not eigenvectors of this matrix, one divided
+the right vectors by
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><msqrt><mpadded depth="0"><mn>105</mn></mpadded></msqrt><annotation encoding="application/x-tex">\sqrt{105}</annotation></semantics></math>,
+and one left it blank. Each eigenvector is a single 1 in its
+eigenvalue’s row, and it already has length 1.</li>
+<li><strong>Problem 3(d) — normalizing.</strong> Two booklets answered
+that the vectors are already normalized, and one divided by the sum of
+the squares. The length is the <strong>square root</strong> of the sum
+of the squares:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[1, 1, 1, 1]</annotation></semantics></math>
+has length 2, so it becomes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>,</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\left[\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2}\right]</annotation></semantics></math>.
+Keep the zero entries.</li>
+<li><strong>Problem 3(a) — chain or ring.</strong> Three booklets drew a
+chain, and two wrote 2 or 3 for the number of unsaturated carbons. The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">-\beta</annotation></semantics></math>
+in the corners of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+bonds C4 to C1: a ring of four carbons, one H on each.</li>
+<li><strong>Problem 3(b) — two levels at −1 eV.</strong> Three booklets
+drew a single −1 eV line, and two put the pair at −2 eV. “Multiplicity
+2” means two separate levels at −1 eV.</li>
+<li><strong>Extra credit — the Hamiltonian with derivatives.</strong>
+Nobody earned extra credit. Most answers were Hückel matrices; the
+question asked for the operator: the kinetic-energy term plus a Coulomb
+term for each pair of charges.</li>
+</ol>
+</section>
+<section id="study" aria-labelledby="study-h">
+<h2 id="study-h">Where to review each idea</h2>
+<h3 class="parth"
+id="homework-and-worksheets-to-revisit-problem-by-problem">Homework and
+worksheets to revisit, problem by problem</h3>
+<ul>
+<li><strong>Problem 1 (eigenvalues and eigenvectors of a diagonal
+matrix):</strong> the diagonal-matrices worksheet of November 4 (three
+teams, the identity and diag(1.1, 1, 0.95)), and the <em>Linear Algebra
+in Perspective</em> homework.</li>
+<li><strong>Problem 2 (what the Schrödinger equation gives):</strong>
+Worksheet 1 of November 16 (eigenvalues are the energies, eigenvectors
+the orbitals).</li>
+<li><strong>Problem 3(a) (the molecule from the matrix):</strong> the
+benzene team worksheet of November 13 (the ring’s corner entries), and
+the Hückel review worksheet of November 18, sections 1–2.</li>
+<li><strong>Problem 3(b) (energy levels and filling them):</strong> the
+<em>Hückel Model</em> homework, Problems 2–3, and the benzene worksheet
+(degenerate levels).</li>
+<li><strong>Problem 3(c) (orbital sketches and nodes):</strong> the
+<em>Hückel Model</em> homework, Problems 3–4, and the benzene
+worksheet’s orbital panels.</li>
+<li><strong>Problem 3(d) (normalizing):</strong> Worksheet 2 of November
+16 (normalization), the Hückel review worksheet, section 7, and the Quiz
+9 extra credit.</li>
+<li><strong>Extra credit (the H₂⁺ Hamiltonian):</strong> the
+Schrödinger-equation worksheet of November 6 (the kinetic-energy term
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">-\frac{\hbar^{2}}{2m}\frac{d^{2}}{dx^{2}}</annotation></semantics></math>),
+plus Coulomb’s law for each pair of charges.</li>
+<li><strong>All of it, with fresh numbers:</strong> the Quiz 10 Practice
+Drill and the Quiz 10 review packet.</li>
+</ul>
+</section>
+<footer class="foot">
+<p><strong>Still stuck? Bring it to office hours.</strong></p>
+</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d || d.tagName !== "DETAILS" || !d.hasAttribute("data-answer")) { return; }
+    var q = d.closest(".q");
+    var list = q ? q.querySelector(".choices") : null;
+    if (!list) { return; }
+    var li = list.children[d.getAttribute("data-answer").charCodeAt(0) - 65];
+    if (li) { li.classList.toggle("is-correct", d.open); }
+  }, true);
+
+  // A link to #q6 (a question) or #q7b (a part), e.g. from a student report, opens that
+  // solution: for a question, its own strip or all of its parts' strips. Added 2026-10-06.
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el || el.tagName !== "LI") { return; }
+    var strips = el.querySelectorAll(":scope > details.sol, :scope > ol.parts > li > details.sol");
+    for (var i = 0; i < strips.length; i++) { strips[i].open = true; }
+    // instant, not the page's smooth scrolling: a smooth scroll can stall (e.g. in a
+    // background tab), leaving the reader at the top of the page
+    el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  // fonts and math finish laying out after this script runs; land on the target again
+  window.addEventListener("load", function () {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === "LI") { el.scrollIntoView({ block: "start", behavior: "instant" }); }
+  });
+
+  var btn = document.getElementById("toggle-all");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      var all = document.querySelectorAll("details.sol");
+      for (var i = 0; i < all.length; i++) { all[i].open = open; }
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Hide all solutions" : "Show all solutions";
+    });
+  }
+}());
+</script>
+</body>
+</html>
